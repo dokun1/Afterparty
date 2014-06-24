@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APCameraOverlayViewController">
+            <connections>
+                <outlet property="cameraButton" destination="Gqc-hb-W3u" id="eHw-99-bUy"/>
+                <outlet property="cancelButton" destination="T7j-ZC-Skh" id="Y7T-h8-pnq"/>
+                <outlet property="imagePreview" destination="i5M-Pr-FkT" id="3bg-Uh-SBC"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewFinderView" destination="19k-ub-f1S" id="yjR-DZ-nHo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="19k-ub-f1S">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gqc-hb-W3u">
+                    <rect key="frame" x="125" y="460" width="70" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="cjC-IZ-zM8"/>
+                        <constraint firstAttribute="height" constant="70" id="jV8-ar-rOZ"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="button_camera.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cameraButtonTapped:" destination="-1" eventType="touchUpInside" id="bCS-IJ-54G"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7j-ZC-Skh">
+                    <rect key="frame" x="20" y="20" width="60" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="zJ3-KA-04E"/>
+                    </constraints>
+                    <state key="normal" title="cancel">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelButtonTapped:" destination="-1" eventType="touchUpInside" id="Dvh-i5-k7f"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="19k-ub-f1S" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2Vp-Iy-MCG"/>
+                <constraint firstItem="19k-ub-f1S" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="8p2-vu-ToP"/>
+                <constraint firstAttribute="trailing" secondItem="19k-ub-f1S" secondAttribute="trailing" id="BZ4-rP-1Sq"/>
+                <constraint firstItem="Gqc-hb-W3u" firstAttribute="centerX" secondItem="19k-ub-f1S" secondAttribute="centerX" id="EIb-rY-WNL"/>
+                <constraint firstItem="T7j-ZC-Skh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="HvA-eG-iax"/>
+                <constraint firstItem="T7j-ZC-Skh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" symbolic="YES" id="RAo-7V-H0W"/>
+                <constraint firstAttribute="bottom" secondItem="Gqc-hb-W3u" secondAttribute="bottom" constant="38" id="YXP-yu-Lsf"/>
+                <constraint firstAttribute="bottom" secondItem="19k-ub-f1S" secondAttribute="bottom" id="dnz-IK-Fp2"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="button_camera.png" width="161" height="161"/>
+    </resources>
+</document>
