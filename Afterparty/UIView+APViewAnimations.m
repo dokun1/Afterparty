@@ -40,9 +40,15 @@
   animation.duration = 0.3;
   
   [self.layer addAnimation:animation forKey:@"popup"];
+  [self performSelector:@selector(afterparty_disappearAlpha) withObject:nil afterDelay:animation.duration + 0.05];
+  
+}
+-(void)afterparty_disappearAlpha {
+  self.alpha = 0.0f;
 }
 
 - (void)afterparty_makeViewAppearWithCompletion:(APAnimationCompleteCallBackBlock)completionHandler {
+  self.alpha = 1.0f;
   CAKeyframeAnimation *animation = [CAKeyframeAnimation
                                     animationWithKeyPath:@"transform"];
   

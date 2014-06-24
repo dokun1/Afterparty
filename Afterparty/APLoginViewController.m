@@ -46,8 +46,6 @@ typedef NS_ENUM(NSInteger, LoginState) {
 @property (strong, nonatomic) ACAccountStore *accountStore;
 @property (strong, nonatomic) ACAccount      *twitterAccount;
 
-
-
 @end
 
 @implementation APLoginViewController
@@ -129,10 +127,11 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)fadeOutInitialSceneForLogin:(BOOL)isForLogin {
-  [self.afterpartyLoginButton afterparty_makeViewDisappearWithCompletion:nil];
-  [self.signUpButton afterparty_makeViewDisappearWithCompletion:nil];
-  [self.twitterLoginButton afterparty_makeViewDisappearWithCompletion:nil];
-  [self.facebookLoginButton afterparty_makeViewDisappearWithCompletion:nil];
+  [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
+  [self.signUpButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
+  [self.facebookLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
+  [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
+  [self performSelector:@selector(fadeInLoginScene) withObject:nil afterDelay:0.7];
 }
 
 - (void)fadeInInitialSceneWithDelay:(NSTimeInterval)delay {
@@ -140,16 +139,6 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [self.signUpButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.1];
   [self.facebookLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.2];
   [self.twitterLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.3];
-
-  
-//  [UIView animateWithDuration:0.5 delay:delay options:UIViewAnimationOptionCurveLinear animations:^{
-//    self.afterpartyLoginButton.alpha = 1.f;
-//    self.twitterLoginButton.alpha = 1.f;
-//    self.facebookLoginButton.alpha = 1.f;
-//    self.signUpButton.alpha = 1.f;
-//  } completion:^(BOOL finished) {
-//    
-//  }];
 }
 
 - (void)fadeOutSignUpScene {
@@ -165,7 +154,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)fadeInLoginScene {
-  
+  [self.emailAddressLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0];
+  [self.passwordLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.1];
 }
 
 @end
