@@ -319,22 +319,18 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
   }];
 }
 
--(void)loginWithUsername:(NSString *)username
-                password:(NSString *)password
-              facebookID:(NSString *)facebookID
-               twitterID:(NSString *)twitterID
-                 success:(APSuccessPFUserBlock)successBlock
-                 failure:(APFailureErrorBlock)failureBlock {
-  NSString *saltedPassword = (facebookID == nil) ? [NSString stringWithFormat:@"%@%@", password, kSalt] : [NSString stringWithFormat:@"%@%@", facebookID, kFacebookSalt];
-  if (twitterID != nil) {
-    saltedPassword = [NSString stringWithFormat:@"%@%@", twitterID, kTwitterSalt];
-  }
+- (void)loginWithUsername:(NSString *)username
+                 password:(NSString *)password
+                  success:(APSuccessPFUserBlock)successBlock
+                  failure:(APFailureErrorBlock)failureBlock {
+  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kSalt];
   NSString *hashedPassword = nil;
   unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
   if (CC_SHA1([data bytes], (uint)[data length], hashedPasswordData)) {
     hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
   }
+  NSLog(@"%@", hashedPassword);
   [PFUser logInWithUsernameInBackground:username password:hashedPassword block:^(PFUser *user, NSError *error) {
     (error == nil) ? successBlock(user) : failureBlock(error);
   }];
@@ -353,6 +349,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 - (void)loginWithFacebookUsingPermissions:(NSArray *)permissions
                                   success:(APSuccessPFUserBlock)successBlock
                                   failure:(APFailureErrorBlock)failureBlock {
+  [PFFacebookUtils initializeFacebook];
   [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
     if (!user) {
       if (!error) {
@@ -362,10 +359,13 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
       }else {
         failureBlock(error);
       }
+      
     } if (user.isNew) {
       NSLog(@"user is brand new");
+      successBlock(user);
+    } else if (user) {
+      successBlock(user);
     }
-    successBlock(user);
   }];
 }
 
@@ -391,9 +391,10 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
   }];
 }
 
-- (void)getTwitterUserDetailsWithSuccess:(APSuccessDictionaryBlock)successBlock
+- (void)getTwitterUserDetailsForUsername:(NSString*)username
+                                 success:(APSuccessDictionaryBlock)successBlock
                                  failure:(APFailureErrorBlock)failureBlock {
-  NSString *twitterUsername = [[PFUser currentUser] username];
+  NSString *twitterUsername = username;
   NSString *requestString = [NSString stringWithFormat:@"https://api.twitter.com/1.1/users/show.json?screen_name=%@", twitterUsername];
   NSURL *verify = [NSURL URLWithString:requestString];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:verify];
@@ -404,6 +405,11 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     NSError *error;
     NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
     (error == nil) ? successBlock(result) : failureBlock(error);
+    if (result) {
+      PFUser *user = [PFUser currentUser];
+      user.username = result[@"screen_name"];
+      [user saveInBackground];
+    }
   }];
 }
 
@@ -430,20 +436,14 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
   }];
 }
 
--(void)signUpUser:(NSDictionary *)credentials
-          success:(APSuccessBooleanBlock)successBlock
-          failure:(APFailureErrorBlock)failureBlock{
+- (void)signUpUser:(NSString*)username
+          password:(NSString*)password
+             email:(NSString*)email
+           success:(APSuccessBooleanBlock)successBlock
+           failure:(APFailureErrorBlock)failureBlock {
   PFUser *user = [PFUser user];
-  user.username = credentials[@"username"];
-  if (credentials[@"facebookID"] != nil)
-    user[@"facebookID"] = credentials[@"facebookID"];
-  if (credentials[@"twitterID"] != nil) {
-    user[@"twitterID"] = credentials[@"twitterID"];
-  }
-  NSString *saltedPassword = (credentials[@"facebookID"] != nil) ? [NSString stringWithFormat:@"%@%@", credentials[@"facebookID"], kFacebookSalt] : [NSString stringWithFormat:@"%@%@", credentials[@"password"], kSalt];
-  if (credentials[@"twitterID"] != nil) {
-    saltedPassword = [NSString stringWithFormat:@"%@%@", credentials[@"twitterID"], kTwitterSalt];
-  }
+  user.username = username;
+  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kSalt];
   NSString *hashedPassword = nil;
   unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
@@ -451,9 +451,10 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
   }
   user.password = hashedPassword;
-  user.email = credentials[@"email"];
+  NSLog(@"%@", hashedPassword);
+  user.email = email;
   [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    succeeded ? successBlock(succeeded) : failureBlock(error);
+    (error == nil) ? successBlock(succeeded) : failureBlock(error);
   }];
 }
 
