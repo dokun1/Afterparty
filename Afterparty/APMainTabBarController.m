@@ -40,7 +40,9 @@
 }
 
 - (void)checkCurrentUser {
-//  [self performSegueWithIdentifier:kLoginSegue sender:self];
+  if (![PFUser currentUser]) {
+    [self performSegueWithIdentifier:kLoginSegue sender:self];
+  }
 //  APLoginViewController *loginVC = (APLoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
 //    [self presentViewController:loginVC animated:YES completion:nil];
 //  if (![self currentUser]) {

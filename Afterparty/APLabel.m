@@ -35,6 +35,7 @@
       [self setFont:[UIFont fontWithName:kBoldFont size:26.f]];
       self.textAlignment = NSTextAlignmentCenter;
       self.textColor = [UIColor afterpartyOffWhiteColor];
+      break;
     case LabelTypeButtonDefault:
       [self setFont:[UIFont fontWithName:kRegularFont size:20.0f]];
       break;

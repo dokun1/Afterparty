@@ -149,6 +149,11 @@
   
   [self.privateEventSwitch setTintColor:[UIColor afterpartyCoralRedColor]];
   [self.privateEventSwitch setOnTintColor:[UIColor afterpartyBrightGreenColor]];
+  
+  [self.chooseEventDateButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+  [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+  [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+  [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -343,11 +348,215 @@
                    }];
 }
 
--(void)dismissScreen {
+#pragma mark - UIScrollViewDelegate Methods
+
+- (UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+  return self.coverPhotoImageView;
+}
+
+-(void)setZoomScales {
+  CGSize boundsSize = self.coverPhotoScrollView.bounds.size;
+  CGSize imageSize = self.coverPhotoImageView.bounds.size;
+  
+  CGFloat xScale = boundsSize.width/imageSize.width;
+  CGFloat yScale = boundsSize.height/imageSize.height;
+  CGFloat minScale = MAX(xScale,yScale);
+  
+  self.coverPhotoScrollView.minimumZoomScale = minScale;
+  self.coverPhotoScrollView.zoomScale = minScale;
+  self.coverPhotoScrollView.maximumZoomScale = 3.0;
+}
+
+#pragma mark - UITextFieldDelegate methods
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+  [textField resignFirstResponder];
+  [self.currentEvent setEventName:self.eventNameField.text];
+  return NO;
+}
+
+#pragma mark - UIImagePickerDelegate methods
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+  UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+  [self.coverPhotoImageView removeFromSuperview];
+  self.coverPhotoImageView = nil;
+  self.coverPhotoImageView = [[UIImageView alloc] initWithImage:image];
+  [self.choosePhotoButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+  [self setZoomScales];
+  [self.coverPhotoScrollView addSubview:self.coverPhotoImageView];
+  [self.picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - VenueChoiceDelegate Methods
+
+-(void)controllerDidChooseVenue:(FSVenue *)venue {
+  [self.currentEvent setEventVenue:venue];
+  [self.currentEvent setLocation:venue.location.coordinate];
+  NSString *address = @"";
+  if (venue.location.address) {
+    address = venue.location.address;
+  }
+  [self.currentEvent setEventAddress:address];
+  [self.chooseEventLocationLabel setText:venue.name];
+  [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+  [self.navigationController popToViewController:self animated:YES];
+}
+
+#pragma mark - FriendInviteDelegate
+
+-(void)didConfirmInvitees:(NSArray *)invitees {
+  self.currentInvitees = invitees;
+  [self.chooseEventFriendsLabel setText:([self.currentInvitees count] != 1)?[NSString stringWithFormat:@"%lu friends are invited.", (unsigned long)[self.currentInvitees count]]:[NSString stringWithFormat:@"%lu friend is invited.", (unsigned long)[self.currentInvitees count]]];
+  [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+  [self.navigationController popToViewController:self animated:YES];
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate methods
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
+  [controller dismissViewControllerAnimated:YES completion:nil];
+  switch (result) {
+    case MessageComposeResultCancelled:
+      [SVProgressHUD dismiss];
+      break;
+    case MessageComposeResultFailed:
+      [SVProgressHUD showErrorWithStatus:@"invitations failed"];
+      break;
+    case MessageComposeResultSent:
+      [SVProgressHUD showSuccessWithStatus:@"invitations sent"];
+      break;
+    default:
+      break;
+  }
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(void)sendInvitationsForEventID:(NSString*)eventID {
+  [self.confirmEventButton setEnabled:NO];
+  [self.confirmEventButton setAlpha:0.0f];
+  if(![MFMessageComposeViewController canSendText]) {
+    [SVProgressHUD showErrorWithStatus:@"can't send invitations"];
+    return;
+  }
+  
+  NSMutableArray *numbers = [NSMutableArray array];
+  [self.currentInvitees enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
+    [numbers addObject:contactDict[@"phone"]];
+  }];
+  
+  
+  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: afterparty://eventID:%@", eventID];
+  
+  MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+  messageController.messageComposeDelegate = self;
+  [messageController setRecipients:numbers];
+  [messageController setBody:message];
+  
+  [self presentViewController:messageController animated:YES completion:nil];
+}
 
+-(void)changeEventButtonColor {
+  self.createEventButton.titleLabel.text = @"HANG ON, YOU'RE MISSING STUFF!";
+  [self.createEventButton setBackgroundColor:[UIColor afterpartyCoralRedColor]];
+}
+
+-(void)confirmEventButtonTapped:(id)sender {
+  [SVProgressHUD showWithStatus:@"saving event"];
+  [self.currentEvent setEventDescription:self.eventDescriptionView.text];
+  [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
+    [[APConnectionManager sharedManager] lookupEventByName:self.currentEvent.eventName user:[PFUser currentUser] success:^(NSArray *objects) {
+      PFObject *object = [objects lastObject];
+      APEvent *thisEvent = [[APEvent alloc] initWithParseObject:object];
+      NSData *photoData = UIImagePNGRepresentation(self.currentEvent.eventImage);
+      [thisEvent setEventImageData:photoData];
+      [APUtil saveEventToMyEvents:thisEvent];
+      [self sendInvitationsForEventID:object.objectId];
+    } failure:^(NSError *error) {
+      [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
+    }];
+    [SVProgressHUD showSuccessWithStatus:@"event saved!"];
+  } failure:^(NSError *error) {
+    [SVProgressHUD showErrorWithStatus:@"error saving, try again"];
+  }];
+}
+
+-(void)fadeOutFirstLabels {
+  [UIView animateWithDuration:0.3
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     self.choosePhotoLabel.alpha          = 0.0f;
+                     self.chooseEventDateLabel.alpha      = 0.0f;
+                     self.chooseEventFriendsLabel.alpha   = 0.0f;
+                     self.chooseEventLocationLabel.alpha  = 0.0f;
+                     self.publicPasswordLabel.alpha       = 0.0f;
+                     self.privatePasswordLabel.alpha      = 0.0f;
+                     self.privateEventSwitch.alpha        = 0.0f;
+                     self.chooseEventPasswordButton.alpha = 0.0f;
+                     
+                     self.choosePhotoButton.alpha         = 0.0f;
+                     self.chooseEventLocationButton.alpha = 0.0f;
+                     self.chooseEventDateButton.alpha     = 0.0f;
+                     self.chooseEventFriendsButton.alpha  = 0.0f;
+                     self.createEventButton.alpha         = 0.0f;
+                     [self.coverPhotoScrollView setScrollEnabled:NO];
+                   } completion:^(BOOL finished) {
+                     [self createEventDescriptionUI];
+                     [self fadeInSecondLabels];
+                   }];
+}
+
+-(void)fadeInFirstLabels {
+  [UIView animateWithDuration:0.3
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     self.choosePhotoLabel.alpha          = 1.0f;
+                     self.chooseEventDateLabel.alpha      = 1.0f;
+                     self.chooseEventFriendsLabel.alpha   = 1.0f;
+                     self.chooseEventLocationLabel.alpha  = 1.0f;
+                     self.publicPasswordLabel.alpha       = 1.0f;
+                     self.privatePasswordLabel.alpha      = 1.0f;
+                     self.privateEventSwitch.alpha        = 1.0f;
+                     self.chooseEventPasswordButton.alpha = 1.0f;
+                     
+                     self.choosePhotoButton.alpha         = 1.0f;
+                     self.chooseEventLocationButton.alpha = 1.0f;
+                     self.chooseEventDateButton.alpha     = 1.0f;
+                     self.chooseEventFriendsButton.alpha  = 1.0f;
+                     self.createEventButton.alpha         = 1.0f;
+                     [self.coverPhotoScrollView setScrollEnabled:YES];
+                   } completion:^(BOOL finished) {
+                     [self fadeInSecondLabels];
+                   }];
+}
+
+-(void)fadeInSecondLabels {
+  [UIView animateWithDuration:0.3
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     self.eventDescriptionView.alpha  = 1.0f;
+                     self.eventDescriptionLabel.alpha = 1.0f;
+                     self.separatorView.alpha         = 1.0f;
+                     self.confirmEventButton.alpha    = 1.0f;
+                   } completion:nil];
+}
+
+-(void)fadeOutSecondLabels {
+  [UIView animateWithDuration:0.3
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     self.eventDescriptionView.alpha  = 0.0f;
+                     self.eventDescriptionLabel.alpha = 0.0f;
+                     self.separatorView.alpha         = 0.0f;
+                     self.confirmEventButton.alpha    = 0.0f;
+                   } completion:^(BOOL finished) {
+                     [self fadeInFirstLabels];
+                   }];
+}
 
 #pragma mark - IBAction Methods
 
