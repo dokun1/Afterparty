@@ -16,6 +16,12 @@
 {
     // Override point for customization after application launch.
   
+  [Parse setApplicationId:@"CvhkqubpxeRFVm6j4HiMf237NWRjaYdPR1PC9vUE" clientKey:@"ds9CT52n1L0cK704AcesYLyZWX2VUNleGarg3jWK"];
+  
+  [Foursquare2 setupFoursquareWithClientId:@"A3QWFSMMPWEKZLXY434YWY3CRIMA53PU50IB4BPEMRFVHLEG" secret:@"FE0YBODXUDB235LSKPN3I1YPPDZCAVULCST4PDYMI0IMDEQM" callbackURL:@"afterparty://foursquare"];
+  
+  [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+  
   [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
   
   [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kRegularFont size:11], NSFontAttributeName, [UIColor afterpartyBlackColor], NSForegroundColorAttributeName,  nil] forState:UIControlStateNormal];

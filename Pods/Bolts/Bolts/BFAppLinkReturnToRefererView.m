@@ -80,7 +80,7 @@ static const CGFloat BFCloseButtonHeight = 12.0;
         _labelView.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
         _labelView.textColor = [UIColor whiteColor];
         _labelView.backgroundColor = [UIColor clearColor];
-        _labelView.textAlignment = UITextAlignmentCenter;
+        _labelView.textAlignment = NSTextAlignmentCenter;
         _labelView.clipsToBounds = YES;
         _labelView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         [self updateLabelText];

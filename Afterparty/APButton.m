@@ -25,7 +25,7 @@
   [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [self setTitleColor:[UIColor colorWithHexString:@"2ad8db" withAlpha:1.0f] forState:UIControlStateHighlighted];
   
-  [self.titleLabel setFont:[UIFont fontWithName:kRegularFont size:13.f]];
+  [self.titleLabel setFont:[UIFont fontWithName:kRegularFont size:16.f]];
 }
 
 @end
