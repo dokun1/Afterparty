@@ -226,24 +226,16 @@ typedef void (^APProgressBlock)(int percentDone);
                                failure:(APFailureErrorBlock)failureBlock;
 
 /**
- *  Logs in a user. This call uses either a password, facebookID, or twitterID string for authentication, and uses different methods of hashing the auth string depending on the kind of string
+ *  Logs in a user. This is only for Parse credentials
  *
- *  @param username     NSString for username. This could be user entered, their facebook username, or twitter handle
- *  @param password     NSString for password. If no FB or Twitter, this must != nil
- *  @param facebookID   NSString for facebookID to identify profile. This is hashed and used as password if != nil
- *  @param twitterID    NSString for device twitter ID. This is hashed and used as password if != nil
- *  @param successBlock Returns PFUser to be assigned to [PFUser currentUser] via Parse iOS SDK
- *  @param failureBlock Returns NSError
+ *  @param username     <#username description#>
+ *  @param password     <#password description#>
+ *  @param successBlock <#successBlock description#>
+ *  @param failureBlock <#failureBlock description#>
  *
- *  @since 0.6.0
+ *  @since 0.9.0
  */
-
--(void)loginWithUsername:(NSString *)username
-                password:(NSString* )password
-              facebookID:(NSString*)facebookID
-               twitterID:(NSString *)twitterID
-                 success:(APSuccessPFUserBlock)successBlock
-                 failure:(APFailureErrorBlock)failureBlock;
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password success:(APSuccessPFUserBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Links facebook ID passed in with user account that already exists. Not yet implemented.
@@ -255,7 +247,6 @@ typedef void (^APProgressBlock)(int percentDone);
  *
  *  @since 0.8.0
  */
-
 -(void)linkFacebookID:(NSString*)facebookID
              withUser:(PFUser*)user
               success:(APSuccessBooleanBlock)successBlock
@@ -301,7 +292,8 @@ typedef void (^APProgressBlock)(int percentDone);
  *  @param failureBlock <#failureBlock description#>
  */
 
-- (void)getTwitterUserDetailsWithSuccess:(APSuccessDictionaryBlock)successBlock
+- (void)getTwitterUserDetailsForUsername:(NSString*)username
+                                 success:(APSuccessDictionaryBlock)successBlock
                                  failure:(APFailureErrorBlock)failureBlock;
 
 /**
@@ -321,16 +313,19 @@ typedef void (^APProgressBlock)(int percentDone);
 /**
  *  Creates account for user on Parse. This should only be called if there are no duplicates of user account.
  *
- *  @param credentials  NSDictionary of credentials containing username, password, (optional)facebookID and (optional)twitterID
+ *  @param username     <#username description#>
+ *  @param password     <#password description#>
+ *  @param email        <#email description#>
  *  @param successBlock Returns YES as BOOL
  *  @param failureBlock Returns NSError
  *
- *  @since 0.6.0
+ *  @since 0.9.0
  */
-
--(void)signUpUser:(NSDictionary *)credentials
-          success:(APSuccessBooleanBlock)successBlock
-          failure:(APFailureErrorBlock)failureBlock;
+- (void)signUpUser:(NSString*)username
+          password:(NSString*)password
+             email:(NSString*)email
+           success:(APSuccessBooleanBlock)successBlock
+           failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Parse call to reset password given an email address. Not implemented yet but should work, need to figure out workaround for facebook and twitter linked accounts

@@ -10,6 +10,7 @@
 #import "APUser.h"
 #import "APLoginViewController.h"
 #import "UIColor+APColor.h"
+#import <Parse/Parse.h>
 
 @interface APMainTabBarController ()
 
