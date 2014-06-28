@@ -16,17 +16,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FvC-RK-i5J" customClass="APTextField">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FvC-RK-i5J" customClass="APTextField">
                                 <rect key="frame" x="20" y="70" width="280" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Wfj-WN-Hoe" id="7ul-DO-TcI"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d4E-hq-ha7" customClass="APTextField">
                                 <rect key="frame" x="20" y="120" width="280" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Wfj-WN-Hoe" id="208-8L-9AG"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Sp-RQ-4mj" customClass="APTextField">
+                                <rect key="frame" x="20" y="170" width="280" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Wfj-WN-Hoe" id="u3o-WJ-AJM"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="welcome to afterparty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mqu-ij-De7" customClass="APLabel">
                                 <rect key="frame" x="20" y="20" width="280" height="40"/>
@@ -48,7 +63,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="facebookSigninButtonTapped:" destination="Wfj-WN-Hoe" eventType="touchUpInside" id="T5i-Rf-cjQ"/>
+                                    <action selector="facebookSigninButtonTapped:" destination="Wfj-WN-Hoe" eventType="touchUpInside" id="srp-3h-Igz"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slL-Ly-2bT" customClass="APButton">
@@ -100,6 +115,45 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vNo-Gm-cKi" customClass="APButton">
+                                <rect key="frame" x="20" y="170" width="280" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="0LJ-tW-1K8"/>
+                                </constraints>
+                                <state key="normal" title="log in">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginCredentialsButtonTapped:" destination="Wfj-WN-Hoe" eventType="touchUpInside" id="qH3-qW-lRN"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TYY-dO-I1B" customClass="APButton">
+                                <rect key="frame" x="20" y="270" width="280" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="dtz-fF-hSu"/>
+                                </constraints>
+                                <state key="normal" title="go back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goBackButtonTapped:" destination="Wfj-WN-Hoe" eventType="touchUpInside" id="Vue-IR-nGW"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="50v-qg-cIH" customClass="APButton">
+                                <rect key="frame" x="20" y="220" width="280" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="lw3-z6-dUR"/>
+                                </constraints>
+                                <state key="normal" title="sign up">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUpCredentialsButton:" destination="Wfj-WN-Hoe" eventType="touchUpInside" id="XyP-Mj-EdJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -132,13 +186,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="afterpartyCredentialsLoginButton" destination="vNo-Gm-cKi" id="TF2-bH-7aU"/>
                         <outlet property="afterpartyLoginButton" destination="Zta-tz-FGH" id="JyA-I8-cbo"/>
-                        <outlet property="emailAddressLoginField" destination="FvC-RK-i5J" id="y9E-Zb-5cw"/>
+                        <outlet property="emailAddressLoginField" destination="6Sp-RQ-4mj" id="VU7-RS-bxt"/>
                         <outlet property="facebookLoginButton" destination="5gV-1Q-Oq9" id="PKr-oQ-zt7"/>
+                        <outlet property="goBackButton" destination="TYY-dO-I1B" id="Tcm-re-HRE"/>
                         <outlet property="passwordLoginField" destination="d4E-hq-ha7" id="iGV-hp-kYH"/>
                         <outlet property="signUpButton" destination="DIE-86-aEd" id="8So-S8-a5u"/>
+                        <outlet property="signUpCredentialsButton" destination="50v-qg-cIH" id="gvd-BM-ghR"/>
                         <outlet property="titleLabel" destination="Mqu-ij-De7" id="zZT-Zw-Y14"/>
                         <outlet property="twitterLoginButton" destination="slL-Ly-2bT" id="gAh-JY-deh"/>
+                        <outlet property="usernameLoginField" destination="FvC-RK-i5J" id="zA4-iV-FO7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gI1-yt-qO8" userLabel="First Responder" sceneMemberID="firstResponder"/>
