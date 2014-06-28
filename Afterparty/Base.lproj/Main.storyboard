@@ -447,7 +447,6 @@
                         <outlet property="chooseEventLocationButton" destination="B3E-6q-BKX" id="nwc-BI-cz8"/>
                         <outlet property="chooseEventLocationLabel" destination="H2Y-Up-UAY" id="pMC-zu-LX9"/>
                         <outlet property="chooseEventPasswordButton" destination="vWe-Vz-tN5" id="eJt-dx-58R"/>
-                        <outlet property="choosePartyLocationLabel" destination="H2Y-Up-UAY" id="OS9-n4-KCi"/>
                         <outlet property="choosePhotoButton" destination="QH8-Vh-HUJ" id="TPp-IM-pDr"/>
                         <outlet property="choosePhotoLabel" destination="CqT-GQ-ZoV" id="ynA-hB-awd"/>
                         <outlet property="createEventButton" destination="MuN-t4-eBB" id="bca-uD-bOX"/>

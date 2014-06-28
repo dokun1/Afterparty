@@ -321,7 +321,7 @@
     if ([fullName isEqualToString:@" "]) {
         fullName = contactDict[@"phone"];
     }
-    [APStyleSheet styleLabel:cell.nameLabel text:fullName labelType:LabelTypeFriendInvite whiteText:NO];
+    [cell.nameLabel styleForType:LabelTypeFriendInvite withText:fullName];
     BOOL isSelected = [self.selectedContacts containsObject:contactDict];
     [cell.buttonImage setImage:(isSelected)?[UIImage imageNamed:@"icon_checkgreen"]:[UIImage imageNamed:@"icon_checkempty"]];
 }
