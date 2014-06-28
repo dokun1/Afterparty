@@ -56,6 +56,6 @@
 	<key>FacebookDisplayName</key>
 	<string>Afterparty</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

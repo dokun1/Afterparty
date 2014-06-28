@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TTTAttributedLabel/TTTAttributedLabel.h>
 
 typedef NS_ENUM(int, LabelType) {
   LabelTypeTitle,
@@ -24,7 +25,7 @@ typedef NS_ENUM(int, LabelType) {
   LabelTypeFriendHeader
 };
 
-@interface APLabel : UILabel
+@interface APLabel : TTTAttributedLabel
 
 - (void)styleForType:(LabelType)type;
 - (void)styleForType:(LabelType)type withText:(NSString*)text;
