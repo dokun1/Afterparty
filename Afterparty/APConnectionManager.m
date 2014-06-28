@@ -378,6 +378,10 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
       failureBlock(error);
     }
     NSDictionary *userData = (NSDictionary*)result;
+    PFUser *user = [PFUser currentUser];
+    user.username = userData[@"name"];
+    user.email = userData[@"email"];
+    [user saveInBackground];
     successBlock(userData);
   }];
 }

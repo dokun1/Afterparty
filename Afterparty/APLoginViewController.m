@@ -59,15 +59,6 @@ typedef NS_ENUM(NSInteger, LoginState) {
 
 @implementation APLoginViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   if (!_sunRisingImageView) {
@@ -79,20 +70,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
   [self styleUI];
-}
-
-- (FBLoginView *)facebookLoginView {
-  FBLoginView *view = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"email", @"user_likes", @"user_friends"]];
-  view.delegate = self;
-  view.loginBehavior = FBSessionLoginBehaviorWithFallbackToWebView;
-  
-  return view;
-}
-
-- (IBAction)loginButtonTapped:(id)sender {
-  [self fadeOutInitialSceneForLogin:YES];
 }
 
 - (void)styleUI {
@@ -123,6 +102,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [self animateSunUp];
 }
 
+#pragma mark - Sun Animation Methods
+
 - (void)animateSunUp {
   [UIView animateWithDuration:2.0 delay:0.f usingSpringWithDamping:0.75 initialSpringVelocity:5.f options:UIViewAnimationOptionCurveEaseOut animations:^{
     CGRect sunFrame = self.sunRisingImageView.frame;
@@ -142,6 +123,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
   } completion:nil];
 }
 
+#pragma mark - Field Animation Methods
+
 - (void)fadeOutInitialSceneForLogin:(BOOL)isForLogin {
   [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
   [self.signUpButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
@@ -152,7 +135,6 @@ typedef NS_ENUM(NSInteger, LoginState) {
   } else {
     [self performSelector:@selector(fadeInSignUpScene) withObject:nil afterDelay:0.7];
   }
-
 }
 
 - (void)fadeInInitialSceneWithDelay:(NSTimeInterval)delay {
@@ -194,23 +176,20 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [self.goBackButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.3];
 }
 
+#pragma mark - IBAction Methods
+
 - (IBAction)loginCredentialsButtonTapped:(id)sender {
   [SVProgressHUD show];
   [self.usernameLoginField resignFirstResponder];
   [self loginUser];
 }
 
-- (void)loginUser {
-  [[APConnectionManager sharedManager] loginWithUsername:self.usernameLoginField.text password:self.passwordLoginField.text success:^(PFUser *user) {
-    [SVProgressHUD showSuccessWithStatus:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
-  } failure:^(NSError *error) {
-    [SVProgressHUD showErrorWithStatus:nil];
-  }];
-}
-
 - (IBAction)signupButtonTapped:(id)sender {
   [self fadeOutInitialSceneForLogin:NO];
+}
+
+- (IBAction)loginButtonTapped:(id)sender {
+  [self fadeOutInitialSceneForLogin:YES];
 }
 
 - (IBAction)signUpCredentialsButton:(id)sender {
@@ -264,6 +243,38 @@ typedef NS_ENUM(NSInteger, LoginState) {
   }];
 }
 
+- (IBAction)facebookSigninButtonTapped:(id)sender {
+  self.currentState = kFacebook;
+  [SVProgressHUD show];
+  [[APConnectionManager sharedManager] loginWithFacebookUsingPermissions:@[@"public_profile", @"email", @"user_friends"] success:^(PFUser *user) {
+    [SVProgressHUD dismiss];
+    [[APConnectionManager sharedManager] getFacebookUserDetailsWithSuccessBlock:^(NSDictionary *dictionary) {
+      NSLog(@"got user details successfully");
+    } failure:^(NSError *error) {
+      NSLog(@"error %@", error.localizedDescription);
+    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+  } failure:^(NSError *error) {
+    NSLog(@"failure");
+    [SVProgressHUD showErrorWithStatus:nil];
+  }];
+}
+
+- (IBAction)forgotPasswordTapped:(id)sender {
+  
+}
+
+- (void)loginUser {
+  [[APConnectionManager sharedManager] loginWithUsername:self.usernameLoginField.text password:self.passwordLoginField.text success:^(PFUser *user) {
+    [SVProgressHUD showSuccessWithStatus:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+  } failure:^(NSError *error) {
+    [SVProgressHUD showErrorWithStatus:nil];
+  }];
+}
+
+#pragma mark - Twitter Account Action Sheet Methods
+
 -(void)showActionSheetForTwitterAccounts:(NSArray*)accounts {
   UIActionSheet *sheet = [[UIActionSheet alloc] init];
   [sheet setDelegate:self];
@@ -298,15 +309,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
   }];
 }
 
-- (IBAction)facebookSigninButtonTapped:(id)sender {
-  [SVProgressHUD show];
-  [[APConnectionManager sharedManager] loginWithFacebookUsingPermissions:@[@"public_profile", @"email", @"user_friends"] success:^(PFUser *user) {
-    [self dismissViewControllerAnimated:YES completion:nil];
-  } failure:^(NSError *error) {
-    NSLog(@"failure");
-    [SVProgressHUD showErrorWithStatus:nil];
-  }];
-}
+#pragma mark - UITextField Delegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
   [textField resignFirstResponder];
