@@ -306,5 +306,19 @@
     return dateString;
 }
 
++ (NSString *)formatDateForEventCreationScreen:(NSDate*)date {
+  static NSDateFormatter *df = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    df = [[NSDateFormatter alloc] init];
+    //FEB 21, 2014 at 8PM
+    //6/29 at 8PM
+    [df setDateFormat:@"M/d h:mma"];
+  });
+  
+  NSString *dateString = [df stringFromDate:date];
+  return dateString;
+}
+
 
 @end

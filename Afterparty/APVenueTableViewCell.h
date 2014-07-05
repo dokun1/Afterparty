@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APLabel.h"
 
 @interface APVenueTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *venueName;
-@property (weak, nonatomic) IBOutlet UILabel *venueAddress;
-@property (weak, nonatomic) IBOutlet UILabel *venueDistance;
+@property (weak, nonatomic) IBOutlet APLabel *venueName;
+@property (weak, nonatomic) IBOutlet APLabel *venueAddress;
+@property (weak, nonatomic) IBOutlet APLabel *venueDistance;
 
 @end

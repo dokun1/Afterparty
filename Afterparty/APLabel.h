@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TTTAttributedLabel/TTTAttributedLabel.h>
 
 typedef NS_ENUM(int, LabelType) {
   LabelTypeTitle,

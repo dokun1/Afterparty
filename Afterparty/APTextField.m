@@ -7,22 +7,21 @@
 //
 
 #import "APTextField.h"
+#import "UIColor+APColor.h"
 
 @implementation APTextField
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
 
 - (void)styleForLogin {
   self.font = [UIFont fontWithName:kRegularFont size:16.0f];
   self.backgroundColor = [UIColor whiteColor];
   self.borderStyle = UITextBorderStyleNone;
+}
+
+- (void)styleForPasswordEntry {
+  [self styleForLogin];
+  self.textColor = [UIColor whiteColor];
+  self.backgroundColor = [UIColor afterpartyTealBlueColor];
+  self.autocapitalizationType = UITextAutocapitalizationTypeNone;
 }
 
 @end

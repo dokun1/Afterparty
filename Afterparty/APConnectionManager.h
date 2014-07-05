@@ -18,6 +18,7 @@ typedef void (^APSuccessDataBlock)(NSData *data);
 typedef void (^APSuccessPFUserBlock)(PFUser *user);
 typedef void (^APSuccessStringBlock)(NSString *string);
 typedef void (^APSuccessDictionaryBlock)(NSDictionary *dictionary);
+typedef void (^APSuccessVoidBlock)();
 
 typedef void (^APFailureErrorBlock)(NSError *error);
 
