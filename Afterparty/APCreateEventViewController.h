@@ -9,9 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "APEvent.h"
 
+@class APCreateEventViewController;
+
+@protocol CreateEventDelegate <NSObject>
+
+@optional
+- (void)controllerDidFinish:(APCreateEventViewController*)controller;
+
+@end
+
 @interface APCreateEventViewController : UIViewController
 
 -(id)initForNewEvent;
 -(id)initForEditingWithEvent:(APEvent*)event;
+
+@property (weak, nonatomic) id<CreateEventDelegate> delegate;
 
 @end

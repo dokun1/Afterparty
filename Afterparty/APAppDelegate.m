@@ -8,7 +8,7 @@
 
 #import "APAppDelegate.h"
 #import "APMainTabBarController.h"
-
+#import <Crashlytics/Crashlytics.h>
 
 @implementation APAppDelegate
 
@@ -21,6 +21,8 @@
   [Foursquare2 setupFoursquareWithClientId:@"A3QWFSMMPWEKZLXY434YWY3CRIMA53PU50IB4BPEMRFVHLEG" secret:@"FE0YBODXUDB235LSKPN3I1YPPDZCAVULCST4PDYMI0IMDEQM" callbackURL:@"afterparty://foursquare"];
   
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+  
+  [Crashlytics startWithAPIKey:@"2562e5594f3c583624c29c6db146c9e585d7d2f2"];
   
   [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
   

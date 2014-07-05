@@ -9,7 +9,6 @@
 #ifndef Afterparty_APConstants_h
 #define Afterparty_APConstants_h
 
-
 #define TWITTER_CONSUMER_KEY @"lrrwwaMcOMZ2ZYyUSWWSfxCOF"
 #define TWITTER_CONSUMER_SECRET @"k8nG6Ib3dVu4MBtIRyrCyqoqi0FZVsbD4JPIxvRc37jRCN7qqh"
 

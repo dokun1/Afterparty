@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class APInviteFriendsViewController;
+
 @protocol FriendInviteDelegate <NSObject>
 
--(void)didConfirmInvitees:(NSArray*)invitees;
+-(void)didConfirmInvitees:(NSArray*)invitees forController:(APInviteFriendsViewController*)controller;
 
 @end
 

@@ -346,6 +346,6 @@
 #pragma mark - FriendInviteDelegate
 
 -(void)saveButtonTapped {
-    [self.delegate didConfirmInvitees:self.selectedContacts];
+    [self.delegate didConfirmInvitees:self.selectedContacts forController:self];
 }
 @end

@@ -40,5 +40,6 @@
 + (BOOL)string:(NSString*)str1 isGreaterThanString:(NSString*)str2;
 + (NSString *) genRandIdString;
 + (NSString *)formatDateForEventDetailScreen:(NSDate*)date;
++ (NSString *)formatDateForEventCreationScreen:(NSDate*)date;
 
 @end

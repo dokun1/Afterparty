@@ -25,7 +25,7 @@ typedef NS_ENUM(int, LabelType) {
   LabelTypeFriendHeader
 };
 
-@interface APLabel : TTTAttributedLabel
+@interface APLabel : UILabel
 
 - (void)styleForType:(LabelType)type;
 - (void)styleForType:(LabelType)type withText:(NSString*)text;

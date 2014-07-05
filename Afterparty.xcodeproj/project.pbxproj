@@ -82,6 +82,7 @@
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
+		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
 		50C3AA88195F0DA900A0297A /* APCreateEventLandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */; };
 		50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */; };
@@ -223,6 +224,8 @@
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
+		50C1E08D196704B900105E64 /* APValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APValueTransformer.h; sourceTree = "<group>"; };
+		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
 		50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventViewController.m; sourceTree = "<group>"; };
 		50C3AA86195F0DA900A0297A /* APCreateEventLandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventLandingViewController.h; sourceTree = "<group>"; };
@@ -355,6 +358,8 @@
 				5048D4A9194A1D0F0092178E /* APConnectionManager.m */,
 				504CA3421940941A003EF9EB /* APRestConnectionManager.h */,
 				504CA3431940941A003EF9EB /* APRestConnectionManager.m */,
+				50C1E08D196704B900105E64 /* APValueTransformer.h */,
+				50C1E08E196704B900105E64 /* APValueTransformer.m */,
 				508849E61955CEDB00B1CA5E /* APConstants.h */,
 				504CA348194096AB003EF9EB /* Model */,
 				504CA37D1940BF79003EF9EB /* View */,
@@ -624,6 +629,7 @@
 				504CA30719408C82003EF9EB /* Frameworks */,
 				504CA30819408C82003EF9EB /* Resources */,
 				3180AAEDAFBD4721A08DEE10 /* Copy Pods Resources */,
+				50C015B819686DF300E9E26F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -774,6 +780,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		50C015B819686DF300E9E26F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 2562e5594f3c583624c29c6db146c9e585d7d2f2 bdb84a1487ff7e6b043dfe0c95f1349b224067a46e178a036f75d46878f27fee";
+		};
 		AD811B73EA5A443A94E8192B /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -817,6 +836,7 @@
 				504CA34E194096C5003EF9EB /* APPhotoInfo.m in Sources */,
 				504CA36719409B9C003EF9EB /* UIImage+APImage.m in Sources */,
 				504CA36519409B9C003EF9EB /* NSString+APString.m in Sources */,
+				50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */,
 				50F64EC41952F40900E0B8DC /* APPhotoCell.m in Sources */,
 				508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */,
 				50F64EC11952F40900E0B8DC /* APStackedGridLayout.m in Sources */,

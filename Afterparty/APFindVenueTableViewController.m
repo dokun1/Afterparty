@@ -172,8 +172,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    FSVenue *venue = self.venues[indexPath.row];
-    [self.delegate controllerDidChooseVenue:venue];
+  FSVenue *venue = self.venues[indexPath.row];
+  [self.delegate controller:self didChooseVenue:venue];
+  
 }
 
 @end
