@@ -17,4 +17,6 @@
 @property (strong, nonatomic) UIImage *image;
 @property (nonatomic, strong) APPhotoInfo *photoInfo;
 
+- (void)setPhotoInfo:(APPhotoInfo *)photoInfo;
+
 @end

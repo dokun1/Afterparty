@@ -16,6 +16,7 @@
     // Initialization code
   [_eventNameLabel styleForType:LabelTypeTableViewCellTitle];
   [_countdownLabel styleForType:LabelTypeTableViewCellAttribute];
+  _countdownLabel.textColor = [UIColor afterpartyOffWhiteColor];
   [_userLabel styleForType:LabelTypeTableViewCellAttribute];
   [_bannerView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
 }

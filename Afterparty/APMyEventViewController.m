@@ -48,86 +48,31 @@
 
 @implementation APMyEventViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-      NSDictionary *eventInfo = [[self.eventDict allValues] firstObject];
-      self.eventID            = [[self.eventDict allKeys] firstObject];
-      self.eventName          = eventInfo[@"eventName"];
-      self.deleteDate         = eventInfo[@"deleteDate"];
-      self.eventLocation = [[CLLocation alloc] initWithLatitude:[eventInfo[@"eventLatitude"] doubleValue] longitude:[eventInfo[@"eventLongitude"] doubleValue]];
-      
-      self.manager = [[CLLocationManager alloc] init];
-      self.manager.delegate = self;
-      self.manager.distanceFilter = kCLDistanceFilterNone;
-      self.manager.desiredAccuracy = kCLLocationAccuracyBest;
-      
-      if ([[[PFUser currentUser] username] isEqualToString:eventInfo[@"createdByUsername"]]) {
-        self.shouldAskAboutMove = YES;
-      }
-      
-      self.thumbnailCacheArray = [[NSMutableArray alloc] init];
-      self.selectedPhotos = nil;
-      
-      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kDoneUploading object:nil];
-      
-      self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
-      
-      [self setUpUI];
-      
-      [SVProgressHUD showWithStatus:@"Downloading photo data..."];    }
-    return self;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  if (self = [super initWithCoder:aDecoder]) {
+    [SVProgressHUD showWithStatus:@"Downloading photo data..."];
+  }
+  return self;
 }
 
-- (id)initWithDict:(NSDictionary*)eventDict {
-    if (self = [super init]) {
-      NSDictionary *eventInfo = [[eventDict allValues] firstObject];
-      self.eventID            = [[eventDict allKeys] firstObject];
-      self.eventName          = eventInfo[@"eventName"];
-      self.deleteDate         = eventInfo[@"deleteDate"];
-      self.eventLocation = [[CLLocation alloc] initWithLatitude:[eventInfo[@"eventLatitude"] doubleValue] longitude:[eventInfo[@"eventLongitude"] doubleValue]];
-              
-      self.manager = [[CLLocationManager alloc] init];
-      self.manager.delegate = self;
-      self.manager.distanceFilter = kCLDistanceFilterNone;
-      self.manager.desiredAccuracy = kCLLocationAccuracyBest;
-      
-      if ([[[PFUser currentUser] username] isEqualToString:eventInfo[@"createdByUsername"]]) {
-          self.shouldAskAboutMove = YES;
-      }
-      
-      self.thumbnailCacheArray = [[NSMutableArray alloc] init];
-      self.selectedPhotos = nil;
-      
-      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kDoneUploading object:nil];
-      
-      self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
-
-      [self setUpUI];
-    
-      [SVProgressHUD showWithStatus:@"Downloading photo data..."];
-    }
-    return self;
-}
-
-- (NSArray*)getLatestMetadata {
+- (void)getLatestMetadata {
   __block NSMutableArray *data = [@[] mutableCopy];
   [[APConnectionManager sharedManager] downloadImageMetadataForEventID:self.eventID success:^(NSArray *objects) {
     [objects enumerateObjectsUsingBlock:^(PFObject *obj, NSUInteger idx, BOOL *stop) {
       APPhotoInfo *info = [[APPhotoInfo alloc] initWithParseObject:obj forEvent:self.eventID];
       [data addObject:info];
     }];
+    [SVProgressHUD dismiss];
+    self.photoMetadata = [NSArray arrayWithArray:data];
   } failure:^(NSError *error) {
-    [UIAlertView showSimpleAlertWithTitle:@"Error" andMessage:@"Could not download image data for this event. Please refresh and try again"];
+    [SVProgressHUD showErrorWithStatus:@"could not get photos"];
   }];
-  return data;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self setUpUI];
     [self setUpCountdown];
 }
 
@@ -155,6 +100,28 @@
 }
 
 -(void)setUpUI {
+  
+  NSDictionary *eventInfo = [[self.eventDict allValues] firstObject];
+  self.eventID            = [[self.eventDict allKeys] firstObject];
+  self.eventName          = eventInfo[@"eventName"];
+  self.deleteDate         = eventInfo[@"deleteDate"];
+  self.eventLocation = [[CLLocation alloc] initWithLatitude:[eventInfo[@"eventLatitude"] doubleValue] longitude:[eventInfo[@"eventLongitude"] doubleValue]];
+  
+  self.manager = [[CLLocationManager alloc] init];
+  self.manager.delegate = self;
+  self.manager.distanceFilter = kCLDistanceFilterNone;
+  self.manager.desiredAccuracy = kCLLocationAccuracyBest;
+  
+  if ([[[PFUser currentUser] username] isEqualToString:eventInfo[@"createdByUsername"]]) {
+    self.shouldAskAboutMove = YES;
+  }
+  
+  self.thumbnailCacheArray = [[NSMutableArray alloc] init];
+  self.selectedPhotos = nil;
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kDoneUploading object:nil];
+  
+  self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
   self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
   self.view.backgroundColor = [UIColor afterpartyTealBlueColor];
   [self.collectionView registerNib:[UINib nibWithNibName:@"APPhotoCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"APPhotoCell"];
@@ -178,7 +145,7 @@
   [self.photoButton addTarget:self action:@selector(photoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
   
   self.title = self.eventName;
-  self.photoButton.enabled = NO;
+  self.photoButton.enabled = YES;
   
   NSDateFormatter *df = [[NSDateFormatter alloc] init];
   [df setDateFormat:@"MM/dd/yy hh:mm:ss a"];
@@ -200,7 +167,7 @@
   [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:btnSave, btnRefresh, nil]];
 
   dispatch_async(self.photoDownloadQueue, ^{
-    self.photoMetadata = [self getLatestMetadata];
+    [self getLatestMetadata];
     self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
     dispatch_async(dispatch_get_main_queue(), ^{
       [self.collectionView reloadData];
@@ -373,19 +340,18 @@
   [self.blurView setBlurRadius:20];
   [SVProgressHUD showWithStatus:@"Refreshing event photos"];
   [self.view insertSubview:self.blurView aboveSubview:self.collectionView];
-  [UIView animateWithDuration:0.2 animations:^{
+  [UIView animateWithDuration:0.5 animations:^{
       [self.blurView setAlpha:1.0f];
   }];
   dispatch_async(self.photoDownloadQueue, ^{
-    NSArray *data = [self getLatestMetadata];
+    [self getLatestMetadata];
     dispatch_async(dispatch_get_main_queue(), ^{
       [SVProgressHUD dismiss];
       self.photoButton.enabled = YES;
-      self.photoMetadata = data;
       self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
       [self.collectionView reloadData];
       [self.refreshControl endRefreshing];
-      [UIView animateWithDuration:0.2
+      [UIView animateWithDuration:0.5
                             delay:0.3
                           options:UIViewAnimationOptionCurveLinear
                        animations:^{
@@ -445,11 +411,11 @@
 #pragma mark - Collection View methods
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+  return 1;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.thumbnailCacheArray count];
+  return [self.photoMetadata count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -460,38 +426,20 @@
   cell.downloadIndicator.center = cell.center;
   cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
   
-  APPhotoInfo *photoInfo = self.photoMetadata[indexPath.item];
-  CGSize newSize = [self sizePhotoForColumn:photoInfo.size];
-  CGRect frame = cell.imageView.frame;
-  frame.size = newSize;
-  cell.imageView.frame = frame;
-  cell.layer.borderColor = [[UIColor whiteColor] CGColor];
-  cell.layer.borderWidth = 0.5f;
-  [cell.imageView setImageWithURL:photoInfo.thumbURL];
-  __weak APPhotoCell *weakcell = cell;
-  [cell.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoInfo.thumbURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-    [weakcell.downloadIndicator stopAnimating];
-    weakcell.downloadIndicator.hidden = YES;
-  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-    NSLog(@"error downloading thumbnail for index %lu", indexPath.item);
-  }];
-    return cell;
+  [cell setPhotoInfo:self.photoMetadata[indexPath.item]];
+  return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.isSavingBulk) {
-        
-//        [[(AfterpartyPhotoCell*)[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath] imageView] setAlpha:0.5];
-//        APPhotoCell *cell = (APPhotoCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
-        
-//        AfterpartyPhotoCell *cell = (AfterpartyPhotoCell*)[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath];
-//        [cell setNeedsDisplay];
-//        cell.imageView.alpha = 0.5;
-//        UIView *overlay = [[UIView alloc] initWithFrame:cell.contentView.frame];
-//        overlay.backgroundColor = [UIColor whiteColor];
-//        overlay.alpha = 0.3;
-//        [cell.contentView addSubview:overlay];
-//        [cell.contentView bringSubviewToFront:overlay];
+        APPhotoCell *cell = (APPhotoCell*)[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath];
+        [cell setNeedsDisplay];
+        cell.imageView.alpha = 0.5;
+        UIView *overlay = [[UIView alloc] initWithFrame:cell.contentView.frame];
+        overlay.backgroundColor = [UIColor whiteColor];
+        overlay.alpha = 0.3;
+        [cell.contentView addSubview:overlay];
+        [cell.contentView bringSubviewToFront:overlay];
     }else{
         APPhotoViewController *vc = [[APPhotoViewController alloc] initWithMetadata:self.photoMetadata andSelectedIndex:indexPath.item];
         [self.navigationController pushViewController:vc animated:YES];

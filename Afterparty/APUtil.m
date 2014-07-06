@@ -175,12 +175,6 @@
     return [NSArray arrayWithContentsOfFile:path];
 }
 
-
-+(UIImage*)getImageForPath:(NSString *)path {
-    path = [[self documentDirectory] stringByAppendingPathComponent:path];
-    return [UIImage imageWithContentsOfFile:path];
-}
-
 + (BOOL)loggedIn{
     return NO;
 }

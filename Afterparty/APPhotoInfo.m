@@ -68,6 +68,6 @@
 }
 
 -(NSString *)description {
-  return [NSString stringWithFormat:@"%@username=%@\ntimestamp%@\ncomments%@\nrefID%@\nthumbID%@\neventID", self.username, self.timestamp, self.comments, self.refID, self.thumbID, self.eventID];
+  return [NSString stringWithFormat:@"username=%@\ntimestamp=%@\ncomments=%@\nrefID=%@\nthumbID=%@\neventID=%@", self.username, self.timestamp, self.comments, self.refID, self.thumbID, self.eventID];
 }
 @end

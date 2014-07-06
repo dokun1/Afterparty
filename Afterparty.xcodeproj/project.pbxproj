@@ -82,6 +82,7 @@
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
+		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
 		50C3AA88195F0DA900A0297A /* APCreateEventLandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */; };
@@ -224,6 +225,7 @@
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
+		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
 		50C1E08D196704B900105E64 /* APValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APValueTransformer.h; sourceTree = "<group>"; };
 		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 				504CA3AC1940C035003EF9EB /* button_plusblack.png */,
 				504CA3AD1940C035003EF9EB /* button_pluswhite.png */,
 				504CA3AE1940C035003EF9EB /* button_savetocloud.png */,
+				50C015B919697BF500E9E26F /* default_avatar_large.png */,
 				504CA3AF1940C035003EF9EB /* icon_checkempty.png */,
 				504CA3B01940C035003EF9EB /* icon_checkgreen.png */,
 				504CA3B11940C035003EF9EB /* icon_close.png */,
@@ -747,6 +750,7 @@
 				504CA3A21940C029003EF9EB /* 16.jpg in Resources */,
 				50F64EBF1952F40900E0B8DC /* APImagePreviewViewController.xib in Resources */,
 				504CA3C81940C043003EF9EB /* stock3.jpeg in Resources */,
+				50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */,
 				504CA32119408C82003EF9EB /* Main.storyboard in Resources */,
 				50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */,
 				504CA3A11940C029003EF9EB /* 15.jpg in Resources */,

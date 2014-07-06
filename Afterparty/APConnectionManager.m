@@ -214,41 +214,57 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
   NSData *thumbData = UIImageJPEGRepresentation(thumbnail, 0.6);
   PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
   PFFile *thumbFile = [PFFile fileWithName:@"thumb.jpg" data:thumbData];
-  [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    if (error) {
-      failureBlock(error);
-    }else{
-      [thumbFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (error) {
-          failureBlock(error);
-        } else {
-          NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
-          PFObject *photoData = [PFObject objectWithClassName:@"PHOTOS"];
-          
-          photoData[@"eventID"] = eventID;
-          photoData[@"timestamp"] = [NSDate date];
-          photoData[@"user"] = [[PFUser currentUser] username];
-          photoData[@"comments"] = @[];
-          photoData[@"refID"] = refID;
-          photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
-          photoData[@"width"] = @(image.size.width);
-          photoData[@"height"] = @(image.size.height);
-          photoData[@"imageFile"] = imageFile;
-          photoData[@"thumbFile"] = thumbFile;
-          
-          [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            (succeeded) ? successBlock(YES) : failureBlock(error);
-          }];
-        }
-      }];
-    }
+  NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
+  PFObject *photoData = [PFObject objectWithClassName:@"PHOTOS"];
+  
+  photoData[@"eventID"] = eventID;
+  photoData[@"timestamp"] = [NSDate date];
+  photoData[@"user"] = [[PFUser currentUser] username];
+  photoData[@"comments"] = @[];
+  photoData[@"refID"] = refID;
+  photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
+  photoData[@"width"] = @(image.size.width);
+  photoData[@"height"] = @(image.size.height);
+  photoData[@"imageFile"] = imageFile;
+  photoData[@"thumbFile"] = thumbFile;
+  [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    (succeeded) ? successBlock(YES) : failureBlock(error);
   }];
+//  [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//    if (error) {
+//      failureBlock(error);
+//    }else{
+//      [thumbFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if (error) {
+//          failureBlock(error);
+//        } else {
+//          NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
+//          PFObject *photoData = [PFObject objectWithClassName:@"PHOTOS"];
+//          
+//          photoData[@"eventID"] = eventID;
+//          photoData[@"timestamp"] = [NSDate date];
+//          photoData[@"user"] = [[PFUser currentUser] username];
+//          photoData[@"comments"] = @[];
+//          photoData[@"refID"] = refID;
+//          photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
+//          photoData[@"width"] = @(image.size.width);
+//          photoData[@"height"] = @(image.size.height);
+//          photoData[@"imageFile"] = imageFile;
+//          photoData[@"thumbFile"] = thumbFile;
+//          
+//          [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//          }];
+//        }
+//      }];
+//    }
+//  }];
 }
 
 -(void)downloadImageMetadataForEventID:(NSString *)eventID
                                success:(APSuccessArrayBlock)successBlock
                                failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"DATA"];
+  if (!eventID) return;
+  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
   [query whereKey:@"eventID" equalTo:eventID];
   [query orderByDescending:@"createdAt"];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

@@ -34,8 +34,6 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBar.barTintColor = [UIColor afterpartyOffWhiteColor];
-
-    self.title = @"MY EVENTS";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
 }
@@ -57,7 +55,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 192.f;
+    return 170.f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,6 +115,7 @@
   if ([[segue identifier] isEqualToString:@"EventSelectedSegue"]) {
     APMyEventViewController *vc = (APMyEventViewController*)segue.destinationViewController;
     vc.eventDict = sender;
+    vc.hidesBottomBarWhenPushed = YES;
   }
 }
 

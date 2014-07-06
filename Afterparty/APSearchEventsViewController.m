@@ -58,8 +58,6 @@
     [self.refreshControl setTintColor:[UIColor afterpartyTealBlueColor]];
     [self.refreshControl addTarget:self action:@selector(refreshEvents) forControlEvents:UIControlEventValueChanged];
     
-    self.title = @"NEARBY EVENTS";
-    
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
     [self.searchBar sizeToFit];
     [self.searchBar setDelegate:self];
@@ -78,14 +76,12 @@
     [self.tableView setBackgroundColor:[UIColor afterpartyOffWhiteColor]];
     
     (self.isForSearch) ? [self searchForEventByID] : [self refreshEvents];
-    
-    UIBarButtonItem *btnDismiss = [[UIBarButtonItem alloc] initWithTitle:@"DISMISS" style:UIBarButtonItemStylePlain target:self action:@selector(dismissScreen)];
-    [self.navigationItem setRightBarButtonItems:@[btnDismiss]];
+  
     [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
 }
 
--(void)dismissScreen {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)viewDidAppear:(BOOL)animated {
+  [self refreshEvents];
 }
 
 #pragma mark - LocationManagerDelegate Methods
@@ -142,12 +138,6 @@
     [self.locationManager startUpdatingLocation];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -160,8 +150,8 @@
     return [self.venues count];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 192.f;
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return 170.f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -33,9 +33,12 @@ static NSString *const kCache = @"cachedUploadPhotos";
 }
 
 - (void)addPhotoToQueue:(UIImage *)image withThumbnail:(UIImage *)thumbnail forEventID:(NSString *)eventID {
-  NSDictionary *photoDict = @{@"image" : image,
-                              @"thumb" : thumbnail,
+  NSData *imageData = UIImagePNGRepresentation(image);
+  NSData *thumbData = UIImagePNGRepresentation(thumbnail);
+  NSDictionary *photoDict = @{@"image" : imageData,
+                              @"thumb" : thumbData,
                               @"event" : eventID};
+
   dispatch_async(self.photoUploadQueue, ^{
     [[self cacheLock] lock]; // when we add or remove photos from the array, we MUST lock the cache so we dont lose anything in space
     NSArray *cacheArray = [APUtil loadArrayForPath:kCache];
@@ -46,7 +49,9 @@ static NSString *const kCache = @"cachedUploadPhotos";
     [cacheCopy addObject:photoDict];
     [APUtil saveArray:cacheCopy forPath:kCache];
     [[self cacheLock] unlock];
-    [self uploadQueuedPhotos];
+    if (!self.isUploading) {
+      [self uploadQueuedPhotos];
+    }
   });
 }
 
@@ -54,6 +59,7 @@ static NSString *const kCache = @"cachedUploadPhotos";
   dispatch_async(dispatch_get_main_queue(), ^{
     [[NSNotificationCenter defaultCenter] postNotificationName:kUploading object:nil];
   });
+  __weak APPhotoUploadQueue *weakself = self;
   dispatch_async(self.photoUploadQueue, ^{
     self.isUploading = YES;
     [[self cacheLock] lock];
@@ -61,31 +67,35 @@ static NSString *const kCache = @"cachedUploadPhotos";
     NSMutableArray *cacheCopy = [cache mutableCopy];
     [[self cacheLock] unlock];
     [cache enumerateObjectsUsingBlock:^(NSDictionary *photoDict, NSUInteger idx, BOOL *stop) {
-        UIImage *image = photoDict[@"image"];
-        UIImage *thumb = photoDict[@"thumb"];
-        NSString *eventID = photoDict[@"event"];
-        [[APConnectionManager sharedManager] uploadImage:image withThumbnail:thumb forEventID:eventID success:^(BOOL succeeded) {
-          [cacheCopy removeObject:photoDict];
-        } failure:^(NSError *error) {
-          NSLog(@"error uploading photo for eventID: %@", eventID);
-        } progress:nil];
+      UIImage *image = [UIImage imageWithData:photoDict[@"image"]];
+      UIImage *thumb = [UIImage imageWithData:photoDict[@"thumb"]];
+      NSString *eventID = photoDict[@"event"];
+      [[APConnectionManager sharedManager] uploadImage:image withThumbnail:thumb forEventID:eventID success:^(BOOL succeeded) {
+        [cacheCopy removeObject:photoDict];
+        if (idx == (cache.count - 1)) {
+          [[self cacheLock] lock];
+          NSMutableArray *latestCache = [[APUtil loadArrayForPath:kCache] mutableCopy];
+          [latestCache enumerateObjectsUsingBlock:^(NSDictionary *photoDict, NSUInteger idx, BOOL *stop) {
+            if (![cache containsObject:photoDict]) {
+              [cacheCopy addObject:photoDict];
+            }
+          }];
+          [APUtil saveArray:cacheCopy forPath:kCache];
+          [[self cacheLock] unlock];
+          BOOL shouldRetry = (cacheCopy.count > 0) ? YES : NO;
+          if (shouldRetry) {
+            [weakself uploadQueuedPhotos];
+          } else {
+            self.isUploading = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+              [[NSNotificationCenter defaultCenter] postNotificationName:kDoneUploading object:nil];
+            });
+          }
+        }
+      } failure:^(NSError *error) {
+        NSLog(@"error uploading photo for eventID: %@", eventID);
+      } progress:nil];
     }];
-    BOOL shouldRetry = (cacheCopy.count > 0) ? YES : NO;
-    [[self cacheLock] lock];
-    NSMutableArray *latestCache = [[APUtil loadArrayForPath:kCache] mutableCopy];
-    [cacheCopy enumerateObjectsUsingBlock:^(NSDictionary *photoDict, NSUInteger idx, BOOL *stop) {
-      [latestCache addObject:photoDict];
-    }];
-    [APUtil saveArray:cache forPath:kCache];
-    [[self cacheLock] unlock];
-    if (shouldRetry) {
-      [self uploadQueuedPhotos];
-    }else {
-      self.isUploading = NO;
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDoneUploading object:nil];
-      });
-    }
   });
 }
 
