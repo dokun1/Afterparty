@@ -12,6 +12,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "UIColor+APColor.h"
 #import "UIAlertView+APAlert.h"
+#import "APConstants.h"
 
 @interface APMyEventUpdateLocationViewController () <UISearchBarDelegate, UIAlertViewDelegate>
 

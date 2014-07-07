@@ -11,10 +11,7 @@
 #import "APEvent.h"
 #import "APPhotoInfo.h"
 
-
-
 @interface APUtil : NSObject
-
 
 + (void)setNetworkActivityIndicator:(BOOL)status;
 + (CGSize) getAppSize;
@@ -25,7 +22,6 @@
 + (CTTelephonyNetworkInfo*) getCurrentConnection;
 + (BOOL)validateEmailWithString:(NSString*)email;
 + (void)saveImage:(UIImage*)image forPath:(NSString*)path;
-+ (UIImage*)getImageForPath:(NSString*)path;
 + (void)saveFile:(NSObject*)file forPath:(NSString*)path;
 + (void)saveDictionary:(NSDictionary*)dictionary forPath:(NSString*)path;
 + (void)saveArray:(NSArray*)array forPath:(NSString*)path;

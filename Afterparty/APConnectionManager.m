@@ -14,10 +14,6 @@
 #import "FSConverter.h"
 #import "APConstants.h"
 
-static const NSString *kSalt = @"099uvyO)VY))G*GV*)go8ghovg8go8gvogv8gvog*VG*V";
-static const NSString *kFacebookSalt = @"8y7b9756vv5Iv75&^v8oB&ovsoVo8&Vboobbobog*VG*V";
-static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$_Z] j";
-
 @implementation APConnectionManager
 
 + (instancetype)sharedManager {
@@ -33,7 +29,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 -(void)updateInstallVersionForUser:(PFUser *)user
                            success:(APSuccessBooleanBlock)successBlock
                            failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+  PFQuery *query = [PFQuery queryWithClassName:kUserParseClass];
   [query whereKey:@"username" equalTo:user.username];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
     if (!error) {
@@ -96,7 +92,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 -(void)getNearbyEventsForLocation:(CLLocation *)location
                           success:(APSuccessArrayBlock)successBlock
                           failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   NSNumber *latUp = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.latitude] floatValue]) + 1];
   NSNumber *latDown = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.latitude] floatValue]) - 1];
   NSNumber *longUp = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.longitude] floatValue]) + 1];
@@ -130,7 +126,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
   NSData *imageData = UIImageJPEGRepresentation(eventImage, 0.8);
   PFFile *imageFile = [PFFile fileWithName:@"eventImage.jpg" data:imageData];
   [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    PFObject *savedEvent = [PFObject objectWithClassName:@"EventSearch"];
+    PFObject *savedEvent = [PFObject objectWithClassName:kEventSearchParseClass];
     savedEvent[@"eventName"]         = [event eventName];
     savedEvent[@"eventVenueID"]      = [event eventVenue].venueId;
     savedEvent[@"eventVenueName"]    = [event eventVenue].name;
@@ -155,7 +151,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
                     user:(PFUser *)user
                  success:(APSuccessArrayBlock)successBlock
                  failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query whereKey:@"eventName" equalTo:name];
   [query whereKey:@"createdByUsername" equalTo:[user username]];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -166,7 +162,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 -(void)searchEventsByName:(NSString *)name
                   success:(APSuccessArrayBlock)successBlock
                   failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query whereKey:@"eventName" containsString:name];
   [query whereKey:@"deleteDate" greaterThan:[NSDate date]];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -185,13 +181,17 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 -(void)searchEventsByID:(NSString *)eventID
                 success:(APSuccessArrayBlock)successBlock
                 failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
     if (error) {
       failureBlock(error);
     }
-    APEvent *event = [[APEvent alloc] initWithParseObject:object];
-    successBlock(@[event]);
+    if (object == nil) {
+      failureBlock(nil);
+    } else {
+      APEvent *event = [[APEvent alloc] initWithParseObject:object];
+      successBlock(@[event]);
+    }
   }];
 }
 
@@ -214,41 +214,29 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
   NSData *thumbData = UIImageJPEGRepresentation(thumbnail, 0.6);
   PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
   PFFile *thumbFile = [PFFile fileWithName:@"thumb.jpg" data:thumbData];
-  [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    if (error) {
-      failureBlock(error);
-    }else{
-      [thumbFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (error) {
-          failureBlock(error);
-        } else {
-          NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
-          PFObject *photoData = [PFObject objectWithClassName:@"PHOTOS"];
-          
-          photoData[@"eventID"] = eventID;
-          photoData[@"timestamp"] = [NSDate date];
-          photoData[@"user"] = [[PFUser currentUser] username];
-          photoData[@"comments"] = @[];
-          photoData[@"refID"] = refID;
-          photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
-          photoData[@"width"] = @(image.size.width);
-          photoData[@"height"] = @(image.size.height);
-          photoData[@"imageFile"] = imageFile;
-          photoData[@"thumbFile"] = thumbFile;
-          
-          [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            (succeeded) ? successBlock(YES) : failureBlock(error);
-          }];
-        }
-      }];
-    }
+  NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
+  PFObject *photoData = [PFObject objectWithClassName:kPhotosParseClass];
+  
+  photoData[@"eventID"] = eventID;
+  photoData[@"timestamp"] = [NSDate date];
+  photoData[@"user"] = [[PFUser currentUser] username];
+  photoData[@"comments"] = @[];
+  photoData[@"refID"] = refID;
+  photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
+  photoData[@"width"] = @(image.size.width);
+  photoData[@"height"] = @(image.size.height);
+  photoData[@"imageFile"] = imageFile;
+  photoData[@"thumbFile"] = thumbFile;
+  [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    (succeeded) ? successBlock(YES) : failureBlock(error);
   }];
 }
 
 -(void)downloadImageMetadataForEventID:(NSString *)eventID
                                success:(APSuccessArrayBlock)successBlock
                                failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"DATA"];
+  if (!eventID) return;
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"eventID" equalTo:eventID];
   [query orderByDescending:@"createdAt"];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -259,7 +247,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 -(void)getURLForImageRefID:(NSString *)refID
                    success:(APSuccessStringBlock)successBlock
                    failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"refID" equalTo:refID];
   query.cachePolicy = kPFCachePolicyCacheElseNetwork;
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -276,7 +264,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 -(void)downloadImageForRefID:(NSString *)refID
                      success:(APSuccessDataBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"refID" equalTo:refID];
   query.cachePolicy = kPFCachePolicyCacheElseNetwork;
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -300,7 +288,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
              inEventID:(NSString *)eventID
                success:(APSuccessBooleanPlusObjectBlock)successBlock
                failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"objectId" equalTo:objectID];
   [query whereKey:@"eventID" equalTo:eventID];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -323,14 +311,13 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
                  password:(NSString *)password
                   success:(APSuccessPFUserBlock)successBlock
                   failure:(APFailureErrorBlock)failureBlock {
-  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kSalt];
+  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
   NSString *hashedPassword = nil;
   unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
   if (CC_SHA1([data bytes], (uint)[data length], hashedPasswordData)) {
     hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
   }
-  NSLog(@"%@", hashedPassword);
   [PFUser logInWithUsernameInBackground:username password:hashedPassword block:^(PFUser *user, NSError *error) {
     (error == nil) ? successBlock(user) : failureBlock(error);
   }];
@@ -353,7 +340,6 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
   [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
     if (!user) {
       if (!error) {
-        NSLog(@"user cancelled fbLogin");
         NSError *fauxError = [[NSError alloc] initWithDomain:@"com.afterparty" code:1004 userInfo:nil];
         failureBlock(fauxError);
       }else {
@@ -361,7 +347,6 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
       }
       
     } if (user.isNew) {
-      NSLog(@"user is brand new");
       successBlock(user);
     } else if (user) {
       successBlock(user);
@@ -381,6 +366,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     PFUser *user = [PFUser currentUser];
     user.username = userData[@"name"];
     user.email = userData[@"email"];
+    [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", userData[@"id"]] forKey:@"profilePhotoURL"];
     [user saveInBackground];
     successBlock(userData);
   }];
@@ -389,7 +375,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 - (void)loginWithTwitterAccount:(ACAccount *)account
                         success:(APSuccessPFUserBlock)successBlock
                         failure:(APFailureErrorBlock)failureBlock {
-  [PFTwitterUtils initializeWithConsumerKey:TWITTER_CONSUMER_KEY consumerSecret:TWITTER_CONSUMER_SECRET];
+  [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
   [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error) {
     (error == nil) ? successBlock(user) : failureBlock(error);
   }];
@@ -412,6 +398,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     if (result) {
       PFUser *user = [PFUser currentUser];
       user.username = result[@"screen_name"];
+      [user setValue:result[@"profile_image_url"] forKey:@"profilePhotoURL"];
       [user saveInBackground];
     }
   }];
@@ -420,10 +407,10 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 -(void)checkIfUserExists:(NSDictionary *)credentials
                  success:(APSuccessArrayBlock)successBlock
                  failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *usernameQuery = [PFQuery queryWithClassName:@"_User"];
+  PFQuery *usernameQuery = [PFQuery queryWithClassName:kUserParseClass];
   [usernameQuery whereKey:@"username" equalTo:credentials[@"username"]];
   
-  PFQuery *emailQuery = [PFQuery queryWithClassName:@"_User"];
+  PFQuery *emailQuery = [PFQuery queryWithClassName:kUserParseClass];
   [emailQuery whereKey:@"email" equalTo:credentials[@"email"]];
   
   PFQuery *query = [PFQuery orQueryWithSubqueries:@[usernameQuery, emailQuery]];
@@ -447,7 +434,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
            failure:(APFailureErrorBlock)failureBlock {
   PFUser *user = [PFUser user];
   user.username = username;
-  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kSalt];
+  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
   NSString *hashedPassword = nil;
   unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
@@ -455,7 +442,6 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
   }
   user.password = hashedPassword;
-  NSLog(@"%@", hashedPassword);
   user.email = email;
   [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     (error == nil) ? successBlock(succeeded) : failureBlock(error);
@@ -466,7 +452,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
                 withNewVenue:(FSVenue*)newVenue
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
     if (error) {
       failureBlock(error);

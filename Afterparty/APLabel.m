@@ -8,6 +8,7 @@
 
 #import "APLabel.h"
 #import "UIColor+APColor.h"
+#import "APConstants.h"
 
 @implementation APLabel
 
@@ -49,7 +50,7 @@
       break;
     case LabelTypeTableViewCellTitle:
       [self setFont:[UIFont fontWithName:kBoldFont size:22.f]];
-      self.textColor = [UIColor afterpartyBlackColor];
+      self.textColor = [UIColor afterpartyOffWhiteColor];
       break;
     case LabelTypeSearchDetailTitle:
       [self setFont:[UIFont fontWithName:kBoldFont size:24.f]];

@@ -8,6 +8,7 @@
 
 #import "APCreateEventLandingViewController.h"
 #import "APCreateEventViewController.h"
+#import "APConstants.h"
 
 @interface APCreateEventLandingViewController () <CreateEventDelegate>
 
@@ -31,7 +32,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  [self performSegueWithIdentifier:@"createEventSegue" sender:self];
+  [self performSegueWithIdentifier:kCreateEventSegue sender:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,7 +47,7 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"createEventSegue"]) {
+  if ([segue.identifier isEqualToString:kCreateEventSegue]) {
     APCreateEventViewController *controller = (APCreateEventViewController*)segue.destinationViewController;
     controller.delegate = self;
   }

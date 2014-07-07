@@ -82,6 +82,12 @@
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
+		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
+		50C015DF196AB4E500E9E26F /* createEventTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DB196AB4E500E9E26F /* createEventTab.png */; };
+		50C015E0196AB4E500E9E26F /* myEventsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DC196AB4E500E9E26F /* myEventsTab.png */; };
+		50C015E1196AB4E500E9E26F /* nearbyTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DD196AB4E500E9E26F /* nearbyTab.png */; };
+		50C015E2196AB4E500E9E26F /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DE196AB4E500E9E26F /* settingsTab.png */; };
+		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
 		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
 		50C3AA88195F0DA900A0297A /* APCreateEventLandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */; };
@@ -220,10 +226,16 @@
 		504CA3CD1940C04E003EF9EB /* ap_appicon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ap_appicon120.png; sourceTree = "<group>"; };
 		504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProBold.otf"; sourceTree = "<group>"; };
 		504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProLight.otf"; sourceTree = "<group>"; };
-		508849E61955CEDB00B1CA5E /* APConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
+		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
+		50C015DB196AB4E500E9E26F /* createEventTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = createEventTab.png; sourceTree = "<group>"; };
+		50C015DC196AB4E500E9E26F /* myEventsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myEventsTab.png; sourceTree = "<group>"; };
+		50C015DD196AB4E500E9E26F /* nearbyTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nearbyTab.png; sourceTree = "<group>"; };
+		50C015DE196AB4E500E9E26F /* settingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsTab.png; sourceTree = "<group>"; };
+		50C015E3196AC64600E9E26F /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
+		50C015E4196AC64600E9E26F /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
 		50C1E08D196704B900105E64 /* APValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APValueTransformer.h; sourceTree = "<group>"; };
 		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
@@ -352,15 +364,14 @@
 				504CA31C19408C82003EF9EB /* APAppDelegate.h */,
 				504CA31D19408C82003EF9EB /* APAppDelegate.m */,
 				504CA31F19408C82003EF9EB /* Main.storyboard */,
-				504CA3731940B8F8003EF9EB /* APMainTabBarController.h */,
-				504CA3741940B8F8003EF9EB /* APMainTabBarController.m */,
 				5048D4A8194A1D0F0092178E /* APConnectionManager.h */,
 				5048D4A9194A1D0F0092178E /* APConnectionManager.m */,
 				504CA3421940941A003EF9EB /* APRestConnectionManager.h */,
 				504CA3431940941A003EF9EB /* APRestConnectionManager.m */,
 				50C1E08D196704B900105E64 /* APValueTransformer.h */,
 				50C1E08E196704B900105E64 /* APValueTransformer.m */,
-				508849E61955CEDB00B1CA5E /* APConstants.h */,
+				50C015E3196AC64600E9E26F /* APConstants.h */,
+				50C015E4196AC64600E9E26F /* APConstants.m */,
 				504CA348194096AB003EF9EB /* Model */,
 				504CA37D1940BF79003EF9EB /* View */,
 				504CA3721940B8A0003EF9EB /* Controller */,
@@ -459,9 +470,6 @@
 			children = (
 				50F64EC61952F64800E0B8DC /* APSearchEventsViewController.h */,
 				50F64EC71952F64800E0B8DC /* APSearchEventsViewController.m */,
-				50F64EC81952F64800E0B8DC /* APSearchEventTableViewCell.h */,
-				50F64EC91952F64800E0B8DC /* APSearchEventTableViewCell.m */,
-				50F64ECA1952F64800E0B8DC /* APSearchEventTableViewCell.xib */,
 				50F64ECB1952F64800E0B8DC /* APSearchEventDetailViewController.h */,
 				50F64ECC1952F64800E0B8DC /* APSearchEventDetailViewController.m */,
 				50F64ECD1952F64800E0B8DC /* APSearchEventDetailViewController.xib */,
@@ -510,14 +518,8 @@
 				50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */,
 				50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */,
 				50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */,
-				50C3AA8B195F0ECB00A0297A /* APInviteFriendTableViewCell.h */,
-				50C3AA8C195F0ECB00A0297A /* APInviteFriendTableViewCell.m */,
-				50C3AA8D195F0ECB00A0297A /* APInviteFriendTableViewCell.xib */,
 				50C3AA91195F171D00A0297A /* APFindVenueTableViewController.h */,
 				50C3AA92195F171D00A0297A /* APFindVenueTableViewController.m */,
-				50F64ED31952FB7A00E0B8DC /* APVenueTableViewCell.h */,
-				50F64ED41952FB7A00E0B8DC /* APVenueTableViewCell.m */,
-				50F64ED51952FB7A00E0B8DC /* APVenueTableViewCell.xib */,
 			);
 			name = CreateEvent;
 			sourceTree = "<group>";
@@ -532,11 +534,13 @@
 		504CA3721940B8A0003EF9EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				504CA3731940B8F8003EF9EB /* APMainTabBarController.h */,
+				504CA3741940B8F8003EF9EB /* APMainTabBarController.m */,
 				504CA3761940BA36003EF9EB /* Login */,
-				504CA3711940B899003EF9EB /* Settings */,
-				504CA3701940B87F003EF9EB /* CreateEvent */,
-				504CA36F1940B873003EF9EB /* MyEvents */,
 				504CA36E1940B869003EF9EB /* NearbyEvents */,
+				504CA36F1940B873003EF9EB /* MyEvents */,
+				504CA3701940B87F003EF9EB /* CreateEvent */,
+				504CA3711940B899003EF9EB /* Settings */,
 				504CA36D1940B860003EF9EB /* UserProfile */,
 			);
 			name = Controller;
@@ -554,6 +558,7 @@
 		504CA37D1940BF79003EF9EB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				50C015E6196AD73800E9E26F /* TableViewCells */,
 				504CA37A1940BF74003EF9EB /* APTextField.h */,
 				504CA37B1940BF74003EF9EB /* APTextField.m */,
 				50DE65871940C76D00C27B84 /* APLabel.h */,
@@ -597,6 +602,7 @@
 				504CA3AC1940C035003EF9EB /* button_plusblack.png */,
 				504CA3AD1940C035003EF9EB /* button_pluswhite.png */,
 				504CA3AE1940C035003EF9EB /* button_savetocloud.png */,
+				50C015B919697BF500E9E26F /* default_avatar_large.png */,
 				504CA3AF1940C035003EF9EB /* icon_checkempty.png */,
 				504CA3B01940C035003EF9EB /* icon_checkgreen.png */,
 				504CA3B11940C035003EF9EB /* icon_close.png */,
@@ -613,8 +619,28 @@
 				504CA3CD1940C04E003EF9EB /* ap_appicon120.png */,
 				504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */,
 				504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */,
+				50C015DB196AB4E500E9E26F /* createEventTab.png */,
+				50C015DC196AB4E500E9E26F /* myEventsTab.png */,
+				50C015DD196AB4E500E9E26F /* nearbyTab.png */,
+				50C015DE196AB4E500E9E26F /* settingsTab.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		50C015E6196AD73800E9E26F /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				50F64EC81952F64800E0B8DC /* APSearchEventTableViewCell.h */,
+				50F64EC91952F64800E0B8DC /* APSearchEventTableViewCell.m */,
+				50F64ECA1952F64800E0B8DC /* APSearchEventTableViewCell.xib */,
+				50F64ED31952FB7A00E0B8DC /* APVenueTableViewCell.h */,
+				50F64ED41952FB7A00E0B8DC /* APVenueTableViewCell.m */,
+				50F64ED51952FB7A00E0B8DC /* APVenueTableViewCell.xib */,
+				50C3AA8B195F0ECB00A0297A /* APInviteFriendTableViewCell.h */,
+				50C3AA8C195F0ECB00A0297A /* APInviteFriendTableViewCell.m */,
+				50C3AA8D195F0ECB00A0297A /* APInviteFriendTableViewCell.xib */,
+			);
+			name = TableViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -668,6 +694,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Afterparty;
 				TargetAttributes = {
+					504CA30919408C82003EF9EB = {
+						DevelopmentTeam = RQ632LL2X3;
+					};
 					504CA32A19408C82003EF9EB = {
 						TestTargetID = 504CA30919408C82003EF9EB;
 					};
@@ -711,10 +740,12 @@
 				504CA3BF1940C035003EF9EB /* icon_lock.png in Resources */,
 				504CA3CA1940C043003EF9EB /* stock1.jpeg in Resources */,
 				504CA3C61940C043003EF9EB /* stock5.jpeg in Resources */,
+				50C015E2196AB4E500E9E26F /* settingsTab.png in Resources */,
 				504CA3A31940C029003EF9EB /* 17.jpg in Resources */,
 				504CA3D01940C04E003EF9EB /* ap_appicon120.png in Resources */,
 				504CA3B91940C035003EF9EB /* button_plusblack.png in Resources */,
 				504CA39E1940C029003EF9EB /* 12.jpg in Resources */,
+				50C015DF196AB4E500E9E26F /* createEventTab.png in Resources */,
 				504CA39D1940C029003EF9EB /* 11.jpg in Resources */,
 				504CA3A51940C029003EF9EB /* 19.jpg in Resources */,
 				504CA3B61940C035003EF9EB /* button_flashoff.png in Resources */,
@@ -730,11 +761,13 @@
 				504CA39F1940C029003EF9EB /* 13.jpg in Resources */,
 				504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */,
 				504CA39B1940C029003EF9EB /* 09.jpg in Resources */,
+				50C015E0196AB4E500E9E26F /* myEventsTab.png in Resources */,
 				504CA3C01940C035003EF9EB /* icon_magnifyingglass.png in Resources */,
 				504CA32619408C82003EF9EB /* Images.xcassets in Resources */,
 				504CA3B41940C035003EF9EB /* button_camera.png in Resources */,
 				504CA3CF1940C04E003EF9EB /* ap_appicon80.png in Resources */,
 				504CA31819408C82003EF9EB /* InfoPlist.strings in Resources */,
+				50C015E1196AB4E500E9E26F /* nearbyTab.png in Resources */,
 				508849E81955DE5E00B1CA5E /* sunRising.png in Resources */,
 				504CA3961940C029003EF9EB /* 04.jpg in Resources */,
 				504CA3C91940C043003EF9EB /* stock2.jpeg in Resources */,
@@ -747,6 +780,7 @@
 				504CA3A21940C029003EF9EB /* 16.jpg in Resources */,
 				50F64EBF1952F40900E0B8DC /* APImagePreviewViewController.xib in Resources */,
 				504CA3C81940C043003EF9EB /* stock3.jpeg in Resources */,
+				50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */,
 				504CA32119408C82003EF9EB /* Main.storyboard in Resources */,
 				50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */,
 				504CA3A11940C029003EF9EB /* 15.jpg in Resources */,
@@ -817,6 +851,7 @@
 			files = (
 				50F64EBE1952F40900E0B8DC /* APImagePreviewViewController.m in Sources */,
 				504CA3441940941A003EF9EB /* APRestConnectionManager.m in Sources */,
+				50C015E5196AC64600E9E26F /* APConstants.m in Sources */,
 				504CA34B194096BA003EF9EB /* APEvent.m in Sources */,
 				504CA35D19409B87003EF9EB /* APUtil.m in Sources */,
 				50F64EC21952F40900E0B8DC /* APStackedGridLayoutSection.m in Sources */,
@@ -983,6 +1018,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: David Okun (ATL9M5R398)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -991,6 +1028,7 @@
 				GCC_PREFIX_HEADER = "Afterparty/Afterparty-Prefix.pch";
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "23694D82-D03A-4F87-A77E-7BB1AAA8E572";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1001,6 +1039,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: David Okun (ATL9M5R398)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1009,6 +1049,7 @@
 				GCC_PREFIX_HEADER = "Afterparty/Afterparty-Prefix.pch";
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "23694D82-D03A-4F87-A77E-7BB1AAA8E572";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

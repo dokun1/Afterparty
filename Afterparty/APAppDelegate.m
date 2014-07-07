@@ -9,6 +9,7 @@
 #import "APAppDelegate.h"
 #import "APMainTabBarController.h"
 #import <Crashlytics/Crashlytics.h>
+#import "APConstants.h"
 
 @implementation APAppDelegate
 
@@ -43,19 +44,25 @@
                   sourceApplication:sourceApplication
                         withSession:[PFFacebookUtils session]];
   }else if([url.absoluteString containsString:@"eventID"]) {
-#warning need to handle an event link being opened in new hierarchy
+
 //    handle event url being opened
-//    NSArray *components = [url.absoluteString componentsSeparatedByString:@":"];
-//    NSString *eventID = [components lastObject];
-//    APSearchEventsViewController *vc = [[APSearchEventsViewController alloc] initWithSearchForEvent:eventID];
-//    CRNavigationController *navController = [[CRNavigationController alloc] initWithRootViewController:vc];
-//    navController.navigationBar.tintColor = [APStyleSheet blackColor];
-//    UIViewController *view = [APAppDelegate topMostController];
-//    [view presentViewController:navController animated:YES completion:nil];
+    NSArray *components = [url.absoluteString componentsSeparatedByString:@":"];
+    NSString *eventID = [components lastObject];
+    UIViewController *view = [APAppDelegate topMostController];
+    [view.tabBarController setSelectedIndex:0];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSearchSpecificEventNotification object:eventID];
   }else{
     return YES;
   }
   return NO;
+}
+
++ (UIViewController*) topMostController {
+  UIViewController *topController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+  while (topController.presentedViewController) {
+    topController = topController.presentedViewController;
+  }
+  return topController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

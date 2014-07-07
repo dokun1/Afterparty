@@ -249,14 +249,11 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [[APConnectionManager sharedManager] loginWithFacebookUsingPermissions:@[@"public_profile", @"email", @"user_friends"] success:^(PFUser *user) {
     [SVProgressHUD dismiss];
     [[APConnectionManager sharedManager] getFacebookUserDetailsWithSuccessBlock:^(NSDictionary *dictionary) {
-      NSLog(@"got user details successfully");
     } failure:^(NSError *error) {
-      NSLog(@"error %@", error.localizedDescription);
     }];
     [self dismissViewControllerAnimated:YES completion:nil];
   } failure:^(NSError *error) {
-    NSLog(@"failure");
-    [SVProgressHUD showErrorWithStatus:nil];
+    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
   }];
 }
 

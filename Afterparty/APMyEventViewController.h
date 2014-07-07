@@ -41,6 +41,4 @@
 
 @property (strong, nonatomic) NSDictionary *eventDict;
 
-- (id)initWithDict:(NSDictionary*)eventDict;
-
 @end
