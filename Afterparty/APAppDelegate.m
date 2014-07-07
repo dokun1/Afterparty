@@ -17,19 +17,20 @@
 {
     // Override point for customization after application launch.
   
-  [Parse setApplicationId:@"CvhkqubpxeRFVm6j4HiMf237NWRjaYdPR1PC9vUE" clientKey:@"ds9CT52n1L0cK704AcesYLyZWX2VUNleGarg3jWK"];
+  [Parse setApplicationId:kParseApplicationID clientKey:kParseClientKey];
   
-  [Foursquare2 setupFoursquareWithClientId:@"A3QWFSMMPWEKZLXY434YWY3CRIMA53PU50IB4BPEMRFVHLEG" secret:@"FE0YBODXUDB235LSKPN3I1YPPDZCAVULCST4PDYMI0IMDEQM" callbackURL:@"afterparty://foursquare"];
+  [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
   
   [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
   
-  [Crashlytics startWithAPIKey:@"2562e5594f3c583624c29c6db146c9e585d7d2f2"];
+  [Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
   
   [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
   
   [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kRegularFont size:11], NSFontAttributeName, [UIColor afterpartyBlackColor], NSForegroundColorAttributeName,  nil] forState:UIControlStateNormal];
   [[UIBarButtonItem appearance] setTintColor:[UIColor afterpartyBlackColor]];
   [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:kRegularFont size:12.0f]];
+  [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kRegularFont size:11.f], NSFontAttributeName, nil] forState:UIControlStateNormal];
   
   [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
     return YES;
@@ -39,7 +40,7 @@
   if ([url.absoluteString containsString:@"foursquare"]) {
     return [Foursquare2 handleURL:url];
   }
-  else if([url.absoluteString containsString:@"fb1377327292516803"]){
+  else if([url.absoluteString containsString:kFacebookAppIDWithPrefix]){
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication
                         withSession:[PFFacebookUtils session]];

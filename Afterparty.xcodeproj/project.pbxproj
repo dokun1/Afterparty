@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50105671196AFA0C00D7F800 /* createEventTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 5010566D196AFA0C00D7F800 /* createEventTab.png */; };
+		50105672196AFA0C00D7F800 /* myEventsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 5010566E196AFA0C00D7F800 /* myEventsTab.png */; };
+		50105673196AFA0C00D7F800 /* nearbyTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 5010566F196AFA0C00D7F800 /* nearbyTab.png */; };
+		50105674196AFA0C00D7F800 /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50105670196AFA0C00D7F800 /* settingsTab.png */; };
 		5048D4AA194A1D0F0092178E /* APConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5048D4A9194A1D0F0092178E /* APConnectionManager.m */; };
 		504CA30E19408C82003EF9EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA30D19408C82003EF9EB /* Foundation.framework */; };
 		504CA31019408C82003EF9EB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA30F19408C82003EF9EB /* CoreGraphics.framework */; };
@@ -83,10 +87,6 @@
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
-		50C015DF196AB4E500E9E26F /* createEventTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DB196AB4E500E9E26F /* createEventTab.png */; };
-		50C015E0196AB4E500E9E26F /* myEventsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DC196AB4E500E9E26F /* myEventsTab.png */; };
-		50C015E1196AB4E500E9E26F /* nearbyTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DD196AB4E500E9E26F /* nearbyTab.png */; };
-		50C015E2196AB4E500E9E26F /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015DE196AB4E500E9E26F /* settingsTab.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
 		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
@@ -134,6 +134,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5010566D196AFA0C00D7F800 /* createEventTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = createEventTab.png; sourceTree = "<group>"; };
+		5010566E196AFA0C00D7F800 /* myEventsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myEventsTab.png; sourceTree = "<group>"; };
+		5010566F196AFA0C00D7F800 /* nearbyTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nearbyTab.png; sourceTree = "<group>"; };
+		50105670196AFA0C00D7F800 /* settingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsTab.png; sourceTree = "<group>"; };
 		5048D4A8194A1D0F0092178E /* APConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConnectionManager.h; sourceTree = "<group>"; };
 		5048D4A9194A1D0F0092178E /* APConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConnectionManager.m; sourceTree = "<group>"; };
 		504CA30A19408C82003EF9EB /* Afterparty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Afterparty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,10 +234,6 @@
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
 		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
-		50C015DB196AB4E500E9E26F /* createEventTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = createEventTab.png; sourceTree = "<group>"; };
-		50C015DC196AB4E500E9E26F /* myEventsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = myEventsTab.png; sourceTree = "<group>"; };
-		50C015DD196AB4E500E9E26F /* nearbyTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nearbyTab.png; sourceTree = "<group>"; };
-		50C015DE196AB4E500E9E26F /* settingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsTab.png; sourceTree = "<group>"; };
 		50C015E3196AC64600E9E26F /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
 		50C015E4196AC64600E9E26F /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
 		50C1E08D196704B900105E64 /* APValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APValueTransformer.h; sourceTree = "<group>"; };
@@ -619,10 +619,10 @@
 				504CA3CD1940C04E003EF9EB /* ap_appicon120.png */,
 				504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */,
 				504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */,
-				50C015DB196AB4E500E9E26F /* createEventTab.png */,
-				50C015DC196AB4E500E9E26F /* myEventsTab.png */,
-				50C015DD196AB4E500E9E26F /* nearbyTab.png */,
-				50C015DE196AB4E500E9E26F /* settingsTab.png */,
+				5010566D196AFA0C00D7F800 /* createEventTab.png */,
+				5010566E196AFA0C00D7F800 /* myEventsTab.png */,
+				5010566F196AFA0C00D7F800 /* nearbyTab.png */,
+				50105670196AFA0C00D7F800 /* settingsTab.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -740,12 +740,12 @@
 				504CA3BF1940C035003EF9EB /* icon_lock.png in Resources */,
 				504CA3CA1940C043003EF9EB /* stock1.jpeg in Resources */,
 				504CA3C61940C043003EF9EB /* stock5.jpeg in Resources */,
-				50C015E2196AB4E500E9E26F /* settingsTab.png in Resources */,
+				50105674196AFA0C00D7F800 /* settingsTab.png in Resources */,
 				504CA3A31940C029003EF9EB /* 17.jpg in Resources */,
 				504CA3D01940C04E003EF9EB /* ap_appicon120.png in Resources */,
 				504CA3B91940C035003EF9EB /* button_plusblack.png in Resources */,
 				504CA39E1940C029003EF9EB /* 12.jpg in Resources */,
-				50C015DF196AB4E500E9E26F /* createEventTab.png in Resources */,
+				50105671196AFA0C00D7F800 /* createEventTab.png in Resources */,
 				504CA39D1940C029003EF9EB /* 11.jpg in Resources */,
 				504CA3A51940C029003EF9EB /* 19.jpg in Resources */,
 				504CA3B61940C035003EF9EB /* button_flashoff.png in Resources */,
@@ -761,13 +761,13 @@
 				504CA39F1940C029003EF9EB /* 13.jpg in Resources */,
 				504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */,
 				504CA39B1940C029003EF9EB /* 09.jpg in Resources */,
-				50C015E0196AB4E500E9E26F /* myEventsTab.png in Resources */,
+				50105672196AFA0C00D7F800 /* myEventsTab.png in Resources */,
 				504CA3C01940C035003EF9EB /* icon_magnifyingglass.png in Resources */,
 				504CA32619408C82003EF9EB /* Images.xcassets in Resources */,
 				504CA3B41940C035003EF9EB /* button_camera.png in Resources */,
 				504CA3CF1940C04E003EF9EB /* ap_appicon80.png in Resources */,
 				504CA31819408C82003EF9EB /* InfoPlist.strings in Resources */,
-				50C015E1196AB4E500E9E26F /* nearbyTab.png in Resources */,
+				50105673196AFA0C00D7F800 /* nearbyTab.png in Resources */,
 				508849E81955DE5E00B1CA5E /* sunRising.png in Resources */,
 				504CA3961940C029003EF9EB /* 04.jpg in Resources */,
 				504CA3C91940C043003EF9EB /* stock2.jpeg in Resources */,
