@@ -9,6 +9,7 @@
 #import "APPhotoUploadQueue.h"
 #import "APConnectionManager.h"
 #import "APUtil.h"
+#import "APConstants.h"
 
 static NSString *const kCache = @"cachedUploadPhotos";
 
@@ -57,7 +58,7 @@ static NSString *const kCache = @"cachedUploadPhotos";
 
 - (void)uploadQueuedPhotos {
   dispatch_async(dispatch_get_main_queue(), ^{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kUploading object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kQueueIsUploading object:nil];
   });
   __weak APPhotoUploadQueue *weakself = self;
   dispatch_async(self.photoUploadQueue, ^{
@@ -88,7 +89,7 @@ static NSString *const kCache = @"cachedUploadPhotos";
           } else {
             self.isUploading = NO;
             dispatch_async(dispatch_get_main_queue(), ^{
-              [[NSNotificationCenter defaultCenter] postNotificationName:kDoneUploading object:nil];
+              [[NSNotificationCenter defaultCenter] postNotificationName:kQueueIsDoneUploading object:nil];
             });
           }
         }

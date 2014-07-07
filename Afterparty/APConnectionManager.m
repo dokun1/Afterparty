@@ -14,10 +14,6 @@
 #import "FSConverter.h"
 #import "APConstants.h"
 
-static const NSString *kSalt = @"099uvyO)VY))G*GV*)go8ghovg8go8gvogv8gvog*VG*V";
-static const NSString *kFacebookSalt = @"8y7b9756vv5Iv75&^v8oB&ovsoVo8&Vboobbobog*VG*V";
-static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$_Z] j";
-
 @implementation APConnectionManager
 
 + (instancetype)sharedManager {
@@ -190,8 +186,12 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     if (error) {
       failureBlock(error);
     }
-    APEvent *event = [[APEvent alloc] initWithParseObject:object];
-    successBlock(@[event]);
+    if (object == nil) {
+      failureBlock(nil);
+    } else {
+      APEvent *event = [[APEvent alloc] initWithParseObject:object];
+      successBlock(@[event]);
+    }
   }];
 }
 
@@ -339,7 +339,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
                  password:(NSString *)password
                   success:(APSuccessPFUserBlock)successBlock
                   failure:(APFailureErrorBlock)failureBlock {
-  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kSalt];
+  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
   NSString *hashedPassword = nil;
   unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
@@ -397,6 +397,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     PFUser *user = [PFUser currentUser];
     user.username = userData[@"name"];
     user.email = userData[@"email"];
+    [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", userData[@"id"]] forKey:@"profilePhotoURL"];
     [user saveInBackground];
     successBlock(userData);
   }];
@@ -405,7 +406,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
 - (void)loginWithTwitterAccount:(ACAccount *)account
                         success:(APSuccessPFUserBlock)successBlock
                         failure:(APFailureErrorBlock)failureBlock {
-  [PFTwitterUtils initializeWithConsumerKey:TWITTER_CONSUMER_KEY consumerSecret:TWITTER_CONSUMER_SECRET];
+  [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
   [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error) {
     (error == nil) ? successBlock(user) : failureBlock(error);
   }];
@@ -428,6 +429,8 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
     if (result) {
       PFUser *user = [PFUser currentUser];
       user.username = result[@"screen_name"];
+      [user setValue:result[@"profile_image_url"] forKey:@"profilePhotoURL"];
+//      user[@"profilePhotoURL"] = result[@"profile_image_url"];
       [user saveInBackground];
     }
   }];
@@ -463,7 +466,7 @@ static const NSString *kTwitterSalt = @"j^h<3WPt2(IbMF{y_r]|ACH4S3|nOlW]0`{,-.j$
            failure:(APFailureErrorBlock)failureBlock {
   PFUser *user = [PFUser user];
   user.username = username;
-  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kSalt];
+  NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
   NSString *hashedPassword = nil;
   unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
   NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];

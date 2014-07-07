@@ -12,6 +12,7 @@
 #import "UIAlertView+APAlert.h"
 #import "UIColor+APColor.h"
 #import "APUtil.h"
+#import "APConstants.h"
 
 @interface APMyEventsViewController ()
 
@@ -21,25 +22,23 @@
 
 @implementation APMyEventsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    self.navigationController.navigationBar.barTintColor = [UIColor afterpartyOffWhiteColor];
+  [super viewDidLoad];
+  self.navigationController.navigationBar.barTintColor = [UIColor afterpartyOffWhiteColor];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
+  [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
+  UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshEvents)];
+  [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    self.events = [APUtil getMyEventsArray];
+- (void)viewDidAppear:(BOOL)animated {
+  [self refreshEvents];
+}
+
+- (void)refreshEvents {
+  self.events = [APUtil getMyEventsArray];
+  [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -104,7 +103,7 @@
           [UIAlertView showSimpleAlertWithTitle:@"Error" andMessage:[NSString stringWithFormat:@"Sorry, %@ has ended.", [eventInfo objectForKey:@"eventName"]]];
           break;
         case NSOrderedDescending:{
-          [self performSegueWithIdentifier:@"EventSelectedSegue" sender:eventDict];
+          [self performSegueWithIdentifier:kMyEventSelectedSegue sender:eventDict];
           break;
         }
     }
@@ -112,7 +111,7 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([[segue identifier] isEqualToString:@"EventSelectedSegue"]) {
+  if ([[segue identifier] isEqualToString:kMyEventSelectedSegue]) {
     APMyEventViewController *vc = (APMyEventViewController*)segue.destinationViewController;
     vc.eventDict = sender;
     vc.hidesBottomBarWhenPushed = YES;

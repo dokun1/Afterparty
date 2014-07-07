@@ -11,6 +11,7 @@
 #import "APLoginViewController.h"
 #import "UIColor+APColor.h"
 #import <Parse/Parse.h>
+#import "APConstants.h"
 
 @interface APMainTabBarController ()
 
@@ -32,6 +33,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  self.view.tintColor = [UIColor afterpartyTealBlueColor];
   // Do any additional setup after loading the view.
 }
 

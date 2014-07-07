@@ -8,6 +8,7 @@
 
 #import "APTextView.h"
 #import "UIColor+APColor.h"
+#import "APConstants.h"
 
 @implementation APTextView
 

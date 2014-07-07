@@ -8,6 +8,7 @@
 
 #import "APTextField.h"
 #import "UIColor+APColor.h"
+#import "APConstants.h"
 
 @implementation APTextField
 

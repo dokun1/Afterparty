@@ -11,6 +11,7 @@
 #import "APVenueTableViewCell.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "UIColor+APColor.h"
+#import "APConstants.h"
 
 
 @interface APFindVenueTableViewController () <UISearchBarDelegate, CLLocationManagerDelegate>

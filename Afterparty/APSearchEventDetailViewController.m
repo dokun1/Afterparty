@@ -11,6 +11,9 @@
 #import "APButton.h"
 #import "APUtil.h"
 #import "UIAlertView+APAlert.h"
+#import <SVProgressHUD/SVProgressHUD.h>
+#import "APMyEventViewController.h"
+#import "APConstants.h"
 
 @interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -44,6 +47,12 @@
         self.currentEvent = event;
     }
     return self;
+}
+
+- (void)setCurrentEvent:(APEvent *)event {
+  if (_currentEvent != event) {
+    _currentEvent = event;
+  }
 }
 
 - (void)viewDidLoad
@@ -82,13 +91,32 @@
         if ([password isEqualToString:self.currentEvent.password]) {
             [self confirmJoinEvent];
         }else{
-            [UIAlertView showSimpleAlertWithTitle:@"Error" andMessage:@"Incorrect password. Please try again."];
+          [SVProgressHUD showErrorWithStatus:@"incorrect password"];
         }
     }
 }
 
 -(void)confirmJoinEvent{
-    [APUtil saveEventToMyEvents:self.currentEvent];
-    [self dismissViewControllerAnimated:YES completion:nil];
+  [APUtil saveEventToMyEvents:self.currentEvent];
+  NSDictionary *eventInfo = @{@"deleteDate": [_currentEvent deleteDate],
+                              @"endDate" : [_currentEvent endDate],
+                              @"startDate" : [_currentEvent startDate],
+                              @"eventName": [_currentEvent eventName],
+                              @"eventLatitude": @([_currentEvent location].latitude),
+                              @"eventLongitude": @([_currentEvent location].longitude),
+                              @"createdByUsername": [_currentEvent createdByUsername],
+                              @"eventImageData": [_currentEvent eventImageData]};
+  NSDictionary *eventDict = @{[_currentEvent objectID]: eventInfo};
+  [self performSegueWithIdentifier:@"EventDetailsGoToEventSegue" sender:eventDict];
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+  if ([[segue identifier] isEqualToString:kNearbyEventGoToSegue]) {
+    APMyEventViewController *vc = (APMyEventViewController*)segue.destinationViewController;
+    vc.eventDict = sender;
+    vc.hidesBottomBarWhenPushed = YES;
+  }
+}
+
+
 @end

@@ -8,6 +8,7 @@
 
 #import "APLabel.h"
 #import "UIColor+APColor.h"
+#import "APConstants.h"
 
 @implementation APLabel
 

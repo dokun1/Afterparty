@@ -2,14 +2,40 @@
 //  APConstants.h
 //  Afterparty
 //
-//  Created by David Okun on 6/21/14.
+//  Created by David Okun on 7/7/14.
 //  Copyright (c) 2014 Afterparty. All rights reserved.
 //
 
-#ifndef Afterparty_APConstants_h
-#define Afterparty_APConstants_h
+#import <Foundation/Foundation.h>
 
-#define TWITTER_CONSUMER_KEY @"lrrwwaMcOMZ2ZYyUSWWSfxCOF"
-#define TWITTER_CONSUMER_SECRET @"k8nG6Ib3dVu4MBtIRyrCyqoqi0FZVsbD4JPIxvRc37jRCN7qqh"
+@interface APConstants : NSObject
 
-#endif
+// Segue Constants
+
+extern NSString *const kMyEventSelectedSegue;
+extern NSString *const kNearbyEventDetailSegue;
+extern NSString *const kNearbyEventGoToSegue;
+extern NSString *const kCreateEventSegue;
+extern NSString *const kSettingsProfileSegue;
+extern NSString *const kSettingsEventSegue;
+extern NSString *const kSettingsSocialNetworkingSegue;
+extern NSString *const kLoginSegue;
+
+// API
+
+extern NSString *const kTwitterConsumerKey;
+extern NSString *const kTwitterConsumerSecret;
+extern NSString *const kPasswordSalt;
+
+// NSNotification Names
+
+extern NSString *const kSearchSpecificEventNotification;
+extern NSString *const kQueueIsUploading;
+extern NSString *const kQueueIsDoneUploading;
+
+// UI
+
+extern NSString *const kRegularFont;
+extern NSString *const kBoldFont;
+
+@end

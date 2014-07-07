@@ -14,9 +14,11 @@
 #import "UIColor+APColor.h"
 #import "UIAlertView+APAlert.h"
 #import "APEvent.h"
+#import "APConstants.h"
+
 @import AddressBook;
 
-@interface APSearchEventsViewController () <UISearchBarDelegate, CLLocationManagerDelegate> 
+@interface APSearchEventsViewController () <UISearchBarDelegate, CLLocationManagerDelegate, SearchEventDetailDelegate, UINavigationControllerDelegate, UINavigationBarDelegate>
 
 @property (strong, nonatomic) NSMutableArray *venues;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -25,6 +27,7 @@
 @property (assign, nonatomic) BOOL isRefresh;
 @property (assign, nonatomic) BOOL isForSearch;
 @property (strong, nonatomic) NSString *initialSearch;
+@property (assign, nonatomic) BOOL isLoading;
 
 @end
 
@@ -53,6 +56,10 @@
     [super viewDidLoad];
     
     self.navigationController.navigationBar.barTintColor = [UIColor afterpartyOffWhiteColor];
+
+  self.navigationController.delegate = self;
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveSearchNotification:) name:kSearchSpecificEventNotification object:nil];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl setTintColor:[UIColor afterpartyTealBlueColor]];
@@ -78,32 +85,50 @@
     (self.isForSearch) ? [self searchForEventByID] : [self refreshEvents];
   
     [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
+  
+  UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshEvents)];
+  [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
+}
+
+- (void)didReceiveSearchNotification:(NSNotification*)notification {
+  self.tabBarController.selectedIndex = 0;
+//  NSLog(@"hey hey what do we have here");
+//  NSLog(@"%@", notification);
+  self.initialSearch = (NSString*)notification.object;
+  [self searchForEventByID];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  [self refreshEvents];
+  if (!self.isLoading) {
+    [self refreshEvents];
+  }
 }
 
 #pragma mark - LocationManagerDelegate Methods
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    self.currentLocation = [locations lastObject];
-    [self.locationManager stopUpdatingLocation];
-    [SVProgressHUD showWithStatus:@"finding events"];
+  self.currentLocation = [locations lastObject];
+  [self.locationManager stopUpdatingLocation];
+  [SVProgressHUD showWithStatus:@"finding events"];
+  self.isLoading = YES;
+  if ([PFUser currentUser]) {
     [[APConnectionManager sharedManager] getNearbyEventsForLocation:self.currentLocation success:^(NSArray *objects) {
-        self.venues = [objects mutableCopy];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([self.venues count] == 0) {
-                [SVProgressHUD showErrorWithStatus:@"No events nearby"];
-            }else{
-                [SVProgressHUD dismiss];
-            }
-            [self.refreshControl endRefreshing];
-            [self.tableView reloadData];
-        });
+      self.isLoading = NO;
+      self.venues = [objects mutableCopy];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.venues count] == 0) {
+          [SVProgressHUD showErrorWithStatus:@"No events nearby"];
+        }else{
+          [SVProgressHUD dismiss];
+        }
+        [self.refreshControl endRefreshing];
+        [self.tableView reloadData];
+      });
     } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"Server error"];
+      [SVProgressHUD showErrorWithStatus:@"Server error"];
+      self.isLoading = NO;
     }];
+  }
 }
 
 #pragma mark - UISearchBarDelegate Methods
@@ -135,7 +160,9 @@
 }
 
 -(void)refreshEvents {
-    [self.locationManager startUpdatingLocation];
+  if ([PFUser currentUser]) {
+      [self.locationManager startUpdatingLocation];
+  }
 }
 
 #pragma mark - Table view data source
@@ -205,9 +232,27 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    APEvent *event = self.venues[indexPath.row];
-    APSearchEventDetailViewController *vc = [[APSearchEventDetailViewController alloc] initWithEvent:event];
-    [self.navigationController pushViewController:vc animated:YES];
+  APEvent *event = self.venues[indexPath.row];
+  [self performSegueWithIdentifier:kNearbyEventDetailSegue sender:event];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+  if ([segue.identifier isEqualToString:kNearbyEventDetailSegue]) {
+    APSearchEventDetailViewController *vc = (APSearchEventDetailViewController*)segue.destinationViewController;
+    [vc setCurrentEvent:sender];
+    vc.delegate = self;
+    vc.hidesBottomBarWhenPushed = YES;
+  }
+}
+
+#pragma mark - SearchEventDetailsDelegate methods
+
+- (void)controllerDidSelectEvent:(APSearchEventDetailViewController *)controller {
+  [self.navigationController popToViewController:self animated:YES];
+}
+
+- (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
+  NSLog(@"done popping!!");
 }
 
 @end

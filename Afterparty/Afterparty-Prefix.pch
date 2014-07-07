@@ -10,15 +10,6 @@
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
-#define kRegularFont @"SofiaProLight"
-#define kBoldFont @"SofiaProBold"
-
-
-#define kLoginSegue @"blurSegueLogin"
-
-#define kUploading @"photoQueueUploading"
-#define kDoneUploading @"photoQueueDoneUploading"
-
 #ifdef __OBJC__
   #import <UIKit/UIKit.h>
   #import <Foundation/Foundation.h>

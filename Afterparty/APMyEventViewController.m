@@ -7,7 +7,7 @@
 //
 
 #import "APMyEventViewController.h"
-
+#import "APConstants.h"
 
 @import AssetsLibrary;
 @import AVFoundation;
@@ -119,7 +119,7 @@
   self.thumbnailCacheArray = [[NSMutableArray alloc] init];
   self.selectedPhotos = nil;
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kDoneUploading object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kQueueIsDoneUploading object:nil];
   
   self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
   self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
@@ -394,6 +394,8 @@
     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
     UIImage *thumbnailImage = [image resizedImageWithSize:[self sizePhotoForColumn:image.size]];
     [self.navigationController popToViewController:self animated:NO];
+    [self.navigationController setNavigationBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self uploadImage:image withThumbnail:thumbnailImage];
     
 }
@@ -450,7 +452,7 @@
 #pragma mark - StackedGridLayoutDelegate Methods 
 
 -(NSInteger)collectionView:(UICollectionView *)cv layout:(UICollectionViewLayout *)cvl numberOfColumnsInSection:(NSInteger)section {
-    return 2; //this is now dynamic, and will size correctly if you change it to 3!
+    return 2;
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)cv layout:(UICollectionViewLayout *)cvl itemInsetsForSectionAtIndex:(NSInteger)section {
@@ -458,7 +460,7 @@
 }
 
 -(CGSize)collectionView:(UICollectionView *)cv layout:(UICollectionViewLayout *)cvl sizeForItemWithWidth:(CGFloat)width atIndexPath:(NSIndexPath *)indexPath {
-    id obj = self.thumbnailCacheArray[indexPath.item];
+    id obj = self.photoMetadata[indexPath.item];
     if ([obj isKindOfClass:[APPhotoInfo class]]) {
         APPhotoInfo *photoInfo = (APPhotoInfo*)obj;
         return [self sizePhotoForColumn:[photoInfo size]];
@@ -469,7 +471,7 @@
 }
 
 -(CGSize)sizePhotoForColumn:(CGSize)photoSize {
-    CGFloat width = ([self collectionView:self.collectionView layout:self.layout numberOfColumnsInSection:0] == 2) ? 160 : 106.67;
+    CGFloat width = 160;
         
     CGSize newSize = CGSizeMake(width, 0);
     if (photoSize.width > width) {
