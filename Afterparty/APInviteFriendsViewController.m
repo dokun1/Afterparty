@@ -335,7 +335,6 @@
     APInviteFriendTableViewCell *cell = (APInviteFriendTableViewCell*)[self.tableView cellForRowAtIndexPath:indexPath];
     (isSelected) ? [self.selectedContacts removeObject:contactDict] : [self.selectedContacts addObject:contactDict];
     [cell.buttonImage setImage:(isSelected)?[UIImage imageNamed:@"icon_checkempty"]:[UIImage imageNamed:@"icon_checkgreen"]];
-    NSLog(@"selected: %@", self.selectedContacts);
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self setFriendCountLabel];
 }

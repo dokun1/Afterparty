@@ -26,6 +26,9 @@ extern NSString *const kLoginSegue;
 extern NSString *const kTwitterConsumerKey;
 extern NSString *const kTwitterConsumerSecret;
 extern NSString *const kPasswordSalt;
+extern NSString *const kEventSearchParseClass;
+extern NSString *const kPhotosParseClass;
+extern NSString *const kUserParseClass;
 
 // NSNotification Names
 

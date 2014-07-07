@@ -489,7 +489,7 @@
 -(void)confirmEventButtonTapped:(id)sender {
   [SVProgressHUD showWithStatus:@"saving event"];
   [self.currentEvent setEventDescription:self.eventDescriptionView.text];
-  self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*24*60];
+  self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*60*60];
   [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
     [[APConnectionManager sharedManager] lookupEventByName:self.currentEvent.eventName user:[PFUser currentUser] success:^(NSArray *objects) {
       PFObject *object = [objects lastObject];
@@ -671,12 +671,9 @@
 -(void)getContactPermission {
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
       ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted){
-    NSLog(@"Denied");
     [SVProgressHUD showErrorWithStatus:@"cannot invite anyone"];
   } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized){
-    NSLog(@"Authorized");
   } else{ //ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined
-    NSLog(@"Not determined");
     ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
       dispatch_async(dispatch_get_main_queue(), ^{
         if (!granted){

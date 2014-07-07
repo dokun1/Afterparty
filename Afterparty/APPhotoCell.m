@@ -7,6 +7,7 @@
 //
 
 #import "APPhotoCell.h"
+#import <UIKit+AFNetworking.h>
 
 @implementation APPhotoCell
 

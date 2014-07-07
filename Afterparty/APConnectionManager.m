@@ -29,7 +29,7 @@
 -(void)updateInstallVersionForUser:(PFUser *)user
                            success:(APSuccessBooleanBlock)successBlock
                            failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+  PFQuery *query = [PFQuery queryWithClassName:kUserParseClass];
   [query whereKey:@"username" equalTo:user.username];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
     if (!error) {
@@ -92,7 +92,7 @@
 -(void)getNearbyEventsForLocation:(CLLocation *)location
                           success:(APSuccessArrayBlock)successBlock
                           failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   NSNumber *latUp = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.latitude] floatValue]) + 1];
   NSNumber *latDown = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.latitude] floatValue]) - 1];
   NSNumber *longUp = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.longitude] floatValue]) + 1];
@@ -126,7 +126,7 @@
   NSData *imageData = UIImageJPEGRepresentation(eventImage, 0.8);
   PFFile *imageFile = [PFFile fileWithName:@"eventImage.jpg" data:imageData];
   [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    PFObject *savedEvent = [PFObject objectWithClassName:@"EventSearch"];
+    PFObject *savedEvent = [PFObject objectWithClassName:kEventSearchParseClass];
     savedEvent[@"eventName"]         = [event eventName];
     savedEvent[@"eventVenueID"]      = [event eventVenue].venueId;
     savedEvent[@"eventVenueName"]    = [event eventVenue].name;
@@ -151,7 +151,7 @@
                     user:(PFUser *)user
                  success:(APSuccessArrayBlock)successBlock
                  failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query whereKey:@"eventName" equalTo:name];
   [query whereKey:@"createdByUsername" equalTo:[user username]];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -162,7 +162,7 @@
 -(void)searchEventsByName:(NSString *)name
                   success:(APSuccessArrayBlock)successBlock
                   failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query whereKey:@"eventName" containsString:name];
   [query whereKey:@"deleteDate" greaterThan:[NSDate date]];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -181,7 +181,7 @@
 -(void)searchEventsByID:(NSString *)eventID
                 success:(APSuccessArrayBlock)successBlock
                 failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
     if (error) {
       failureBlock(error);
@@ -215,7 +215,7 @@
   PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
   PFFile *thumbFile = [PFFile fileWithName:@"thumb.jpg" data:thumbData];
   NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
-  PFObject *photoData = [PFObject objectWithClassName:@"PHOTOS"];
+  PFObject *photoData = [PFObject objectWithClassName:kPhotosParseClass];
   
   photoData[@"eventID"] = eventID;
   photoData[@"timestamp"] = [NSDate date];
@@ -230,41 +230,13 @@
   [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     (succeeded) ? successBlock(YES) : failureBlock(error);
   }];
-//  [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//    if (error) {
-//      failureBlock(error);
-//    }else{
-//      [thumbFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if (error) {
-//          failureBlock(error);
-//        } else {
-//          NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
-//          PFObject *photoData = [PFObject objectWithClassName:@"PHOTOS"];
-//          
-//          photoData[@"eventID"] = eventID;
-//          photoData[@"timestamp"] = [NSDate date];
-//          photoData[@"user"] = [[PFUser currentUser] username];
-//          photoData[@"comments"] = @[];
-//          photoData[@"refID"] = refID;
-//          photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
-//          photoData[@"width"] = @(image.size.width);
-//          photoData[@"height"] = @(image.size.height);
-//          photoData[@"imageFile"] = imageFile;
-//          photoData[@"thumbFile"] = thumbFile;
-//          
-//          [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//          }];
-//        }
-//      }];
-//    }
-//  }];
 }
 
 -(void)downloadImageMetadataForEventID:(NSString *)eventID
                                success:(APSuccessArrayBlock)successBlock
                                failure:(APFailureErrorBlock)failureBlock {
   if (!eventID) return;
-  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"eventID" equalTo:eventID];
   [query orderByDescending:@"createdAt"];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -275,7 +247,7 @@
 -(void)getURLForImageRefID:(NSString *)refID
                    success:(APSuccessStringBlock)successBlock
                    failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"refID" equalTo:refID];
   query.cachePolicy = kPFCachePolicyCacheElseNetwork;
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -292,7 +264,7 @@
 -(void)downloadImageForRefID:(NSString *)refID
                      success:(APSuccessDataBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"refID" equalTo:refID];
   query.cachePolicy = kPFCachePolicyCacheElseNetwork;
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -316,7 +288,7 @@
              inEventID:(NSString *)eventID
                success:(APSuccessBooleanPlusObjectBlock)successBlock
                failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"PHOTOS"];
+  PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"objectId" equalTo:objectID];
   [query whereKey:@"eventID" equalTo:eventID];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -346,7 +318,6 @@
   if (CC_SHA1([data bytes], (uint)[data length], hashedPasswordData)) {
     hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
   }
-  NSLog(@"%@", hashedPassword);
   [PFUser logInWithUsernameInBackground:username password:hashedPassword block:^(PFUser *user, NSError *error) {
     (error == nil) ? successBlock(user) : failureBlock(error);
   }];
@@ -369,7 +340,6 @@
   [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
     if (!user) {
       if (!error) {
-        NSLog(@"user cancelled fbLogin");
         NSError *fauxError = [[NSError alloc] initWithDomain:@"com.afterparty" code:1004 userInfo:nil];
         failureBlock(fauxError);
       }else {
@@ -377,7 +347,6 @@
       }
       
     } if (user.isNew) {
-      NSLog(@"user is brand new");
       successBlock(user);
     } else if (user) {
       successBlock(user);
@@ -430,7 +399,6 @@
       PFUser *user = [PFUser currentUser];
       user.username = result[@"screen_name"];
       [user setValue:result[@"profile_image_url"] forKey:@"profilePhotoURL"];
-//      user[@"profilePhotoURL"] = result[@"profile_image_url"];
       [user saveInBackground];
     }
   }];
@@ -439,10 +407,10 @@
 -(void)checkIfUserExists:(NSDictionary *)credentials
                  success:(APSuccessArrayBlock)successBlock
                  failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *usernameQuery = [PFQuery queryWithClassName:@"_User"];
+  PFQuery *usernameQuery = [PFQuery queryWithClassName:kUserParseClass];
   [usernameQuery whereKey:@"username" equalTo:credentials[@"username"]];
   
-  PFQuery *emailQuery = [PFQuery queryWithClassName:@"_User"];
+  PFQuery *emailQuery = [PFQuery queryWithClassName:kUserParseClass];
   [emailQuery whereKey:@"email" equalTo:credentials[@"email"]];
   
   PFQuery *query = [PFQuery orQueryWithSubqueries:@[usernameQuery, emailQuery]];
@@ -474,7 +442,6 @@
     hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
   }
   user.password = hashedPassword;
-  NSLog(@"%@", hashedPassword);
   user.email = email;
   [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     (error == nil) ? successBlock(succeeded) : failureBlock(error);
@@ -485,7 +452,7 @@
                 withNewVenue:(FSVenue*)newVenue
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock {
-  PFQuery *query = [PFQuery queryWithClassName:@"EventSearch"];
+  PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
   [query getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
     if (error) {
       failureBlock(error);
