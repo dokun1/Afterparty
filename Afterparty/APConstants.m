@@ -25,6 +25,13 @@ NSString *const kLoginSegue = @"LoginSegue";
 
 NSString *const kTwitterConsumerKey = @"lrrwwaMcOMZ2ZYyUSWWSfxCOF";
 NSString *const kTwitterConsumerSecret = @"k8nG6Ib3dVu4MBtIRyrCyqoqi0FZVsbD4JPIxvRc37jRCN7qqh";
+NSString *const kParseApplicationID = @"CvhkqubpxeRFVm6j4HiMf237NWRjaYdPR1PC9vUE";
+NSString *const kParseClientKey = @"ds9CT52n1L0cK704AcesYLyZWX2VUNleGarg3jWK";
+NSString *const kFoursquareClientID = @"A3QWFSMMPWEKZLXY434YWY3CRIMA53PU50IB4BPEMRFVHLEG";
+NSString *const kFoursquareSecret = @"FE0YBODXUDB235LSKPN3I1YPPDZCAVULCST4PDYMI0IMDEQM";
+NSString *const kCrashlyticsAPIKey = @"2562e5594f3c583624c29c6db146c9e585d7d2f2";
+NSString *const kFacebookAppID = @"1377327292516803";
+NSString *const kFacebookAppIDWithPrefix = @"fb1377327292516803";
 NSString *const kPasswordSalt = @"099uvyO)VY))G*GV*)go8ghovg8go8gvogv8gvog*VG*V";
 NSString *const kEventSearchParseClass = @"EventSearch";
 NSString *const kPhotosParseClass = @"Photos";
