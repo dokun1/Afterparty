@@ -376,4 +376,18 @@ typedef void (^APProgressBlock)(int percentDone);
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock;
 
+
+/**
+ *  Updates a boolean parameter on a user object to determine whether a user wants to opt out of having their user information tracked for our profit
+ *
+ *  @param isTrackingData BOOL to save on user database to see if they want to allow tracking of their data
+ *  @param successBlock   Returns void block on success
+ *  @param failureBlock   Returns NSError
+ *
+ *  @since 0.9.1
+ */
+- (void)saveUserTrackingParameter:(BOOL)isTrackingData
+                          success:(APSuccessVoidBlock)successBlock
+                          failure:(APFailureErrorBlock)failureBlock;
+
 @end

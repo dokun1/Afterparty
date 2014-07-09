@@ -366,6 +366,7 @@
     PFUser *user = [PFUser currentUser];
     user.username = userData[@"name"];
     user.email = userData[@"email"];
+    user[@"dataTracking"] = @(YES);
     [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", userData[@"id"]] forKey:@"profilePhotoURL"];
     [user saveInBackground];
     successBlock(userData);
@@ -398,6 +399,7 @@
     if (result) {
       PFUser *user = [PFUser currentUser];
       user.username = result[@"screen_name"];
+      user[@"dataTracking"] = @(YES);
       [user setValue:result[@"profile_image_url"] forKey:@"profilePhotoURL"];
       [user saveInBackground];
     }
@@ -443,6 +445,7 @@
   }
   user.password = hashedPassword;
   user.email = email;
+  user[@"dataTracking"] = @(YES);
   [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     (error == nil) ? successBlock(succeeded) : failureBlock(error);
   }];
@@ -466,6 +469,16 @@
       (error == nil) ? successBlock(succeeded) : failureBlock(error);
     }];
   }];
+}
+
+- (void)saveUserTrackingParameter:(BOOL)isTrackingData success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+  PFUser *currentUser = [PFUser currentUser];
+  if (currentUser) {
+    currentUser[@"dataTracking"] = @(isTrackingData);
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+      (error == nil) ? successBlock() : failureBlock(error);
+    }];
+  }
 }
 
 @end

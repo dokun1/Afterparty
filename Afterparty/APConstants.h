@@ -43,6 +43,7 @@ extern NSString *const kUserParseClass;
 extern NSString *const kSearchSpecificEventNotification;
 extern NSString *const kQueueIsUploading;
 extern NSString *const kQueueIsDoneUploading;
+extern NSString *const kCheckCurrentUser;
 
 // UI
 
