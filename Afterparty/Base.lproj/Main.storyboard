@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GYt-on-aUY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GYt-on-aUY">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -709,7 +709,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3E-xO-hs5" customClass="APLabel">
-                                <rect key="frame" x="20" y="153" width="41" height="21"/>
+                                <rect key="frame" x="20" y="153" width="269" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -721,7 +721,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="blurb about yourself" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aih-Tt-KDR" customClass="APLabel">
-                                <rect key="frame" x="20" y="214" width="154" height="21"/>
+                                <rect key="frame" x="20" y="214" width="269" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -771,8 +771,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="EDIT PROFILE" id="m3U-PH-cCv"/>
                     <connections>
+                        <outlet property="blurbFieldLabel" destination="Aih-Tt-KDR" id="bQn-oc-DTn"/>
                         <outlet property="blurbTextField" destination="bt6-KI-XeX" id="yOQ-sb-e5r"/>
                         <outlet property="dataTrackingButton" destination="sj4-R7-cyP" id="Xbz-2A-Rne"/>
+                        <outlet property="emailFieldLabel" destination="T3E-xO-hs5" id="PK1-sU-UZX"/>
                         <outlet property="emailTextField" destination="XYI-5r-q49" id="Haa-6T-wcr"/>
                         <outlet property="linkWithFacebookButton" destination="xgW-0y-Mud" id="MyJ-Zj-WHZ"/>
                         <outlet property="linkWithTwitterButton" destination="cLP-O6-irn" id="xOY-WC-nAd"/>

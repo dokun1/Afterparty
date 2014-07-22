@@ -29,4 +29,12 @@
   [self.titleLabel setFont:[UIFont fontWithName:kRegularFont size:16.f]];
 }
 
+- (void)styleWithClearBackground {
+  self.backgroundColor = [UIColor clearColor];
+  [self setTitleColor:[UIColor afterpartyTealBlueColor] forState:UIControlStateNormal];
+  [self setTitleColor:[UIColor afterpartyBrightGreenColor] forState:UIControlStateHighlighted];
+  
+  [self.titleLabel setFont:[UIFont fontWithName:kRegularFont size:16.f]];
+}
+
 @end

@@ -12,6 +12,7 @@
 #import <Parse/Parse.h>
 #import "APConstants.h"
 #import "UIColor+APColor.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface APSettingsTableViewController ()
 
@@ -26,6 +27,11 @@
   self.currentUser = [PFUser currentUser];
   [self.profilePicture setImageWithURL:[NSURL URLWithString:self.currentUser[@"profilePhotoURL"]]];
   self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  [SVProgressHUD dismiss];
 }
 
 #pragma mark - Navigation

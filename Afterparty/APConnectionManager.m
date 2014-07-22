@@ -323,20 +323,25 @@
   }];
 }
 
--(void)linkFacebookID:(NSString *)facebookID
-             withUser:(PFUser *)user
-              success:(APSuccessBooleanBlock)successBlock
-              failure:(APFailureErrorBlock)failureBlock {
-  user[@"facebookID"] = facebookID;
-  [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    (error == nil) ? successBlock(succeeded) : failureBlock(error);
+-(void)linkFacebookWithSuccess:(APSuccessVoidBlock)successBlock
+                       failure:(APFailureErrorBlock)failureBlock {
+  [PFFacebookUtils linkUser:[PFUser currentUser] permissions:@[@"public_profile", @"email", @"user_friends"] block:^(BOOL succeeded, NSError *error) {
+    (error == nil) ? successBlock() : failureBlock(error);
   }];
+}
+
+- (void)linkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
+                       failure:(APFailureErrorBlock)failureBlock {
+  if ([PFUser currentUser]) {
+    [PFTwitterUtils linkUser:[PFUser currentUser] block:^(BOOL succeeded, NSError *error) {
+      (error == nil) ? successBlock() : failureBlock(error);
+    }];
+  }
 }
 
 - (void)loginWithFacebookUsingPermissions:(NSArray *)permissions
                                   success:(APSuccessPFUserBlock)successBlock
                                   failure:(APFailureErrorBlock)failureBlock {
-  [PFFacebookUtils initializeFacebook];
   [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
     if (!user) {
       if (!error) {
@@ -376,7 +381,6 @@
 - (void)loginWithTwitterAccount:(ACAccount *)account
                         success:(APSuccessPFUserBlock)successBlock
                         failure:(APFailureErrorBlock)failureBlock {
-  [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
   [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error) {
     (error == nil) ? successBlock(user) : failureBlock(error);
   }];
@@ -480,5 +484,34 @@
     }];
   }
 }
+
+- (void)saveUserBlurb:(NSString*)blurb
+              success:(APSuccessVoidBlock)successBlock
+              failure:(APFailureErrorBlock)failureBlock {
+  PFUser *currentUser = [PFUser currentUser];
+  if (currentUser) {
+    currentUser[@"blurb"] = blurb;
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+      (error == nil) ? successBlock() : failureBlock(error);
+    }];
+  }
+}
+
+- (void)saveUserEmail:(NSString*)email
+              success:(APSuccessVoidBlock)successBlock
+              failure:(APFailureErrorBlock)failureBlock {
+  if (![APUtil validateEmailWithString:email]) {
+    failureBlock(nil);
+    return;
+  }
+  PFUser *currentUser = [PFUser currentUser];
+  if (currentUser) {
+    currentUser.email = email;
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+      (error == nil) ? successBlock() : failureBlock(error);
+    }];
+  }
+}
+
 
 @end

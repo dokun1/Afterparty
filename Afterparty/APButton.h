@@ -11,5 +11,6 @@
 @interface APButton : UIButton
 
 - (void)style;
+- (void)styleWithClearBackground;
 
 @end

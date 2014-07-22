@@ -239,19 +239,26 @@ typedef void (^APProgressBlock)(int percentDone);
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password success:(APSuccessPFUserBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
 
 /**
- *  Links facebook ID passed in with user account that already exists. Not yet implemented.
+ *  Links facebook  with user account that already exists.
  *
- *  @param facebookID   NSString for facebookID to link with user
- *  @param user         PFUser to be linked with facebookID
- *  @param successBlock Returns YES as BOOL
+ *  @param successBlock Returns void block on success
  *  @param failureBlock Returns NSError
  *
- *  @since 0.8.0
+ *  @since 0.9.1
  */
--(void)linkFacebookID:(NSString*)facebookID
-             withUser:(PFUser*)user
-              success:(APSuccessBooleanBlock)successBlock
-              failure:(APFailureErrorBlock)failureBlock;
+-(void)linkFacebookWithSuccess:(APSuccessVoidBlock)successBlock
+                       failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Delegates to twitter to link account with current user
+ *
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.1
+ */
+- (void)linkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
+                       failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Logs into parse using facebook credentials and permissions
@@ -389,5 +396,31 @@ typedef void (^APProgressBlock)(int percentDone);
 - (void)saveUserTrackingParameter:(BOOL)isTrackingData
                           success:(APSuccessVoidBlock)successBlock
                           failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Updates the blurb property on a user object. Initially blank for all users
+ *
+ *  @param blurb        NSString that represents user blurb
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.1
+ */
+- (void)saveUserBlurb:(NSString*)blurb
+              success:(APSuccessVoidBlock)successBlock
+              failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Updates the email property on a user object
+ *
+ *  @param email        NSString that represents email address of user
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.1
+ */
+- (void)saveUserEmail:(NSString*)email
+              success:(APSuccessVoidBlock)successBlock
+              failure:(APFailureErrorBlock)failureBlock;
 
 @end

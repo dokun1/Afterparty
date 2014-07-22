@@ -42,26 +42,6 @@
 		504CA3751940B8F8003EF9EB /* APMainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA3741940B8F8003EF9EB /* APMainTabBarController.m */; };
 		504CA3791940BA5A003EF9EB /* APLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA3781940BA5A003EF9EB /* APLoginViewController.m */; };
 		504CA37C1940BF74003EF9EB /* APTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA37B1940BF74003EF9EB /* APTextField.m */; };
-		504CA3931940C029003EF9EB /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA37F1940C029003EF9EB /* 01.jpg */; };
-		504CA3941940C029003EF9EB /* 02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3801940C029003EF9EB /* 02.jpg */; };
-		504CA3951940C029003EF9EB /* 03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3811940C029003EF9EB /* 03.jpg */; };
-		504CA3961940C029003EF9EB /* 04.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3821940C029003EF9EB /* 04.jpg */; };
-		504CA3971940C029003EF9EB /* 05.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3831940C029003EF9EB /* 05.jpg */; };
-		504CA3981940C029003EF9EB /* 06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3841940C029003EF9EB /* 06.jpg */; };
-		504CA3991940C029003EF9EB /* 07.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3851940C029003EF9EB /* 07.jpg */; };
-		504CA39A1940C029003EF9EB /* 08.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3861940C029003EF9EB /* 08.jpg */; };
-		504CA39B1940C029003EF9EB /* 09.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3871940C029003EF9EB /* 09.jpg */; };
-		504CA39C1940C029003EF9EB /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3881940C029003EF9EB /* 10.jpg */; };
-		504CA39D1940C029003EF9EB /* 11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3891940C029003EF9EB /* 11.jpg */; };
-		504CA39E1940C029003EF9EB /* 12.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA38A1940C029003EF9EB /* 12.jpg */; };
-		504CA39F1940C029003EF9EB /* 13.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA38B1940C029003EF9EB /* 13.jpg */; };
-		504CA3A01940C029003EF9EB /* 14.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA38C1940C029003EF9EB /* 14.jpg */; };
-		504CA3A11940C029003EF9EB /* 15.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA38D1940C029003EF9EB /* 15.jpg */; };
-		504CA3A21940C029003EF9EB /* 16.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA38E1940C029003EF9EB /* 16.jpg */; };
-		504CA3A31940C029003EF9EB /* 17.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA38F1940C029003EF9EB /* 17.jpg */; };
-		504CA3A41940C029003EF9EB /* 18.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3901940C029003EF9EB /* 18.jpg */; };
-		504CA3A51940C029003EF9EB /* 19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3911940C029003EF9EB /* 19.jpg */; };
-		504CA3A61940C029003EF9EB /* 20.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3921940C029003EF9EB /* 20.png */; };
 		504CA3B41940C035003EF9EB /* button_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3A71940C035003EF9EB /* button_camera.png */; };
 		504CA3B51940C035003EF9EB /* button_flashauto.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3A81940C035003EF9EB /* button_flashauto.png */; };
 		504CA3B61940C035003EF9EB /* button_flashoff.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3A91940C035003EF9EB /* button_flashoff.png */; };
@@ -736,41 +716,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				504CA39C1940C029003EF9EB /* 10.jpg in Resources */,
 				504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */,
-				504CA3991940C029003EF9EB /* 07.jpg in Resources */,
 				50F64EC51952F40900E0B8DC /* APPhotoCell.xib in Resources */,
 				504CA3BD1940C035003EF9EB /* icon_checkgreen.png in Resources */,
 				504CA3C71940C043003EF9EB /* stock4.jpeg in Resources */,
-				504CA3951940C029003EF9EB /* 03.jpg in Resources */,
-				504CA39A1940C029003EF9EB /* 08.jpg in Resources */,
 				504CA3B81940C035003EF9EB /* button_frontfacingcamera.png in Resources */,
-				504CA3941940C029003EF9EB /* 02.jpg in Resources */,
-				504CA3A41940C029003EF9EB /* 18.jpg in Resources */,
 				504CA3BF1940C035003EF9EB /* icon_lock.png in Resources */,
 				504CA3CA1940C043003EF9EB /* stock1.jpeg in Resources */,
 				504CA3C61940C043003EF9EB /* stock5.jpeg in Resources */,
 				50105674196AFA0C00D7F800 /* settingsTab.png in Resources */,
-				504CA3A31940C029003EF9EB /* 17.jpg in Resources */,
 				504CA3D01940C04E003EF9EB /* ap_appicon120.png in Resources */,
 				504CA3B91940C035003EF9EB /* button_plusblack.png in Resources */,
-				504CA39E1940C029003EF9EB /* 12.jpg in Resources */,
 				50105671196AFA0C00D7F800 /* createEventTab.png in Resources */,
-				504CA39D1940C029003EF9EB /* 11.jpg in Resources */,
-				504CA3A51940C029003EF9EB /* 19.jpg in Resources */,
 				504CA3B61940C035003EF9EB /* button_flashoff.png in Resources */,
 				50F64ED01952F64800E0B8DC /* APSearchEventTableViewCell.xib in Resources */,
 				504CA3CE1940C04E003EF9EB /* ap_appicon58.png in Resources */,
 				504CA3BA1940C035003EF9EB /* button_pluswhite.png in Resources */,
-				504CA3971940C029003EF9EB /* 05.jpg in Resources */,
 				50F64ED21952F64800E0B8DC /* APSearchEventDetailViewController.xib in Resources */,
 				50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */,
-				504CA3A01940C029003EF9EB /* 14.jpg in Resources */,
-				504CA3981940C029003EF9EB /* 06.jpg in Resources */,
 				504CA3B71940C035003EF9EB /* button_flashon.png in Resources */,
-				504CA39F1940C029003EF9EB /* 13.jpg in Resources */,
 				504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */,
-				504CA39B1940C029003EF9EB /* 09.jpg in Resources */,
 				50105672196AFA0C00D7F800 /* myEventsTab.png in Resources */,
 				504CA3C01940C035003EF9EB /* icon_magnifyingglass.png in Resources */,
 				504CA32619408C82003EF9EB /* Images.xcassets in Resources */,
@@ -779,21 +744,16 @@
 				504CA31819408C82003EF9EB /* InfoPlist.strings in Resources */,
 				50105673196AFA0C00D7F800 /* nearbyTab.png in Resources */,
 				508849E81955DE5E00B1CA5E /* sunRising.png in Resources */,
-				504CA3961940C029003EF9EB /* 04.jpg in Resources */,
 				504CA3C91940C043003EF9EB /* stock2.jpeg in Resources */,
 				504CA3BE1940C035003EF9EB /* icon_close.png in Resources */,
 				504CA3B51940C035003EF9EB /* button_flashauto.png in Resources */,
-				504CA3A61940C029003EF9EB /* 20.png in Resources */,
-				504CA3931940C029003EF9EB /* 01.jpg in Resources */,
 				50C3AA90195F0ECB00A0297A /* APInviteFriendTableViewCell.xib in Resources */,
 				504CA3BC1940C035003EF9EB /* icon_checkempty.png in Resources */,
-				504CA3A21940C029003EF9EB /* 16.jpg in Resources */,
 				50F64EBF1952F40900E0B8DC /* APImagePreviewViewController.xib in Resources */,
 				504CA3C81940C043003EF9EB /* stock3.jpeg in Resources */,
 				50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */,
 				504CA32119408C82003EF9EB /* Main.storyboard in Resources */,
 				50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */,
-				504CA3A11940C029003EF9EB /* 15.jpg in Resources */,
 				504CA3BB1940C035003EF9EB /* button_savetocloud.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
