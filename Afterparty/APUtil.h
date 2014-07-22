@@ -33,7 +33,6 @@
 + (void)updateEventVenue:(FSVenue*)newVenue forEventID:(NSString*)eventID;
 + (NSString*)getVersion;
 + (BOOL)shouldDownloadNewVersion;
-+ (BOOL)string:(NSString*)str1 isGreaterThanString:(NSString*)str2;
 + (NSString *) genRandIdString;
 + (NSString *)formatDateForEventDetailScreen:(NSDate*)date;
 + (NSString *)formatDateForEventCreationScreen:(NSDate*)date;

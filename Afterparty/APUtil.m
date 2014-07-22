@@ -250,31 +250,11 @@
     NSString *webVersion = [metadata objectForKey:@"bundle-version"];
     
     NSLog(@"\nCurrent Version: %@\nServer Version: %@", [self getVersion], webVersion);
-    
-    if ([self string:webVersion isGreaterThanString:[self getVersion]]) {
-        return YES;
-    }
-    return NO;
-}
-
-+(BOOL)string:(NSString*)str1 isGreaterThanString:(NSString*)str2
-{
-    NSArray *a1 = [str1 componentsSeparatedByString:@"."];
-    NSArray *a2 = [str2 componentsSeparatedByString:@"."];
-    
-    NSInteger totalCount = ([a1 count] < [a2 count]) ? [a1 count] : [a2 count];
-    NSInteger checkCount = 0;
-    
-    while (checkCount < totalCount) {
-        if([a1[checkCount] integerValue] < [a2[checkCount] integerValue])
-            return NO;
-        else if([a1[checkCount] integerValue] > [a2[checkCount] integerValue])
-            return YES;
-        else
-            checkCount++;
-    }
-    
-    return NO;
+  
+  if ([[self getVersion] compare:webVersion options:NSNumericSearch] == NSOrderedAscending) { //checks to see if current version is less than web version
+    return YES;
+  }
+  return NO;
 }
 
 +(NSString *) genRandIdString {
