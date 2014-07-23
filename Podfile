@@ -6,4 +6,3 @@ pod 'FXBlurView', '~> 1.5'
 pod 'SVProgressHUD', :head
 pod 'TTTAttributedLabel', '~> 1.9'
 pod 'Parse', '~> 1.2.19'
-pod 'JazzHands', '~> 0.1'

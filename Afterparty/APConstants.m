@@ -20,6 +20,7 @@ NSString *const kSettingsProfileSegue = @"settingsProfileSegue";
 NSString *const kSettingsEventSegue = @"settingsEventSegue";
 NSString *const kSettingsSocialNetworkingSegue = @"settingsSocialNetworkingSegue";
 NSString *const kLoginSegue = @"LoginSegue";
+NSString *const kCheckCurrentUser = @"checkCurrentUser";
 
 // API
 

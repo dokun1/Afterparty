@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GYt-on-aUY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GYt-on-aUY">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -627,10 +627,10 @@
             </objects>
             <point key="canvasLocation" x="559" y="1167"/>
         </scene>
-        <!--Table View Controller - SETTINGS-->
+        <!--Settings Table View Controller - SETTINGS-->
         <scene sceneID="kWh-61-ELd">
             <objects>
-                <tableViewController id="a4A-iv-Y3u" sceneMemberID="viewController">
+                <tableViewController id="a4A-iv-Y3u" customClass="APSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="lau-MP-3rX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -638,53 +638,29 @@
                         <sections>
                             <tableViewSection headerTitle="User Profile" id="4ZG-HH-jkJ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Setting" id="Nbp-7r-Ib7">
-                                        <rect key="frame" x="0.0" y="119" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Setting" rowHeight="90" id="Nbp-7r-Ib7">
+                                        <rect key="frame" x="0.0" y="119" width="320" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nbp-7r-Ib7" id="8dW-rp-GeP">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6BN-VU-kxx">
+                                                    <rect key="frame" x="20" y="15" width="60" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DWK-cd-1CF" customClass="APLabel">
+                                                    <rect key="frame" x="98" y="34" width="172" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Event Settings" id="zCu-Vq-FzD">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Setting" id="khz-fP-Sz4">
-                                        <rect key="frame" x="0.0" y="211" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="khz-fP-Sz4" id="de3-69-WCR">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Setting" id="tYp-zM-ryg">
-                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tYp-zM-ryg" id="j2P-XF-gKI">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Social Networking" id="H8U-eC-Dbh">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Setting" id="A60-h8-wGE">
-                                        <rect key="frame" x="0.0" y="347" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A60-h8-wGE" id="5X0-iu-krT">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Setting" id="J7T-0P-L5H">
-                                        <rect key="frame" x="0.0" y="391" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J7T-0P-L5H" id="Q1D-C2-AJe">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="uON-gI-ljh" kind="push" identifier="settingsProfileSegue" id="RU3-hm-9ke"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -695,10 +671,121 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="SETTINGS" id="CEf-V1-fZS"/>
+                    <connections>
+                        <outlet property="profilePicture" destination="6BN-VU-kxx" id="UaP-Ib-gVX"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uSw-Ly-18H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="559" y="1932"/>
+        </scene>
+        <!--Settings Profile View Controller - EDIT PROFILE-->
+        <scene sceneID="mJj-Bt-Lr7">
+            <objects>
+                <viewController id="uON-gI-ljh" customClass="APSettingsProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KaX-al-Mxu"/>
+                        <viewControllerLayoutGuide type="bottom" id="1pM-WN-vNp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CkX-EX-ZfL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Hz-Kj-b0b">
+                                <rect key="frame" x="20" y="81" width="70" height="70"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sf0-7j-Uja" customClass="APLabel">
+                                <rect key="frame" x="98" y="105" width="186" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XYI-5r-q49" customClass="APTextField">
+                                <rect key="frame" x="20" y="176" width="269" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T3E-xO-hs5" customClass="APLabel">
+                                <rect key="frame" x="20" y="153" width="269" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bt6-KI-XeX" customClass="APTextField">
+                                <rect key="frame" x="20" y="237" width="269" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="blurb about yourself" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aih-Tt-KDR" customClass="APLabel">
+                                <rect key="frame" x="20" y="214" width="269" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgW-0y-Mud" customClass="APButton">
+                                <rect key="frame" x="28" y="275" width="125" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="link w/facebook">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="facebookButtonLinkTapped:" destination="uON-gI-ljh" eventType="touchUpInside" id="OJ6-vO-Lby"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLP-O6-irn" customClass="APButton">
+                                <rect key="frame" x="167" y="275" width="125" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="link w/twitter">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="twitterButtonLinkTapped:" destination="uON-gI-ljh" eventType="touchUpInside" id="Mu0-Dc-4XY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sj4-R7-cyP" customClass="APButton">
+                                <rect key="frame" x="28" y="327" width="264" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="opt out of data tracking">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dataTrackingButtonTapped:" destination="uON-gI-ljh" eventType="touchUpInside" id="ibM-vE-LAB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzW-Rh-AF8" customClass="APButton">
+                                <rect key="frame" x="28" y="379" width="264" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="sign out">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signOutButtonTapped:" destination="uON-gI-ljh" eventType="touchUpInside" id="To3-g5-Eqs"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="EDIT PROFILE" id="m3U-PH-cCv"/>
+                    <connections>
+                        <outlet property="blurbFieldLabel" destination="Aih-Tt-KDR" id="bQn-oc-DTn"/>
+                        <outlet property="blurbTextField" destination="bt6-KI-XeX" id="yOQ-sb-e5r"/>
+                        <outlet property="dataTrackingButton" destination="sj4-R7-cyP" id="Xbz-2A-Rne"/>
+                        <outlet property="emailFieldLabel" destination="T3E-xO-hs5" id="PK1-sU-UZX"/>
+                        <outlet property="emailTextField" destination="XYI-5r-q49" id="Haa-6T-wcr"/>
+                        <outlet property="linkWithFacebookButton" destination="xgW-0y-Mud" id="MyJ-Zj-WHZ"/>
+                        <outlet property="linkWithTwitterButton" destination="cLP-O6-irn" id="xOY-WC-nAd"/>
+                        <outlet property="profilePhotoView" destination="3Hz-Kj-b0b" id="MCt-pY-dI4"/>
+                        <outlet property="signOutButton" destination="AzW-Rh-AF8" id="WcC-3h-mO7"/>
+                        <outlet property="usernameLabel" destination="sf0-7j-Uja" id="j1Z-vW-AuW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vEZ-jP-oPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1080" y="1932"/>
         </scene>
         <!--Navigation Controller - My Events-->
         <scene sceneID="Yjp-bJ-EAf">
@@ -891,10 +978,10 @@
         <image name="button_camera.png" width="161" height="161"/>
         <image name="button_plusblack.png" width="44" height="44"/>
         <image name="button_pluswhite.png" width="44" height="44"/>
-        <image name="createEventTab.png" width="32" height="32"/>
-        <image name="myEventsTab.png" width="32" height="32"/>
-        <image name="nearbyTab.png" width="32" height="32"/>
-        <image name="settingsTab.png" width="32" height="32"/>
+        <image name="createEventTab.png" width="40" height="40"/>
+        <image name="myEventsTab.png" width="40" height="40"/>
+        <image name="nearbyTab.png" width="40" height="40"/>
+        <image name="settingsTab.png" width="35" height="35"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

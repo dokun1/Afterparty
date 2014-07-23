@@ -18,6 +18,8 @@
     // Override point for customization after application launch.
   
   [Parse setApplicationId:kParseApplicationID clientKey:kParseClientKey];
+  [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
+  [PFFacebookUtils initializeFacebook];
   
   [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
   
