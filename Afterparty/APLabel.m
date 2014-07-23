@@ -46,7 +46,7 @@
       break;
     case LabelTypeTableViewCellAttribute:
       [self setFont:[UIFont fontWithName:kRegularFont size:17.f]];
-      self.textColor = [UIColor afterpartyTealBlueColor];
+      self.textColor = [UIColor afterpartyOffWhiteColor];
       break;
     case LabelTypeTableViewCellTitle:
       [self setFont:[UIFont fontWithName:kBoldFont size:22.f]];
