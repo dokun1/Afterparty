@@ -12,6 +12,9 @@
 #import "UIColor+APColor.h"
 #import <Parse/Parse.h>
 #import "APConstants.h"
+#import "APUtil.h"
+#import "APConnectionManager.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface APMainTabBarController ()
 
@@ -45,22 +48,20 @@
   if (![PFUser currentUser]) {
     [self performSegueWithIdentifier:kLoginSegue sender:self];
   }
-//  APLoginViewController *loginVC = (APLoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//    [self presentViewController:loginVC animated:YES completion:nil];
-//  if (![self currentUser]) {
-//    APLoginViewController *loginVC = [[APLoginViewController alloc] init];
-//    [self presentViewController:loginVC animated:YES completion:nil];
-//  }
-//  NSString *latestVersion= [[NSUserDefaults standardUserDefaults] objectForKey:@"latestVersion"];
-//  if (![[APUtil getVersion] isEqualToString:latestVersion] && [PFUser currentUser] != nil) {
-//    [[APConnectionManager sharedManager] updateInstallVersionForUser:[PFUser currentUser] success:^(BOOL succeeded) {
-//      [[NSUserDefaults standardUserDefaults] setObject:[APUtil getVersion] forKey:@"latestVersion"];
-//      [[NSUserDefaults standardUserDefaults] synchronize];
-//    } failure:^(NSError *error) {
-//      NSLog(@"Couldnt update version for user = %@", [error localizedDescription]);
-//    }];
-//  }
-//  [self performSelectorInBackground:@selector(newInstallLogic) withObject:nil];
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    if ([APUtil shouldDownloadNewVersion]) {
+      [SVProgressHUD showWithStatus:@"new version available"];
+    }
+  });
+  NSString *latestVersion= [[NSUserDefaults standardUserDefaults] objectForKey:@"latestVersion"];
+  if (![[APUtil getVersion] isEqualToString:latestVersion] && [PFUser currentUser] != nil) {
+    [[APConnectionManager sharedManager] updateInstallVersionForUser:[PFUser currentUser] success:^(BOOL succeeded) {
+      [[NSUserDefaults standardUserDefaults] setObject:[APUtil getVersion] forKey:@"latestVersion"];
+      [[NSUserDefaults standardUserDefaults] synchronize];
+    } failure:^(NSError *error) {
+      NSLog(@"Couldnt update version for user = %@", [error localizedDescription]);
+    }];
+  }
 }
 
 - (void)didReceiveMemoryWarning

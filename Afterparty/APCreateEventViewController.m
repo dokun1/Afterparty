@@ -235,6 +235,7 @@
   self.confirmEventButton = [[APButton alloc] init];
   [self.confirmEventButton style];
   self.confirmEventButton.titleLabel.text = @"DONE AND DONE. CREATE EVENT!";
+  [self.confirmEventButton setTitle:@"DONE AND DONE. CREATE EVENT!" forState:UIControlStateNormal];
   [self.confirmEventButton setFrame:self.createEventButton.frame];
   [self.confirmEventButton setAlpha:0.0f];
   [self.confirmEventButton addTarget:self action:@selector(confirmEventButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -488,6 +489,7 @@
 
 -(void)confirmEventButtonTapped:(id)sender {
   [SVProgressHUD showWithStatus:@"saving event"];
+  self.confirmEventButton.enabled = NO;
   [self.currentEvent setEventDescription:self.eventDescriptionView.text];
   self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*60*60];
   [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
@@ -500,10 +502,12 @@
       [self sendInvitationsForEventID:object.objectId];
     } failure:^(NSError *error) {
       [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
+      self.confirmEventButton.enabled = YES;
     }];
     [SVProgressHUD showSuccessWithStatus:@"event saved!"];
   } failure:^(NSError *error) {
     [SVProgressHUD showErrorWithStatus:@"error saving, try again"];
+    self.confirmEventButton.enabled = YES;
   }];
 }
 
