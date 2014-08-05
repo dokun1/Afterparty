@@ -50,13 +50,14 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   if (self = [super initWithCoder:aDecoder]) {
-    [SVProgressHUD showWithStatus:@"Downloading photo data..."];
+    //init logic
   }
   return self;
 }
 
 - (void)getLatestMetadata {
   __block NSMutableArray *data = [@[] mutableCopy];
+  [SVProgressHUD show];
   [[APConnectionManager sharedManager] downloadImageMetadataForEventID:self.eventID success:^(NSArray *objects) {
     [objects enumerateObjectsUsingBlock:^(PFObject *obj, NSUInteger idx, BOOL *stop) {
       APPhotoInfo *info = [[APPhotoInfo alloc] initWithParseObject:obj forEvent:self.eventID];
@@ -176,7 +177,6 @@
 }
 
 -(void)saveButtonTapped {
-    [UIAlertView showSimpleAlertWithTitle:@"Warning" andMessage:@"I don't have this feature working yet, but I will soon!"];
     self.isSavingBulk = YES;
     self.collectionView.allowsMultipleSelection = YES;
     [UIView transitionWithView:self.photoButton
@@ -440,15 +440,19 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.isSavingBulk) {
-        APPhotoCell *cell = (APPhotoCell*)[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell setNeedsDisplay];
-        cell.imageView.alpha = 0.5;
-        UIView *overlay = [[UIView alloc] initWithFrame:cell.contentView.frame];
-        overlay.backgroundColor = [UIColor whiteColor];
-        overlay.alpha = 0.3;
-        [cell.contentView addSubview:overlay];
-        [cell.contentView bringSubviewToFront:overlay];
+        NSLog(@"selected item %d for bulk save", indexPath.item);
+      if (!self.selectedPhotos) {
+        self.selectedPhotos = [NSMutableArray array];
+      }
+      if ([self.selectedPhotos containsObject:indexPath]) {
+        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+        [self.selectedPhotos removeObject:indexPath];
+      }else{
+        [self.selectedPhotos addObject:indexPath];
+      }
+
     }else{
+        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         APPhotoViewController *vc = [[APPhotoViewController alloc] initWithMetadata:self.photoMetadata andSelectedIndex:indexPath.item];
         [self.navigationController pushViewController:vc animated:YES];
     }

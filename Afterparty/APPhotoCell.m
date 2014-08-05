@@ -43,11 +43,14 @@
   self.imageView.frame = frame;
   self.layer.borderColor = [[UIColor whiteColor] CGColor];
   self.layer.borderWidth = 0.5f;
-  [self.imageView setImageWithURL:photoInfo.thumbURL];
   __weak APPhotoCell *weakcell = self;
   [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoInfo.thumbURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
     [weakcell.downloadIndicator stopAnimating];
     weakcell.downloadIndicator.hidden = YES;
+    CGRect frame = weakcell.imageView.frame;
+    frame.size = [weakcell sizePhotoForColumn:weakcell.photoInfo.size];
+    weakcell.imageView.frame = frame;
+    weakcell.imageView.image = image;
   } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
     NSLog(@"error download");
   }];
@@ -66,6 +69,15 @@
   }
   
   return newSize;
+}
+
+- (void)setSelected:(BOOL)selected {
+  if (!self.selectedView) {
+    self.selectedView = [[UIView alloc] initWithFrame:self.bounds];
+    self.selectedView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:self.selectedView];
+  }
+  self.selectedView.alpha = selected ? 0.7f : 0.0f;
 }
 
 

@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *downloadIndicator;
 @property (strong, nonatomic) UIImage *image;
 @property (nonatomic, strong) APPhotoInfo *photoInfo;
+@property (strong, nonatomic) UIView *selectedView;
 
 - (void)setPhotoInfo:(APPhotoInfo *)photoInfo;
 
