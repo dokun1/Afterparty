@@ -61,7 +61,7 @@
     
   [self setTitle:self.currentEvent.eventName];
   [self.eventCreatedByName styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.createdByUsername];
-  [self.eventCreatedByBlurb styleForType:LabelTypeSearchDetailAttribute withText:@"sample blurb"];
+  [self.eventCreatedByBlurb styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventUserBlurb];
   [self.eventDescription styleForType:LabelTypeSearchDetailDescription withText:self.currentEvent.eventDescription];
   [self.eventStartDateLabel styleForType:LabelTypeSearchDetailAttribute withText:[APUtil formatDateForEventDetailScreen:self.currentEvent.startDate]];
   [self.eventFirstAddressString styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventAddress];
@@ -70,10 +70,11 @@
     
   UIImage *image = [UIImage imageWithData:self.currentEvent.eventImageData];
   [self.eventImageView setImage:image];
+  [self.userAvatar setImageWithURL:[NSURL URLWithString:self.currentEvent.eventUserPhotoURL]];
 }
 
 - (IBAction)eventJoinTapped:(id)sender {
-    if (self.currentEvent.password) {
+    if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Private Event" message:@"Please enter the event's password." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
         av.alertViewStyle = UIAlertViewStylePlainTextInput;
         av.tag = 1000;

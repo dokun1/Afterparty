@@ -27,6 +27,8 @@
 @property (strong, nonatomic) NSString               *eventAddress;
 @property (strong, nonatomic) UIImage                *eventImage;
 @property (strong, nonatomic) NSData                 *eventImageData;
+@property (strong, nonatomic) NSString               *eventUserPhotoURL;
+@property (strong, nonatomic) NSString               *eventUserBlurb;
 
 - (instancetype)initWithName:(NSString*)name
                        venue:(FSVenue*)venue
@@ -39,7 +41,9 @@
                 coverPhotoID:(NSString*)coverPhotoID
             eventDescription:(NSString*)eventDescription
                 eventAddress:(NSString*)eventAddress
-                  eventImage:(UIImage*)eventImage;
+                  eventImage:(UIImage*)eventImage
+           eventUserPhotoURL:(NSString*)eventUserPhotoURL
+              eventUserBlurb:(NSString*)eventUserBlurb;
 
 - (instancetype)initWithParseObject:(PFObject*)parseObject;
 

@@ -25,12 +25,12 @@
 
 - (void)viewDidLoad {
   self.currentUser = [PFUser currentUser];
-  [self.profilePicture setImageWithURL:[NSURL URLWithString:self.currentUser[@"profilePhotoURL"]]];
   self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  [self.profilePicture setImageWithURL:[NSURL URLWithString:self.currentUser[kPFUserProfilePhotoURLKey]]];
   [SVProgressHUD dismiss];
 }
 

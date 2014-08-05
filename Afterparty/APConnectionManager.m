@@ -127,19 +127,21 @@
   PFFile *imageFile = [PFFile fileWithName:@"eventImage.jpg" data:imageData];
   [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     PFObject *savedEvent = [PFObject objectWithClassName:kEventSearchParseClass];
-    savedEvent[@"eventName"]         = [event eventName];
-    savedEvent[@"eventVenueID"]      = [event eventVenue].venueId;
-    savedEvent[@"eventVenueName"]    = [event eventVenue].name;
-    savedEvent[@"password"]          = event.password ? [event password] : @"";
-    savedEvent[@"startDate"]         = [event startDate];
-    savedEvent[@"endDate"]           = [event endDate];
-    savedEvent[@"deleteDate"]        = [event deleteDate];
-    savedEvent[@"createdByUsername"] = [event createdByUsername];
-    savedEvent[@"latitude"]          = @([event location].latitude);
-    savedEvent[@"longitude"]         = @([event location].longitude);
-    savedEvent[@"eventDescription"]  = [event eventDescription];
-    savedEvent[@"eventAddress"]      = [event eventAddress];
-    savedEvent[@"eventImage"]        = imageFile;
+    savedEvent[@"eventName"]              = [event eventName];
+    savedEvent[@"eventVenueID"]           = [event eventVenue].venueId;
+    savedEvent[@"eventVenueName"]         = [event eventVenue].name;
+    savedEvent[@"password"]               = event.password ? [event password] : @"";
+    savedEvent[@"startDate"]              = [event startDate];
+    savedEvent[@"endDate"]                = [event endDate];
+    savedEvent[@"deleteDate"]             = [event deleteDate];
+    savedEvent[@"createdByUsername"]      = [event createdByUsername];
+    savedEvent[@"latitude"]               = @([event location].latitude);
+    savedEvent[@"longitude"]              = @([event location].longitude);
+    savedEvent[@"eventDescription"]       = [event eventDescription];
+    savedEvent[@"eventAddress"]           = [event eventAddress];
+    savedEvent[@"eventImage"]             = imageFile;
+    savedEvent[kPFUserProfilePhotoURLKey] = [event eventUserPhotoURL];
+    savedEvent[kPFUserBlurbKey]           = [event eventUserBlurb];
     [savedEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
       (error == nil) ? successBlock(succeeded) : failureBlock(error);
     }];
@@ -371,8 +373,8 @@
     PFUser *user = [PFUser currentUser];
     user.username = userData[@"name"];
     user.email = userData[@"email"];
-    user[@"dataTracking"] = @(YES);
-    [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", userData[@"id"]] forKey:@"profilePhotoURL"];
+    user[kPFUserDataTrackingKey] = @(YES);
+    [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", userData[@"id"]] forKey:kPFUserProfilePhotoURLKey];
     [user saveInBackground];
     successBlock(userData);
   }];
@@ -403,8 +405,8 @@
     if (result) {
       PFUser *user = [PFUser currentUser];
       user.username = result[@"screen_name"];
-      user[@"dataTracking"] = @(YES);
-      [user setValue:result[@"profile_image_url"] forKey:@"profilePhotoURL"];
+      user[kPFUserDataTrackingKey] = @(YES);
+      [user setValue:result[@"profile_image_url"] forKey:kPFUserProfilePhotoURLKey];
       [user saveInBackground];
     }
   }];
@@ -449,7 +451,7 @@
   }
   user.password = hashedPassword;
   user.email = email;
-  user[@"dataTracking"] = @(YES);
+  user[kPFUserDataTrackingKey] = @(YES);
   [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     (error == nil) ? successBlock(succeeded) : failureBlock(error);
   }];
@@ -478,7 +480,7 @@
 - (void)saveUserTrackingParameter:(BOOL)isTrackingData success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
   PFUser *currentUser = [PFUser currentUser];
   if (currentUser) {
-    currentUser[@"dataTracking"] = @(isTrackingData);
+    currentUser[kPFUserDataTrackingKey] = @(isTrackingData);
     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
       (error == nil) ? successBlock() : failureBlock(error);
     }];
@@ -490,7 +492,7 @@
               failure:(APFailureErrorBlock)failureBlock {
   PFUser *currentUser = [PFUser currentUser];
   if (currentUser) {
-    currentUser[@"blurb"] = blurb;
+    currentUser[kPFUserBlurbKey] = blurb;
     [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
       (error == nil) ? successBlock() : failureBlock(error);
     }];

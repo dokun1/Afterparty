@@ -400,6 +400,12 @@
     
 }
 
+- (void)cameraControllerDidCancel:(APCameraOverlayViewController *)controller {
+  [self.navigationController setNavigationBarHidden:NO];
+  [[UIApplication sharedApplication] setStatusBarHidden:NO];
+  [self.navigationController popToViewController:self animated:YES];
+}
+
 -(void)uploadImage:(UIImage*)image withThumbnail:(UIImage*)thumbnailImage {
   [SVProgressHUD show];
   [[APPhotoUploadQueue sharedQueue] addPhotoToQueue:image withThumbnail:thumbnailImage forEventID:self.eventID];

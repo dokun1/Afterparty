@@ -50,4 +50,10 @@ extern NSString *const kCheckCurrentUser;
 extern NSString *const kRegularFont;
 extern NSString *const kBoldFont;
 
+// PFUser Keys
+
+extern NSString *const kPFUserProfilePhotoURLKey;
+extern NSString *const kPFUserBlurbKey;
+extern NSString *const kPFUserDataTrackingKey;
+
 @end

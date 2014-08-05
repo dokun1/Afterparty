@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9B8A771E162F4BD68254C2A6"
+               BlueprintIdentifier = "D3C0EBE73E6244639E107CA7"
                BuildableName = "libPods-Foursquare-API-v2.a"
                BlueprintName = "Pods-Foursquare-API-v2"
                ReferencedContainer = "container:Pods.xcodeproj">

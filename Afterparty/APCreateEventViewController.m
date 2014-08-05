@@ -295,10 +295,8 @@
   }];
   
   self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(285, 5, 30, 30)];
-  [self.dismissDateButton setImage:[UIImage imageNamed:@"button_plusblack"] forState:UIControlStateNormal];
-  [self.dismissDateButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+  [self.dismissDateButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
   [self.dismissDateButton addTarget:self action:@selector(dismissDatePickerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-  self.dismissDateButton.transform = CGAffineTransformMakeRotation(45.0*M_PI/180.0);
   [self.view addSubview:self.dismissDateButton];
   
   self.datePickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 440)];
@@ -492,6 +490,9 @@
   self.confirmEventButton.enabled = NO;
   [self.currentEvent setEventDescription:self.eventDescriptionView.text];
   self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*60*60];
+  PFUser *currentUser = [PFUser currentUser];
+  self.currentEvent.eventUserBlurb = currentUser[kPFUserBlurbKey] ? currentUser[kPFUserBlurbKey] : @"This user has no blurb";
+  self.currentEvent.eventUserPhotoURL = currentUser[kPFUserProfilePhotoURLKey] ? currentUser[kPFUserProfilePhotoURLKey] : @"";
   [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
     [[APConnectionManager sharedManager] lookupEventByName:self.currentEvent.eventName user:[PFUser currentUser] success:^(NSArray *objects) {
       PFObject *object = [objects lastObject];

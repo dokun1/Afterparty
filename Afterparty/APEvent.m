@@ -7,10 +7,11 @@
 //
 
 #import "APEvent.h"
+#import "APConstants.h"
 
 @implementation APEvent
 
-- (instancetype)initWithName:(NSString *)name venue:(FSVenue *)venue password:(NSString *)password startDate:(NSDate *)startDate endDate:(NSDate *)endDate deleteDate:(NSDate *)deleteDate createdByUsername:(NSString *)createdByUsername atLocation:(CLLocationCoordinate2D)location coverPhotoID:(NSString *)coverPhotoID eventDescription:(NSString *)eventDescription eventAddress:(NSString *)eventAddress eventImage:(UIImage *)eventImage {
+- (instancetype)initWithName:(NSString *)name venue:(FSVenue *)venue password:(NSString *)password startDate:(NSDate *)startDate endDate:(NSDate *)endDate deleteDate:(NSDate *)deleteDate createdByUsername:(NSString *)createdByUsername atLocation:(CLLocationCoordinate2D)location coverPhotoID:(NSString *)coverPhotoID eventDescription:(NSString *)eventDescription eventAddress:(NSString *)eventAddress eventImage:(UIImage *)eventImage eventUserPhotoURL:(NSString *)eventUserPhotoURL eventUserBlurb:(NSString *)eventUserBlurb{
   if (self = [super init]) {
     _eventName         = name;
     _eventVenue        = venue;
@@ -25,6 +26,8 @@
     _eventDescription  = eventDescription;
     _eventAddress      = (eventAddress) ? eventAddress : @"";
     _eventImage        = eventImage;
+    _eventUserPhotoURL = eventUserPhotoURL;
+    _eventUserBlurb    = eventUserBlurb;
   }
   return self;
 }
@@ -33,7 +36,7 @@
   if (self = [super init]) {
     _eventName         = parseObject[@"eventName"];
     _eventVenue        = nil;
-    _password          = nil;
+    _password          = parseObject[@"password"];
     _startDate         = parseObject[@"startDate"];
     _endDate           = parseObject[@"endDate"];
     _deleteDate        = parseObject[@"deleteDate"];
@@ -44,6 +47,8 @@
     _eventDescription  = parseObject[@"eventDescription"];
     _eventAddress      = (parseObject[@"eventAddress"]) ? parseObject[@"eventAddress"] : @"";
     _eventImage        = parseObject[@"eventImage"];
+    _eventUserPhotoURL = parseObject[kPFUserProfilePhotoURLKey];
+    _eventUserBlurb    = parseObject[kPFUserBlurbKey];
   }
   return self;
 }

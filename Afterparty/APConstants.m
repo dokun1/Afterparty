@@ -49,4 +49,10 @@ NSString *const kQueueIsDoneUploading = @"photoQueueDoneUploading";
 NSString *const kRegularFont = @"SofiaProLight";
 NSString *const kBoldFont = @"SofiaProBold";
 
+// PFUser Keys
+
+NSString *const kPFUserProfilePhotoURLKey = @"profilePhotoURL";
+NSString *const kPFUserBlurbKey = @"blurb";
+NSString *const kPFUserDataTrackingKey = @"dataTracking";
+
 @end

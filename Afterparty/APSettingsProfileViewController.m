@@ -57,15 +57,18 @@
   if (self.profileImage) {
     self.profilePhotoView.image = self.profileImage;
   } else {
-    [self.profilePhotoView setImageWithURL:[NSURL URLWithString:user[@"profilePhotoURL"]]];
+    [self.profilePhotoView setImageWithURL:[NSURL URLWithString:user[kPFUserProfilePhotoURLKey]]];
   }
-  BOOL isTrackingData = [user[@"dataTracking"] boolValue];
+  BOOL isTrackingData = [user[kPFUserDataTrackingKey] boolValue];
   self.isTracking = isTrackingData;
   if (user.email) {
     self.emailTextField.text = user.email;
   }
-  if (user[@"blurb"]) {
-    self.blurbTextField.text = user[@"blurb"];
+  if (user[kPFUserBlurbKey]) {
+    self.blurbTextField.text = user[kPFUserBlurbKey];
+  }
+  if (user[kPFUserProfilePhotoURLKey]) {
+    [self.profilePhotoView setImageWithURL:[NSURL URLWithString:user[kPFUserProfilePhotoURLKey]]];
   }
   self.blurbTextField.delegate = self;
   
@@ -81,8 +84,11 @@
   [self.emailTextField styleForPasswordEntry];
   [self.blurbTextField styleForPasswordEntry];
   [self.emailFieldLabel styleForType:LabelTypeTableViewCellAttribute];
+  self.emailFieldLabel.textColor = [UIColor afterpartyTealBlueColor];
   [self.blurbFieldLabel styleForType:LabelTypeTableViewCellAttribute];
+  self.blurbFieldLabel.textColor = [UIColor afterpartyTealBlueColor];
   [self.usernameLabel styleForType:LabelTypeTableViewCellAttribute];
+  self.usernameLabel.textColor = [UIColor afterpartyTealBlueColor];
 }
 
 #pragma mark - IBAction Methods
@@ -100,6 +106,11 @@
   [SVProgressHUD show];
   [[APConnectionManager sharedManager] linkFacebookWithSuccess:^{
     [SVProgressHUD showSuccessWithStatus:@"linked!"];
+    [[APConnectionManager sharedManager] getFacebookUserDetailsWithSuccessBlock:^(NSDictionary *dictionary) {
+      [self loadUserData];
+    } failure:^(NSError *error) {
+      NSLog(@"couldnt get details");
+    }];
   } failure:^(NSError *error) {
     [SVProgressHUD showErrorWithStatus:@"couldn't link your facebook account"];
   }];

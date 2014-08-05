@@ -37,7 +37,7 @@
   [self.acceptButton style];
 
     [self.imageView setImage:self.image];
-    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [self.imageView setContentMode:UIViewContentModeScaleToFill];
     [self.imageView setCenter:self.view.center];
     // Do any additional setup after loading the view from its nib.
 }

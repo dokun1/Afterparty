@@ -289,7 +289,7 @@
                                     <constraint firstAttribute="height" constant="170" id="njq-gJ-Fp3"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgd-HP-zRI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user_male3-512" translatesAutoresizingMaskIntoConstraints="NO" id="hgd-HP-zRI">
                                 <rect key="frame" x="10" y="242" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -378,7 +378,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Create Event" image="createEventTab.png" id="fF4-u4-XvF"/>
+                    <tabBarItem key="tabBarItem" title="Create Event" image="plus-512" id="fF4-u4-XvF">
+                        <inset key="imageInsets" minX="300" minY="300" maxX="300" maxY="300"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="ZUQ-Ls-UDP"/>
                     <connections>
                         <segue destination="bSh-UU-cpN" kind="modal" identifier="createEventSegue" id="Uu8-bn-0er"/>
@@ -645,7 +647,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="89"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6BN-VU-kxx">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user_male3-512" translatesAutoresizingMaskIntoConstraints="NO" id="6BN-VU-kxx">
                                                     <rect key="frame" x="20" y="15" width="60" height="60"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
@@ -691,7 +693,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Hz-Kj-b0b">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user_male3-512" translatesAutoresizingMaskIntoConstraints="NO" id="3Hz-Kj-b0b">
                                 <rect key="frame" x="20" y="81" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -978,10 +980,11 @@
         <image name="button_camera.png" width="161" height="161"/>
         <image name="button_plusblack.png" width="44" height="44"/>
         <image name="button_pluswhite.png" width="44" height="44"/>
-        <image name="createEventTab.png" width="40" height="40"/>
         <image name="myEventsTab.png" width="40" height="40"/>
         <image name="nearbyTab.png" width="40" height="40"/>
+        <image name="plus-512" width="256" height="256"/>
         <image name="settingsTab.png" width="35" height="35"/>
+        <image name="user_male3-512" width="512" height="512"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

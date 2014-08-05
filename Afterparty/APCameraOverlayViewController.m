@@ -10,6 +10,7 @@
 #import "APImagePreviewViewController.h"
 #import "UIImage+APImage.h"
 #import "APButton.h"
+#import "APCamPreviewView.h"
 
 @import AVFoundation;
 
@@ -31,14 +32,17 @@ typedef NS_ENUM(NSInteger, FlashState) {
 @property (weak, nonatomic) IBOutlet APButton           *cameraButton;
 @property (weak, nonatomic) IBOutlet APButton           *cancelButton;
 @property (weak, nonatomic) IBOutlet UIView             *imagePreview;
-@property (weak, nonatomic) IBOutlet UIView             *viewFinderView;
+@property (weak, nonatomic) IBOutlet APCamPreviewView   *viewFinderView;
 
 
 @property (strong, nonatomic) AVCaptureSession          *session;
+@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
+@property (strong, nonatomic) AVCaptureDeviceInput      *videoDeviceInput;
+@property (strong, nonatomic) dispatch_queue_t          sessionQueue;
 
 @property (assign, nonatomic) BOOL                      frontCamera;
 @property (assign, nonatomic) BOOL                      haveImage;
-@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
+
 
 - (void)cameraFlipButtonTapped;
 - (void)cameraFlashButtonTapped;
@@ -85,7 +89,10 @@ typedef NS_ENUM(NSInteger, FlashState) {
     [self.view insertSubview:self.flashButton belowSubview:self.cameraButton];
   
     [self.cancelButton style];
-    
+  
+  [self initializeCameraBetter];
+
+  
     [UIView animateWithDuration:0.5
                           delay:0.4
          usingSpringWithDamping:0.25
@@ -108,74 +115,66 @@ typedef NS_ENUM(NSInteger, FlashState) {
     [super viewDidAppear:animated];
     
     self.flashState = kFlashAuto;
-    [self initalizeCamera];
 }
 
--(void)initalizeCamera {
-    if (self.session) {
-        self.session = nil;
-    }
-    
-    self.session = [[AVCaptureSession alloc] init];
-	self.session.sessionPreset = AVCaptureSessionPresetHigh;
-    
-	AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
-    [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    
-	captureVideoPreviewLayer.frame = self.imagePreview.bounds;
-	[self.imagePreview.layer addSublayer:captureVideoPreviewLayer];
-    
-    UIView *view = [self imagePreview];
-    CALayer *viewLayer = [view layer];
-    [viewLayer setMasksToBounds:YES];
-    
-    CGRect bounds = [view bounds];
-    [captureVideoPreviewLayer setFrame:bounds];
-    
-    NSArray *devices = [AVCaptureDevice devices];
-    AVCaptureDevice *frontCamera;
-    AVCaptureDevice *backCamera;
-    
-    for (AVCaptureDevice *device in devices) {
-        if ([device hasMediaType:AVMediaTypeVideo]) {
-            if ([device position] == AVCaptureDevicePositionBack) {
-                backCamera = device;
-            }
-            else {
-                frontCamera = device;
-            }
-        }
-    }
-
+- (void)initializeCameraBetter {
+  self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
+  self.session = [[AVCaptureSession alloc] init];
+  
+  [[self viewFinderView] setSession:self.session];
+  
+  [self checkDeviceAuthorizationStatus];
+  dispatch_async(self.sessionQueue, ^{
     NSError *error = nil;
-    AVCaptureDeviceInput *input;
-    if (!self.frontCamera) {
-        input = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:&error];
-    }else{
-        input = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:&error];
-        if (self.flashState == kFlashAuto || self.flashState == kFlashOn) {
-            NSLog(@"auto/on changing to off");
-            [self.flashButton setImage:[UIImage imageNamed:@"button_flashoff.png"] forState:UIControlStateNormal];
-            self.flashState = kFlashOff;
-        }
+
+    AVCaptureDevice *videoDevice = [APCameraOverlayViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:(self.frontCamera)? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack];
+    self.videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+    
+    if (error) {
+      NSLog(@"%@", error);
     }
-    if (!input) {
-        NSLog(@"ERROR: trying to open camera: %@", error);
+    
+    if ([self.session canAddInput:self.videoDeviceInput]) {
+      [self.session addInput:self.videoDeviceInput];
     }
-    [self.session addInput:input];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [[(AVCaptureVideoPreviewLayer *)[[self viewFinderView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)[self interfaceOrientation]];
+    });
     
     self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [self.stillImageOutput setOutputSettings:outputSettings];
+    if ([self.session canAddOutput:self.stillImageOutput]) {
+      [self.stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
+      [self.session addOutput:self.stillImageOutput];
+    }
     
-    [self.session addOutput:self.stillImageOutput];
-    
-	[self.session startRunning];
-    
-    [self.view bringSubviewToFront:self.cameraFlipButton];
-    [self.view bringSubviewToFront:self.flashButton];
-    [self.view bringSubviewToFront:self.cameraButton];
-    [self.view bringSubviewToFront:self.cancelButton];
+    [self.session startRunning];
+  });
+}
+
+- (void)checkDeviceAuthorizationStatus {
+	[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+		if (!granted) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[[[UIAlertView alloc] initWithTitle:@"Oops"
+                                    message:@"Change your privacy settings - Afterparty can't access your camera."
+                                   delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+			});
+		}
+	}];
+}
+
++ (AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType preferringPosition:(AVCaptureDevicePosition)position {
+  NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
+	AVCaptureDevice *captureDevice = [devices firstObject];
+	for (AVCaptureDevice *device in devices) {
+		if ([device position] == position) {
+			captureDevice = device;
+			break;
+		}
+	}
+	return captureDevice;
 }
 
 -(void)cameraFlashButtonTapped {
@@ -248,78 +247,57 @@ typedef NS_ENUM(NSInteger, FlashState) {
 
 -(void)cameraFlipButtonTapped {
     self.frontCamera = !self.frontCamera;
-    [self initalizeCamera];
+    [self initializeCameraBetter];
 }
 
 -(IBAction)cameraButtonTapped:(id)sender {
-    [self capImage];
+  [self capImage];
 }
 
 - (IBAction)cancelButtonTapped:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+  [self.delegate cameraControllerDidCancel:self];
 }
 
-- (void) capImage { //method to capture image from AVCaptureSession video feed
-    AVCaptureConnection *videoConnection = nil;
-    for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
-        
-        for (AVCaptureInputPort *port in [connection inputPorts]) {
-            
-            if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
-                videoConnection = connection;
-                break;
-            }
-        }
-        
-        if (videoConnection) {
-            break;
-        }
-    }
+- (void)capImage {
+  dispatch_async([self sessionQueue], ^{
+    [[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer*)[[self viewFinderView] layer] connection] videoOrientation]];
     
-    NSLog(@"about to request a capture from: %@", self.stillImageOutput);
-
-    [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
-        
-        if (imageSampleBuffer != NULL) {
-            NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-            UIImage *image = [UIImage imageWithData:imageData];
-//            // Resize image
-            UIGraphicsBeginImageContext(CGSizeMake(320, self.view.frame.size.height));
-            [image drawInRect: CGRectMake(0, 0, 320, self.view.frame.size.height)];
-            UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            CGRect cropRect = self.view.bounds;
-            CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
-            
-            UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-            UIImage *rotatedImage;
-            switch ([[UIDevice currentDevice] orientation]) {
-                case UIDeviceOrientationUnknown:
-                case UIDeviceOrientationPortrait:
-                case UIDeviceOrientationFaceUp:
-                case UIDeviceOrientationFaceDown:
-                    rotatedImage = croppedImage;
-                    break;
-                case UIDeviceOrientationPortraitUpsideDown:
-                    //rotate 180 degrees
-                    rotatedImage = [croppedImage imageRotatedByDegrees:180];
-                    break;
-                case UIDeviceOrientationLandscapeLeft:
-                    rotatedImage = [croppedImage imageRotatedByDegrees:(self.frontCamera)?90:-90];
-                    break;
-                case UIDeviceOrientationLandscapeRight:
-                    rotatedImage = [croppedImage imageRotatedByDegrees:(self.frontCamera)?-90:90];
-                    break;
-                default:
-                    break;
-            }
-            
-            APImagePreviewViewController *vc = [[APImagePreviewViewController alloc] initWithImage:rotatedImage];
-            vc.delegate = self;
-            [self presentViewController:vc animated:NO completion:nil];
-            CGImageRelease(imageRef);
-        }
+    [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+      if (imageDataSampleBuffer) {
+        [self prepareImageForPreview:[AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer]];
+      }
     }];
+  });
+}
+
+- (void)prepareImageForPreview:(NSData*)imageData {
+  UIImage *image = [UIImage imageWithData:imageData];
+
+  UIImage *rotatedImage;
+  switch ([[UIDevice currentDevice] orientation]) {
+      case UIDeviceOrientationUnknown:
+      case UIDeviceOrientationPortrait:
+      case UIDeviceOrientationFaceUp:
+      case UIDeviceOrientationFaceDown:
+          rotatedImage = image;
+          break;
+      case UIDeviceOrientationPortraitUpsideDown:
+          //rotate 180 degrees
+          rotatedImage = [image imageRotatedByDegrees:180];
+          break;
+      case UIDeviceOrientationLandscapeLeft:
+          rotatedImage = [image imageRotatedByDegrees:(self.frontCamera)?90:-90];
+          break;
+      case UIDeviceOrientationLandscapeRight:
+          rotatedImage = [image imageRotatedByDegrees:(self.frontCamera)?-90:90];
+          break;
+      default:
+          break;
+  }
+  
+  APImagePreviewViewController *vc = [[APImagePreviewViewController alloc] initWithImage:rotatedImage];
+  vc.delegate = self;
+  [self presentViewController:vc animated:NO completion:nil];
 }
 
 #pragma mark - PreviewDelegate Methods
@@ -350,6 +328,10 @@ typedef NS_ENUM(NSInteger, FlashState) {
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+  [self.session stopRunning];
 }
 
 @end

@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class APCameraOverlayViewController;
+
 @protocol CaptureDelegate <NSObject>
 
--(void)capturedImage:(UIImage*)image;
+- (void)capturedImage:(UIImage*)image;
+- (void)cameraControllerDidCancel:(APCameraOverlayViewController*)controller;
 
 @end
 
