@@ -629,58 +629,6 @@
             </objects>
             <point key="canvasLocation" x="559" y="1167"/>
         </scene>
-        <!--Settings Table View Controller - SETTINGS-->
-        <scene sceneID="kWh-61-ELd">
-            <objects>
-                <tableViewController id="a4A-iv-Y3u" customClass="APSettingsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="lau-MP-3rX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection headerTitle="User Profile" id="4ZG-HH-jkJ">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Setting" rowHeight="90" id="Nbp-7r-Ib7">
-                                        <rect key="frame" x="0.0" y="119" width="320" height="90"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nbp-7r-Ib7" id="8dW-rp-GeP">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user_male3-512" translatesAutoresizingMaskIntoConstraints="NO" id="6BN-VU-kxx">
-                                                    <rect key="frame" x="20" y="15" width="60" height="60"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DWK-cd-1CF" customClass="APLabel">
-                                                    <rect key="frame" x="98" y="34" width="172" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="uON-gI-ljh" kind="push" identifier="settingsProfileSegue" id="RU3-hm-9ke"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="a4A-iv-Y3u" id="ofE-cB-ZRO"/>
-                            <outlet property="delegate" destination="a4A-iv-Y3u" id="OIn-Cl-fFW"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="SETTINGS" id="CEf-V1-fZS"/>
-                    <connections>
-                        <outlet property="profilePicture" destination="6BN-VU-kxx" id="UaP-Ib-gVX"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uSw-Ly-18H" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="559" y="1932"/>
-        </scene>
         <!--Settings Profile View Controller - EDIT PROFILE-->
         <scene sceneID="mJj-Bt-Lr7">
             <objects>
@@ -768,6 +716,13 @@
                                     <action selector="signOutButtonTapped:" destination="uON-gI-ljh" eventType="touchUpInside" id="To3-g5-Eqs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5h-11-stE" customClass="APLabel">
+                                <rect key="frame" x="227" y="71" width="65" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -783,11 +738,12 @@
                         <outlet property="profilePhotoView" destination="3Hz-Kj-b0b" id="MCt-pY-dI4"/>
                         <outlet property="signOutButton" destination="AzW-Rh-AF8" id="WcC-3h-mO7"/>
                         <outlet property="usernameLabel" destination="sf0-7j-Uja" id="j1Z-vW-AuW"/>
+                        <outlet property="versionLabel" destination="x5h-11-stE" id="ObY-6v-FRc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vEZ-jP-oPl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1080" y="1932"/>
+            <point key="canvasLocation" x="522" y="1932"/>
         </scene>
         <!--Navigation Controller - My Events-->
         <scene sceneID="Yjp-bJ-EAf">
@@ -968,7 +924,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="a4A-iv-Y3u" kind="relationship" relationship="rootViewController" id="uNs-Ri-JX7"/>
+                        <segue destination="uON-gI-ljh" kind="relationship" relationship="rootViewController" id="Iom-cO-XjY"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lbU-hk-yI8" userLabel="First Responder" sceneMemberID="firstResponder"/>

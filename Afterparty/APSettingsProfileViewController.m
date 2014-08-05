@@ -16,6 +16,7 @@
 #import "APConstants.h"
 #import "APConnectionManager.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "APUtil.h"
 
 @interface APSettingsProfileViewController () <UITextFieldDelegate>
 
@@ -29,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet APButton *signOutButton;
 @property (weak, nonatomic) IBOutlet APLabel *emailFieldLabel;
 @property (weak, nonatomic) IBOutlet APLabel *blurbFieldLabel;
+@property (weak, nonatomic) IBOutlet APLabel *versionLabel;
 
 @property (assign, nonatomic) BOOL isTracking;
 @property (assign, nonatomic) BOOL isLinkedWithFacebook;
@@ -76,7 +78,6 @@
 }
 
 - (void)updateButtonsText {
-  self.dataTrackingButton.titleLabel.text = (self.isTracking) ? @"opt out of data tracking" : @"opt into data tracking";
   [self.linkWithTwitterButton styleWithClearBackground];
   [self.linkWithFacebookButton styleWithClearBackground];
   [self.signOutButton styleWithClearBackground];
@@ -89,6 +90,9 @@
   self.blurbFieldLabel.textColor = [UIColor afterpartyTealBlueColor];
   [self.usernameLabel styleForType:LabelTypeTableViewCellAttribute];
   self.usernameLabel.textColor = [UIColor afterpartyTealBlueColor];
+  self.dataTrackingButton.titleLabel.text = (self.isTracking) ? @"opt out of data tracking" : @"opt into data tracking";
+  [self.versionLabel styleForType:LabelTypeTableViewCellAttribute withText:[NSString stringWithFormat:@"v%@", [APUtil getVersion]]];
+  self.versionLabel.textColor = [UIColor afterpartyTealBlueColor];
 }
 
 #pragma mark - IBAction Methods

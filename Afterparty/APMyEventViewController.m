@@ -41,6 +41,8 @@
 
 @property (strong, nonatomic) FXBlurView        *blurView;
 
+@property (strong, nonatomic) UICollectionViewFlowLayout *photoViewLayout;
+
 @property dispatch_queue_t photoUploadQueue;
 @property dispatch_queue_t photoDownloadQueue;
 
@@ -64,7 +66,12 @@
       [data addObject:info];
     }];
     [SVProgressHUD dismiss];
-    self.photoMetadata = [NSArray arrayWithArray:data];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if (!self.photoMetadata) {
+        self.photoMetadata = [NSArray array];
+      }
+      self.photoMetadata = data;
+    });
   } failure:^(NSError *error) {
     [SVProgressHUD showErrorWithStatus:@"could not get photos"];
   }];
@@ -166,15 +173,20 @@
   UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonTapped)];
   UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
   [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:btnSave, btnRefresh, nil]];
-
-  dispatch_async(self.photoDownloadQueue, ^{
-    [self getLatestMetadata];
-    self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [self.collectionView reloadData];
-    });
-  });
+  
+  self.photoMetadata = [[NSArray alloc] init];
+  
+  [self refreshPhotos];
+  
+//  dispatch_async(self.photoDownloadQueue, ^{
+//    [self getLatestMetadata];
+//    self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//      [self.collectionView reloadData];
+//    });
+//  });
 }
+
 
 -(void)saveButtonTapped {
     self.isSavingBulk = YES;
@@ -366,8 +378,12 @@
 - (void)photoButtonTapped {
     if (self.isSavingBulk) {
         NSLog(@"need to add method for saving all selected photos");
+      if (self.selectedPhotos && self.selectedPhotos.count > 0) {
+        [self saveBulkPhotos];
+        [SVProgressHUD showWithStatus:@"saving photos..."];
+      }
         [self cancelButtonTapped];
-        [SVProgressHUD showSuccessWithStatus:@"Photos saved"];
+
     }else{
         if (self.canTakePhoto) {
             if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES){
@@ -387,6 +403,78 @@
             [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a mile of the party center to contribute, ya big jerk."];
     }
 }
+
+- (void)saveBulkPhotos {
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    for (NSIndexPath *indexPath in self.selectedPhotos) {
+      APPhotoInfo *photoInfo = self.photoMetadata[indexPath.item];
+      NSData *imgData = [NSData dataWithContentsOfURL:photoInfo.photoURL];
+      UIImage *img = [UIImage imageWithData:imgData];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self saveImageToCameraRoll:img];
+      });
+    }
+    [self.selectedPhotos removeAllObjects];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [SVProgressHUD showSuccessWithStatus:@"photos saved!"];
+    });
+  });
+}
+
+-(void)saveImageToCameraRoll:(UIImage*)image {
+  
+  ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+  NSString *albumName = @"Afterparty";
+  __block ALAssetsGroup* folder;
+  
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+    NSNumber *hasFolder = [[NSUserDefaults standardUserDefaults] objectForKey:@"hasFolder"];
+    if (![hasFolder boolValue]) {
+      [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
+        NSLog(@"Added folder:%@", albumName);
+        folder = group;
+      } failureBlock:^(NSError *error) {
+        NSLog(@"Error adding folder");
+      }];
+      hasFolder = [NSNumber numberWithBool:YES];
+      [[NSUserDefaults standardUserDefaults] setValue:hasFolder forKey:@"hasFolder"];
+      [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+      NSLog(@"found folder %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+      if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:albumName]) {
+        folder = group;
+        *stop = YES;
+      }
+    } failureBlock:^(NSError *error) {
+      [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
+        NSLog(@"Added folder:%@", albumName);
+        folder = group;
+      } failureBlock:^(NSError *error) {
+        NSLog(@"Error adding folder");
+      }];
+    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSData *imageData = UIImagePNGRepresentation(image);
+      [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+        if (error.code == 0) {
+          [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+            [folder addAsset:asset];
+          } failureBlock:^(NSError *error) {
+            NSLog(@"Error adding image");
+          }];
+        }else{
+          NSLog(@"Error adding image: %@", error.localizedDescription);
+        }
+      }];
+    });
+  });
+}
+
+
+
 
 #pragma mark - CaptureDelegate Methods
 
@@ -440,14 +528,15 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.isSavingBulk) {
-        NSLog(@"selected item %d for bulk save", indexPath.item);
       if (!self.selectedPhotos) {
         self.selectedPhotos = [NSMutableArray array];
       }
       if ([self.selectedPhotos containsObject:indexPath]) {
+        NSLog(@"deselected item %d for bulk save", indexPath.item);
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         [self.selectedPhotos removeObject:indexPath];
       }else{
+        NSLog(@"selected item %d for bulk save", indexPath.item);
         [self.selectedPhotos addObject:indexPath];
       }
 

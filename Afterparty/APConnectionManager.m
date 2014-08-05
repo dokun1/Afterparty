@@ -374,7 +374,7 @@
     user.username = userData[@"name"];
     user.email = userData[@"email"];
     user[kPFUserDataTrackingKey] = @(YES);
-    [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=square", userData[@"id"]] forKey:kPFUserProfilePhotoURLKey];
+    [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=300&height=300", userData[@"id"]] forKey:kPFUserProfilePhotoURLKey];
     [user saveInBackground];
     successBlock(userData);
   }];

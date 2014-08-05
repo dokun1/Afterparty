@@ -294,9 +294,11 @@
     [view removeFromSuperview];
   }];
   
-  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(285, 5, 30, 30)];
-  [self.dismissDateButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(135, self.view.bounds.size.height - 60, 50, 30)];
+  [self.dismissDateButton style];
+  [self.dismissDateButton setTitle:@"save" forState:UIControlStateNormal];
   [self.dismissDateButton addTarget:self action:@selector(dismissDatePickerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+  self.dismissDateButton.alpha = 0.0f;
   [self.view addSubview:self.dismissDateButton];
   
   self.datePickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 440)];
@@ -332,6 +334,7 @@
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
                      [self.datePickerContainerView setCenter:self.view.center];
+                     self.dismissDateButton.alpha = 1.0f;
                    } completion:^(BOOL finished) {
                      self.currentEvent.startDate = self.startDatePicker.date;
                    }];
