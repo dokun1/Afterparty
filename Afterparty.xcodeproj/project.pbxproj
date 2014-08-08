@@ -67,6 +67,7 @@
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
+		509B439319942584004CC33D /* button_redCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 509B439219942584004CC33D /* button_redCancel.png */; };
 		50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */; };
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
@@ -218,6 +219,7 @@
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
+		509B439219942584004CC33D /* button_redCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_redCancel.png; sourceTree = "<group>"; };
 		50BF4C8B196C410600B6EA1F /* APSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsTableViewController.h; sourceTree = "<group>"; };
 		50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsTableViewController.m; sourceTree = "<group>"; };
 		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 				504CA3AA1940C035003EF9EB /* button_flashon.png */,
 				504CA3AB1940C035003EF9EB /* button_frontfacingcamera.png */,
 				504CA3AC1940C035003EF9EB /* button_plusblack.png */,
+				509B439219942584004CC33D /* button_redCancel.png */,
 				504CA3AD1940C035003EF9EB /* button_pluswhite.png */,
 				504CA3AE1940C035003EF9EB /* button_savetocloud.png */,
 				50C015B919697BF500E9E26F /* default_avatar_large.png */,
@@ -740,6 +743,7 @@
 				50F64ED21952F64800E0B8DC /* APSearchEventDetailViewController.xib in Resources */,
 				50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */,
 				504CA3B71940C035003EF9EB /* button_flashon.png in Resources */,
+				509B439319942584004CC33D /* button_redCancel.png in Resources */,
 				504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */,
 				50105672196AFA0C00D7F800 /* myEventsTab.png in Resources */,
 				504CA3C01940C035003EF9EB /* icon_magnifyingglass.png in Resources */,

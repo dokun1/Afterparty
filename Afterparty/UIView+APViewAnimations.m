@@ -7,6 +7,7 @@
 //
 
 #import "UIView+APViewAnimations.h"
+#import <pop/POP.h>
 
 @implementation UIView (APViewAnimations)
 
@@ -80,6 +81,28 @@
   self.hidden = NO;
   [self.layer addAnimation:animation forKey:@"popup"];
   
+}
+
+- (void)afterparty_translateToPoint:(CGPoint)point expanding:(BOOL)expanding delay:(NSTimeInterval)delay withCompletion:(APAnimationCompleteCallBackBlock)completion {
+  [self.layer pop_removeAllAnimations];
+  
+  POPSpringAnimation *moveAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
+  [moveAnimation setCompletionBlock:^(POPAnimation *animation, BOOL complete) {
+    if (completion) {
+      completion();
+    }
+  }];
+  moveAnimation.toValue = [NSValue valueWithCGPoint:point];
+  moveAnimation.springBounciness = expanding ? 17.f : 7.f;
+  moveAnimation.beginTime = CACurrentMediaTime() + delay;
+  [self.layer pop_addAnimation:moveAnimation forKey:@"layerPositionAnimation"];
+  
+  POPSpringAnimation *scaleAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+  scaleAnimation.toValue = expanding ? [NSValue valueWithCGSize:CGSizeMake(1.1, 1.1)] : [NSValue valueWithCGSize:CGSizeMake(0.95, 0.95)];
+  scaleAnimation.springBounciness = 25.f;
+  scaleAnimation.springSpeed = 9.f;
+  scaleAnimation.beginTime = CACurrentMediaTime() + delay;
+  [self.layer pop_addAnimation:scaleAnimation forKey:@"scaleAnimation"];
 }
 
 @end

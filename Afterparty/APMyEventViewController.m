@@ -8,6 +8,7 @@
 
 #import "APMyEventViewController.h"
 #import "APConstants.h"
+#import <pop/POP.h>
 
 @import AssetsLibrary;
 @import AVFoundation;
@@ -53,6 +54,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   if (self = [super initWithCoder:aDecoder]) {
     //init logic
+      _photoMetadata = [NSArray array];
   }
   return self;
 }
@@ -71,6 +73,7 @@
         self.photoMetadata = [NSArray array];
       }
       self.photoMetadata = data;
+        [self.collectionView reloadData];
     });
   } failure:^(NSError *error) {
     [SVProgressHUD showErrorWithStatus:@"could not get photos"];
@@ -361,7 +364,7 @@
       [SVProgressHUD dismiss];
       self.photoButton.enabled = YES;
       self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
-      [self.collectionView reloadData];
+//      [self.collectionView reloadData];
       [self.refreshControl endRefreshing];
       [UIView animateWithDuration:0.5
                             delay:0.3
@@ -417,6 +420,10 @@
     [self.selectedPhotos removeAllObjects];
     dispatch_async(dispatch_get_main_queue(), ^{
       [SVProgressHUD showSuccessWithStatus:@"photos saved!"];
+      for (int i = 0; i < self.photoMetadata.count; i++) {
+        APPhotoCell *cell = (APPhotoCell*)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+        [cell setSelected:NO];
+      }
     });
   });
 }
@@ -532,11 +539,9 @@
         self.selectedPhotos = [NSMutableArray array];
       }
       if ([self.selectedPhotos containsObject:indexPath]) {
-        NSLog(@"deselected item %d for bulk save", indexPath.item);
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         [self.selectedPhotos removeObject:indexPath];
       }else{
-        NSLog(@"selected item %d for bulk save", indexPath.item);
         [self.selectedPhotos addObject:indexPath];
       }
 

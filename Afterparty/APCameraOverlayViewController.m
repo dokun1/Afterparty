@@ -11,6 +11,7 @@
 #import "UIImage+APImage.h"
 #import "APButton.h"
 #import "APCamPreviewView.h"
+#import "UIView+APViewAnimations.h"
 
 @import AVFoundation;
 
@@ -27,10 +28,10 @@ typedef NS_ENUM(NSInteger, FlashState) {
 
 @property (strong, nonatomic) UIButton                  *cameraFlipButton;
 @property (strong, nonatomic) UIButton                  *flashButton;
+@property (strong, nonatomic) UIButton                  *cancelButton;
 @property (assign, nonatomic) FlashState                flashState;
 
 @property (weak, nonatomic) IBOutlet APButton           *cameraButton;
-@property (weak, nonatomic) IBOutlet APButton           *cancelButton;
 @property (weak, nonatomic) IBOutlet UIView             *imagePreview;
 @property (weak, nonatomic) IBOutlet APCamPreviewView   *viewFinderView;
 
@@ -46,8 +47,9 @@ typedef NS_ENUM(NSInteger, FlashState) {
 
 - (void)cameraFlipButtonTapped;
 - (void)cameraFlashButtonTapped;
+- (void)cancelButtonTapped;
 - (IBAction)cameraButtonTapped:(id)sender;
-- (IBAction)cancelButtonTapped:(id)sender;
+
 
 @end
 
@@ -88,27 +90,19 @@ typedef NS_ENUM(NSInteger, FlashState) {
     [self.flashButton addTarget:self action:@selector(cameraFlashButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view insertSubview:self.flashButton belowSubview:self.cameraButton];
   
-    [self.cancelButton style];
+  self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [self.cancelButton setBackgroundColor:[UIColor clearColor]];
+  [self.cancelButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
+  [self.cancelButton setFrame:CGRectMake(130, self.buttonHeight, 40, 40)];
+  [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+  [self.view insertSubview:self.cancelButton belowSubview:self.cameraButton];
   
   [self initializeCameraBetter];
-
   
-    [UIView animateWithDuration:0.5
-                          delay:0.4
-         usingSpringWithDamping:0.25
-          initialSpringVelocity:0.6
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self.cameraFlipButton setCenter:CGPointMake(60, self.buttonHeight + 20)];
-                     } completion:nil];
-    [UIView animateWithDuration:0.5
-                          delay:0.5
-         usingSpringWithDamping:0.25
-          initialSpringVelocity:0.6
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self.flashButton setCenter:CGPointMake(260, self.buttonHeight + 20)];
-                     } completion:nil];
+  [self.cameraFlipButton afterparty_translateToPoint:CGPointMake(60, self.buttonHeight + 20) expanding:YES delay:0.1 withCompletion:nil];
+  [self.flashButton afterparty_translateToPoint:CGPointMake(260, self.buttonHeight + 20) expanding:YES delay:0.2 withCompletion:nil];
+  [self.cancelButton afterparty_translateToPoint:CGPointMake(30, 30) expanding:YES delay:0.3 withCompletion:nil];
+
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -250,54 +244,60 @@ typedef NS_ENUM(NSInteger, FlashState) {
     [self initializeCameraBetter];
 }
 
+- (void)cancelButtonTapped {
+  [self.delegate cameraControllerDidCancel:self];
+}
+
 -(IBAction)cameraButtonTapped:(id)sender {
   [self capImage];
 }
 
-- (IBAction)cancelButtonTapped:(id)sender {
-  [self.delegate cameraControllerDidCancel:self];
-}
-
 - (void)capImage {
   dispatch_async([self sessionQueue], ^{
-    [[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer*)[[self viewFinderView] layer] connection] videoOrientation]];
+    AVCaptureVideoOrientation orientation = [[(AVCaptureVideoPreviewLayer*)[[self viewFinderView] layer] connection] videoOrientation];
+    [[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:orientation];
     
     [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
       if (imageDataSampleBuffer) {
-        [self prepareImageForPreview:[AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer]];
+        [self prepareImageForPreview:[AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer] forOrientation:orientation];
       }
     }];
   });
 }
 
-- (void)prepareImageForPreview:(NSData*)imageData {
+- (void)prepareImageForPreview:(NSData*)imageData forOrientation:(AVCaptureVideoOrientation)orientation {
   UIImage *image = [UIImage imageWithData:imageData];
 
   UIImage *rotatedImage;
+  
   switch ([[UIDevice currentDevice] orientation]) {
-      case UIDeviceOrientationUnknown:
-      case UIDeviceOrientationPortrait:
-      case UIDeviceOrientationFaceUp:
-      case UIDeviceOrientationFaceDown:
-          rotatedImage = image;
-          break;
-      case UIDeviceOrientationPortraitUpsideDown:
-          //rotate 180 degrees
-          rotatedImage = [image imageRotatedByDegrees:180];
-          break;
-      case UIDeviceOrientationLandscapeLeft:
-          rotatedImage = [image imageRotatedByDegrees:(self.frontCamera)?90:-90];
-          break;
-      case UIDeviceOrientationLandscapeRight:
-          rotatedImage = [image imageRotatedByDegrees:(self.frontCamera)?-90:90];
-          break;
-      default:
-          break;
+    case UIDeviceOrientationUnknown:
+    case UIDeviceOrientationFaceUp:
+    case UIDeviceOrientationFaceDown:
+    case UIDeviceOrientationPortrait:
+      rotatedImage = image;
+      NSLog(@"device is in portrait");
+      break;
+    case UIDeviceOrientationPortraitUpsideDown:
+      rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:UIImageOrientationLeft];
+      NSLog(@"device is in upside down");
+      break;
+    case UIDeviceOrientationLandscapeLeft:
+      rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:UIImageOrientationUp];
+      NSLog(@"device is in landscape left");
+      break;
+    case UIDeviceOrientationLandscapeRight:
+      rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:UIImageOrientationDown];
+      NSLog(@"device is in landscape right");
+      break;
+    default:
+      break;
   }
   
   APImagePreviewViewController *vc = [[APImagePreviewViewController alloc] initWithImage:rotatedImage];
   vc.delegate = self;
   [self presentViewController:vc animated:NO completion:nil];
+
 }
 
 #pragma mark - PreviewDelegate Methods

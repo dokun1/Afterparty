@@ -86,47 +86,52 @@
 }
 
 -(void)setUpInitialImageViews {
+  
+  [self addImageAtNewIndex:self.selectedIndex oldIndex:-1 purgeIndex:-1];
+  
     
-    UIScrollView *currentScrollView = [self scrollViewForIndex:self.selectedIndex];
-    UIImageView *currentImageView = [self imageViewForIndex:self.selectedIndex];
-    [currentScrollView addSubview:currentImageView];
-    [self.imageViewArray replaceObjectAtIndex:self.selectedIndex withObject:currentScrollView];
-    UIActivityIndicatorView *indicator = self.downloadIndicators[self.selectedIndex];
-    [self.scrollView insertSubview:currentScrollView belowSubview:indicator];
-    [indicator setHidden:YES];
-    [indicator stopAnimating];
-    currentScrollView.frame = self.view.frame;
-    currentScrollView.center = [self centerForImageViewAtIndex:self.selectedIndex];
-    [self getImageForIndex:self.selectedIndex];
-    
+//    UIScrollView *currentScrollView = [self scrollViewForIndex:self.selectedIndex];
+//    UIImageView *currentImageView = [self imageViewForIndex:self.selectedIndex];
+//    [currentScrollView addSubview:currentImageView];
+//    [self.imageViewArray replaceObjectAtIndex:self.selectedIndex withObject:currentScrollView];
+//    UIActivityIndicatorView *indicator = self.downloadIndicators[self.selectedIndex];
+//    [self.scrollView insertSubview:currentScrollView belowSubview:indicator];
+//    [indicator setHidden:YES];
+//    [indicator stopAnimating];
+//    currentScrollView.frame = self.view.frame;
+//    currentScrollView.center = [self centerForImageViewAtIndex:self.selectedIndex];
+//    [self getImageForIndex:self.selectedIndex];
+  
     if (self.selectedIndex != 0) {
         NSInteger newIndex = self.selectedIndex - 1;
-        UIScrollView *newScrollView = [self scrollViewForIndex:newIndex];
-        UIImageView *newImageView = [self imageViewForIndex:newIndex];
-        [newScrollView addSubview:newImageView];
-        [self.imageViewArray replaceObjectAtIndex:newIndex withObject:newScrollView];
-        indicator = self.downloadIndicators[newIndex];
-        [self.scrollView insertSubview:newScrollView belowSubview:indicator];
-        newScrollView.frame = [self frameForImageViewAtIndex:newIndex];
-        newScrollView.center = [self centerForImageViewAtIndex:newIndex];
-        [self getImageForIndex:newIndex];
-        [indicator setHidden:YES];
-        [indicator stopAnimating];
+      [self addImageAtNewIndex:newIndex oldIndex:-1 purgeIndex:-1];
+//        UIScrollView *newScrollView = [self scrollViewForIndex:newIndex];
+//        UIImageView *newImageView = [self imageViewForIndex:newIndex];
+//        [newScrollView addSubview:newImageView];
+//        [self.imageViewArray replaceObjectAtIndex:newIndex withObject:newScrollView];
+//        indicator = self.downloadIndicators[newIndex];
+//        [self.scrollView insertSubview:newScrollView belowSubview:indicator];
+//        newScrollView.frame = [self frameForImageViewAtIndex:newIndex];
+//        newScrollView.center = [self centerForImageViewAtIndex:newIndex];
+//        [self getImageForIndex:newIndex];
+//        [indicator setHidden:YES];
+//        [indicator stopAnimating];
     }
     
     if (self.selectedIndex < [self.metadata count] - 1) {
         NSInteger newIndex = self.selectedIndex + 1;
-        UIScrollView *newScrollView = [self scrollViewForIndex:newIndex];
-        UIImageView *newImageView = [self imageViewForIndex:newIndex];
-        [newScrollView addSubview:newImageView];
-        [self.imageViewArray replaceObjectAtIndex:newIndex withObject:newScrollView];
-        indicator = self.downloadIndicators[newIndex];
-        [self.scrollView insertSubview:newScrollView belowSubview:indicator];
-        newScrollView.frame = [self frameForImageViewAtIndex:newIndex];
-        newScrollView.center = [self centerForImageViewAtIndex:newIndex];
-        [self getImageForIndex:newIndex];
-        [indicator setHidden:YES];
-        [indicator stopAnimating];
+      [self addImageAtNewIndex:newIndex oldIndex:-1 purgeIndex:-1];
+//        UIScrollView *newScrollView = [self scrollViewForIndex:newIndex];
+//        UIImageView *newImageView = [self imageViewForIndex:newIndex];
+//        [newScrollView addSubview:newImageView];
+//        [self.imageViewArray replaceObjectAtIndex:newIndex withObject:newScrollView];
+//        indicator = self.downloadIndicators[newIndex];
+//        [self.scrollView insertSubview:newScrollView belowSubview:indicator];
+//        newScrollView.frame = [self frameForImageViewAtIndex:newIndex];
+//        newScrollView.center = [self centerForImageViewAtIndex:newIndex];
+//        [self getImageForIndex:newIndex];
+//        [indicator setHidden:YES];
+//        [indicator stopAnimating];
     }
 }
 
@@ -251,16 +256,19 @@
                         UIActivityIndicatorView *indicator = self.downloadIndicators[index];
                         [indicator stopAnimating];
                         [indicator setHidden:YES];
-                        UIScrollView *newScrollView = self.imageViewArray[index];
-                        __block UIImageView *newImageView;
-                        
-                        [newScrollView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        id objScrollView = self.imageViewArray[index];
+                        if ([objScrollView isKindOfClass:[UIScrollView class]]) {
+                          UIScrollView *newScrollView = self.imageViewArray[index];
+                          __block UIImageView *newImageView;
+                          [newScrollView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                             if ([obj isKindOfClass:[UIImageView class]]) {
-                                newImageView = obj;
-                                *stop = YES;
+                              newImageView = obj;
+                              *stop = YES;
                             }
-                        }];
-                        newImageView.image = image;
+                          }];
+                          newImageView.image = image;
+                        }
+
                     });
                 }
             } failure:^(NSError *error) {
@@ -305,60 +313,69 @@
         id obj = self.imageViewArray[newIndex];
         if ([obj isKindOfClass:[UIScrollView class]])
             return;
-        
-        UIScrollView *scrollView = [self scrollViewForIndex:newIndex];
-        UIImageView *imageView = [self imageViewForIndex:newIndex];
-        [scrollView addSubview:imageView];
-        [self.imageViewArray replaceObjectAtIndex:newIndex withObject:scrollView];
-        UIActivityIndicatorView *indicator = self.downloadIndicators[newIndex];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.scrollView insertSubview:scrollView belowSubview:indicator];
-            scrollView.frame = self.view.frame;
-            scrollView.center = [self centerForImageViewAtIndex:newIndex];
-            [self getImageForIndex:newIndex];
-            [indicator setHidden:YES];
-            [indicator stopAnimating];
-            if (purgeIndex >= 0 && purgeIndex < [self.imageViewArray count]) {
-                id obj = self.imageViewArray[purgeIndex];
-                UIScrollView *purgeScrollView = ([obj isKindOfClass:[UIScrollView class]]) ? obj : nil;
-                if (!purgeScrollView)
-                    return;
-                __block UIImageView *purgeImageView;
-                [purgeScrollView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    if ([obj isKindOfClass:[UIImageView class]]) {
-                        purgeImageView = obj;
-                        *stop = YES;
-                    }
-                }];
-                if (purgeImageView) {
-                    purgeImageView.image = nil;
-                    purgeImageView = nil;
-                    purgeScrollView = nil;
-                    [purgeImageView removeFromSuperview];
-                    [purgeScrollView removeFromSuperview];
-                    APPhotoInfo *photoInfo = self.metadata[purgeIndex];
-                    [self.imageViewArray replaceObjectAtIndex:purgeIndex withObject:photoInfo];
-                    UIActivityIndicatorView *indicator = self.downloadIndicators[purgeIndex];
-                    [indicator startAnimating];
-                    [indicator setHidden:NO];
-                }
-            }
-        });
-        id oldObj = self.imageViewArray[oldIndex];
-        if ([oldObj isKindOfClass:[UIScrollView class]]) {
-            UIScrollView *oldScrollView = oldObj;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [UIView animateWithDuration:0.2
-                                 animations:^{
-                                     oldScrollView.zoomScale = 1.0f;
-                                 }];
-            });
-        }
+      
+      [self addImageAtNewIndex:newIndex oldIndex:oldIndex purgeIndex:purgeIndex];
     });
 }
 
+- (void)addImageAtNewIndex:(NSInteger)newIndex oldIndex:(NSInteger)oldIndex purgeIndex:(NSInteger)purgeIndex {
+  UIScrollView *scrollView = [self scrollViewForIndex:newIndex];
+  UIImageView *imageView = [self imageViewForIndex:newIndex];
+  [scrollView addSubview:imageView];
+  imageView.center = scrollView.center;
+  [self.imageViewArray replaceObjectAtIndex:newIndex withObject:scrollView];
+  UIActivityIndicatorView *indicator = self.downloadIndicators[newIndex];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.scrollView insertSubview:scrollView belowSubview:indicator];
+    scrollView.frame = self.view.frame;
+    scrollView.center = [self centerForImageViewAtIndex:newIndex];
+    [self getImageForIndex:newIndex];
+    [indicator setHidden:YES];
+    [indicator stopAnimating];
+    if (purgeIndex >= 0 && purgeIndex < [self.imageViewArray count]) {
+      id obj = self.imageViewArray[purgeIndex];
+      UIScrollView *purgeScrollView = ([obj isKindOfClass:[UIScrollView class]]) ? obj : nil;
+      if (!purgeScrollView)
+        return;
+      __block UIImageView *purgeImageView;
+      [purgeScrollView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[UIImageView class]]) {
+          purgeImageView = obj;
+          *stop = YES;
+        }
+      }];
+      if (purgeImageView) {
+        purgeImageView.image = nil;
+        purgeImageView = nil;
+        purgeScrollView = nil;
+        [purgeImageView removeFromSuperview];
+        [purgeScrollView removeFromSuperview];
+        APPhotoInfo *photoInfo = self.metadata[purgeIndex];
+        [self.imageViewArray replaceObjectAtIndex:purgeIndex withObject:photoInfo];
+        UIActivityIndicatorView *indicator = self.downloadIndicators[purgeIndex];
+        [indicator startAnimating];
+        [indicator setHidden:NO];
+      }
+    }
+  });
+  if (oldIndex > -1) {
+    id oldObj = self.imageViewArray[oldIndex];
+    if ([oldObj isKindOfClass:[UIScrollView class]]) {
+      UIScrollView *oldScrollView = oldObj;
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.2
+                         animations:^{
+                           oldScrollView.zoomScale = 1.0f;
+                         }];
+      });
+    }
+  }
+
+
+}
+
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
+  
 }
 
 -(UIImageView*)imageViewForIndex:(NSInteger)index {

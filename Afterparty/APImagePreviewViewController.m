@@ -25,20 +25,22 @@
 
 -(id)initWithImage:(UIImage *)image {
     if (self = [super init]) {
-        self.image = image;
+      _image = image;
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-  [self.retakeButton style];
-  [self.acceptButton style];
+  [super viewDidLoad];
 
-    [self.imageView setImage:self.image];
-    [self.imageView setContentMode:UIViewContentModeScaleToFill];
-    [self.imageView setCenter:self.view.center];
+  [self.imageView setImage:self.image];
+  if (self.image.size.width > self.image.size.height) {
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+  } else {
+    self.imageView.contentMode = UIViewContentModeScaleToFill;
+  }
+  [self.imageView setCenter:self.view.center];
     // Do any additional setup after loading the view from its nib.
 }
 

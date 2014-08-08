@@ -44,6 +44,7 @@
   self.layer.borderColor = [[UIColor whiteColor] CGColor];
   self.layer.borderWidth = 0.5f;
   __weak APPhotoCell *weakcell = self;
+  self.imageView.contentMode = UIViewContentModeScaleToFill;
   [self.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:photoInfo.thumbURL] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
     [weakcell.downloadIndicator stopAnimating];
     weakcell.downloadIndicator.hidden = YES;
@@ -51,12 +52,13 @@
     frame.size = [weakcell sizePhotoForColumn:weakcell.photoInfo.size];
     weakcell.imageView.frame = frame;
     weakcell.imageView.image = image;
+    NSLog(@"imageViewSize = %@\nimageSize = %@", NSStringFromCGSize(weakcell.imageView.frame.size), NSStringFromCGSize(image.size));
   } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
     NSLog(@"error download");
   }];
 }
 
--(CGSize)sizePhotoForColumn:(CGSize)photoSize {
+- (CGSize)sizePhotoForColumn:(CGSize)photoSize {
   CGFloat width = 160;
   
   CGSize newSize = CGSizeMake(width, 0);
@@ -76,6 +78,9 @@
     self.selectedView = [[UIView alloc] initWithFrame:self.bounds];
     self.selectedView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.selectedView];
+    UIImageView *checkImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_checkgreen"]];
+    checkImage.frame = CGRectMake(CGRectGetMaxX(self.bounds) - 30, CGRectGetMaxY(self.bounds) - 30, 20, 20);
+    [self.selectedView addSubview:checkImage];
   }
   self.selectedView.alpha = selected ? 0.7f : 0.0f;
 }

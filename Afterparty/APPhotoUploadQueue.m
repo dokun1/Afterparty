@@ -34,8 +34,8 @@ static NSString *const kCache = @"cachedUploadPhotos";
 }
 
 - (void)addPhotoToQueue:(UIImage *)image withThumbnail:(UIImage *)thumbnail forEventID:(NSString *)eventID {
-  NSData *imageData = UIImagePNGRepresentation(image);
-  NSData *thumbData = UIImagePNGRepresentation(thumbnail);
+  NSData *imageData = UIImageJPEGRepresentation(image, 0.9);
+  NSData *thumbData = UIImageJPEGRepresentation(thumbnail, 0.7);
   NSDictionary *photoDict = @{@"image" : imageData,
                               @"thumb" : thumbData,
                               @"event" : eventID};
