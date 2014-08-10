@@ -90,7 +90,6 @@
   self.blurbFieldLabel.textColor = [UIColor afterpartyTealBlueColor];
   [self.usernameLabel styleForType:LabelTypeTableViewCellAttribute];
   self.usernameLabel.textColor = [UIColor afterpartyTealBlueColor];
-  self.dataTrackingButton.titleLabel.text = (self.isTracking) ? @"opt out of data tracking" : @"opt into data tracking";
   [self.versionLabel styleForType:LabelTypeTableViewCellAttribute withText:[NSString stringWithFormat:@"v%@", [APUtil getVersion]]];
   self.versionLabel.textColor = [UIColor afterpartyTealBlueColor];
 }
@@ -121,14 +120,7 @@
 }
 
 - (IBAction)dataTrackingButtonTapped:(id)sender {
-  self.isTracking = !self.isTracking;
-  [[APConnectionManager sharedManager] saveUserTrackingParameter:self.isTracking success:^{
-    [SVProgressHUD showSuccessWithStatus:@"data tracking preferences saved"];
-    [self updateButtonsText];
-  } failure:^(NSError *error) {
-    self.isTracking = !self.isTracking;
-    [SVProgressHUD showErrorWithStatus:@"try again later"];
-  }];
+    [[[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"...are coming soon...soon..." delegate:nil cancelButtonTitle:@"Nice" otherButtonTitles:nil] show];
 }
 
 - (IBAction)signOutButtonTapped:(id)sender {
