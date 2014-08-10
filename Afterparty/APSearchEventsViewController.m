@@ -91,17 +91,21 @@
 }
 
 - (void)didReceiveSearchNotification:(NSNotification*)notification {
-  self.tabBarController.selectedIndex = 0;
-//  NSLog(@"hey hey what do we have here");
-//  NSLog(@"%@", notification);
   self.initialSearch = (NSString*)notification.object;
+  self.tabBarController.selectedIndex = 0;
   [self searchForEventByID];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   if (!self.isLoading) {
     [self refreshEvents];
   }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.initialSearch = nil;
 }
 
 #pragma mark - LocationManagerDelegate Methods
@@ -160,7 +164,7 @@
 }
 
 -(void)refreshEvents {
-  if ([PFUser currentUser]) {
+  if ([PFUser currentUser] && !self.initialSearch) {
       [self.locationManager startUpdatingLocation];
   }
 }

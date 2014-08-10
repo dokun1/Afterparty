@@ -12,6 +12,7 @@
 		50105673196AFA0C00D7F800 /* nearbyTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 5010566F196AFA0C00D7F800 /* nearbyTab.png */; };
 		50105674196AFA0C00D7F800 /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50105670196AFA0C00D7F800 /* settingsTab.png */; };
 		502DC771196D77B6002C9C4A /* APSettingsProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502DC770196D77B6002C9C4A /* APSettingsProfileViewController.m */; };
+		5044E5691997FAF1003D5153 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5044E5681997FAF1003D5153 /* Images.xcassets */; };
 		5048D4AA194A1D0F0092178E /* APConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5048D4A9194A1D0F0092178E /* APConnectionManager.m */; };
 		504CA30E19408C82003EF9EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA30D19408C82003EF9EB /* Foundation.framework */; };
 		504CA31019408C82003EF9EB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA30F19408C82003EF9EB /* CoreGraphics.framework */; };
@@ -20,7 +21,6 @@
 		504CA31A19408C82003EF9EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA31919408C82003EF9EB /* main.m */; };
 		504CA31E19408C82003EF9EB /* APAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA31D19408C82003EF9EB /* APAppDelegate.m */; };
 		504CA32119408C82003EF9EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504CA31F19408C82003EF9EB /* Main.storyboard */; };
-		504CA32619408C82003EF9EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504CA32519408C82003EF9EB /* Images.xcassets */; };
 		504CA32D19408C82003EF9EB /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA32C19408C82003EF9EB /* XCTest.framework */; };
 		504CA32E19408C82003EF9EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA30D19408C82003EF9EB /* Foundation.framework */; };
 		504CA32F19408C82003EF9EB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA31119408C82003EF9EB /* UIKit.framework */; };
@@ -124,6 +124,7 @@
 		50105670196AFA0C00D7F800 /* settingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsTab.png; sourceTree = "<group>"; };
 		502DC76F196D77B6002C9C4A /* APSettingsProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsProfileViewController.h; sourceTree = "<group>"; };
 		502DC770196D77B6002C9C4A /* APSettingsProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsProfileViewController.m; sourceTree = "<group>"; };
+		5044E5681997FAF1003D5153 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5048D4A8194A1D0F0092178E /* APConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConnectionManager.h; sourceTree = "<group>"; };
 		5048D4A9194A1D0F0092178E /* APConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConnectionManager.m; sourceTree = "<group>"; };
 		504CA30A19408C82003EF9EB /* Afterparty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Afterparty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +138,6 @@
 		504CA31C19408C82003EF9EB /* APAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APAppDelegate.h; sourceTree = "<group>"; };
 		504CA31D19408C82003EF9EB /* APAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APAppDelegate.m; sourceTree = "<group>"; };
 		504CA32019408C82003EF9EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		504CA32519408C82003EF9EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		504CA32B19408C82003EF9EB /* AfterpartyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AfterpartyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		504CA32C19408C82003EF9EB /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		504CA33419408C82003EF9EB /* AfterpartyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AfterpartyTests-Info.plist"; sourceTree = "<group>"; };
@@ -322,6 +322,7 @@
 				504CA33219408C82003EF9EB /* AfterpartyTests */,
 				504CA30C19408C82003EF9EB /* Frameworks */,
 				504CA30B19408C82003EF9EB /* Products */,
+				5044E5681997FAF1003D5153 /* Images.xcassets */,
 				8FD2B46C232A44DEAC2D6F8C /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
@@ -368,7 +369,6 @@
 				504CA3721940B8A0003EF9EB /* Controller */,
 				504CA35E19409B8B003EF9EB /* Util */,
 				504CA37E1940C00D003EF9EB /* Resources */,
-				504CA32519408C82003EF9EB /* Images.xcassets */,
 				504CA31419408C82003EF9EB /* Supporting Files */,
 			);
 			path = Afterparty;
@@ -725,6 +725,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */,
+				5044E5691997FAF1003D5153 /* Images.xcassets in Resources */,
 				50F64EC51952F40900E0B8DC /* APPhotoCell.xib in Resources */,
 				504CA3BD1940C035003EF9EB /* icon_checkgreen.png in Resources */,
 				504CA3C71940C043003EF9EB /* stock4.jpeg in Resources */,
@@ -747,7 +748,6 @@
 				504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */,
 				50105672196AFA0C00D7F800 /* myEventsTab.png in Resources */,
 				504CA3C01940C035003EF9EB /* icon_magnifyingglass.png in Resources */,
-				504CA32619408C82003EF9EB /* Images.xcassets in Resources */,
 				504CA3B41940C035003EF9EB /* button_camera.png in Resources */,
 				504CA3CF1940C04E003EF9EB /* ap_appicon80.png in Resources */,
 				504CA31819408C82003EF9EB /* InfoPlist.strings in Resources */,

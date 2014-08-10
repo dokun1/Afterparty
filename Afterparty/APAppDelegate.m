@@ -10,6 +10,7 @@
 #import "APMainTabBarController.h"
 #import <Crashlytics/Crashlytics.h>
 #import "APConstants.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @implementation APAppDelegate
 
@@ -35,6 +36,12 @@
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kRegularFont size:11.f], NSFontAttributeName, nil] forState:UIControlStateNormal];
   
   [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+    
+    [SVProgressHUD setFont:[UIFont fontWithName:kRegularFont size:13.f]];
+    [SVProgressHUD setBackgroundColor:[UIColor afterpartyTealBlueColor]];
+    [SVProgressHUD setForegroundColor:[UIColor afterpartyOffWhiteColor]];
+    [SVProgressHUD setRingThickness:1.0f];
+    
     return YES;
 }
 
@@ -47,12 +54,8 @@
                   sourceApplication:sourceApplication
                         withSession:[PFFacebookUtils session]];
   }else if([url.absoluteString containsString:@"eventID"]) {
-
-//    handle event url being opened
     NSArray *components = [url.absoluteString componentsSeparatedByString:@":"];
     NSString *eventID = [components lastObject];
-    UIViewController *view = [APAppDelegate topMostController];
-    [view.tabBarController setSelectedIndex:0];
     [[NSNotificationCenter defaultCenter] postNotificationName:kSearchSpecificEventNotification object:eventID];
   }else{
     return YES;

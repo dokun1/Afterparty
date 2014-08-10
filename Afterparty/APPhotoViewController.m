@@ -9,6 +9,7 @@
 #import "APPhotoViewController.h"
 #import "APConnectionManager.h"
 #import "APPhotoInfo.h"
+#import "APButton.h"
 
 @import AssetsLibrary;
 
@@ -21,6 +22,7 @@
 @property (strong, nonatomic) NSMutableArray *downloadIndicators;
 @property (assign, nonatomic) NSInteger currentlyViewingIndex;
 @property (assign, nonatomic) BOOL longPressed;
+@property (strong, nonatomic) UITapGestureRecognizer *backRecognizer;
 
 @end
 
@@ -33,7 +35,6 @@
         self.currentlyViewingIndex = self.selectedIndex;
         self.imageViewArray = [[NSMutableArray alloc] initWithArray:self.metadata];
         self.downloadIndicators = [[NSMutableArray alloc] initWithCapacity:[self.metadata count]];
-        
         self.longPressed = NO;
     }
     return self;
@@ -52,12 +53,24 @@
         [self.scrollView addSubview:indicator];
     }];
     
+    self.backRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
+    [self.view addGestureRecognizer:self.backRecognizer];
     
     [self setUpInitialImageViews];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [super viewWillDisappear:animated];
+}
+
+- (void)tapGestureRecognized:(UITapGestureRecognizer*)recognizer {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)setUpScrollView {
@@ -88,50 +101,14 @@
 -(void)setUpInitialImageViews {
   
   [self addImageAtNewIndex:self.selectedIndex oldIndex:-1 purgeIndex:-1];
-  
-    
-//    UIScrollView *currentScrollView = [self scrollViewForIndex:self.selectedIndex];
-//    UIImageView *currentImageView = [self imageViewForIndex:self.selectedIndex];
-//    [currentScrollView addSubview:currentImageView];
-//    [self.imageViewArray replaceObjectAtIndex:self.selectedIndex withObject:currentScrollView];
-//    UIActivityIndicatorView *indicator = self.downloadIndicators[self.selectedIndex];
-//    [self.scrollView insertSubview:currentScrollView belowSubview:indicator];
-//    [indicator setHidden:YES];
-//    [indicator stopAnimating];
-//    currentScrollView.frame = self.view.frame;
-//    currentScrollView.center = [self centerForImageViewAtIndex:self.selectedIndex];
-//    [self getImageForIndex:self.selectedIndex];
-  
     if (self.selectedIndex != 0) {
         NSInteger newIndex = self.selectedIndex - 1;
       [self addImageAtNewIndex:newIndex oldIndex:-1 purgeIndex:-1];
-//        UIScrollView *newScrollView = [self scrollViewForIndex:newIndex];
-//        UIImageView *newImageView = [self imageViewForIndex:newIndex];
-//        [newScrollView addSubview:newImageView];
-//        [self.imageViewArray replaceObjectAtIndex:newIndex withObject:newScrollView];
-//        indicator = self.downloadIndicators[newIndex];
-//        [self.scrollView insertSubview:newScrollView belowSubview:indicator];
-//        newScrollView.frame = [self frameForImageViewAtIndex:newIndex];
-//        newScrollView.center = [self centerForImageViewAtIndex:newIndex];
-//        [self getImageForIndex:newIndex];
-//        [indicator setHidden:YES];
-//        [indicator stopAnimating];
     }
     
     if (self.selectedIndex < [self.metadata count] - 1) {
         NSInteger newIndex = self.selectedIndex + 1;
       [self addImageAtNewIndex:newIndex oldIndex:-1 purgeIndex:-1];
-//        UIScrollView *newScrollView = [self scrollViewForIndex:newIndex];
-//        UIImageView *newImageView = [self imageViewForIndex:newIndex];
-//        [newScrollView addSubview:newImageView];
-//        [self.imageViewArray replaceObjectAtIndex:newIndex withObject:newScrollView];
-//        indicator = self.downloadIndicators[newIndex];
-//        [self.scrollView insertSubview:newScrollView belowSubview:indicator];
-//        newScrollView.frame = [self frameForImageViewAtIndex:newIndex];
-//        newScrollView.center = [self centerForImageViewAtIndex:newIndex];
-//        [self getImageForIndex:newIndex];
-//        [indicator setHidden:YES];
-//        [indicator stopAnimating];
     }
 }
 
@@ -442,10 +419,10 @@
     return CGPointMake(x, CGRectGetMidY(self.view.bounds));
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Cleanup
+
+- (void)dealloc {
+    self.backRecognizer = nil;
 }
 
 @end

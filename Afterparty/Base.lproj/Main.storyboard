@@ -378,9 +378,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Create Event" image="plus-512" id="fF4-u4-XvF">
-                        <inset key="imageInsets" minX="300" minY="300" maxX="300" maxY="300"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Create Event" image="Add" id="fF4-u4-XvF"/>
                     <navigationItem key="navigationItem" id="ZUQ-Ls-UDP"/>
                     <connections>
                         <segue destination="bSh-UU-cpN" kind="modal" identifier="createEventSegue" id="Uu8-bn-0er"/>
@@ -749,7 +747,7 @@
         <scene sceneID="Yjp-bJ-EAf">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gsa-2r-BID" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Events" image="myEventsTab.png" id="z56-aD-kxT"/>
+                    <tabBarItem key="tabBarItem" title="My Events" image="Photos" id="z56-aD-kxT"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zW4-1V-WP1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -897,7 +895,7 @@
         <scene sceneID="KVM-us-4h9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Rvp-sh-aPt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Nearby" image="nearbyTab.png" id="8n6-fJ-Ki3"/>
+                    <tabBarItem key="tabBarItem" title="Nearby" image="Near_Me" id="8n6-fJ-Ki3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vlk-xC-gub">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -916,7 +914,7 @@
         <scene sceneID="hXs-aQ-jFK">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zyu-Ad-ATm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="settingsTab.png" id="7D0-bd-nVL"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="Drawers" id="7D0-bd-nVL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kSn-Oh-fG2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -933,13 +931,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Add" width="25" height="25"/>
+        <image name="Drawers" width="24" height="24"/>
+        <image name="Near_Me" width="25" height="25"/>
+        <image name="Photos" width="27" height="22"/>
         <image name="button_camera.png" width="161" height="161"/>
         <image name="button_plusblack.png" width="44" height="44"/>
         <image name="button_pluswhite.png" width="44" height="44"/>
-        <image name="myEventsTab.png" width="40" height="40"/>
-        <image name="nearbyTab.png" width="40" height="40"/>
-        <image name="plus-512" width="256" height="256"/>
-        <image name="settingsTab.png" width="35" height="35"/>
         <image name="user_male3-512" width="512" height="512"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
