@@ -58,10 +58,8 @@
 #pragma mark - CreateEventDelegate Methods
 
 - (void)controllerDidFinish:(APCreateEventViewController *)controller {
-  [controller dismissViewControllerAnimated:YES completion:^{
-    //completion code here
     [self.tabBarController setSelectedIndex:1];
-  }];
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 

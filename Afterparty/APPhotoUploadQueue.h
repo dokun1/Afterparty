@@ -12,6 +12,6 @@
 
 + (instancetype)sharedQueue;
 
-- (void)addPhotoToQueue:(UIImage*)image withThumbnail:(UIImage*)thumbnail forEventID:(NSString*)eventID;
+- (void)addPhotoToQueue:(UIImage*)image forEventID:(NSString*)eventID;
 
 @end

@@ -205,6 +205,26 @@
   }];
 }
 
+- (void)uploadImage:(UIImage*)image forEventID:(NSString*)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
+    NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
+    PFObject *photoData = [PFObject objectWithClassName:kPhotosParseClass];
+    
+    photoData[@"eventID"] = eventID;
+    photoData[@"timestamp"] = [NSDate date];
+    photoData[@"user"] = [[PFUser currentUser] username];
+    photoData[@"comments"] = @[];
+    photoData[@"refID"] = refID;
+    photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
+    photoData[@"width"] = @(image.size.width);
+    photoData[@"height"] = @(image.size.height);
+    photoData[@"imageFile"] = imageFile;
+    [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        (succeeded) ? successBlock() : failureBlock(error);
+    }];
+}
+
 -(void)uploadImage:(UIImage *)image
      withThumbnail:(UIImage *)thumbnail
         forEventID:(NSString *)eventID

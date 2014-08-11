@@ -186,6 +186,8 @@ typedef void (^APProgressBlock)(int percentDone);
            failure:(APFailureErrorBlock)failureBlock
           progress:(APProgressBlock)progressBlock;
 
+- (void)uploadImage:(UIImage*)image forEventID:(NSString*)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
+
 /**
  *  Downloads an image given its reference ID. The ref ID can be obtained from the metadata sheet downloaded at the beginning of every event open. This can be used to load thumbnails in the event collage, or the full-res photo in the photo viewer.
  *

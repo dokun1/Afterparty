@@ -401,8 +401,7 @@
                 NSString *imageName = [NSString stringWithFormat:@"stock%lu.jpeg", (unsigned long)randNum];
                 UIImage *image = [UIImage imageNamed:imageName];
 
-                UIImage *thumbnailImage = [image resizedImageWithSize:[self sizePhotoForColumn:image.size]];
-                [self uploadImage:image withThumbnail:thumbnailImage];
+                [self uploadImage:image];
             }
         }else
             [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a mile of the party center to contribute, ya big jerk."];
@@ -489,11 +488,10 @@
 
 -(void)capturedImage:(UIImage *)image {
     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-    UIImage *thumbnailImage = [image resizedImageWithSize:[self sizePhotoForColumn:image.size]];
     [self.navigationController popToViewController:self animated:NO];
     [self.navigationController setNavigationBarHidden:NO];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    [self uploadImage:image withThumbnail:thumbnailImage];
+    [self uploadImage:image];
     
 }
 
@@ -503,9 +501,9 @@
   [self.navigationController popToViewController:self animated:YES];
 }
 
--(void)uploadImage:(UIImage*)image withThumbnail:(UIImage*)thumbnailImage {
+-(void)uploadImage:(UIImage*)image {
   [SVProgressHUD show];
-  [[APPhotoUploadQueue sharedQueue] addPhotoToQueue:image withThumbnail:thumbnailImage forEventID:self.eventID];
+  [[APPhotoUploadQueue sharedQueue] addPhotoToQueue:image forEventID:self.eventID];
 }
 
 -(void)receivedRefreshNotification {

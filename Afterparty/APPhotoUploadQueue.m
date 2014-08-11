@@ -33,11 +33,9 @@ static NSString *const kCache = @"cachedUploadPhotos";
   return sharedQueue;
 }
 
-- (void)addPhotoToQueue:(UIImage *)image withThumbnail:(UIImage *)thumbnail forEventID:(NSString *)eventID {
+- (void)addPhotoToQueue:(UIImage *)image forEventID:(NSString *)eventID {
   NSData *imageData = UIImageJPEGRepresentation(image, 0.9);
-  NSData *thumbData = UIImageJPEGRepresentation(thumbnail, 0.7);
   NSDictionary *photoDict = @{@"image" : imageData,
-                              @"thumb" : thumbData,
                               @"event" : eventID};
 
   dispatch_async(self.photoUploadQueue, ^{
@@ -69,9 +67,8 @@ static NSString *const kCache = @"cachedUploadPhotos";
     [[self cacheLock] unlock];
     [cache enumerateObjectsUsingBlock:^(NSDictionary *photoDict, NSUInteger idx, BOOL *stop) {
       UIImage *image = [UIImage imageWithData:photoDict[@"image"]];
-      UIImage *thumb = [UIImage imageWithData:photoDict[@"thumb"]];
       NSString *eventID = photoDict[@"event"];
-      [[APConnectionManager sharedManager] uploadImage:image withThumbnail:thumb forEventID:eventID success:^(BOOL succeeded) {
+      [[APConnectionManager sharedManager] uploadImage:image forEventID:eventID success:^{
         [cacheCopy removeObject:photoDict];
         if (idx == (cache.count - 1)) {
           [[self cacheLock] lock];
@@ -95,7 +92,7 @@ static NSString *const kCache = @"cachedUploadPhotos";
         }
       } failure:^(NSError *error) {
         NSLog(@"error uploading photo for eventID: %@", eventID);
-      } progress:nil];
+      }];
     }];
   });
 }
