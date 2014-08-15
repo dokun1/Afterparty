@@ -16,9 +16,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-  
-  [Parse setApplicationId:kParseApplicationID clientKey:kParseClientKey];
+#ifdef DEBUG
+    NSLog(@"--------DEV SERVER--------");
+    [Parse setApplicationId:kParseApplicationIDDev clientKey:kParseClientKeyDev];
+#else
+    NSLog(@"--------PROD SERVER--------");
+    [Parse setApplicationId:kParseApplicationIDProduction clientKey:kParseClientKeyProduction];
+#endif
   [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
   [PFFacebookUtils initializeFacebook];
   

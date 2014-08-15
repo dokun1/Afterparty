@@ -25,8 +25,10 @@ extern NSString *const kLoginSegue;
 
 extern NSString *const kTwitterConsumerKey;
 extern NSString *const kTwitterConsumerSecret;
-extern NSString *const kParseApplicationID;
-extern NSString *const kParseClientKey;
+extern NSString *const kParseApplicationIDProduction;
+extern NSString *const kParseClientKeyProduction;
+extern NSString *const kParseApplicationIDDev;
+extern NSString *const kParseClientKeyDev;
 extern NSString *const kFoursquareClientID;
 extern NSString *const kFoursquareSecret;
 extern NSString *const kCrashlyticsAPIKey;

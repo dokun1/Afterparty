@@ -17,6 +17,36 @@
             endingLineNumber = "406"
             landmarkName = "-loginWithTwitterAccount:success:failure:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[APConnectionManager loginWithTwitterAccount:success:failure:]"
+                  moduleName = "Afterparty"
+                  urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
+                  timestampString = "429804938.473924"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "406"
+                  endingLineNumber = "406"
+                  offsetFromSymbolStart = "141">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__63-[APConnectionManager loginWithTwitterAccount:success:failure:]_block_invoke"
+                  moduleName = "Afterparty"
+                  urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
+                  timestampString = "429804938.474167"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "406"
+                  endingLineNumber = "406"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

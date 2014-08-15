@@ -30,6 +30,7 @@
   [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
   UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshEvents)];
   [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
+    self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
