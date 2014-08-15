@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "406"
             endingLineNumber = "406"
-            landmarkName = "-getTwitterUserDetailsForUsername:success:failure:"
+            landmarkName = "-loginWithTwitterAccount:success:failure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
