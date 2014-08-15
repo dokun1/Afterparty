@@ -26,8 +26,10 @@ NSString *const kCheckCurrentUser = @"checkCurrentUser";
 
 NSString *const kTwitterConsumerKey = @"lrrwwaMcOMZ2ZYyUSWWSfxCOF";
 NSString *const kTwitterConsumerSecret = @"k8nG6Ib3dVu4MBtIRyrCyqoqi0FZVsbD4JPIxvRc37jRCN7qqh";
-NSString *const kParseApplicationID = @"CvhkqubpxeRFVm6j4HiMf237NWRjaYdPR1PC9vUE";
-NSString *const kParseClientKey = @"ds9CT52n1L0cK704AcesYLyZWX2VUNleGarg3jWK";
+NSString *const kParseApplicationIDProduction = @"CvhkqubpxeRFVm6j4HiMf237NWRjaYdPR1PC9vUE";
+NSString *const kParseClientKeyProduction = @"ds9CT52n1L0cK704AcesYLyZWX2VUNleGarg3jWK";
+NSString *const kParseApplicationIDDev = @"g7uceRQOuK3aRgsGZhjqdG9fIV0EoaTjbvPwbKTN";
+NSString *const kParseClientKeyDev = @"Hb8yBE0IlYGdZBrCy6bkAcNqyu3HafrBzbOto0oA";
 NSString *const kFoursquareClientID = @"A3QWFSMMPWEKZLXY434YWY3CRIMA53PU50IB4BPEMRFVHLEG";
 NSString *const kFoursquareSecret = @"FE0YBODXUDB235LSKPN3I1YPPDZCAVULCST4PDYMI0IMDEQM";
 NSString *const kCrashlyticsAPIKey = @"2562e5594f3c583624c29c6db146c9e585d7d2f2";

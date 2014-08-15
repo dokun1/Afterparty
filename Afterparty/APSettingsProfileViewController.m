@@ -90,7 +90,11 @@
   self.blurbFieldLabel.textColor = [UIColor afterpartyTealBlueColor];
   [self.usernameLabel styleForType:LabelTypeTableViewCellAttribute];
   self.usernameLabel.textColor = [UIColor afterpartyTealBlueColor];
+#ifdef DEBUG
+  [self.versionLabel styleForType:LabelTypeTableViewCellAttribute withText:[NSString stringWithFormat:@"v%@ DEV", [APUtil getVersion]]];
+#else
   [self.versionLabel styleForType:LabelTypeTableViewCellAttribute withText:[NSString stringWithFormat:@"v%@", [APUtil getVersion]]];
+#endif
   self.versionLabel.textColor = [UIColor afterpartyTealBlueColor];
 }
 
