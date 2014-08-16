@@ -16,6 +16,7 @@
 -(id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         //init logic here
+        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return self;
 }
@@ -29,8 +30,8 @@
 -(void)setImage:(UIImage *)image {
     if (_image != image) {
         _image = image;
+        self.imageView.image = _image;
     }
-    self.imageView.image = _image;
 }
 
 - (void)setPhotoInfo:(APPhotoInfo *)photoInfo {
