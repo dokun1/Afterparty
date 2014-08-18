@@ -35,7 +35,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.3)
   - Foursquare-API-v2 (~> 1.4)
   - FXBlurView (~> 1.6.2)
-  - Parse (~> 1.2.19)
+  - Parse (~> 1.2.20)
   - pop (~> 1.0)
   - SVProgressHUD (HEAD)
   - TTTAttributedLabel (~> 1.10)
