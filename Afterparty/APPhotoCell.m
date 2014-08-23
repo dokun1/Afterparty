@@ -34,6 +34,10 @@
     }
 }
 
+- (void)prepareForReuse {
+    self.imageView.image = nil; //fixes the issue of the old image flashing in the wrong place
+}
+
 - (void)setPhotoInfo:(APPhotoInfo *)photoInfo {
   if (_photoInfo != photoInfo) {
     _photoInfo = photoInfo;
@@ -53,7 +57,6 @@
     frame.size = [weakcell sizePhotoForColumn:weakcell.photoInfo.size];
     weakcell.imageView.frame = frame;
     weakcell.imageView.image = image;
-    NSLog(@"imageViewSize = %@\nimageSize = %@", NSStringFromCGSize(weakcell.imageView.frame.size), NSStringFromCGSize(image.size));
   } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
     NSLog(@"error download");
   }];

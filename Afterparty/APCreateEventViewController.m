@@ -466,13 +466,16 @@
     [self.delegate controllerDidFinish:self];
     return;
   }
-  
+
+  if (self.currentInvitees.count == 0) {
+      [self.delegate controllerDidFinish:self];
+      return;
+  }
   NSMutableArray *numbers = [NSMutableArray array];
   [self.currentInvitees enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
     [numbers addObject:contactDict[@"phone"]];
   }];
-  
-  
+    
   NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: afterparty://eventID:%@", eventID];
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
@@ -561,9 +564,7 @@
                      self.chooseEventFriendsButton.alpha  = 1.0f;
                      self.createEventButton.alpha         = 1.0f;
                      [self.coverPhotoScrollView setScrollEnabled:YES];
-                   } completion:^(BOOL finished) {
-                     [self fadeInSecondLabels];
-                   }];
+                   } completion:nil];
 }
 
 -(void)fadeInSecondLabels {
@@ -658,20 +659,24 @@
     return;
   }
   
-  UIGraphicsBeginImageContextWithOptions(self.coverPhotoScrollView.bounds.size,
-                                         YES,
-                                         [UIScreen mainScreen].scale);
-  
-  CGPoint offset = self.coverPhotoScrollView.contentOffset;
-  CGContextTranslateCTM(UIGraphicsGetCurrentContext(), -offset.x, -offset.y);
-  
-  [self.coverPhotoScrollView.layer renderInContext:UIGraphicsGetCurrentContext()];
-  UIImage *visibleScrollViewImage = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  self.currentEvent.eventImage = visibleScrollViewImage;
+  self.currentEvent.eventImage = [self getScrollViewVisibleImage];
   self.currentEvent.eventName = self.eventNameField.text;
-  self.currentEvent.password = self.privateEventSwitch.isOn ? self.passwordTextField.text : @"";
+  self.currentEvent.password = self.privateEventSwitch.isOn ? @"" : self.passwordTextField.text;
   [self fadeOutFirstLabels];
+}
+
+- (UIImage *)getScrollViewVisibleImage {
+    UIGraphicsBeginImageContextWithOptions(self.coverPhotoScrollView.bounds.size,
+                                           YES,
+                                           [UIScreen mainScreen].scale);
+    
+    CGPoint offset = self.coverPhotoScrollView.contentOffset;
+    CGContextTranslateCTM(UIGraphicsGetCurrentContext(), -offset.x, -offset.y);
+    
+    [self.coverPhotoScrollView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *visibleScrollViewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return visibleScrollViewImage;
 }
 
 #pragma mark - AddressBook Methods

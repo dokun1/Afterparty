@@ -25,7 +25,7 @@
                   symbolName = "-[APConnectionManager loginWithTwitterAccount:success:failure:]"
                   moduleName = "Afterparty"
                   urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
-                  timestampString = "429804938.473924"
+                  timestampString = "430528595.445508"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "406"
@@ -39,7 +39,7 @@
                   symbolName = "__63-[APConnectionManager loginWithTwitterAccount:success:failure:]_block_invoke"
                   moduleName = "Afterparty"
                   urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
-                  timestampString = "429804938.474167"
+                  timestampString = "430528595.445687"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "406"
@@ -47,6 +47,84 @@
                   offsetFromSymbolStart = "72">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Afterparty/APConnectionManager.m"
+            timestampString = "429811413.909242"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
+            landmarkName = "-getTwitterUserDetailsForUsername:success:failure:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[APConnectionManager getTwitterUserDetailsForUsername:success:failure:]"
+                  moduleName = "Afterparty"
+                  urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
+                  timestampString = "430528595.52407"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "420"
+                  endingLineNumber = "420"
+                  offsetFromSymbolStart = "361">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__72-[APConnectionManager getTwitterUserDetailsForUsername:success:failure:]_block_invoke"
+                  moduleName = "Afterparty"
+                  urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
+                  timestampString = "430528595.524333"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "420"
+                  endingLineNumber = "420"
+                  offsetFromSymbolStart = "117">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Afterparty/APCreateEventViewController.m"
+            timestampString = "430064022.616935"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
+            landmarkName = "-sendInvitationsForEventID:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Afterparty/APCreateEventViewController.m"
+            timestampString = "430526766.732053"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "753"
+            endingLineNumber = "753"
+            landmarkName = "-showPasswordField"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
