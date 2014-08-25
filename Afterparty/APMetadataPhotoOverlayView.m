@@ -10,11 +10,13 @@
 
 @implementation APMetadataPhotoOverlayView
 
+static const CGFloat PADDING = 10;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.usernameLabel = [[APLabel alloc] initWithFrame:CGRectMake(10, 0, self.frame.size.width - 20, 20)];
+        self.usernameLabel = [[APLabel alloc] initWithFrame:CGRectMake(PADDING, 0, self.frame.size.width - (PADDING * 2), PADDING * 2)];
         [self.usernameLabel styleForType:LabelTypeStandard];
         self.usernameLabel.textColor = [UIColor whiteColor];
         self.usernameLabel.layer.shadowOffset = CGSizeMake(3, 3);
@@ -23,7 +25,7 @@
         self.usernameLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.usernameLabel];
         
-        self.timestampLabel = [[APLabel alloc] initWithFrame:CGRectMake(10, 30, self.frame.size.width - 20, 20)];
+        self.timestampLabel = [[APLabel alloc] initWithFrame:CGRectMake(PADDING, self.usernameLabel.frame.size.height + PADDING, self.frame.size.width - (PADDING * 2), PADDING * 2)];
         [self.timestampLabel styleForType:LabelTypeStandard];
         self.timestampLabel.textColor = [UIColor whiteColor];
         self.timestampLabel.layer.shadowOffset = CGSizeMake(3, 3);

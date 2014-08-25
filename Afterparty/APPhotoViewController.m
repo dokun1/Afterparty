@@ -363,10 +363,6 @@
 
 }
 
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
-}
-
 -(UIImageView*)imageViewForIndex:(NSInteger)index {
     APPhotoInfo *currentInfo = self.metadata[index];
     CGRect currentFrame = CGRectMake(0, 0, [self sizePhotoForPage:currentInfo.size].width, [self sizePhotoForPage:currentInfo.size].height);
