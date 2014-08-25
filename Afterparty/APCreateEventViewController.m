@@ -433,7 +433,6 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-//    [self.view sendSubviewToBack:self.choosePhotoButton];
     [self.choosePhotoButton.layer removeAllAnimations];
     self.choosePhotoButton.alpha = 0.0f;
   [self.coverPhotoImageView removeFromSuperview];
@@ -554,7 +553,6 @@
                         delay:0.0
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
-//                     self.choosePhotoLabel.alpha          = 0.0f;
                      self.chooseEventDateLabel.alpha      = 0.0f;
                      self.chooseEventFriendsLabel.alpha   = 0.0f;
                      self.chooseEventLocationLabel.alpha  = 0.0f;
@@ -580,7 +578,6 @@
                         delay:0.0
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
-//                     self.choosePhotoLabel.alpha          = 1.0f;
                      self.chooseEventDateLabel.alpha      = 1.0f;
                      self.chooseEventFriendsLabel.alpha   = 1.0f;
                      self.chooseEventLocationLabel.alpha  = 1.0f;
