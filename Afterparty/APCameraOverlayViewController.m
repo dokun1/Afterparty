@@ -141,7 +141,7 @@ typedef NS_ENUM(NSInteger, FlashState) {
       [self.session addOutput:self.stillImageOutput];
     }
 
-    self.session.sessionPreset = IS_IPHONE_5 ? AVCaptureSessionPreset1920x1080 : AVCaptureSessionPresetPhoto; //this fixes stretching for legacy iphones
+    self.session.sessionPreset = IS_IPHONE_5 ? AVCaptureSessionPresetHigh : AVCaptureSessionPresetPhoto; //this fixes stretching for legacy iphones
       
     [self.session startRunning];
   });
