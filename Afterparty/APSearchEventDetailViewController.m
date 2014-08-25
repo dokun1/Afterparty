@@ -66,15 +66,30 @@
 
 - (IBAction)eventJoinTapped:(id)sender {
     if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
-        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Private Event" message:@"Please enter the event's password." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-        av.alertViewStyle = UIAlertViewStylePlainTextInput;
-        av.tag = 1000;
-        [av textFieldAtIndex:0].delegate = self;
-        [av show];
-        return;
-    }else{
-        [self confirmJoinEvent];
+        if (![self hasAlreadyAuthenticatedEvent]) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Private Event" message:@"Please enter the event's password." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+            av.alertViewStyle = UIAlertViewStylePlainTextInput;
+            av.tag = 1000;
+            [av textFieldAtIndex:0].delegate = self;
+            [av show];
+            return;
+        }
     }
+    [self confirmJoinEvent];
+}
+
+- (BOOL)hasAlreadyAuthenticatedEvent {
+    //an event gets added to their array when they get to the page, meaning theyve already entered the password once.
+    NSMutableArray *eventsArray = [APUtil getMyEventsArray];
+    __block BOOL eventExists;
+    [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
+        NSString *eventID = eventDict.allKeys.firstObject;
+        if ([eventID isEqualToString:self.currentEvent.objectID]) {
+            eventExists = YES;
+            *stop = YES;
+        }
+    }];
+    return eventExists;
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {

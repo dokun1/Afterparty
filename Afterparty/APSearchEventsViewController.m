@@ -15,6 +15,7 @@
 #import "UIAlertView+APAlert.h"
 #import "APEvent.h"
 #import "APConstants.h"
+#import "APUtil.h"
 
 @import AddressBook;
 
@@ -155,6 +156,8 @@
     [[APConnectionManager sharedManager] searchEventsByID:self.initialSearch success:^(NSArray *objects) {
         [SVProgressHUD dismiss];
         self.venues = [objects mutableCopy];
+        APEvent *searchedEvent = self.venues.firstObject;
+        [APUtil saveEventToMyEvents:searchedEvent];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });

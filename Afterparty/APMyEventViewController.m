@@ -172,6 +172,8 @@
 
   self.countdownLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
   self.eventEndsLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
+    self.countdownLabel.textColor = [UIColor whiteColor];
+    self.eventEndsLabel.textColor = [UIColor whiteColor];
   
   [self.manager startUpdatingLocation];
   
@@ -212,7 +214,6 @@
 
 -(void)cancelButtonTapped {
     self.isSavingBulk = NO;
-    self.collectionView.allowsMultipleSelection = NO;
     [UIView transitionWithView:self.photoButton
                       duration:0.3
                        options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
@@ -224,6 +225,8 @@
                            }
                            
                        } completion:^(BOOL finished) {
+                           [self deselectAllCells];
+                           self.collectionView.allowsMultipleSelection = NO;
                            UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonTapped)];
                            UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
                            [self.navigationItem setRightBarButtonItems:@[btnSave, btnRefresh]];
@@ -421,12 +424,16 @@
     [self.selectedPhotos removeAllObjects];
     dispatch_async(dispatch_get_main_queue(), ^{
       [SVProgressHUD showSuccessWithStatus:@"photos saved!"];
-      for (int i = 0; i < self.photoMetadata.count; i++) {
-        APPhotoCell *cell = (APPhotoCell*)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-        [cell setSelected:NO];
-      }
+        [self deselectAllCells];
     });
   });
+}
+
+- (void)deselectAllCells {
+    for (int i = 0; i < self.photoMetadata.count; i++) {
+        APPhotoCell *cell = (APPhotoCell*)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+        [cell setSelected:NO];
+    }
 }
 
 -(void)saveImageToCameraRoll:(UIImage*)image {
@@ -530,6 +537,9 @@
   cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
   
   [cell setPhotoInfo:self.photoMetadata[indexPath.item]];
+    if (!self.isSavingBulk) {
+        [cell setSelected:NO];
+    }
   return cell;
 }
 

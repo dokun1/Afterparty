@@ -1011,7 +1011,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "13904bf4-9e4f-4c59-8949-b6620689a1d7";
+				PROVISIONING_PROFILE = "592cd4af-52b3-42de-86fc-b8d466c135ca";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1033,7 +1033,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "13904bf4-9e4f-4c59-8949-b6620689a1d7";
+				PROVISIONING_PROFILE = "592cd4af-52b3-42de-86fc-b8d466c135ca";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

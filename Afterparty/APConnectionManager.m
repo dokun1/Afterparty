@@ -93,10 +93,11 @@
                           success:(APSuccessArrayBlock)successBlock
                           failure:(APFailureErrorBlock)failureBlock {
   PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
-  NSNumber *latUp = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.latitude] floatValue]) + 1];
-  NSNumber *latDown = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.latitude] floatValue]) - 1];
-  NSNumber *longUp = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.longitude] floatValue]) + 1];
-  NSNumber *longDown = [NSNumber numberWithInt:([[NSString stringWithFormat:@"%.0f", location.coordinate.longitude] floatValue]) - 1];
+    
+  NSNumber *latUp = @(location.coordinate.latitude + 0.07);
+  NSNumber *latDown = @(location.coordinate.latitude - 0.07);
+  NSNumber *longUp = @(location.coordinate.longitude + 0.07);
+  NSNumber *longDown = @(location.coordinate.longitude - 0.07);
   
   NSLog(@"Searching for coord range (%@, %@), (%@, %@)", latDown, latUp, longDown, longUp);
   

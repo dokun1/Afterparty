@@ -140,7 +140,9 @@ typedef NS_ENUM(NSInteger, FlashState) {
       [self.stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
       [self.session addOutput:self.stillImageOutput];
     }
-    
+
+    self.session.sessionPreset = IS_IPHONE_5 ? AVCaptureSessionPreset1920x1080 : AVCaptureSessionPresetPhoto; //this fixes stretching for legacy iphones
+      
     [self.session startRunning];
   });
 }
@@ -324,14 +326,10 @@ typedef NS_ENUM(NSInteger, FlashState) {
     return size;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)dealloc {
   [self.session stopRunning];
+  self.session = nil;
+  self.viewFinderView = nil;
 }
 
 @end
