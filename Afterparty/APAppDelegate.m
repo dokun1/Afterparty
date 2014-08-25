@@ -44,7 +44,7 @@
     [SVProgressHUD setFont:[UIFont fontWithName:kRegularFont size:13.f]];
     [SVProgressHUD setBackgroundColor:[UIColor afterpartyTealBlueColor]];
     [SVProgressHUD setForegroundColor:[UIColor afterpartyOffWhiteColor]];
-    [SVProgressHUD setRingThickness:1.0f];
+    [SVProgressHUD setRingThickness:2.0f];
     
     return YES;
 }
