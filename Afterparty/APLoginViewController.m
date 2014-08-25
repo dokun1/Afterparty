@@ -311,7 +311,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
 #pragma mark - UITextField Delegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  [textField resignFirstResponder];
-  return YES;
+    [textField resignFirstResponder];
+    [self loginCredentialsButtonTapped:nil];
+    return YES;
 }  
 @end
