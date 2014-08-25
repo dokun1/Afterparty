@@ -85,16 +85,28 @@
         [df setDateFormat:@"hh:mm a MM/dd/yy"];
     });
     
-    NSString *endDate = [NSString stringWithFormat:@"ends %@",[df stringFromDate:eventInfo[@"endDate"]]];
     NSString *user = [NSString stringWithFormat:@"%@'S", [eventInfo[@"createdByUsername"] uppercaseString]];
     
     UIImage *image = [UIImage imageWithData:eventInfo[@"eventImageData"]];
-  
-  cell.userLabel.text = user;
-  cell.eventNameLabel.text = eventName;
-  cell.countdownLabel.text = endDate;
-  
-  [cell.eventImageView setImage:image];
+    NSString *endDate;
+    cell.userLabel.text = user;
+    cell.eventNameLabel.text = eventName;
+    NSDate *endDateDate = eventInfo[@"endDate"];
+    NSComparisonResult result = [endDateDate compare:[NSDate date]];
+    switch (result){
+        case NSOrderedAscending:
+        case NSOrderedSame:
+            cell.bannerView.backgroundColor = [UIColor afterpartyCoralRedColor];
+            endDate = [NSString stringWithFormat:@"ended %@",[df stringFromDate:eventInfo[@"endDate"]]];
+            break;
+        case NSOrderedDescending:{
+            cell.bannerView.backgroundColor = [UIColor afterpartyTealBlueColor];
+            endDate = [NSString stringWithFormat:@"ends %@",[df stringFromDate:eventInfo[@"endDate"]]];
+            break;
+        }
+    }
+    cell.countdownLabel.text = endDate;
+    [cell.eventImageView setImage:image];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

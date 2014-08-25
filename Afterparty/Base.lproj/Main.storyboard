@@ -262,6 +262,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <segue destination="51j-6s-3oY" kind="push" identifier="EventDetailSegue" id="ehl-yB-3Cp"/>
+                        <segue destination="xba-d3-b1b" kind="push" id="L89-XX-LcM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ic7-VR-dup" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -859,6 +860,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4mA-R2-d1K"/>
+        <segue reference="L89-XX-LcM"/>
     </inferredMetricsTieBreakers>
 </document>

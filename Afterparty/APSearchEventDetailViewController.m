@@ -62,6 +62,10 @@
   UIImage *image = [UIImage imageWithData:self.currentEvent.eventImageData];
   [self.eventImageView setImage:image];
   [self.userAvatar setImageWithURL:[NSURL URLWithString:self.currentEvent.eventUserPhotoURL]];
+    
+    if ([self hasAlreadyAuthenticatedEvent]) {
+        [self.eventJoinButton setTitle:@"GO!!" forState:UIControlStateNormal];
+    }
 }
 
 - (IBAction)eventJoinTapped:(id)sender {
