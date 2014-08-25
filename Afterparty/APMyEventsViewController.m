@@ -144,9 +144,16 @@
 
 #pragma mark - CreateEventDelegate Methods
 
-- (void)controllerDidFinish:(APCreateEventViewController *)controller {
+- (void)controllerDidFinish:(APCreateEventViewController *)controller withEventID:(NSString *)eventID{
     [self.tabBarController setSelectedIndex:1];
     [controller dismissViewControllerAnimated:YES completion:nil];
+    [[APUtil getMyEventsArray] enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
+        NSString *checkEventID = eventDict.allKeys.firstObject;
+        if ([checkEventID isEqualToString:eventID]) {
+            [self performSegueWithIdentifier:kMyEventSelectedSegue sender:eventDict];
+            *stop = YES;
+        }
+    }];
 }
 
 @end

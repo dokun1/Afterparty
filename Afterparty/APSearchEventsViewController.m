@@ -213,8 +213,6 @@
         [df setDateFormat:@"hh:mm a MM/dd/yy"];
     });
     
-    [cell.eventImageView setBackgroundColor:[UIColor afterpartyBrightGreenColor]];
-    
     NSString *user = [NSString stringWithFormat:@"%@'S", [event.createdByUsername uppercaseString]];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         PFFile *imageFile = (PFFile*)[event eventImage];

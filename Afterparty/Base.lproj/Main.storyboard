@@ -347,7 +347,9 @@
                             <constraint firstItem="esV-WG-m5P" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" id="uth-Ak-bqW"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="qAq-4U-Ahn"/>
+                    <navigationItem key="navigationItem" id="qAq-4U-Ahn">
+                        <barButtonItem key="backBarButtonItem" title="BACK" id="0BE-cw-VAb"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="eventCreatedByBlurb" destination="K4c-CN-XXS" id="V4Q-og-KAn"/>
                         <outlet property="eventCreatedByName" destination="9lb-DN-DMF" id="GzF-vC-zd1"/>
@@ -391,7 +393,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bFa-CS-ADx" customClass="APTextField">
-                                <rect key="frame" x="53" y="80" width="253" height="30"/>
+                                <rect key="frame" x="43" y="80" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -498,9 +500,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DxR-za-f6W">
-                                <rect key="frame" x="110" y="104" width="100" height="93"/>
+                                <rect key="frame" x="123" y="108" width="74" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="video_camera-512copy">
+                                <state key="normal" image="photo-512copy">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -850,8 +852,8 @@
         <image name="button_camera.png" width="161" height="161"/>
         <image name="button_plusblack.png" width="44" height="44"/>
         <image name="button_pluswhite.png" width="44" height="44"/>
+        <image name="photo-512copy" width="512" height="512"/>
         <image name="user_male3-512" width="512" height="512"/>
-        <image name="video_camera-512copy" width="512" height="512"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -859,6 +861,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="f8i-cj-h7P"/>
+        <segue reference="4mA-R2-d1K"/>
     </inferredMetricsTieBreakers>
 </document>
