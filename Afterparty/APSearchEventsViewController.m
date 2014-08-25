@@ -107,6 +107,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     self.initialSearch = nil;
+    [SVProgressHUD dismiss];
 }
 
 #pragma mark - LocationManagerDelegate Methods

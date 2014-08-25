@@ -13,8 +13,9 @@
 #import "UIColor+APColor.h"
 #import "APUtil.h"
 #import "APConstants.h"
+#import "APCreateEventViewController.h"
 
-@interface APMyEventsViewController ()
+@interface APMyEventsViewController () <CreateEventDelegate>
 
 @property (strong, nonatomic) NSArray *events;
 
@@ -28,9 +29,10 @@
   self.navigationController.navigationBar.barTintColor = [UIColor afterpartyOffWhiteColor];
     
   [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
-  UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshEvents)];
-  [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
-    self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
+  UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped)];
+  [self.navigationItem setRightBarButtonItems:@[btnAdd]];
+  self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -40,6 +42,10 @@
 - (void)refreshEvents {
   self.events = [APUtil getMyEventsArray];
   [self.tableView reloadData];
+}
+
+- (void)addButtonTapped {
+    [self performSegueWithIdentifier:kCreateEventSegue sender:self];
 }
 
 #pragma mark - Table view data source
@@ -111,12 +117,24 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - Navigation
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
   if ([[segue identifier] isEqualToString:kMyEventSelectedSegue]) {
     APMyEventViewController *vc = (APMyEventViewController*)segue.destinationViewController;
     vc.eventDict = sender;
     vc.hidesBottomBarWhenPushed = YES;
+  } else if ([segue.identifier isEqualToString:kCreateEventSegue]) {
+    APCreateEventViewController *controller = (APCreateEventViewController*)segue.destinationViewController;
+    controller.delegate = self;
   }
+}
+
+#pragma mark - CreateEventDelegate Methods
+
+- (void)controllerDidFinish:(APCreateEventViewController *)controller {
+    [self.tabBarController setSelectedIndex:1];
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
