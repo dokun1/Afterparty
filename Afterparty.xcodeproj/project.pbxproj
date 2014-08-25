@@ -73,7 +73,6 @@
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
 		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
-		50C3AA88195F0DA900A0297A /* APCreateEventLandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */; };
 		50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */; };
 		50C3AA8F195F0ECB00A0297A /* APInviteFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8C195F0ECB00A0297A /* APInviteFriendTableViewCell.m */; };
 		50C3AA90195F0ECB00A0297A /* APInviteFriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C3AA8D195F0ECB00A0297A /* APInviteFriendTableViewCell.xib */; };
@@ -229,8 +228,6 @@
 		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
 		50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventViewController.m; sourceTree = "<group>"; };
-		50C3AA86195F0DA900A0297A /* APCreateEventLandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventLandingViewController.h; sourceTree = "<group>"; };
-		50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventLandingViewController.m; sourceTree = "<group>"; };
 		50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInviteFriendsViewController.h; sourceTree = "<group>"; };
 		50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APInviteFriendsViewController.m; sourceTree = "<group>"; };
 		50C3AA8B195F0ECB00A0297A /* APInviteFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInviteFriendTableViewCell.h; sourceTree = "<group>"; };
@@ -505,8 +502,6 @@
 		504CA3701940B87F003EF9EB /* CreateEvent */ = {
 			isa = PBXGroup;
 			children = (
-				50C3AA86195F0DA900A0297A /* APCreateEventLandingViewController.h */,
-				50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */,
 				50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */,
 				50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */,
 				50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */,
@@ -866,7 +861,6 @@
 				50F64EDA19531DF400E0B8DC /* APPhotoUploadQueue.m in Sources */,
 				504CA3791940BA5A003EF9EB /* APLoginViewController.m in Sources */,
 				504CA31E19408C82003EF9EB /* APAppDelegate.m in Sources */,
-				50C3AA88195F0DA900A0297A /* APCreateEventLandingViewController.m in Sources */,
 				50DE65921940D02500C27B84 /* APTextView.m in Sources */,
 				504CA36619409B9C003EF9EB /* UIAlertView+APAlert.m in Sources */,
 				50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */,

@@ -38,6 +38,7 @@
   [super viewDidLoad];
   self.view.tintColor = [UIColor afterpartyTealBlueColor];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkCurrentUser) name:kCheckCurrentUser object:nil];
+    [self.tabBarController setSelectedIndex:1];
   // Do any additional setup after loading the view.
 }
 
