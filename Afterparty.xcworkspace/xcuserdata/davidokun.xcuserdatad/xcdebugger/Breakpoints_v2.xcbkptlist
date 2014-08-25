@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Afterparty/APConnectionManager.m"
-            timestampString = "428973311.685113"
+            timestampString = "430663466.735304"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
             landmarkName = "-loginWithTwitterAccount:success:failure:"
             landmarkType = "5">
             <Locations>
@@ -25,11 +25,11 @@
                   symbolName = "-[APConnectionManager loginWithTwitterAccount:success:failure:]"
                   moduleName = "Afterparty"
                   urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
-                  timestampString = "430528595.445508"
+                  timestampString = "430663467.056677"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "406"
-                  endingLineNumber = "406"
+                  startingLineNumber = "407"
+                  endingLineNumber = "407"
                   offsetFromSymbolStart = "141">
                </Location>
                <Location
@@ -39,11 +39,11 @@
                   symbolName = "__63-[APConnectionManager loginWithTwitterAccount:success:failure:]_block_invoke"
                   moduleName = "Afterparty"
                   urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
-                  timestampString = "430528595.445687"
+                  timestampString = "430663467.057994"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "406"
-                  endingLineNumber = "406"
+                  startingLineNumber = "407"
+                  endingLineNumber = "407"
                   offsetFromSymbolStart = "72">
                </Location>
             </Locations>
@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Afterparty/APConnectionManager.m"
-            timestampString = "429811413.909242"
+            timestampString = "430663466.735304"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "420"
+            endingLineNumber = "420"
             landmarkName = "-getTwitterUserDetailsForUsername:success:failure:"
             landmarkType = "5">
             <Locations>
@@ -71,11 +71,11 @@
                   symbolName = "-[APConnectionManager getTwitterUserDetailsForUsername:success:failure:]"
                   moduleName = "Afterparty"
                   urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
-                  timestampString = "430528595.52407"
+                  timestampString = "430663467.139882"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "420"
-                  endingLineNumber = "420"
+                  startingLineNumber = "421"
+                  endingLineNumber = "421"
                   offsetFromSymbolStart = "361">
                </Location>
                <Location
@@ -85,11 +85,11 @@
                   symbolName = "__72-[APConnectionManager getTwitterUserDetailsForUsername:success:failure:]_block_invoke"
                   moduleName = "Afterparty"
                   urlString = "file:///Users/davidokun/Dev/AfterpartyNew/Afterparty/APConnectionManager.m"
-                  timestampString = "430528595.524333"
+                  timestampString = "430663467.140068"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "420"
-                  endingLineNumber = "420"
+                  startingLineNumber = "421"
+                  endingLineNumber = "421"
                   offsetFromSymbolStart = "117">
                </Location>
             </Locations>

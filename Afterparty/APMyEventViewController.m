@@ -172,6 +172,8 @@
 
   self.countdownLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
   self.eventEndsLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
+    self.countdownLabel.textColor = [UIColor whiteColor];
+    self.eventEndsLabel.textColor = [UIColor whiteColor];
   
   [self.manager startUpdatingLocation];
   
@@ -535,6 +537,9 @@
   cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
   
   [cell setPhotoInfo:self.photoMetadata[indexPath.item]];
+    if (!self.isSavingBulk) {
+        [cell setSelected:NO];
+    }
   return cell;
 }
 

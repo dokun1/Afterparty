@@ -35,6 +35,7 @@
 }
 
 - (void)prepareForReuse {
+    [super prepareForReuse];
     self.imageView.image = nil; //fixes the issue of the old image flashing in the wrong place
 }
 
