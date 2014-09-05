@@ -68,12 +68,12 @@
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
 		509B439319942584004CC33D /* button_redCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 509B439219942584004CC33D /* button_redCancel.png */; };
+		50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */; };
 		50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */; };
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
 		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
-		50C3AA88195F0DA900A0297A /* APCreateEventLandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */; };
 		50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */; };
 		50C3AA8F195F0ECB00A0297A /* APInviteFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8C195F0ECB00A0297A /* APInviteFriendTableViewCell.m */; };
 		50C3AA90195F0ECB00A0297A /* APInviteFriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C3AA8D195F0ECB00A0297A /* APInviteFriendTableViewCell.xib */; };
@@ -220,6 +220,8 @@
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
 		509B439219942584004CC33D /* button_redCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_redCancel.png; sourceTree = "<group>"; };
+		50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMetadataPhotoOverlayView.h; sourceTree = "<group>"; };
+		50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMetadataPhotoOverlayView.m; sourceTree = "<group>"; };
 		50BF4C8B196C410600B6EA1F /* APSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsTableViewController.h; sourceTree = "<group>"; };
 		50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsTableViewController.m; sourceTree = "<group>"; };
 		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
@@ -229,8 +231,6 @@
 		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
 		50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventViewController.m; sourceTree = "<group>"; };
-		50C3AA86195F0DA900A0297A /* APCreateEventLandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventLandingViewController.h; sourceTree = "<group>"; };
-		50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventLandingViewController.m; sourceTree = "<group>"; };
 		50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInviteFriendsViewController.h; sourceTree = "<group>"; };
 		50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APInviteFriendsViewController.m; sourceTree = "<group>"; };
 		50C3AA8B195F0ECB00A0297A /* APInviteFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInviteFriendTableViewCell.h; sourceTree = "<group>"; };
@@ -505,8 +505,6 @@
 		504CA3701940B87F003EF9EB /* CreateEvent */ = {
 			isa = PBXGroup;
 			children = (
-				50C3AA86195F0DA900A0297A /* APCreateEventLandingViewController.h */,
-				50C3AA87195F0DA900A0297A /* APCreateEventLandingViewController.m */,
 				50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */,
 				50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */,
 				50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */,
@@ -564,6 +562,8 @@
 				50DE658E1940D01100C27B84 /* APButton.m */,
 				50DE65901940D02500C27B84 /* APTextView.h */,
 				50DE65911940D02500C27B84 /* APTextView.m */,
+				50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */,
+				50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -847,6 +847,7 @@
 				502DC771196D77B6002C9C4A /* APSettingsProfileViewController.m in Sources */,
 				50F64ECF1952F64800E0B8DC /* APSearchEventTableViewCell.m in Sources */,
 				50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */,
+				50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */,
 				504CA35719409899003EF9EB /* FSVenue.m in Sources */,
 				50F64ED61952FB7A00E0B8DC /* APVenueTableViewCell.m in Sources */,
 				504CA34E194096C5003EF9EB /* APPhotoInfo.m in Sources */,
@@ -866,7 +867,6 @@
 				50F64EDA19531DF400E0B8DC /* APPhotoUploadQueue.m in Sources */,
 				504CA3791940BA5A003EF9EB /* APLoginViewController.m in Sources */,
 				504CA31E19408C82003EF9EB /* APAppDelegate.m in Sources */,
-				50C3AA88195F0DA900A0297A /* APCreateEventLandingViewController.m in Sources */,
 				50DE65921940D02500C27B84 /* APTextView.m in Sources */,
 				504CA36619409B9C003EF9EB /* UIAlertView+APAlert.m in Sources */,
 				50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */,
@@ -1000,7 +1000,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1022,7 +1022,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

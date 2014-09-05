@@ -107,6 +107,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     self.initialSearch = nil;
+    [SVProgressHUD dismiss];
 }
 
 #pragma mark - LocationManagerDelegate Methods
@@ -214,7 +215,6 @@
     
     [cell.eventImageView setBackgroundColor:[UIColor afterpartyBrightGreenColor]];
     
-    NSString *endDate = [NSString stringWithFormat:@"ends %@",[df stringFromDate:event.endDate]];
     NSString *user = [NSString stringWithFormat:@"%@'S", [event.createdByUsername uppercaseString]];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         PFFile *imageFile = (PFFile*)[event eventImage];
@@ -230,11 +230,28 @@
     UIImage *image = [UIImage imageNamed:imageName];
   
   [cell.eventNameLabel styleForType:LabelTypeTableViewCellTitle withText:eventName];
-  [cell.countdownLabel styleForType:LabelTypeTableViewCellAttribute withText:endDate];
+  [cell.countdownLabel styleForType:LabelTypeTableViewCellAttribute];
   [cell.userLabel styleForType:LabelTypeTableViewCellAttribute withText:user];
   
     if (!cell.imageView.image)
         [cell.eventImageView setImage:image];
+    
+    NSString *endDate;
+    NSComparisonResult result = [event.endDate compare:[NSDate date]];
+    switch (result){
+        case NSOrderedAscending:
+        case NSOrderedSame:
+            cell.bannerView.backgroundColor = [UIColor afterpartyCoralRedColor];
+            endDate = [NSString stringWithFormat:@"ended %@",[df stringFromDate:event.endDate]];
+            break;
+        case NSOrderedDescending:{
+            cell.bannerView.backgroundColor = [UIColor afterpartyTealBlueColor];
+            endDate = [NSString stringWithFormat:@"ends %@",[df stringFromDate:event.endDate]];
+            break;
+        }
+    }
+    cell.countdownLabel.text = endDate;
+    
     [cell.bannerView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
 }
 

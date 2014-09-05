@@ -262,12 +262,14 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)loginUser {
-  [[APConnectionManager sharedManager] loginWithUsername:self.usernameLoginField.text password:self.passwordLoginField.text success:^(PFUser *user) {
-    [SVProgressHUD showSuccessWithStatus:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
-  } failure:^(NSError *error) {
-    [SVProgressHUD showErrorWithStatus:nil];
-  }];
+  [[APConnectionManager sharedManager] loginWithUsername:self.usernameLoginField.text
+                                                password:self.passwordLoginField.text
+                                                 success:^(PFUser *user) {
+                                                     [SVProgressHUD showSuccessWithStatus:nil];
+                                                     [self dismissViewControllerAnimated:YES completion:nil];
+                                                 } failure:^(NSError *error) {
+                                                     [SVProgressHUD showErrorWithStatus:nil];
+                                                 }];
 }
 
 #pragma mark - Twitter Account Action Sheet Methods
@@ -309,7 +311,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
 #pragma mark - UITextField Delegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  [textField resignFirstResponder];
-  return YES;
+    [textField resignFirstResponder];
+    [self loginCredentialsButtonTapped:nil];
+    return YES;
 }  
 @end
