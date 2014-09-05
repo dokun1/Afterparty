@@ -25,7 +25,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 @property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
 @property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
 @property (nonatomic) AVCaptureStillImageOutput *stillImageOutput;
-
 // Utilities.
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundRecordingID;
 @property (nonatomic, getter = isDeviceAuthorized) BOOL deviceAuthorized;
@@ -36,7 +35,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 @property (nonatomic) BOOL isUsingFrontFacingCamera;
 @property (nonatomic) UIView *previewView;
 @property (nonatomic) UIView *flashView;
-
 // external properties
 @property (nonatomic, strong, readwrite) NSData *capturedImageData;
 @property (nonatomic, assign, readwrite) AVCaptureVideoOrientation videoOrientation;
@@ -78,6 +76,8 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 	// -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue so that the main queue isn't blocked (which keeps the UI responsive).
 	
 	dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
+    // not sure if the next line is "legal" but it seems to fix the main bug: the preview from camera is not loading
+    dispatch_set_target_queue(sessionQueue,dispatch_get_main_queue());
 	[self setSessionQueue:sessionQueue];
 	
 	dispatch_async(sessionQueue, ^{
