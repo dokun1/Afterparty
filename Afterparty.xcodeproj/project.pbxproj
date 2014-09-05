@@ -68,6 +68,7 @@
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
 		509B439319942584004CC33D /* button_redCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 509B439219942584004CC33D /* button_redCancel.png */; };
+		50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */; };
 		50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */; };
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
@@ -219,6 +220,8 @@
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
 		509B439219942584004CC33D /* button_redCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_redCancel.png; sourceTree = "<group>"; };
+		50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMetadataPhotoOverlayView.h; sourceTree = "<group>"; };
+		50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMetadataPhotoOverlayView.m; sourceTree = "<group>"; };
 		50BF4C8B196C410600B6EA1F /* APSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsTableViewController.h; sourceTree = "<group>"; };
 		50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsTableViewController.m; sourceTree = "<group>"; };
 		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
@@ -559,6 +562,8 @@
 				50DE658E1940D01100C27B84 /* APButton.m */,
 				50DE65901940D02500C27B84 /* APTextView.h */,
 				50DE65911940D02500C27B84 /* APTextView.m */,
+				50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */,
+				50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -842,6 +847,7 @@
 				502DC771196D77B6002C9C4A /* APSettingsProfileViewController.m in Sources */,
 				50F64ECF1952F64800E0B8DC /* APSearchEventTableViewCell.m in Sources */,
 				50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */,
+				50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */,
 				504CA35719409899003EF9EB /* FSVenue.m in Sources */,
 				50F64ED61952FB7A00E0B8DC /* APVenueTableViewCell.m in Sources */,
 				504CA34E194096C5003EF9EB /* APPhotoInfo.m in Sources */,
@@ -994,7 +1000,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1005,7 +1011,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "739a754b-b951-44ee-ba3d-5f555222a601";
+				PROVISIONING_PROFILE = "592cd4af-52b3-42de-86fc-b8d466c135ca";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1016,7 +1022,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Okun (RQ632LL2X3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1027,7 +1033,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "739a754b-b951-44ee-ba3d-5f555222a601";
+				PROVISIONING_PROFILE = "592cd4af-52b3-42de-86fc-b8d466c135ca";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
