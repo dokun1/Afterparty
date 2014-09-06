@@ -12,16 +12,9 @@
 #import "APButton.h"
 #import "APCamPreviewView.h"
 #import "UIView+APViewAnimations.h"
+#import "APAVSessionController.h"
 
-@import AVFoundation;
-
-typedef NS_ENUM(NSInteger, FlashState) {
-    kFlashAuto,
-    kFlashOn,
-    kFlashOff
-};
-
-@interface APCameraOverlayViewController () <PreviewDelegate>
+@interface APCameraOverlayViewController () <PreviewDelegate,AVSessionControllerDelegate>
 
 @property (assign, nonatomic) CGFloat                   screenHeight;
 @property (assign, nonatomic) CGFloat                   buttonHeight;
@@ -29,27 +22,16 @@ typedef NS_ENUM(NSInteger, FlashState) {
 @property (strong, nonatomic) UIButton                  *cameraFlipButton;
 @property (strong, nonatomic) UIButton                  *flashButton;
 @property (strong, nonatomic) UIButton                  *cancelButton;
-@property (assign, nonatomic) FlashState                flashState;
-
 @property (weak, nonatomic) IBOutlet APButton           *cameraButton;
 @property (weak, nonatomic) IBOutlet UIView             *imagePreview;
 @property (weak, nonatomic) IBOutlet APCamPreviewView   *viewFinderView;
 
-
-@property (strong, nonatomic) AVCaptureSession          *session;
-@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
-@property (strong, nonatomic) AVCaptureDeviceInput      *videoDeviceInput;
-@property (strong, nonatomic) dispatch_queue_t          sessionQueue;
-
-@property (assign, nonatomic) BOOL                      frontCamera;
-@property (assign, nonatomic) BOOL                      haveImage;
-
+@property (nonatomic, strong, readwrite) APAVSessionController *sessionController;
 
 - (void)cameraFlipButtonTapped;
 - (void)cameraFlashButtonTapped;
 - (void)cancelButtonTapped;
 - (IBAction)cameraButtonTapped:(id)sender;
-
 
 @end
 
@@ -97,153 +79,22 @@ typedef NS_ENUM(NSInteger, FlashState) {
   [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
   [self.view insertSubview:self.cancelButton belowSubview:self.cameraButton];
   
-  [self initializeCameraBetter];
-  
   [self.cameraFlipButton afterparty_translateToPoint:CGPointMake(60, self.buttonHeight + 20) expanding:YES delay:0.1 withCompletion:nil];
   [self.flashButton afterparty_translateToPoint:CGPointMake(260, self.buttonHeight + 20) expanding:YES delay:0.2 withCompletion:nil];
   [self.cancelButton afterparty_translateToPoint:CGPointMake(30, 30) expanding:YES delay:0.3 withCompletion:nil];
-
-}
-
-- (void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     
-    self.flashState = kFlashAuto;
+    self.sessionController = [[APAVSessionController alloc] initWithPreviewView:self.viewFinderView];
+    self.sessionController.delegate = self;
+    [self.sessionController startSession];
 }
 
-- (void)initializeCameraBetter {
-  self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
-  self.session = [[AVCaptureSession alloc] init];
-  
-  [[self viewFinderView] setSession:self.session];
-  
-  [self checkDeviceAuthorizationStatus];
-  dispatch_async(self.sessionQueue, ^{
-    NSError *error = nil;
-
-    AVCaptureDevice *videoDevice = [APCameraOverlayViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:(self.frontCamera)? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack];
-    self.videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
-    
-    if (error) {
-      NSLog(@"%@", error);
-    }
-    
-    if ([self.session canAddInput:self.videoDeviceInput]) {
-      [self.session addInput:self.videoDeviceInput];
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [[(AVCaptureVideoPreviewLayer *)[[self viewFinderView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)[self interfaceOrientation]];
-    });
-    
-    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-    if ([self.session canAddOutput:self.stillImageOutput]) {
-      [self.stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
-      [self.session addOutput:self.stillImageOutput];
-    }
-
-    self.session.sessionPreset = IS_IPHONE_5 ? AVCaptureSessionPresetHigh : AVCaptureSessionPresetPhoto; //this fixes stretching for legacy iphones
-      
-    [self.session startRunning];
-  });
-}
-
-- (void)checkDeviceAuthorizationStatus {
-	[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-		if (!granted) {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[[[UIAlertView alloc] initWithTitle:@"Oops"
-                                    message:@"Change your privacy settings - Afterparty can't access your camera."
-                                   delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
-			});
-		}
-	}];
-}
-
-+ (AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType preferringPosition:(AVCaptureDevicePosition)position {
-  NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
-	AVCaptureDevice *captureDevice = [devices firstObject];
-	for (AVCaptureDevice *device in devices) {
-		if ([device position] == position) {
-			captureDevice = device;
-			break;
-		}
-	}
-	return captureDevice;
-}
-
+# pragma mark - Actions
 -(void)cameraFlashButtonTapped {
-    AVCaptureDevice *currentCamera;
-    for (AVCaptureDevice *device in [AVCaptureDevice devices]) {
-        if (self.frontCamera && [device position] == AVCaptureDevicePositionFront) {
-            currentCamera = device;
-            break;
-        }else if (!self.frontCamera && [device position] == AVCaptureDevicePositionBack) {
-            currentCamera = device;
-            break;
-        }else{
-            currentCamera = nil;
-        }
-    }
-    if (currentCamera) {
-        NSError *error = nil;
-        [currentCamera lockForConfiguration:&error];
-        if (!error) {
-            if (self.frontCamera) {
-                NSLog(@"front camera flash change");
-                switch (self.flashState) {
-                    case kFlashAuto:
-                        NSLog(@"auto changing to off");
-                        [self.flashButton setImage:[UIImage imageNamed:@"button_flashoff.png"] forState:UIControlStateNormal];
-                        self.flashState = kFlashOff;
-                        [currentCamera setFlashMode:AVCaptureFlashModeOff];
-                        break;
-                    case kFlashOn:
-                        NSLog(@"on changing to off");
-                        [self.flashButton setImage:[UIImage imageNamed:@"button_flashoff.png"] forState:UIControlStateNormal];
-                        self.flashState = kFlashOff;
-                        [currentCamera setFlashMode:AVCaptureFlashModeOff];
-                        break;
-                    case kFlashOff:
-                        NSLog(@"off staying at off");
-                    default:
-                        break;
-                }
-            }else{
-                NSLog(@"back camera flash change");
-                switch (self.flashState) {
-                    case kFlashAuto:
-                        NSLog(@"auto changing to on");
-                        [currentCamera setFlashMode:AVCaptureFlashModeOn];
-                        [self.flashButton setImage:[UIImage imageNamed:@"button_flashon.png"] forState:UIControlStateNormal];
-                        self.flashState = kFlashOn;
-                        break;
-                    case kFlashOn:
-                        NSLog(@"on changing to off");
-                        [self.flashButton setImage:[UIImage imageNamed:@"button_flashoff.png"] forState:UIControlStateNormal];
-                        self.flashState = kFlashOff;
-                        [currentCamera setFlashMode:AVCaptureFlashModeOff];
-                        break;
-                    case kFlashOff:
-                        NSLog(@"off changing to auto");
-                        [currentCamera setFlashMode:AVCaptureFlashModeAuto];
-                        [self.flashButton setImage:[UIImage imageNamed:@"button_flashauto.png"] forState:UIControlStateNormal];
-                        self.flashState = kFlashAuto;
-                        break;
-                    default:
-                        NSLog(@"unrecognized flash state");
-                        break;
-                }
-            }
-        }
-        [currentCamera unlockForConfiguration];
-    }
+    [self.sessionController switchFlash];
 }
 
 -(void)cameraFlipButtonTapped {
-    self.frontCamera = !self.frontCamera;
-    [self initializeCameraBetter];
+    [self.sessionController switchCamera];
 }
 
 - (void)cancelButtonTapped {
@@ -251,22 +102,10 @@ typedef NS_ENUM(NSInteger, FlashState) {
 }
 
 -(IBAction)cameraButtonTapped:(id)sender {
-  [self capImage];
+    [self.sessionController takePicture];
 }
 
-- (void)capImage {
-  dispatch_async([self sessionQueue], ^{
-    AVCaptureVideoOrientation orientation = [[(AVCaptureVideoPreviewLayer*)[[self viewFinderView] layer] connection] videoOrientation];
-    [[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:orientation];
-    
-    [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-      if (imageDataSampleBuffer) {
-        [self prepareImageForPreview:[AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer] forOrientation:orientation];
-      }
-    }];
-  });
-}
-
+# pragma mark - Helper methods
 - (void)prepareImageForPreview:(NSData*)imageData forOrientation:(AVCaptureVideoOrientation)orientation {
   UIImage *image = [UIImage imageWithData:imageData];
 
@@ -319,17 +158,37 @@ typedef NS_ENUM(NSInteger, FlashState) {
 
 -(CGSize)swapWidthAndHeightForSize:(CGSize)size {
     CGFloat swap = size.width;
-    
     size.width  = size.height;
     size.height = swap;
-    
     return size;
 }
 
+#pragma mark - APAVSessionControllerDelegate Methods
+- (void)sessionDidReceivedImageData:(NSData *)imageData forOrientation:(AVCaptureVideoOrientation)videoOrientation {
+    [self prepareImageForPreview:self.sessionController.capturedImageData forOrientation:self.sessionController.videoOrientation];
+}
+
+- (void)cameraDidSwitchedFlashStateToState:(FlashState)flashState {
+    switch (flashState) {
+        case kFlashAuto:
+            [self.flashButton setImage:[UIImage imageNamed:@"button_flashauto.png"] forState:UIControlStateNormal];
+            break;
+        case kFlashOn:
+            [self.flashButton setImage:[UIImage imageNamed:@"button_flashon.png"] forState:UIControlStateNormal];
+            break;
+        case kFlashOff:
+            [self.flashButton setImage:[UIImage imageNamed:@"button_flashoff.png"] forState:UIControlStateNormal];
+            break;
+        default:
+            NSLog(@"unrecognized flash state");
+            break;
+    }
+
+}
+
 - (void)dealloc {
-  [self.session stopRunning];
-  self.session = nil;
-  self.viewFinderView = nil;
+    [self.sessionController stopSession];
+    self.viewFinderView = nil;
 }
 
 @end
