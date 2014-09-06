@@ -14,7 +14,7 @@
 @protocol CreateEventDelegate <NSObject>
 
 @optional
-- (void)controllerDidFinish:(APCreateEventViewController*)controller;
+- (void)controllerDidFinish:(APCreateEventViewController*)controller withEventID:(NSString*)eventID;
 
 @end
 

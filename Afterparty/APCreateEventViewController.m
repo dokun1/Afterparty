@@ -196,7 +196,7 @@
 }
 
 - (void)endButtonTapped {
-  [self.delegate controllerDidFinish:self];
+    [self.delegate controllerDidFinish:self withEventID:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -485,7 +485,8 @@
     default:
       break;
   }
-  [self.delegate controllerDidFinish:self];
+    
+  [self.delegate controllerDidFinish:self withEventID:self.currentEvent.objectID];
 }
 
 -(void)sendInvitationsForEventID:(NSString*)eventID {
@@ -493,12 +494,12 @@
   [self.confirmEventButton setAlpha:0.0f];
   if(![MFMessageComposeViewController canSendText]) {
     [SVProgressHUD showErrorWithStatus:@"can't send invitations"];
-    [self.delegate controllerDidFinish:self];
+    [self.delegate controllerDidFinish:self withEventID:eventID];
     return;
   }
 
   if (self.currentInvitees.count == 0) {
-      [self.delegate controllerDidFinish:self];
+      [self.delegate controllerDidFinish:self withEventID:eventID];
       return;
   }
   NSMutableArray *numbers = [NSMutableArray array];
@@ -536,6 +537,7 @@
       NSData *photoData = UIImagePNGRepresentation(self.currentEvent.eventImage);
       [thisEvent setEventImageData:photoData];
       [APUtil saveEventToMyEvents:thisEvent];
+        self.currentEvent.objectID = object.objectId;
       [self sendInvitationsForEventID:object.objectId];
     } failure:^(NSError *error) {
       [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
