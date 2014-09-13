@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, FlashState) {
 @property (nonatomic, assign, readonly) AVCaptureVideoOrientation videoOrientation;
 @property (nonatomic, assign, readonly) FlashState flashState;
 @property (nonatomic, weak, readwrite) id<AVSessionControllerDelegate> delegate;
+@property (nonatomic, assign, readonly) BOOL isUsingFrontFacingCamera;
 
 - (instancetype)initWithPreviewView:(UIView*)previewView;
 - (void)startSession;
