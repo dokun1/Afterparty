@@ -56,5 +56,7 @@ NSString *const kBoldFont = @"SofiaProBold";
 NSString *const kPFUserProfilePhotoURLKey = @"profilePhotoURL";
 NSString *const kPFUserBlurbKey = @"blurb";
 NSString *const kPFUserDataTrackingKey = @"dataTracking";
+NSString *const kPFUserEventsJoinedKey = @"eventsJoined";
+
 
 @end

@@ -28,7 +28,7 @@
 + (NSArray*)loadArrayForPath:(NSString*)path;
 + (NSObject*)getFileForPath:(NSString*)path;
 + (BOOL)loggedIn;
-+ (NSMutableArray*)getMyEventsArray;
++ (void)getMyEventsArrayWithSuccess:(void (^)(NSMutableArray *events))successBlock;
 + (void)saveEventToMyEvents:(APEvent*)event;
 + (void)updateEventVenue:(FSVenue*)newVenue forEventID:(NSString*)eventID;
 + (NSString*)getVersion;
@@ -36,5 +36,6 @@
 + (NSString *) genRandIdString;
 + (NSString *)formatDateForEventDetailScreen:(NSDate*)date;
 + (NSString *)formatDateForEventCreationScreen:(NSDate*)date;
++ (NSLock *)cacheLock;
 
 @end
