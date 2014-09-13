@@ -249,8 +249,6 @@
         }
     }
     cell.countdownLabel.text = endDate;
-    
-    [cell.bannerView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

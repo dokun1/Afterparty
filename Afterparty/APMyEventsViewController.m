@@ -40,8 +40,10 @@
 }
 
 - (void)refreshEvents {
-  self.events = [APUtil getMyEventsArray];
-  [self.tableView reloadData];
+    [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *events) {
+        self.events = events;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)addButtonTapped {
@@ -147,12 +149,14 @@
 - (void)controllerDidFinish:(APCreateEventViewController *)controller withEventID:(NSString *)eventID{
     [self.tabBarController setSelectedIndex:1];
     [controller dismissViewControllerAnimated:YES completion:nil];
-    [[APUtil getMyEventsArray] enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
-        NSString *checkEventID = eventDict.allKeys.firstObject;
-        if ([checkEventID isEqualToString:eventID]) {
-            [self performSegueWithIdentifier:kMyEventSelectedSegue sender:eventDict];
-            *stop = YES;
-        }
+    [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *events) {
+        [events enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
+            NSString *checkEventID = eventDict.allKeys.firstObject;
+            if ([checkEventID isEqualToString:eventID]) {
+                [self performSegueWithIdentifier:kMyEventSelectedSegue sender:eventDict];
+                *stop = YES;
+            }
+        }];
     }];
 }
 
