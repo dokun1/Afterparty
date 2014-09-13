@@ -85,7 +85,6 @@
 		50DE658C1940CE9F00C27B84 /* UIColor+APColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DE658B1940CE9F00C27B84 /* UIColor+APColor.m */; };
 		50DE658F1940D01100C27B84 /* APButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DE658E1940D01100C27B84 /* APButton.m */; };
 		50DE65921940D02500C27B84 /* APTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DE65911940D02500C27B84 /* APTextView.m */; };
-		50E21D3219C46AA300365D0A /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E21D3119C46AA300365D0A /* Accounts.framework */; };
 		50F64EB81952F40900E0B8DC /* APMyEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA11952F40900E0B8DC /* APMyEventsViewController.m */; };
 		50F64EB91952F40900E0B8DC /* APMyEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA31952F40900E0B8DC /* APMyEventViewController.m */; };
 		50F64EBB1952F40900E0B8DC /* APMyEventUpdateLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA61952F40900E0B8DC /* APMyEventUpdateLocationViewController.m */; };
@@ -254,7 +253,6 @@
 		50DE658E1940D01100C27B84 /* APButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APButton.m; sourceTree = "<group>"; };
 		50DE65901940D02500C27B84 /* APTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTextView.h; sourceTree = "<group>"; };
 		50DE65911940D02500C27B84 /* APTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTextView.m; sourceTree = "<group>"; };
-		50E21D3119C46AA300365D0A /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		50F64EA01952F40900E0B8DC /* APMyEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyEventsViewController.h; sourceTree = "<group>"; };
 		50F64EA11952F40900E0B8DC /* APMyEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyEventsViewController.m; sourceTree = "<group>"; };
 		50F64EA21952F40900E0B8DC /* APMyEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyEventViewController.h; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50E21D3219C46AA300365D0A /* Accounts.framework in Frameworks */,
 				501232B119BB70F1007099A4 /* AVFoundation.framework in Frameworks */,
 				504CA31019408C82003EF9EB /* CoreGraphics.framework in Frameworks */,
 				504CA36A19409BFC003EF9EB /* Crashlytics.framework in Frameworks */,
@@ -348,7 +345,6 @@
 		504CA30C19408C82003EF9EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				50E21D3119C46AA300365D0A /* Accounts.framework */,
 				501232B019BB70F1007099A4 /* AVFoundation.framework */,
 				504CA36B19409C06003EF9EB /* Reveal.framework */,
 				504CA36919409BFC003EF9EB /* Crashlytics.framework */,
