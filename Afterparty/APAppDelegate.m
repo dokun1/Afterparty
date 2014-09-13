@@ -14,8 +14,8 @@
 
 @implementation APAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 #ifdef DEBUG
     NSLog(@"--------DEV SERVER--------");
     [Parse setApplicationId:kParseApplicationIDDev clientKey:kParseClientKeyDev];
