@@ -110,6 +110,7 @@
   UIImage *image = [UIImage imageWithData:imageData];
 
   UIImage *rotatedImage;
+  BOOL isFrontCamera = self.sessionController.isUsingFrontFacingCamera;
   
   switch ([[UIDevice currentDevice] orientation]) {
     case UIDeviceOrientationUnknown:
@@ -117,19 +118,15 @@
     case UIDeviceOrientationFaceDown:
     case UIDeviceOrientationPortrait:
       rotatedImage = image;
-      NSLog(@"device is in portrait");
       break;
     case UIDeviceOrientationPortraitUpsideDown:
       rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:UIImageOrientationLeft];
-      NSLog(@"device is in upside down");
       break;
     case UIDeviceOrientationLandscapeLeft:
-      rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:UIImageOrientationUp];
-      NSLog(@"device is in landscape left");
+      rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:isFrontCamera?UIImageOrientationDown:UIImageOrientationUp];
       break;
     case UIDeviceOrientationLandscapeRight:
-      rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:UIImageOrientationDown];
-      NSLog(@"device is in landscape right");
+      rotatedImage = [[UIImage alloc] initWithCGImage:image.CGImage scale:1.0 orientation:isFrontCamera?UIImageOrientationUp:UIImageOrientationDown];
       break;
     default:
       break;
