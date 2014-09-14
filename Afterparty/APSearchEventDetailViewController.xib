@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APSearchEventDetailViewController">
             <connections>
+                <outlet property="eventAuthorNameOnTopImage" destination="CYe-kF-y6L" id="AS0-6A-07U"/>
                 <outlet property="eventCreatedByBlurb" destination="FbE-fL-Zgv" id="RsU-XA-sQM"/>
                 <outlet property="eventCreatedByName" destination="NR8-Nb-JKn" id="hGa-EP-TIR"/>
                 <outlet property="eventDescription" destination="XSr-SK-UBO" id="ACg-Xb-JMU"/>
@@ -13,6 +14,7 @@
                 <outlet property="eventImageView" destination="Yfu-xQ-zEW" id="anF-dc-6gh"/>
                 <outlet property="eventJoinButton" destination="M7W-VH-nmf" id="ZtS-GE-xeh"/>
                 <outlet property="eventStartDateLabel" destination="rQs-nd-wTL" id="01o-2m-9Ug"/>
+                <outlet property="eventTitleOnTopImage" destination="Qc0-ig-gfp" id="54C-q3-mWh"/>
                 <outlet property="userAvatar" destination="UeT-FD-FNy" id="dEQ-qT-yhg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -76,6 +78,18 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="event thrower blurb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qc0-ig-gfp" customClass="APLabel">
+                    <rect key="frame" x="10" y="102" width="212" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="event thrower name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYe-kF-y6L" customClass="APLabel">
+                    <rect key="frame" x="10" y="74" width="212" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

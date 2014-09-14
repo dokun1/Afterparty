@@ -107,6 +107,13 @@
 		50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F64ED51952FB7A00E0B8DC /* APVenueTableViewCell.xib */; };
 		50F64EDA19531DF400E0B8DC /* APPhotoUploadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64ED919531DF400E0B8DC /* APPhotoUploadQueue.m */; };
 		64110BA7EDC5490CB3C28E6C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E13799ABE623491984920737 /* libPods.a */; };
+		C9AEB3B219C48503009915BF /* APSearchEventUserDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AEB3B019C48503009915BF /* APSearchEventUserDetailsTableViewCell.m */; };
+		C9AEB3B319C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AEB3B119C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib */; };
+		C9AEB3B719C48FD7009915BF /* APSearchEventBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AEB3B619C48FD7009915BF /* APSearchEventBaseTableViewCell.m */; };
+		C9AEB3BB19C4918B009915BF /* APSearchEventDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AEB3B919C4918B009915BF /* APSearchEventDescriptionTableViewCell.m */; };
+		C9AEB3BC19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AEB3BA19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib */; };
+		C9AEB3C019C49482009915BF /* APSearchEventDateLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AEB3BE19C49482009915BF /* APSearchEventDateLocationTableViewCell.m */; };
+		C9AEB3C119C49482009915BF /* APSearchEventDateLocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AEB3BF19C49482009915BF /* APSearchEventDateLocationTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -290,6 +297,18 @@
 		50F64ED819531DF400E0B8DC /* APPhotoUploadQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPhotoUploadQueue.h; sourceTree = "<group>"; };
 		50F64ED919531DF400E0B8DC /* APPhotoUploadQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPhotoUploadQueue.m; sourceTree = "<group>"; };
 		8FD2B46C232A44DEAC2D6F8C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C9AEB3AF19C48503009915BF /* APSearchEventUserDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventUserDetailsTableViewCell.h; sourceTree = "<group>"; };
+		C9AEB3B019C48503009915BF /* APSearchEventUserDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventUserDetailsTableViewCell.m; sourceTree = "<group>"; };
+		C9AEB3B119C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APSearchEventUserDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		C9AEB3B519C48FD7009915BF /* APSearchEventBaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventBaseTableViewCell.h; sourceTree = "<group>"; };
+		C9AEB3B619C48FD7009915BF /* APSearchEventBaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventBaseTableViewCell.m; sourceTree = "<group>"; };
+		C9AEB3B819C4918B009915BF /* APSearchEventDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventDescriptionTableViewCell.h; sourceTree = "<group>"; };
+		C9AEB3B919C4918B009915BF /* APSearchEventDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventDescriptionTableViewCell.m; sourceTree = "<group>"; };
+		C9AEB3BA19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APSearchEventDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		C9AEB3BD19C49482009915BF /* APSearchEventDateLocationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventDateLocationTableViewCell.h; sourceTree = "<group>"; };
+		C9AEB3BE19C49482009915BF /* APSearchEventDateLocationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventDateLocationTableViewCell.m; sourceTree = "<group>"; };
+		C9AEB3BF19C49482009915BF /* APSearchEventDateLocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APSearchEventDateLocationTableViewCell.xib; sourceTree = "<group>"; };
+		C9AEB3C219C4B673009915BF /* APSearchEventTableViewCells.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventTableViewCells.h; sourceTree = "<group>"; };
 		E13799ABE623491984920737 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -637,6 +656,7 @@
 		50C015E6196AD73800E9E26F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				C9AEB3B419C48603009915BF /* TableViewCellsSerchEvent */,
 				50F64EC81952F64800E0B8DC /* APSearchEventTableViewCell.h */,
 				50F64EC91952F64800E0B8DC /* APSearchEventTableViewCell.m */,
 				50F64ECA1952F64800E0B8DC /* APSearchEventTableViewCell.xib */,
@@ -648,6 +668,25 @@
 				50C3AA8D195F0ECB00A0297A /* APInviteFriendTableViewCell.xib */,
 			);
 			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		C9AEB3B419C48603009915BF /* TableViewCellsSerchEvent */ = {
+			isa = PBXGroup;
+			children = (
+				C9AEB3B519C48FD7009915BF /* APSearchEventBaseTableViewCell.h */,
+				C9AEB3B619C48FD7009915BF /* APSearchEventBaseTableViewCell.m */,
+				C9AEB3AF19C48503009915BF /* APSearchEventUserDetailsTableViewCell.h */,
+				C9AEB3B019C48503009915BF /* APSearchEventUserDetailsTableViewCell.m */,
+				C9AEB3B119C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib */,
+				C9AEB3B819C4918B009915BF /* APSearchEventDescriptionTableViewCell.h */,
+				C9AEB3B919C4918B009915BF /* APSearchEventDescriptionTableViewCell.m */,
+				C9AEB3BA19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib */,
+				C9AEB3BD19C49482009915BF /* APSearchEventDateLocationTableViewCell.h */,
+				C9AEB3BE19C49482009915BF /* APSearchEventDateLocationTableViewCell.m */,
+				C9AEB3BF19C49482009915BF /* APSearchEventDateLocationTableViewCell.xib */,
+				C9AEB3C219C4B673009915BF /* APSearchEventTableViewCells.h */,
+			);
+			name = TableViewCellsSerchEvent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -751,6 +790,7 @@
 				504CA3CE1940C04E003EF9EB /* ap_appicon58.png in Resources */,
 				504CA3BA1940C035003EF9EB /* button_pluswhite.png in Resources */,
 				50F64ED21952F64800E0B8DC /* APSearchEventDetailViewController.xib in Resources */,
+				C9AEB3BC19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib in Resources */,
 				50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */,
 				504CA3B71940C035003EF9EB /* button_flashon.png in Resources */,
 				509B439319942584004CC33D /* button_redCancel.png in Resources */,
@@ -769,9 +809,11 @@
 				504CA3BC1940C035003EF9EB /* icon_checkempty.png in Resources */,
 				50F64EBF1952F40900E0B8DC /* APImagePreviewViewController.xib in Resources */,
 				504CA3C81940C043003EF9EB /* stock3.jpeg in Resources */,
+				C9AEB3C119C49482009915BF /* APSearchEventDateLocationTableViewCell.xib in Resources */,
 				50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */,
 				504CA32119408C82003EF9EB /* Main.storyboard in Resources */,
 				50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */,
+				C9AEB3B319C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib in Resources */,
 				504CA3BB1940C035003EF9EB /* button_savetocloud.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -839,10 +881,12 @@
 			files = (
 				50F64EBE1952F40900E0B8DC /* APImagePreviewViewController.m in Sources */,
 				504CA3441940941A003EF9EB /* APRestConnectionManager.m in Sources */,
+				C9AEB3C019C49482009915BF /* APSearchEventDateLocationTableViewCell.m in Sources */,
 				501232B419BB73DF007099A4 /* APAVSessionController.m in Sources */,
 				50C015E5196AC64600E9E26F /* APConstants.m in Sources */,
 				504CA34B194096BA003EF9EB /* APEvent.m in Sources */,
 				504CA35D19409B87003EF9EB /* APUtil.m in Sources */,
+				C9AEB3BB19C4918B009915BF /* APSearchEventDescriptionTableViewCell.m in Sources */,
 				50F64EC21952F40900E0B8DC /* APStackedGridLayoutSection.m in Sources */,
 				504CA351194096CE003EF9EB /* APComment.m in Sources */,
 				504CA3751940B8F8003EF9EB /* APMainTabBarController.m in Sources */,
@@ -859,6 +903,7 @@
 				50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */,
 				50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */,
 				504CA35719409899003EF9EB /* FSVenue.m in Sources */,
+				C9AEB3B219C48503009915BF /* APSearchEventUserDetailsTableViewCell.m in Sources */,
 				50F64ED61952FB7A00E0B8DC /* APVenueTableViewCell.m in Sources */,
 				504CA34E194096C5003EF9EB /* APPhotoInfo.m in Sources */,
 				504CA36719409B9C003EF9EB /* UIImage+APImage.m in Sources */,
@@ -882,6 +927,7 @@
 				50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */,
 				50CF3D30198DC2E000005DA0 /* APCamPreviewView.m in Sources */,
 				504CA35619409899003EF9EB /* FSConverter.m in Sources */,
+				C9AEB3B719C48FD7009915BF /* APSearchEventBaseTableViewCell.m in Sources */,
 				50DE658F1940D01100C27B84 /* APButton.m in Sources */,
 				504CA347194096A8003EF9EB /* APUser.m in Sources */,
 				50C3AA8F195F0ECB00A0297A /* APInviteFriendTableViewCell.m in Sources */,

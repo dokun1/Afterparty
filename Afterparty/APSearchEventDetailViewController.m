@@ -14,8 +14,9 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "APMyEventViewController.h"
 #import "APConstants.h"
+#import "APSearchEventTableViewCells.h"
 
-@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate>
+@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
@@ -25,7 +26,9 @@
 @property (weak, nonatomic) IBOutlet APLabel *eventStartDateLabel;
 @property (weak, nonatomic) IBOutlet APLabel *eventFirstAddressString;
 @property (weak, nonatomic) IBOutlet APButton *eventJoinButton;
-
+@property (weak, nonatomic) IBOutlet UILabel *eventAuthorNameOnTopImage;
+@property (weak, nonatomic) IBOutlet UILabel *eventTitleOnTopImage;
+@property (weak, nonatomic) IBOutlet UITableView *eventDetailsTableView;
 @property (strong, nonatomic) APEvent *currentEvent;
 
 - (IBAction)eventJoinTapped:(id)sender;
@@ -66,6 +69,26 @@
     if ([self hasAlreadyAuthenticatedEvent]) {
         [self.eventJoinButton setTitle:@"GO!!" forState:UIControlStateNormal];
     }
+    self.eventAuthorNameOnTopImage.text = [[self.currentEvent.createdByUsername uppercaseString] stringByAppendingString:@"'S"];
+    self.eventTitleOnTopImage.text = [self.currentEvent.eventName uppercaseString];
+    self.eventDetailsTableView.dataSource = self;
+    self.eventDetailsTableView.delegate = self;
+//    self.eventDetailsTableView.bounces = NO;
+    self.eventDetailsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventUserDetailsTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                                           forCellReuseIdentifier:[APSearchEventUserDetailsTableViewCell cellIdentifier]];
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventDescriptionTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                     forCellReuseIdentifier:[APSearchEventDescriptionTableViewCell cellIdentifier]];
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventDateLocationTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                                           forCellReuseIdentifier:[APSearchEventDateLocationTableViewCell cellIdentifier]];
+}
+
+- (void)awakeFromNib {
+    self.eventTitleOnTopImage.text = @"title";
+    self.eventAuthorNameOnTopImage.text = @"author";    
 }
 
 - (IBAction)eventJoinTapped:(id)sender {
@@ -127,6 +150,73 @@
     vc.eventDict = sender;
     vc.hidesBottomBarWhenPushed = YES;
   }
+}
+
+#pragma mark - UITableViewDataSource delegate methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifier = nil;
+    APSearchEventBaseTableViewCell *cell = nil;
+    switch (indexPath.row) {
+        case 0:
+            identifier = [APSearchEventUserDetailsTableViewCell cellIdentifier];
+            cell = (APSearchEventUserDetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[APSearchEventUserDetailsTableViewCell cellIdentifier]
+                                                                                            forIndexPath:indexPath];
+            break;
+        case 1:
+            identifier = [APSearchEventDescriptionTableViewCell cellIdentifier];
+            cell = (APSearchEventUserDetailsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[APSearchEventDescriptionTableViewCell cellIdentifier]
+                                                                                            forIndexPath:indexPath];
+            break;
+        case 2:
+            identifier = [APSearchEventDateLocationTableViewCell cellIdentifier];
+            cell = (APSearchEventDateLocationTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[APSearchEventDateLocationTableViewCell cellIdentifier]
+                                                                                            forIndexPath:indexPath];
+            break;
+        default:
+            identifier = [APSearchEventBaseTableViewCell cellIdentifier];
+            cell = (APSearchEventBaseTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[APSearchEventBaseTableViewCell cellIdentifier]
+                                                                                     forIndexPath:indexPath];
+            break;
+    }
+    cell.event = self.currentEvent;
+    [cell updateUI];
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat cellHeight = 0;
+    switch (indexPath.row) {
+        case 0:{
+            APSearchEventUserDetailsTableViewCell *cell = [APSearchEventUserDetailsTableViewCell new];
+            cell.event = self.currentEvent;
+            cellHeight = [cell cellHeight];
+            break;
+        }
+        case 1: {
+            APSearchEventDescriptionTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:[APSearchEventDescriptionTableViewCell nibFile]
+                                                                                        owner:self
+                                                                                      options:nil]lastObject];
+            cell.event = self.currentEvent;
+            cellHeight = [cell cellHeight];
+            break;
+        }
+        case 2:{
+            APSearchEventDateLocationTableViewCell *cell = [APSearchEventDateLocationTableViewCell new];
+            cell.event = self.currentEvent;
+            cellHeight = [cell cellHeight];
+            break;
+        }
+        default:{
+            APSearchEventBaseTableViewCell *cell = [APSearchEventBaseTableViewCell new];
+            cell.event = self.currentEvent;
+            cellHeight = [cell cellHeight];
+            break;
+        }
+    }
+    return cellHeight;
 }
 
 
