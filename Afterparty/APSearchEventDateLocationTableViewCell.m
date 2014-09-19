@@ -7,14 +7,6 @@
 //
 
 #import "APSearchEventDateLocationTableViewCell.h"
-@interface APSearchEventDateLocationTableViewCell()
-@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventDateDayLabel;
-@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventDateMonthLabel;
-@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventDateHourLabel;
-@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventAmPMLabel;
-@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventAddressLabel;
-@end
-
 @implementation APSearchEventDateLocationTableViewCell
 
 - (void)awakeFromNib
@@ -30,32 +22,12 @@
     self.eventDateHourLabel.layer.borderWidth = borderWidth;
     self.eventAmPMLabel.layer.borderColor = borderColor;
     self.eventAmPMLabel.layer.borderWidth = borderWidth;
-    [self updateUI];
 }
 
 # pragma mark - External Methods
 
 - (CGFloat)cellHeight {
-    return 100;
-}
-
-- (void)updateUI {
-    if (self.event.startDate == nil) {
-        return;
-    }
-    NSDateFormatter *formater = [NSDateFormatter new];
-    formater.dateFormat = @"MMM";
-    formater.locale = [NSLocale currentLocale];
-    formater.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
-    
-    self.eventDateMonthLabel.text = [[formater stringFromDate:self.event.startDate]uppercaseString];
-    formater.dateFormat = @"dd";
-    self.eventDateDayLabel.text = [formater stringFromDate:self.event.startDate];
-    formater.dateFormat = @"hh:mm";
-    self.eventDateHourLabel.text = [formater stringFromDate:self.event.startDate];
-    formater.dateFormat = @"a";
-    self.eventAmPMLabel.text = [formater stringFromDate:self.event.startDate];
-    self.eventAddressLabel.text = self.event.eventAddress;
+    return 80;
 }
 
 + (NSString *)cellIdentifier {

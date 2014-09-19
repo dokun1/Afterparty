@@ -10,5 +10,6 @@
 #import "APSearchEventBaseTableViewCell.h"
 
 @interface APSearchEventDescriptionTableViewCell : APSearchEventBaseTableViewCell
+@property (nonatomic, strong, readwrite) IBOutlet UITextView *eventDescriptionTextView;
 
 @end

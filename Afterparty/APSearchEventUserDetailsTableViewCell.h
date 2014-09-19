@@ -10,5 +10,8 @@
 #import "APSearchEventBaseTableViewCell.h"
 
 @interface APSearchEventUserDetailsTableViewCell : APSearchEventBaseTableViewCell
+@property (nonatomic, strong, readwrite) IBOutlet UILabel *authorFullNameLabel; // capital letters
+@property (nonatomic, strong, readwrite) IBOutlet UILabel *authorBlurbLabel; // capital letters
+@property (nonatomic, strong, readwrite) IBOutlet UIImageView *avatarImageView;
 
 @end

@@ -7,21 +7,11 @@
 //
 
 #import "APSearchEventDescriptionTableViewCell.h"
-@interface APSearchEventDescriptionTableViewCell ()
-@property (nonatomic, strong, readwrite) IBOutlet UITextView *eventDescriptionTextView;
-@end
-
 @implementation APSearchEventDescriptionTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
     self.contentView.backgroundColor = [UIColor redColor];
-    [self updateUI];
-}
-
-#pragma mark - External Methods Implementation
-- (void)updateUI {
-    self.eventDescriptionTextView.text = self.event.eventDescription;
 }
 
 + (NSString*)cellIdentifier {
@@ -34,7 +24,7 @@
 
 - (CGFloat)cellHeight {
     CGFloat cellHeight = 0;
-    if (self.event.eventDescription.length) {
+    if (self.eventDescriptionTextView.text.length) {
         CGRect textNecessaryRect = [self.eventDescriptionTextView.text boundingRectWithSize: CGSizeMake(self.eventDescriptionTextView.bounds.size.width, NSUIntegerMax)
                                                                                     options: (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                                                  attributes: @{NSFontAttributeName: [UIFont systemFontOfSize:14.0]}

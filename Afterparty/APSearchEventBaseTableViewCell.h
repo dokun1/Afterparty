@@ -10,9 +10,8 @@
 #import "APEvent.h"
 
 @interface APSearchEventBaseTableViewCell : UITableViewCell
-@property (nonatomic, strong, readwrite) APEvent *event;
 
-- (void)updateUI;
++ (instancetype)cellInstanceFromNib;
 - (CGFloat)cellHeight;
 
 + (NSString *)cellIdentifier;

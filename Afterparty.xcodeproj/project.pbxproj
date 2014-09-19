@@ -114,6 +114,7 @@
 		C9AEB3BC19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AEB3BA19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib */; };
 		C9AEB3C019C49482009915BF /* APSearchEventDateLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AEB3BE19C49482009915BF /* APSearchEventDateLocationTableViewCell.m */; };
 		C9AEB3C119C49482009915BF /* APSearchEventDateLocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AEB3BF19C49482009915BF /* APSearchEventDateLocationTableViewCell.xib */; };
+		C9F2B40B19CCD6B30027BC95 /* APSearchEventTableViewCellFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F2B40A19CCD6B30027BC95 /* APSearchEventTableViewCellFactory.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -309,6 +310,8 @@
 		C9AEB3BE19C49482009915BF /* APSearchEventDateLocationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventDateLocationTableViewCell.m; sourceTree = "<group>"; };
 		C9AEB3BF19C49482009915BF /* APSearchEventDateLocationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APSearchEventDateLocationTableViewCell.xib; sourceTree = "<group>"; };
 		C9AEB3C219C4B673009915BF /* APSearchEventTableViewCells.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventTableViewCells.h; sourceTree = "<group>"; };
+		C9F2B40919CCD6B30027BC95 /* APSearchEventTableViewCellFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventTableViewCellFactory.h; sourceTree = "<group>"; };
+		C9F2B40A19CCD6B30027BC95 /* APSearchEventTableViewCellFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventTableViewCellFactory.m; sourceTree = "<group>"; };
 		E13799ABE623491984920737 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -685,6 +688,8 @@
 				C9AEB3BE19C49482009915BF /* APSearchEventDateLocationTableViewCell.m */,
 				C9AEB3BF19C49482009915BF /* APSearchEventDateLocationTableViewCell.xib */,
 				C9AEB3C219C4B673009915BF /* APSearchEventTableViewCells.h */,
+				C9F2B40919CCD6B30027BC95 /* APSearchEventTableViewCellFactory.h */,
+				C9F2B40A19CCD6B30027BC95 /* APSearchEventTableViewCellFactory.m */,
 			);
 			name = TableViewCellsSerchEvent;
 			sourceTree = "<group>";
@@ -895,6 +900,7 @@
 				5048D4AA194A1D0F0092178E /* APConnectionManager.m in Sources */,
 				50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */,
 				50C3AA93195F171D00A0297A /* APFindVenueTableViewController.m in Sources */,
+				C9F2B40B19CCD6B30027BC95 /* APSearchEventTableViewCellFactory.m in Sources */,
 				50F64EC01952F40900E0B8DC /* APPhotoViewController.m in Sources */,
 				504CA31A19408C82003EF9EB /* main.m in Sources */,
 				50DE65891940C76D00C27B84 /* APLabel.m in Sources */,
@@ -1056,8 +1062,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Okun (RQ632LL2X3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1067,7 +1073,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "739a754b-b951-44ee-ba3d-5f555222a601";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1079,8 +1085,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (ATL9M5R398)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Okun (RQ632LL2X3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1090,7 +1096,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "739a754b-b951-44ee-ba3d-5f555222a601";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};

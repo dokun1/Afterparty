@@ -20,19 +20,21 @@ static CGFloat const kAPSearchEventBaseTableViewCellDefaultCellHeight = 100.0;
     return @"";
 }
 
-- (void)setEvent:(APEvent *)event{
-    if (_event != event) {
-        _event = event;
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-}
-
-- (void)updateUI {
-    
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (CGFloat)cellHeight {
     return kAPSearchEventBaseTableViewCellDefaultCellHeight;
+}
+
++ (instancetype)cellInstanceFromNib {
+    if ([self nibFile].length) {
+        return [[[NSBundle mainBundle] loadNibNamed:[self nibFile] owner:self options:nil] objectAtIndex:0];
+    } else {
+        return nil;
+    }
 }
 
 

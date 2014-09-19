@@ -10,5 +10,11 @@
 #import "APSearchEventBaseTableViewCell.h"
 
 @interface APSearchEventDateLocationTableViewCell : APSearchEventBaseTableViewCell
+@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventDateDayLabel;
+@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventDateMonthLabel;
+@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventDateHourLabel;
+@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventAmPMLabel;
+@property (nonatomic, strong, readwrite)IBOutlet UILabel *eventAddressLabel;
+
 
 @end
