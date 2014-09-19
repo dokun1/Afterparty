@@ -107,14 +107,15 @@
 
 - (BOOL)hasAlreadyAuthenticatedEvent {
     //an event gets added to their array when they get to the page, meaning theyve already entered the password once.
-    NSMutableArray *eventsArray = [APUtil getMyEventsArray];
     __block BOOL eventExists;
-    [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
-        NSString *eventID = eventDict.allKeys.firstObject;
-        if ([eventID isEqualToString:self.currentEvent.objectID]) {
-            eventExists = YES;
-            *stop = YES;
-        }
+    [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *eventsArray) {
+        [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
+            NSString *eventID = eventDict.allKeys.firstObject;
+            if ([eventID isEqualToString:self.currentEvent.objectID]) {
+                eventExists = YES;
+                *stop = YES;
+            }
+        }];
     }];
     return eventExists;
 }

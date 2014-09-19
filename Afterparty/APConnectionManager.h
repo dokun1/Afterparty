@@ -137,6 +137,19 @@ typedef void (^APProgressBlock)(int percentDone);
          failure:(APFailureErrorBlock)failureBlock;
 
 /**
+ *  When you join an event, this adds the eventID to an array on the server under your username so that you always know which events you are actively participating in.
+ *
+ *  @param eventID      NSString for the eventID that you are joining
+ *  @param successBlock Returns void
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)joinEvent:(NSString*)eventID
+          success:(APSuccessVoidBlock)successBlock
+          failure:(APFailureErrorBlock)failureBlock;
+
+/**
  *  Gets event that user has just created to see if the user wants to save it right away. Probably should deprecate, but it is a reliable way to ensure that the event previously created truly exists.
  *
  *  @param name         NSString of event name
@@ -146,8 +159,7 @@ typedef void (^APProgressBlock)(int percentDone);
  *
  *  @since 0.6.0
  */
-
--(void)lookupEventByName:(NSString *)name
+- (void)lookupEventByName:(NSString *)name
                     user:(PFUser *)user
                  success:(APSuccessArrayBlock)successBlock
                  failure:(APFailureErrorBlock)failureBlock;

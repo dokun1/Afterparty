@@ -32,7 +32,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 @property (nonatomic) BOOL lockInterfaceRotation;
 @property (nonatomic) id runtimeErrorHandlingObserver;
 @property (nonatomic) FlashState flashState;
-@property (nonatomic) BOOL isUsingFrontFacingCamera;
+@property (nonatomic, assign, readwrite) BOOL isUsingFrontFacingCamera;
 @property (nonatomic) UIView *previewView;
 @property (nonatomic) UIView *flashView;
 // external properties

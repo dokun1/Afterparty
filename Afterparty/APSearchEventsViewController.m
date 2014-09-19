@@ -158,10 +158,16 @@
         [SVProgressHUD dismiss];
         self.venues = [objects mutableCopy];
         APEvent *searchedEvent = self.venues.firstObject;
-        [APUtil saveEventToMyEvents:searchedEvent];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            PFFile *imageFile = (PFFile*)[searchedEvent eventImage];
+            NSData *imageData = [imageFile getData];
+            [searchedEvent setEventImageData:imageData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [APUtil saveEventToMyEvents:searchedEvent];
+                [self.tableView reloadData];
+            });
         });
+
     } failure:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"couldn't find event"];
     }];
@@ -249,8 +255,6 @@
         }
     }
     cell.countdownLabel.text = endDate;
-    
-    [cell.bannerView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
