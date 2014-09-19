@@ -19,12 +19,6 @@
 @interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
-@property (weak, nonatomic) IBOutlet APLabel *eventCreatedByName;
-@property (weak, nonatomic) IBOutlet APLabel *eventCreatedByBlurb;
-@property (weak, nonatomic) IBOutlet APLabel *eventDescription;
-@property (weak, nonatomic) IBOutlet APLabel *eventStartDateLabel;
-@property (weak, nonatomic) IBOutlet APLabel *eventFirstAddressString;
 @property (weak, nonatomic) IBOutlet APButton *eventJoinButton;
 @property (weak, nonatomic) IBOutlet UILabel *eventAuthorNameOnTopImage;
 @property (weak, nonatomic) IBOutlet UILabel *eventTitleOnTopImage;
@@ -54,23 +48,18 @@
   [super viewDidLoad];
     
   [self setTitle:self.currentEvent.eventName];
-  [self.eventCreatedByName styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.createdByUsername];
-  [self.eventCreatedByBlurb styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventUserBlurb];
-  [self.eventDescription styleForType:LabelTypeSearchDetailDescription withText:self.currentEvent.eventDescription];
-  [self.eventStartDateLabel styleForType:LabelTypeSearchDetailAttribute withText:[APUtil formatDateForEventDetailScreen:self.currentEvent.startDate]];
-  [self.eventFirstAddressString styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventAddress];
   
   [self.eventJoinButton style];
     
   UIImage *image = [UIImage imageWithData:self.currentEvent.eventImageData];
   [self.eventImageView setImage:image];
-  [self.userAvatar setImageWithURL:[NSURL URLWithString:self.currentEvent.eventUserPhotoURL]];
     
     if ([self hasAlreadyAuthenticatedEvent]) {
         [self.eventJoinButton setTitle:@"GO!!" forState:UIControlStateNormal];
     }
     self.eventAuthorNameOnTopImage.text = [[self.currentEvent.createdByUsername uppercaseString] stringByAppendingString:@"'S"];
     self.eventTitleOnTopImage.text = [self.currentEvent.eventName uppercaseString];
+    
     self.eventDetailsTableView.dataSource = self;
     self.eventDetailsTableView.delegate = self;
     self.eventDetailsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

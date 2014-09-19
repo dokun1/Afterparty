@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Afterparty. All rights reserved.
 //
 
+#import <UIKit+AFNetworking.h>
 #import "APSearchEventTableViewCellFactory.h"
 
 @implementation APSearchEventTableViewCellFactory
@@ -25,6 +26,8 @@
             }
             cell.authorFullNameLabel.text = [event.createdByUsername capitalizedString];
             cell.authorBlurbLabel.text = [event.eventUserBlurb capitalizedString];
+            [cell.avatarImageView setImageWithURL:[NSURL URLWithString:event.eventUserPhotoURL]];
+
             if (event.eventUserPhotoURL.length) {
                 cell.avatarImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:event.eventUserPhotoURL]]];
             }

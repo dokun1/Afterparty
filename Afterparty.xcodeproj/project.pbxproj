@@ -102,7 +102,6 @@
 		50F64ECF1952F64800E0B8DC /* APSearchEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EC91952F64800E0B8DC /* APSearchEventTableViewCell.m */; };
 		50F64ED01952F64800E0B8DC /* APSearchEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F64ECA1952F64800E0B8DC /* APSearchEventTableViewCell.xib */; };
 		50F64ED11952F64800E0B8DC /* APSearchEventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64ECC1952F64800E0B8DC /* APSearchEventDetailViewController.m */; };
-		50F64ED21952F64800E0B8DC /* APSearchEventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F64ECD1952F64800E0B8DC /* APSearchEventDetailViewController.xib */; };
 		50F64ED61952FB7A00E0B8DC /* APVenueTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64ED41952FB7A00E0B8DC /* APVenueTableViewCell.m */; };
 		50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F64ED51952FB7A00E0B8DC /* APVenueTableViewCell.xib */; };
 		50F64EDA19531DF400E0B8DC /* APPhotoUploadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64ED919531DF400E0B8DC /* APPhotoUploadQueue.m */; };
@@ -291,7 +290,6 @@
 		50F64ECA1952F64800E0B8DC /* APSearchEventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APSearchEventTableViewCell.xib; sourceTree = "<group>"; };
 		50F64ECB1952F64800E0B8DC /* APSearchEventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventDetailViewController.h; sourceTree = "<group>"; };
 		50F64ECC1952F64800E0B8DC /* APSearchEventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventDetailViewController.m; sourceTree = "<group>"; };
-		50F64ECD1952F64800E0B8DC /* APSearchEventDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APSearchEventDetailViewController.xib; sourceTree = "<group>"; };
 		50F64ED31952FB7A00E0B8DC /* APVenueTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APVenueTableViewCell.h; sourceTree = "<group>"; };
 		50F64ED41952FB7A00E0B8DC /* APVenueTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APVenueTableViewCell.m; sourceTree = "<group>"; };
 		50F64ED51952FB7A00E0B8DC /* APVenueTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APVenueTableViewCell.xib; sourceTree = "<group>"; };
@@ -492,7 +490,6 @@
 				50F64EC71952F64800E0B8DC /* APSearchEventsViewController.m */,
 				50F64ECB1952F64800E0B8DC /* APSearchEventDetailViewController.h */,
 				50F64ECC1952F64800E0B8DC /* APSearchEventDetailViewController.m */,
-				50F64ECD1952F64800E0B8DC /* APSearchEventDetailViewController.xib */,
 			);
 			name = NearbyEvents;
 			sourceTree = "<group>";
@@ -794,7 +791,6 @@
 				50F64ED01952F64800E0B8DC /* APSearchEventTableViewCell.xib in Resources */,
 				504CA3CE1940C04E003EF9EB /* ap_appicon58.png in Resources */,
 				504CA3BA1940C035003EF9EB /* button_pluswhite.png in Resources */,
-				50F64ED21952F64800E0B8DC /* APSearchEventDetailViewController.xib in Resources */,
 				C9AEB3BC19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib in Resources */,
 				50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */,
 				504CA3B71940C035003EF9EB /* button_flashon.png in Resources */,
