@@ -6,4 +6,4 @@ pod 'FXBlurView', '~> 1.6.2'
 pod 'SVProgressHUD', :head
 pod 'TTTAttributedLabel', '~> 1.10'
 pod 'pop', '~> 1.0'
-pod 'Parse', '~> 1.2.20'
+pod 'Parse', '1.2.20'

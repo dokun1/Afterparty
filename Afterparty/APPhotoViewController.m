@@ -10,6 +10,8 @@
 #import "APConnectionManager.h"
 #import "APPhotoInfo.h"
 #import "APButton.h"
+#import "APUtil.h"
+#import "APMetadataPhotoOverlayView.h"
 
 @import AssetsLibrary;
 
@@ -18,6 +20,7 @@
 @property (strong, nonatomic) NSArray *metadata;
 @property (assign, nonatomic) NSInteger selectedIndex;
 @property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) APMetadataPhotoOverlayView *metadataView;
 @property (strong, nonatomic) NSMutableArray *imageViewArray;
 @property (strong, nonatomic) NSMutableArray *downloadIndicators;
 @property (assign, nonatomic) NSInteger currentlyViewingIndex;
@@ -56,6 +59,9 @@
     self.backRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
     [self.view addGestureRecognizer:self.backRecognizer];
     
+    self.metadataView = [[APMetadataPhotoOverlayView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 80, self.view.frame.size.width, 80)];
+    [self.view addSubview:self.metadataView];
+    [self setMetadataViewForIndex:self.selectedIndex];
     [self setUpInitialImageViews];
 }
 
@@ -226,6 +232,8 @@
         
         dispatch_async(dispatch_get_global_queue(priority, 0), ^{
             APPhotoInfo *currentPhotoInfo = self.metadata[index];
+            UIActivityIndicatorView *thisIndicatorView = self.downloadIndicators[index];
+            [self.view bringSubviewToFront:thisIndicatorView];
             [[APConnectionManager sharedManager] downloadImageForRefID:[currentPhotoInfo refID] success:^(NSData *data) {
                 if (data != nil) {
                     UIImage *image = [[UIImage alloc] initWithData:data];
@@ -285,13 +293,16 @@
             newIndex++;
             purgeIndex = self.selectedIndex - 5;
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setMetadataViewForIndex:self.selectedIndex];
+        });
         if (newIndex >= [self.metadata count] || newIndex < 0)
             return;
         id obj = self.imageViewArray[newIndex];
         if ([obj isKindOfClass:[UIScrollView class]])
             return;
-      
       [self addImageAtNewIndex:newIndex oldIndex:oldIndex purgeIndex:purgeIndex];
+
     });
 }
 
@@ -299,6 +310,7 @@
   UIScrollView *scrollView = [self scrollViewForIndex:newIndex];
   UIImageView *imageView = [self imageViewForIndex:newIndex];
   [scrollView addSubview:imageView];
+    
   imageView.center = scrollView.center;
   [self.imageViewArray replaceObjectAtIndex:newIndex withObject:scrollView];
   UIActivityIndicatorView *indicator = self.downloadIndicators[newIndex];
@@ -351,10 +363,6 @@
 
 }
 
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  
-}
-
 -(UIImageView*)imageViewForIndex:(NSInteger)index {
     APPhotoInfo *currentInfo = self.metadata[index];
     CGRect currentFrame = CGRectMake(0, 0, [self sizePhotoForPage:currentInfo.size].width, [self sizePhotoForPage:currentInfo.size].height);
@@ -372,6 +380,12 @@
     scrollView.delegate = self;
     scrollView.pagingEnabled = NO;
     return scrollView;
+}
+
+- (void)setMetadataViewForIndex:(NSInteger)index {
+    APPhotoInfo *photoInfo = self.metadata[index];
+    self.metadataView.usernameLabel.text = [photoInfo.username uppercaseString];
+    self.metadataView.timestampLabel.text = [APUtil formatDateForEventCreationScreen:photoInfo.timestamp];
 }
 
 #pragma mark - UIScrollViewDelegate Methods

@@ -57,5 +57,6 @@ extern NSString *const kBoldFont;
 extern NSString *const kPFUserProfilePhotoURLKey;
 extern NSString *const kPFUserBlurbKey;
 extern NSString *const kPFUserDataTrackingKey;
+extern NSString *const kPFUserEventsJoinedKey;
 
 @end

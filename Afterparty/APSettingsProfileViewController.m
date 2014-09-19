@@ -47,10 +47,13 @@
 
 - (void)viewDidLoad
 {
-  [super viewDidLoad];
-  [self loadUserData];
+    [super viewDidLoad];
   self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self loadUserData];
 }
 
 - (void)loadUserData {

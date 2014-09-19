@@ -24,16 +24,17 @@
 
 @import MessageUI;
 @import AddressBook;
+@import QuartzCore;
 
 @interface APCreateEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, VenueChoiceDelegate, UIScrollViewDelegate, FriendInviteDelegate, UITextViewDelegate, MFMessageComposeViewControllerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet APLabel            *titleLabel;
 @property (weak, nonatomic) IBOutlet APLabel            *eventOwnerLabel;
 @property (weak, nonatomic) IBOutlet APTextField        *eventNameField;
-@property (weak, nonatomic) IBOutlet APLabel            *choosePhotoLabel;
 @property (weak, nonatomic) IBOutlet APLabel            *chooseEventLocationLabel;
 @property (weak, nonatomic) IBOutlet APLabel            *chooseEventDateLabel;
 @property (weak, nonatomic) IBOutlet APLabel            *chooseEventFriendsLabel;
+@property (weak, nonatomic) IBOutlet UIButton           *chooseEventTitleButton;
 @property (weak, nonatomic) IBOutlet UIButton           *choosePhotoButton;
 @property (weak, nonatomic) IBOutlet UIButton           *chooseEventLocationButton;
 @property (weak, nonatomic) IBOutlet UIButton           *chooseEventDateButton;
@@ -65,6 +66,7 @@
 @property (strong, nonatomic) UIView                  *passwordFieldContainerView;
 @property (assign, nonatomic) BOOL                    isReceivingPassword;
 
+- (IBAction)chooseEventTitleTapped:(id)sender;
 - (IBAction)choosePhotoButtonTapped:(id)sender;
 - (IBAction)chooseEventLocationButtonTapped:(id)sender;
 - (IBAction)chooseEventDateButtonTapped:(id)sender;
@@ -103,6 +105,7 @@
   [self getContactPermission];
   
   [self initializeCustomUI];
+    
   
   [UIApplication sharedApplication].statusBarHidden = YES;
   
@@ -141,8 +144,6 @@
   [self.titleLabel styleForType:LabelTypeStandard];
   [self.eventOwnerLabel styleForType:LabelTypeTableViewCellTitle withText:[partyOwner uppercaseString]];
   self.eventOwnerLabel.textColor = [UIColor whiteColor];
-  [self.choosePhotoLabel styleForType:LabelTypeCreateLabel];
-  self.choosePhotoLabel.textColor = [UIColor whiteColor];
   [self.chooseEventLocationLabel styleForType:LabelTypeCreateLabel];
   [self.chooseEventDateLabel styleForType:LabelTypeCreateLabel];
   [self.chooseEventFriendsLabel styleForType:LabelTypeCreateLabel];
@@ -195,16 +196,40 @@
 }
 
 - (void)endButtonTapped {
-  [self.delegate controllerDidFinish:self];
+    [self.delegate controllerDidFinish:self withEventID:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self pulsePhotoButton:NO];
+}
+
+- (void)pulsePhotoButton:(BOOL)isAppearing {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.delegate = self;
+    animation.duration = isAppearing ? 0.5 : 1.5;
+    animation.toValue = isAppearing ? @(1.0f) : @(0.05f);
+    animation.fromValue = isAppearing ? @(0.05f) : @(1.0f);
+    [animation setValue:isAppearing ? @"animateOpacityIn" : @"animateOpacityOut" forKey:@"id"];
+    [self.choosePhotoButton.layer addAnimation:animation forKey:@"animateOpacity"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+}
+
+#pragma mark - CAAnimation Delegate Methods
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    [self.choosePhotoButton.layer removeAllAnimations];
+    CABasicAnimation *animation = (CABasicAnimation*)anim;
+    [self pulsePhotoButton:[[animation valueForKey:@"id"] isEqualToString:@"animateOpacityOut"]];
 }
 
 -(void)createEventDescriptionUI {
@@ -396,6 +421,9 @@
         return YES;
       }
     }
+    if (textField == self.eventNameField && textField.text.length > 0) {
+        [self.chooseEventTitleButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    }
   [textField resignFirstResponder];
   [self.currentEvent setEventName:self.eventNameField.text];
   return NO;
@@ -405,10 +433,12 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self.choosePhotoButton.layer removeAllAnimations];
+    self.choosePhotoButton.alpha = 0.0f;
   [self.coverPhotoImageView removeFromSuperview];
   self.coverPhotoImageView = nil;
   self.coverPhotoImageView = [[UIImageView alloc] initWithImage:image];
-  [self.choosePhotoButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+  [self.choosePhotoButton setImage:nil forState:UIControlStateNormal];
   [self setZoomScales];
   [self.coverPhotoScrollView addSubview:self.coverPhotoImageView];
   [self.picker dismissViewControllerAnimated:YES completion:nil];
@@ -455,7 +485,8 @@
     default:
       break;
   }
-  [self.delegate controllerDidFinish:self];
+    
+  [self.delegate controllerDidFinish:self withEventID:self.currentEvent.objectID];
 }
 
 -(void)sendInvitationsForEventID:(NSString*)eventID {
@@ -463,12 +494,12 @@
   [self.confirmEventButton setAlpha:0.0f];
   if(![MFMessageComposeViewController canSendText]) {
     [SVProgressHUD showErrorWithStatus:@"can't send invitations"];
-    [self.delegate controllerDidFinish:self];
+    [self.delegate controllerDidFinish:self withEventID:eventID];
     return;
   }
 
   if (self.currentInvitees.count == 0) {
-      [self.delegate controllerDidFinish:self];
+      [self.delegate controllerDidFinish:self withEventID:eventID];
       return;
   }
   NSMutableArray *numbers = [NSMutableArray array];
@@ -506,6 +537,7 @@
       NSData *photoData = UIImagePNGRepresentation(self.currentEvent.eventImage);
       [thisEvent setEventImageData:photoData];
       [APUtil saveEventToMyEvents:thisEvent];
+        self.currentEvent.objectID = object.objectId;
       [self sendInvitationsForEventID:object.objectId];
     } failure:^(NSError *error) {
       [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
@@ -523,7 +555,6 @@
                         delay:0.0
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
-                     self.choosePhotoLabel.alpha          = 0.0f;
                      self.chooseEventDateLabel.alpha      = 0.0f;
                      self.chooseEventFriendsLabel.alpha   = 0.0f;
                      self.chooseEventLocationLabel.alpha  = 0.0f;
@@ -549,7 +580,6 @@
                         delay:0.0
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
-                     self.choosePhotoLabel.alpha          = 1.0f;
                      self.chooseEventDateLabel.alpha      = 1.0f;
                      self.chooseEventFriendsLabel.alpha   = 1.0f;
                      self.chooseEventLocationLabel.alpha  = 1.0f;
@@ -594,6 +624,10 @@
 }
 
 #pragma mark - IBAction Methods
+
+- (IBAction)chooseEventTitleTapped:(id)sender {
+    [self.eventNameField becomeFirstResponder];
+}
 
 - (IBAction)choosePhotoButtonTapped:(id)sender {
   UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Go Back" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
