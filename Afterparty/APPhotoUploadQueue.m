@@ -39,7 +39,7 @@ static NSString *const kCache = @"cachedUploadPhotos";
                               @"event" : eventID};
 
   dispatch_async(self.photoUploadQueue, ^{
-    [[self cacheLock] lock]; // when we add or remove photos from the array, we MUST lock the cache so we dont lose anything in space
+    [[APUtil cacheLock] lock]; // when we add or remove photos from the array, we MUST lock the cache so we dont lose anything in space
     NSArray *cacheArray = [APUtil loadArrayForPath:kCache];
     if (!cacheArray) {
       cacheArray = @[];
@@ -47,7 +47,7 @@ static NSString *const kCache = @"cachedUploadPhotos";
     NSMutableArray *cacheCopy = [cacheArray mutableCopy];
     [cacheCopy addObject:photoDict];
     [APUtil saveArray:cacheCopy forPath:kCache];
-    [[self cacheLock] unlock];
+    [[APUtil cacheLock] unlock];
     if (!self.isUploading) {
       [self uploadQueuedPhotos];
     }
@@ -61,17 +61,17 @@ static NSString *const kCache = @"cachedUploadPhotos";
   __weak APPhotoUploadQueue *weakself = self;
   dispatch_async(self.photoUploadQueue, ^{
     self.isUploading = YES;
-    [[self cacheLock] lock];
+    [[APUtil cacheLock] lock];
     NSArray *cache = [APUtil loadArrayForPath:kCache];
     NSMutableArray *cacheCopy = [cache mutableCopy];
-    [[self cacheLock] unlock];
+    [[APUtil cacheLock] unlock];
     [cache enumerateObjectsUsingBlock:^(NSDictionary *photoDict, NSUInteger idx, BOOL *stop) {
       UIImage *image = [UIImage imageWithData:photoDict[@"image"]];
       NSString *eventID = photoDict[@"event"];
       [[APConnectionManager sharedManager] uploadImage:image forEventID:eventID success:^{
         [cacheCopy removeObject:photoDict];
         if (idx == (cache.count - 1)) {
-          [[self cacheLock] lock];
+          [[APUtil cacheLock] lock];
           NSMutableArray *latestCache = [[APUtil loadArrayForPath:kCache] mutableCopy];
           [latestCache enumerateObjectsUsingBlock:^(NSDictionary *photoDict, NSUInteger idx, BOOL *stop) {
             if (![cache containsObject:photoDict]) {
@@ -79,7 +79,7 @@ static NSString *const kCache = @"cachedUploadPhotos";
             }
           }];
           [APUtil saveArray:cacheCopy forPath:kCache];
-          [[self cacheLock] unlock];
+          [[APUtil cacheLock] unlock];
           BOOL shouldRetry = (cacheCopy.count > 0) ? YES : NO;
           if (shouldRetry) {
             [weakself uploadQueuedPhotos];
@@ -95,15 +95,6 @@ static NSString *const kCache = @"cachedUploadPhotos";
       }];
     }];
   });
-}
-
-- (NSLock*) cacheLock {
-  static NSLock *lock;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    lock = [[NSLock alloc] init];
-  });
-  return lock;
 }
 
 @end
