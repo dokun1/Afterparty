@@ -383,9 +383,13 @@
 }
 
 - (void)setMetadataViewForIndex:(NSInteger)index {
-    APPhotoInfo *photoInfo = self.metadata[index];
-    self.metadataView.usernameLabel.text = [photoInfo.username uppercaseString];
-    self.metadataView.timestampLabel.text = [APUtil formatDateForEventCreationScreen:photoInfo.timestamp];
+    if (index < self.metadata.count - 1 && index > 0) {
+        // when the scrollview bounces left or right the index will be out of bounds and the app will crash
+        // when the index is out of bounds we do not need to worry aboud metadata
+        APPhotoInfo *photoInfo = self.metadata[index];
+        self.metadataView.usernameLabel.text = [photoInfo.username uppercaseString];
+        self.metadataView.timestampLabel.text = [APUtil formatDateForEventCreationScreen:photoInfo.timestamp];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate Methods
