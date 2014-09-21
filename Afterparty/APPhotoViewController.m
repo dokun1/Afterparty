@@ -46,6 +46,7 @@
 {
     [super viewDidLoad];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self setUpScrollView];
     
     [self.metadata enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
