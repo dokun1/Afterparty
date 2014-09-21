@@ -288,30 +288,6 @@
                                     <constraint firstAttribute="height" constant="170" id="njq-gJ-Fp3"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user_male3-512" translatesAutoresizingMaskIntoConstraints="NO" id="hgd-HP-zRI">
-                                <rect key="frame" x="10" y="242" width="70" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="eventThrowerNameGoesJere" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9lb-DN-DMF" customClass="APLabel">
-                                <rect key="frame" x="88" y="252" width="212" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="eventthrowerblurbgoes here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K4c-CN-XXS" customClass="APLabel">
-                                <rect key="frame" x="88" y="281" width="212" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSS-tW-mih" customClass="APLabel">
-                                <rect key="frame" x="10" y="313" width="297" height="63"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBq-um-TeV" customClass="APButton">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -326,39 +302,61 @@
                                     <action selector="eventJoinTapped:" destination="51j-6s-3oY" eventType="touchUpInside" id="W2k-on-GqC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="event time and date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LfE-4c-suR" customClass="APLabel">
-                                <rect key="frame" x="10" y="375" width="297" height="25"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAUREN PERLOW'S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TH-5B-vsq">
+                                <rect key="frame" x="10" y="64" width="297" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Npy-Cy-0Ye"/>
+                                    <constraint firstAttribute="width" constant="297" id="nN8-yY-h1a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="first address string" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D71-5z-Z9S" customClass="APLabel">
-                                <rect key="frame" x="10" y="402" width="297" height="25"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SNOWPOCALYPSE '14" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IE-jf-Jyj">
+                                <rect key="frame" x="10" y="82" width="297" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="p1H-qM-xdB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-Ej-r3Z">
+                                <rect key="frame" x="0.0" y="234" width="320" height="284"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="top" secondItem="esV-WG-m5P" secondAttribute="bottom" id="5s1-BE-Rhy"/>
+                            <constraint firstItem="1TH-5B-vsq" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" constant="10" id="9ug-ia-fcW"/>
+                            <constraint firstAttribute="trailing" secondItem="1TH-5B-vsq" secondAttribute="trailing" constant="13" id="9vM-bg-Nti"/>
                             <constraint firstAttribute="bottom" secondItem="oBq-um-TeV" secondAttribute="bottom" id="EkO-Kf-PFJ"/>
+                            <constraint firstAttribute="trailing" secondItem="9IE-jf-Jyj" secondAttribute="trailing" constant="13" id="Krr-Lf-pCB"/>
+                            <constraint firstItem="1TH-5B-vsq" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" id="OOb-5m-wcR"/>
+                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="top" secondItem="1TH-5B-vsq" secondAttribute="bottom" constant="-2" id="VSh-8z-v7p"/>
                             <constraint firstItem="oBq-um-TeV" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" id="Xco-Vm-ZLo"/>
+                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" id="ZZD-JS-iqg"/>
+                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" constant="10" id="lgf-vV-I1B"/>
+                            <constraint firstItem="oBq-um-TeV" firstAttribute="top" secondItem="sD4-Ej-r3Z" secondAttribute="bottom" id="qBh-ZP-ji2"/>
                             <constraint firstItem="esV-WG-m5P" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" id="rb7-38-Hvo"/>
                             <constraint firstItem="esV-WG-m5P" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" id="uth-Ak-bqW"/>
+                            <constraint firstAttribute="trailing" secondItem="sD4-Ej-r3Z" secondAttribute="trailing" id="wK1-3f-wea"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qAq-4U-Ahn">
                         <barButtonItem key="backBarButtonItem" title="BACK" id="0BE-cw-VAb"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="eventCreatedByBlurb" destination="K4c-CN-XXS" id="V4Q-og-KAn"/>
-                        <outlet property="eventCreatedByName" destination="9lb-DN-DMF" id="GzF-vC-zd1"/>
-                        <outlet property="eventDescription" destination="xSS-tW-mih" id="7Bg-jI-ZGs"/>
-                        <outlet property="eventFirstAddressString" destination="D71-5z-Z9S" id="Oiw-Xk-NFY"/>
+                        <outlet property="eventAuthorNameOnTopImage" destination="1TH-5B-vsq" id="Usa-Aq-i4c"/>
+                        <outlet property="eventDetailsTableView" destination="sD4-Ej-r3Z" id="W0v-FT-0uR"/>
                         <outlet property="eventImageView" destination="esV-WG-m5P" id="OtB-Vn-AEP"/>
                         <outlet property="eventJoinButton" destination="oBq-um-TeV" id="7DP-hh-HHf"/>
-                        <outlet property="eventStartDateLabel" destination="LfE-4c-suR" id="lss-sR-EaK"/>
-                        <outlet property="userAvatar" destination="hgd-HP-zRI" id="IhL-wK-xY8"/>
+                        <outlet property="eventTitleOnTopImage" destination="9IE-jf-Jyj" id="I8U-Lx-EQd"/>
                         <segue destination="xba-d3-b1b" kind="push" identifier="EventDetailsGoToEventSegue" id="4mA-R2-d1K"/>
                     </connections>
                 </viewController>
