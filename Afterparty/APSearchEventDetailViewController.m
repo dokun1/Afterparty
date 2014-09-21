@@ -14,18 +14,15 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "APMyEventViewController.h"
 #import "APConstants.h"
+#import "APSearchEventTableViewCellFactory.h"
 
-@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate>
+@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
-@property (weak, nonatomic) IBOutlet APLabel *eventCreatedByName;
-@property (weak, nonatomic) IBOutlet APLabel *eventCreatedByBlurb;
-@property (weak, nonatomic) IBOutlet APLabel *eventDescription;
-@property (weak, nonatomic) IBOutlet APLabel *eventStartDateLabel;
-@property (weak, nonatomic) IBOutlet APLabel *eventFirstAddressString;
 @property (weak, nonatomic) IBOutlet APButton *eventJoinButton;
-
+@property (weak, nonatomic) IBOutlet UILabel *eventAuthorNameOnTopImage;
+@property (weak, nonatomic) IBOutlet UILabel *eventTitleOnTopImage;
+@property (weak, nonatomic) IBOutlet UITableView *eventDetailsTableView;
 @property (strong, nonatomic) APEvent *currentEvent;
 
 - (IBAction)eventJoinTapped:(id)sender;
@@ -51,21 +48,36 @@
   [super viewDidLoad];
     
   [self setTitle:self.currentEvent.eventName];
-  [self.eventCreatedByName styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.createdByUsername];
-  [self.eventCreatedByBlurb styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventUserBlurb];
-  [self.eventDescription styleForType:LabelTypeSearchDetailDescription withText:self.currentEvent.eventDescription];
-  [self.eventStartDateLabel styleForType:LabelTypeSearchDetailAttribute withText:[APUtil formatDateForEventDetailScreen:self.currentEvent.startDate]];
-  [self.eventFirstAddressString styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventAddress];
   
   [self.eventJoinButton style];
     
   UIImage *image = [UIImage imageWithData:self.currentEvent.eventImageData];
   [self.eventImageView setImage:image];
-  [self.userAvatar setImageWithURL:[NSURL URLWithString:self.currentEvent.eventUserPhotoURL]];
     
     if ([self hasAlreadyAuthenticatedEvent]) {
         [self.eventJoinButton setTitle:@"GO!!" forState:UIControlStateNormal];
     }
+    self.eventAuthorNameOnTopImage.text = [[self.currentEvent.createdByUsername uppercaseString] stringByAppendingString:@"'S"];
+    self.eventTitleOnTopImage.text = [self.currentEvent.eventName uppercaseString];
+    
+    self.eventDetailsTableView.dataSource = self;
+    self.eventDetailsTableView.delegate = self;
+    self.eventDetailsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.eventDetailsTableView.bounces = NO;
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventUserDetailsTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                                           forCellReuseIdentifier:[APSearchEventUserDetailsTableViewCell cellIdentifier]];
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventDescriptionTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                     forCellReuseIdentifier:[APSearchEventDescriptionTableViewCell cellIdentifier]];
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventDateLocationTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                                           forCellReuseIdentifier:[APSearchEventDateLocationTableViewCell cellIdentifier]];
+}
+
+- (void)awakeFromNib {
+    self.eventTitleOnTopImage.text = @"title";
+    self.eventAuthorNameOnTopImage.text = @"author";    
 }
 
 - (IBAction)eventJoinTapped:(id)sender {
@@ -130,5 +142,18 @@
   }
 }
 
+#pragma mark - UITableViewDataSource delegate methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [APSearchEventTableViewCellFactory initializedCellForTableView:tableView
+                                                              atIndexPath:indexPath
+                                                                 andEvent:self.currentEvent];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [APSearchEventTableViewCellFactory appropriateHeightForIndexPath:indexPath andEvent:self.currentEvent];
+}
 
 @end

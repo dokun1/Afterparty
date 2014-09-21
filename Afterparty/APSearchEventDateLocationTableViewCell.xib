@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="APSearchEventDateLocationTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWH-WP-e0h">
+                        <rect key="frame" x="10" y="9" width="65" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="VQJ-qG-ekf"/>
+                            <constraint firstAttribute="height" constant="35" id="XTA-qS-phW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FEB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9a-BC-xdd">
+                        <rect key="frame" x="10" y="43" width="65" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="4ZO-bp-BYN"/>
+                            <constraint firstAttribute="height" constant="25" id="SL5-PV-Oz9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:45" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZX-9s-ghA">
+                        <rect key="frame" x="85" y="9" width="65" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="8mH-pE-Ntz"/>
+                            <constraint firstAttribute="width" constant="65" id="tiN-6F-Xmc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zO-GE-djH">
+                        <rect key="frame" x="85" y="43" width="65" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="7zJ-VL-lf5"/>
+                            <constraint firstAttribute="width" constant="65" id="aHs-Yq-Xdr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CIRCLE BAR 1234PACIFIC STREET SANTA MONICA, CA" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="8" preferredMaxLayoutWidth="146" translatesAutoresizingMaskIntoConstraints="NO" id="nss-p4-nJY">
+                        <rect key="frame" x="160" y="9" width="146" height="59"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="tZX-9s-ghA" firstAttribute="leading" secondItem="vWH-WP-e0h" secondAttribute="trailing" constant="10" id="1LN-0z-oS1"/>
+                    <constraint firstItem="vWH-WP-e0h" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="1l9-NC-iRq"/>
+                    <constraint firstItem="nss-p4-nJY" firstAttribute="leading" secondItem="6zO-GE-djH" secondAttribute="trailing" constant="10" id="7GG-dK-uhD"/>
+                    <constraint firstItem="vWH-WP-e0h" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="A9V-YY-VAj"/>
+                    <constraint firstItem="w9a-BC-xdd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Dzd-4P-tBy"/>
+                    <constraint firstAttribute="bottom" secondItem="w9a-BC-xdd" secondAttribute="bottom" constant="11" id="KzW-x2-890"/>
+                    <constraint firstAttribute="trailing" secondItem="nss-p4-nJY" secondAttribute="trailing" constant="14" id="RMt-PP-eCe"/>
+                    <constraint firstAttribute="bottom" secondItem="nss-p4-nJY" secondAttribute="bottom" constant="11" id="dDs-D9-cBK"/>
+                    <constraint firstItem="nss-p4-nJY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="dsO-gE-d4g"/>
+                    <constraint firstAttribute="bottom" secondItem="6zO-GE-djH" secondAttribute="bottom" constant="11" id="hsg-eV-7xv"/>
+                    <constraint firstItem="tZX-9s-ghA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="kiB-09-Pvz"/>
+                    <constraint firstItem="6zO-GE-djH" firstAttribute="leading" secondItem="w9a-BC-xdd" secondAttribute="trailing" constant="10" id="pk2-jq-KOX"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="eventAddressLabel" destination="nss-p4-nJY" id="i1n-c3-nF1"/>
+                <outlet property="eventAmPMLabel" destination="6zO-GE-djH" id="bTZ-cA-35m"/>
+                <outlet property="eventDateDayLabel" destination="vWH-WP-e0h" id="d40-To-fPf"/>
+                <outlet property="eventDateHourLabel" destination="tZX-9s-ghA" id="7ef-Ra-2DR"/>
+                <outlet property="eventDateMonthLabel" destination="w9a-BC-xdd" id="aqq-gp-v8s"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
