@@ -536,5 +536,22 @@
   }
 }
 
+- (void)joinEvent:(NSString *)eventID
+          success:(APSuccessVoidBlock)successBlock
+          failure:(APFailureErrorBlock)failureBlock {
+    PFUser *currentUser = [PFUser currentUser];
+    NSMutableArray *eventsJoinedArray = currentUser[kPFUserEventsJoinedKey];
+    if (!eventsJoinedArray) {
+        eventsJoinedArray = [@[] mutableCopy];
+    }
+    if (![eventsJoinedArray containsObject:eventID]) {
+        [eventsJoinedArray addObject:eventID];
+        currentUser[kPFUserEventsJoinedKey] = eventsJoinedArray;
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            succeeded?successBlock():failureBlock(nil);
+        }];
+    }
+}
+
 
 @end
