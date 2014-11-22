@@ -19,4 +19,6 @@
 
 @property (strong, nonatomic) NSString *coverPhotoID;
 
++ (CGFloat)suggestedCellHeight;
+
 @end

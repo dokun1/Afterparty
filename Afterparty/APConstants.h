@@ -51,6 +51,9 @@ extern NSString *const kCheckCurrentUser;
 
 extern NSString *const kRegularFont;
 extern NSString *const kBoldFont;
+extern CGFloat const kIPhone5Width;
+extern CGFloat const kIPhone6Width;
+extern CGFloat const kIPhone6PlusWidth;
 
 // PFUser Keys
 

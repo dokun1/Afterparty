@@ -65,6 +65,7 @@
 @property (strong, nonatomic) APTextField             *confirmPasswordTextField;
 @property (strong, nonatomic) UIView                  *passwordFieldContainerView;
 @property (assign, nonatomic) BOOL                    isReceivingPassword;
+@property (assign, nonatomic) CGFloat                 widthFactor;
 
 - (IBAction)chooseEventTitleTapped:(id)sender;
 - (IBAction)choosePhotoButtonTapped:(id)sender;
@@ -106,10 +107,11 @@
   
   [self initializeCustomUI];
     
+    self.widthFactor = self.view.frame.size.width / 320;
   
   [UIApplication sharedApplication].statusBarHidden = YES;
   
-  self.coverPhotoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40, 320, 170)];
+  self.coverPhotoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40, 320 * self.widthFactor, 170 * self.widthFactor)];
   
   self.coverPhotoScrollView.backgroundColor = [UIColor afterpartyTealBlueColor];
   self.coverPhotoScrollView.contentSize = self.coverPhotoScrollView.bounds.size;
@@ -178,7 +180,7 @@
   [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
   [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
   
-  self.endEventCreationButton = [[APButton alloc] initWithFrame:CGRectMake(285, 5, 30, 30)];
+  self.endEventCreationButton = [[APButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 35, 5, 30, 30)];
   [self.endEventCreationButton setImage:[UIImage imageNamed:@"button_plusblack"] forState:UIControlStateNormal];
   [self.endEventCreationButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
   self.endEventCreationButton.transform = CGAffineTransformMakeRotation(45.0*M_PI/180.0);

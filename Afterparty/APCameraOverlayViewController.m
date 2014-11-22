@@ -61,26 +61,26 @@
     self.cameraFlipButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.cameraFlipButton setBackgroundColor:[UIColor clearColor]];
     [self.cameraFlipButton setImage:[UIImage imageNamed:@"button_frontfacingcamera.png"] forState:UIControlStateNormal];
-    [self.cameraFlipButton setFrame:CGRectMake(125, self.buttonHeight, 40, 40)];
+    [self.cameraFlipButton setFrame:CGRectMake(CGRectGetMidX(screenRect) - 20, self.buttonHeight, 40, 40)];
     [self.cameraFlipButton addTarget:self action:@selector(cameraFlipButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view insertSubview:self.cameraFlipButton belowSubview:self.cameraButton];
     
     self.flashButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.flashButton setBackgroundColor:[UIColor clearColor]];
     [self.flashButton setImage:[UIImage imageNamed:@"button_flashauto.png"] forState:UIControlStateNormal];
-    [self.flashButton setFrame:CGRectMake(155, self.buttonHeight, 40, 40)];
+    [self.flashButton setFrame:CGRectMake(CGRectGetMidX(screenRect) - 20, self.buttonHeight, 40, 40)];
     [self.flashButton addTarget:self action:@selector(cameraFlashButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view insertSubview:self.flashButton belowSubview:self.cameraButton];
   
   self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [self.cancelButton setBackgroundColor:[UIColor clearColor]];
   [self.cancelButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
-  [self.cancelButton setFrame:CGRectMake(130, self.buttonHeight, 40, 40)];
+  [self.cancelButton setFrame:CGRectMake(CGRectGetMidX(screenRect) - 20, self.buttonHeight, 40, 40)];
   [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
   [self.view insertSubview:self.cancelButton belowSubview:self.cameraButton];
   
   [self.cameraFlipButton afterparty_translateToPoint:CGPointMake(60, self.buttonHeight + 20) expanding:YES delay:0.1 withCompletion:nil];
-  [self.flashButton afterparty_translateToPoint:CGPointMake(260, self.buttonHeight + 20) expanding:YES delay:0.2 withCompletion:nil];
+  [self.flashButton afterparty_translateToPoint:CGPointMake(CGRectGetMaxX(screenRect) - 60, self.buttonHeight + 20) expanding:YES delay:0.2 withCompletion:nil];
   [self.cancelButton afterparty_translateToPoint:CGPointMake(30, 30) expanding:YES delay:0.3 withCompletion:nil];
     
     self.sessionController = [[APAVSessionController alloc] initWithPreviewView:self.viewFinderView];

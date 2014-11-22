@@ -50,6 +50,9 @@ NSString *const kQueueIsDoneUploading = @"photoQueueDoneUploading";
 
 NSString *const kRegularFont = @"SofiaProLight";
 NSString *const kBoldFont = @"SofiaProBold";
+CGFloat const kIPhone5Width = 320.f;
+CGFloat const kIPhone6Width = 375.f;
+CGFloat const kIPhone6PlusWidth = 414.f;
 
 // PFUser Keys
 

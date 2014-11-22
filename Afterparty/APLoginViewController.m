@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
     _sunRisingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sunRising"]];
     [self.view addSubview:_sunRisingImageView];
   }
-  _sunRisingImageView.frame = CGRectMake(0, self.view.frame.size.height, 320, 202);
+  _sunRisingImageView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 202 * (self.view.frame.size.width/320));
 }
 
 - (void)viewDidLoad
