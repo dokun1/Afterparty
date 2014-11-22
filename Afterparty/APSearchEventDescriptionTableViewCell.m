@@ -7,11 +7,14 @@
 //
 
 #import "APSearchEventDescriptionTableViewCell.h"
+#import "APConstants.h"
+
 @implementation APSearchEventDescriptionTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
     self.contentView.backgroundColor = [UIColor redColor];
+    self.eventDescriptionTextView.font = [UIFont fontWithName:kBoldFont size:14.f];
 }
 
 + (NSString*)cellIdentifier {

@@ -7,6 +7,7 @@
 //
 
 #import "APSearchEventDateLocationTableViewCell.h"
+#import "APConstants.h"
 @implementation APSearchEventDateLocationTableViewCell
 
 - (void)awakeFromNib
@@ -22,6 +23,11 @@
     self.eventDateHourLabel.layer.borderWidth = borderWidth;
     self.eventAmPMLabel.layer.borderColor = borderColor;
     self.eventAmPMLabel.layer.borderWidth = borderWidth;
+    self.eventAmPMLabel.font = [UIFont fontWithName:kBoldFont size:18.f];
+    self.eventDateHourLabel.font = [UIFont fontWithName:kBoldFont size:18.f];
+    self.eventDateMonthLabel.font = [UIFont fontWithName:kBoldFont size:15.f];
+    self.eventAddressLabel.font = [UIFont fontWithName:kBoldFont size:13.f];
+    self.eventDateDayLabel.font = [UIFont fontWithName:kBoldFont size:18.f];
 }
 
 # pragma mark - External Methods

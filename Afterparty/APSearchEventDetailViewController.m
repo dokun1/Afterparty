@@ -77,7 +77,9 @@
 
 - (void)awakeFromNib {
     self.eventTitleOnTopImage.text = @"title";
-    self.eventAuthorNameOnTopImage.text = @"author";    
+    self.eventAuthorNameOnTopImage.text = @"author";
+    self.eventTitleOnTopImage.font = [UIFont fontWithName:kBoldFont size:18.f];
+    self.eventAuthorNameOnTopImage.font = [UIFont fontWithName:kRegularFont size:14.f];
 }
 
 - (IBAction)eventJoinTapped:(id)sender {
