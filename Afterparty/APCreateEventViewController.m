@@ -102,6 +102,8 @@
     _currentEvent = [[APEvent alloc] init];
     _currentEvent.createdByUsername = [[PFUser currentUser] username];
   }
+    
+    [self pulsePhotoButton:NO];
   
   [self getContactPermission];
   
@@ -125,6 +127,10 @@
   self.coverPhotoScrollView.maximumZoomScale = 3.0;
   
   [self.coverPhotoImageView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosePhotoButtonTapped:)];
+    tapRecognizer.numberOfTapsRequired = 1;
+    [self.coverPhotoScrollView addGestureRecognizer:tapRecognizer];
   [self.view sendSubviewToBack:self.coverPhotoScrollView];
   
   [self.eventNameField setFont:[UIFont fontWithName:kBoldFont size:20.f]];
@@ -208,17 +214,15 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self pulsePhotoButton:NO];
+    self.choosePhotoButton.enabled = YES;
 }
 
 - (void)pulsePhotoButton:(BOOL)isAppearing {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    animation.delegate = self;
-    animation.duration = isAppearing ? 0.5 : 1.5;
-    animation.toValue = isAppearing ? @(1.0f) : @(0.05f);
-    animation.fromValue = isAppearing ? @(0.05f) : @(1.0f);
-    [animation setValue:isAppearing ? @"animateOpacityIn" : @"animateOpacityOut" forKey:@"id"];
-    [self.choosePhotoButton.layer addAnimation:animation forKey:@"animateOpacity"];
+    [UIView animateWithDuration:isAppearing?0.5:1.5 animations:^{
+        self.choosePhotoButton.alpha = isAppearing?1.0f:0.05f;
+    } completion:^(BOOL finished) {
+        [self pulsePhotoButton:!isAppearing];
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -226,16 +230,8 @@
   [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
-#pragma mark - CAAnimation Delegate Methods
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    [self.choosePhotoButton.layer removeAllAnimations];
-    CABasicAnimation *animation = (CABasicAnimation*)anim;
-    [self pulsePhotoButton:[[animation valueForKey:@"id"] isEqualToString:@"animateOpacityOut"]];
-}
-
 -(void)createEventDescriptionUI {
-  self.eventDescriptionView = [[APTextView alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 90, 300, 140)];
+  self.eventDescriptionView = [[APTextView alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 90, self.view.frame.size.width - 20, 140)];
   [self.eventDescriptionView setDelegate:self];
   [self.eventDescriptionView styleWithFontSize:15.f];
   [self.eventDescriptionView.layer setBorderColor:[[UIColor clearColor] CGColor]];
@@ -246,12 +242,12 @@
   [self.eventDescriptionView setReturnKeyType:UIReturnKeyDone];
   [self.view addSubview:self.eventDescriptionView];
   
-  self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(-1, self.coverPhotoScrollView.frame.size.height + 80, 322, 0.5f)];
+  self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(-1, self.coverPhotoScrollView.frame.size.height + 80, self.view.frame.size.width + 2, 0.5f)];
   [self.separatorView setBackgroundColor:[UIColor lightGrayColor]];
   [self.separatorView setAlpha:0.0f];
   [self.view addSubview:self.separatorView];
   
-  self.eventDescriptionLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 42, 300, 40)];
+  self.eventDescriptionLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 42, self.view.frame.size.width - 20, 40)];
   [self.eventDescriptionLabel setNumberOfLines:2];
   [self.eventDescriptionLabel setFont:[UIFont fontWithName:kRegularFont size:14.f]];
   [self.eventDescriptionLabel setTextAlignment:NSTextAlignmentCenter];
@@ -298,7 +294,7 @@
     [textView setText:@""];
   }
   [UIView animateWithDuration:0.2 animations:^{
-    [textView setFrame:CGRectMake(10, 70, 300, 140)];
+    [textView setFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 140)];
   }];
 };
 
@@ -308,7 +304,7 @@
     [textView setText:text];
   }
   [UIView animateWithDuration:0.2 animations:^{
-    [textView setFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 90, 300, 140)];
+    [textView setFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 90, self.view.frame.size.width - 20, 140)];
   }];
 }
 
@@ -320,32 +316,34 @@
   [self.blurView.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
     [view removeFromSuperview];
   }];
+    
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   
-  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(135, self.view.bounds.size.height - 60, 50, 30)];
+  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame) - 25, self.view.bounds.size.height - 60, 50, 30)];
   [self.dismissDateButton style];
   [self.dismissDateButton setTitle:@"save" forState:UIControlStateNormal];
   [self.dismissDateButton addTarget:self action:@selector(dismissDatePickerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
   self.dismissDateButton.alpha = 0.0f;
   [self.view addSubview:self.dismissDateButton];
   
-  self.datePickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 440)];
+  self.datePickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, screenWidth, 440)];
   
-  APLabel *startDateLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+  APLabel *startDateLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 30)];
   [startDateLabel styleForType:LabelTypeStandard withText:@"START TIME"];
   [self.datePickerContainerView addSubview:startDateLabel];
   
-  UIDatePicker *picker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 15, 320, 162)];
+  UIDatePicker *picker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 15, screenWidth, 162)];
   [picker setDate:[NSDate date]];
   [picker setMinuteInterval:15];
   [picker setMinimumDate:[NSDate date]];
   self.startDatePicker = picker;
   [self.datePickerContainerView addSubview:picker];
   
-  APLabel *endDateLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 225, 320, 30)];
+  APLabel *endDateLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 225, screenWidth, 30)];
   [endDateLabel styleForType:LabelTypeStandard withText:@"END TIME"];
   [self.datePickerContainerView addSubview:endDateLabel];
   
-  UIDatePicker *endPicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 240, 320, 162)];
+  UIDatePicker *endPicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 240, screenWidth, 162)];
   [endPicker setMinimumDate:[NSDate dateWithTimeIntervalSinceNow:60*60*4]];
   [endPicker setMinuteInterval:15];
   [endPicker setDate:[NSDate dateWithTimeIntervalSinceNow:60*60*4]];
@@ -761,15 +759,17 @@
   [self.blurView.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
     [view removeFromSuperview];
   }];
+    
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
   
-  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(280, 10, 30, 30)];
+  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(screenWidth - 40, 10, 30, 30)];
   [self.dismissDateButton setImage:[UIImage imageNamed:@"button_plusblack"] forState:UIControlStateNormal];
   [self.dismissDateButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
   [self.dismissDateButton addTarget:self action:@selector(dismissDatePickerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
   self.dismissDateButton.transform = CGAffineTransformMakeRotation(45.0*M_PI/180.0);
   [self.view addSubview:self.dismissDateButton];
   
-  self.passwordFieldContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 200)];
+  self.passwordFieldContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, screenWidth, 200)];
   self.passwordFieldContainerView.backgroundColor = [UIColor clearColor];
   [self.view addSubview:self.passwordFieldContainerView];
   

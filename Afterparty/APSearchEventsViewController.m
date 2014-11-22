@@ -195,6 +195,10 @@
   return [APSearchEventTableViewCell suggestedCellHeight];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [APSearchEventTableViewCell suggestedCellHeight];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"NearbyEventCell";
