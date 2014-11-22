@@ -11,7 +11,7 @@
 #import "APLabel.h"
 #import "APButton.h"
 #import <FXBlurView.h>
-#import <FacebookSDK/Facebook.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "UIColor+APColor.h"
 #import "UIView+APViewAnimations.h"
 #import "APConnectionManager.h"
