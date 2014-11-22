@@ -26,6 +26,7 @@
 @property (assign, nonatomic) NSInteger currentlyViewingIndex;
 @property (assign, nonatomic) BOOL longPressed;
 @property (strong, nonatomic) UITapGestureRecognizer *backRecognizer;
+@property (assign, nonatomic) CGFloat screenWidth;
 
 @end
 
@@ -39,6 +40,7 @@
         self.imageViewArray = [[NSMutableArray alloc] initWithArray:self.metadata];
         self.downloadIndicators = [[NSMutableArray alloc] initWithCapacity:[self.metadata count]];
         self.longPressed = NO;
+        self.screenWidth = [UIScreen mainScreen].bounds.size.width;
     }
     return self;
 }
@@ -273,8 +275,8 @@
         NSInteger newIndex = 1;
         NSInteger oldIndex = 1;
         while (done == NO) {
-            if (newStart + 320 < xOffset) {
-                newStart += 320;
+            if (newStart + self.screenWidth < xOffset) {
+                newStart += self.screenWidth;
                 newIndex++;
             }else{
                 done = YES;
@@ -405,7 +407,7 @@
 #pragma mark - Sizing Util Methods
 
 -(CGSize)sizePhotoForPage:(CGSize)photoSize {
-    CGFloat width = 320;
+    CGFloat width = self.screenWidth;
     
     CGSize newSize = CGSizeMake(width, 0);
     if (photoSize.width > width) {
@@ -420,7 +422,7 @@
 }
 
 -(CGRect)frameForImageViewAtIndex:(NSInteger)index {
-    CGFloat x = 320 * index;
+    CGFloat x = self.screenWidth * index;
     APPhotoInfo *currentInfo = self.metadata[index];
     CGSize photoSize = [self sizePhotoForPage:[currentInfo size]];
     return CGRectMake(x, 0, photoSize.width, photoSize.height);
@@ -429,7 +431,7 @@
 
 
 -(CGPoint)centerForImageViewAtIndex:(NSInteger)index {
-    CGFloat x = (320 * index) + 160;
+    CGFloat x = (self.screenWidth * index) + 160;
     return CGPointMake(x, CGRectGetMidY(self.view.bounds));
 }
 

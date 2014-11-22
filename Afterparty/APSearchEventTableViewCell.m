@@ -8,6 +8,7 @@
 
 #import "APSearchEventTableViewCell.h"
 #import "UIColor+APColor.h"
+#import "APConstants.h"
 
 @implementation APSearchEventTableViewCell
 
@@ -32,6 +33,10 @@
         _coverPhotoID = coverPhotoID;
     }
     //init lazy loading for cover photo id and setting of the image
+}
+
++ (CGFloat)suggestedCellHeight {
+    return 170.f * ([UIScreen mainScreen].bounds.size.width/320);
 }
 
 @end

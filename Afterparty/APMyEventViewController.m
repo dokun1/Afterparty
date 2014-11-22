@@ -566,7 +566,7 @@
 #pragma mark - StackedGridLayoutDelegate Methods 
 
 -(NSInteger)collectionView:(UICollectionView *)cv layout:(UICollectionViewLayout *)cvl numberOfColumnsInSection:(NSInteger)section {
-    return 2;
+    return (self.view.frame.size.width > kIPhone6Width ? 3 : 2);
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)cv layout:(UICollectionViewLayout *)cvl itemInsetsForSectionAtIndex:(NSInteger)section {
@@ -585,7 +585,7 @@
 }
 
 -(CGSize)sizePhotoForColumn:(CGSize)photoSize {
-    CGFloat width = 160;
+    CGFloat width = self.view.frame.size.width / (self.view.frame.size.width > kIPhone6Width ? 3 : 2);
         
     CGSize newSize = CGSizeMake(width, 0);
     if (photoSize.width > width) {

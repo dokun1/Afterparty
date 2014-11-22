@@ -62,6 +62,7 @@
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
+    [self.locationManager requestWhenInUseAuthorization];
     
     [self.tableView setBackgroundColor:[UIColor colorWithHexString:@"e5e5e5" withAlpha:1.0]];
     
@@ -71,6 +72,14 @@
     [self.navigationItem setRightBarButtonItems:@[btnDismiss]];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"APVenueTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"APVenueCell"];
+}
+
+#pragma mark - CLLocationManagerDelegate Methods
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [_locationManager startUpdatingLocation];
+    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -64,7 +64,7 @@
 }
 
 - (CGSize)sizePhotoForColumn:(CGSize)photoSize {
-  CGFloat width = 160;
+  CGFloat width = self.superview.frame.size.width / (self.superview.frame.size.width > 375.f ? 3 : 2);
   
   CGSize newSize = CGSizeMake(width, 0);
   if (photoSize.width > width) {
