@@ -91,6 +91,8 @@
   [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
 }
 
+
+
 - (void)didReceiveSearchNotification:(NSNotification*)notification {
   self.initialSearch = (NSString*)notification.object;
   self.tabBarController.selectedIndex = 0;
@@ -102,6 +104,11 @@
   if (!self.isLoading) {
     [self refreshEvents];
   }
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        if ([PFUser currentUser] && ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse)) {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -110,7 +117,13 @@
     [SVProgressHUD dismiss];
 }
 
-#pragma mark - LocationManagerDelegate Methods
+#pragma mark - CLLocationManagerDelegate Methods
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [self.locationManager startUpdatingLocation];
+    }
+}
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
   self.currentLocation = [locations lastObject];

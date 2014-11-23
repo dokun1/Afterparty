@@ -39,7 +39,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>It&apos;s kind of, you know, the main purpose of the app.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mostardesign-SofiaProBold.otf</string>
