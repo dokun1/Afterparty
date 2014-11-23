@@ -11,6 +11,7 @@
 #import <ImageIO/ImageIO.h>
 #import <AssertMacros.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+
 @class CIDetector;
 
 #pragma mark -- Internal Helper Stuff
