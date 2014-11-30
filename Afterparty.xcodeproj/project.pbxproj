@@ -497,13 +497,6 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		504CA36D1940B860003EF9EB /* UserProfile */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UserProfile;
-			sourceTree = "<group>";
-		};
 		504CA36E1940B869003EF9EB /* NearbyEvents */ = {
 			isa = PBXGroup;
 			children = (
@@ -587,7 +580,6 @@
 				504CA36F1940B873003EF9EB /* MyEvents */,
 				504CA3701940B87F003EF9EB /* CreateEvent */,
 				504CA3711940B899003EF9EB /* Settings */,
-				504CA36D1940B860003EF9EB /* UserProfile */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1012,7 +1004,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					arm64,
+					armv7s,
+					armv7,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1041,9 +1038,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -1051,7 +1048,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					arm64,
+					armv7s,
+					armv7,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1074,8 +1076,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				SDKROOT = iphoneos7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1084,7 +1086,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 06B0F08E1B8D74E382530CED /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					arm64,
+					armv7s,
+					armv7,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1109,7 +1116,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C8833B16F229571813F997A6 /* Pods.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					arm64,
+					armv7s,
+					armv7,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

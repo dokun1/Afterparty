@@ -9,5 +9,9 @@
     },
     "0.9.9": {
         "1":"Settings screen FINALLY re-done!"
+    },
+    "0.9.10": {
+        "1":"Twitter login re-activated",
+        "2":"Neat new parallax effect when viewing photos full screen"
     }
 }
