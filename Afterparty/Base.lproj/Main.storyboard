@@ -272,13 +272,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="esV-WG-m5P">
                                 <rect key="frame" x="0.0" y="64" width="320" height="170"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="170" id="aLe-nj-aX2"/>
+                                    <constraint firstAttribute="height" constant="170" id="J6M-fQ-iW0"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBq-um-TeV" customClass="APButton">
                                 <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="zjY-D7-PEw"/>
+                                    <constraint firstAttribute="height" constant="50" id="Q6J-pB-eV2"/>
                                 </constraints>
                                 <state key="normal" title="JOIN US!!!">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -287,21 +287,12 @@
                                     <action selector="eventJoinTapped:" destination="51j-6s-3oY" eventType="touchUpInside" id="W2k-on-GqC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAUREN PERLOW'S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TH-5B-vsq">
-                                <rect key="frame" x="10" y="64" width="297" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SNOWPOCALYPSE '14" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IE-jf-Jyj" customClass="APLabel">
+                                <rect key="frame" x="20" y="96" width="297" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="Z7z-Oy-SY1"/>
+                                    <constraint firstAttribute="height" constant="21" id="f9r-vM-WUo"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SNOWPOCALYPSE '14" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IE-jf-Jyj">
-                                <rect key="frame" x="10" y="82" width="297" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="rdx-Z4-beA"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -310,25 +301,34 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
                             </tableView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAUREN PERLOW'S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TH-5B-vsq" customClass="APLabel">
+                                <rect key="frame" x="20" y="71" width="297" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="EQ2-oP-L59"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="oBq-um-TeV" secondAttribute="bottom" id="0Vg-eA-03Y"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="trailing" secondItem="esV-WG-m5P" secondAttribute="trailing" id="8DQ-UT-30J"/>
-                            <constraint firstItem="esV-WG-m5P" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" id="AQc-LY-x4J"/>
-                            <constraint firstItem="oBq-um-TeV" firstAttribute="top" secondItem="sD4-Ej-r3Z" secondAttribute="bottom" id="BI0-zM-fJT"/>
-                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="leading" secondItem="1TH-5B-vsq" secondAttribute="leading" id="IpX-WO-6zW"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="oBq-um-TeV" secondAttribute="leading" id="MVA-4s-tx3"/>
-                            <constraint firstItem="1TH-5B-vsq" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" id="R2S-20-0Ly"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="esV-WG-m5P" secondAttribute="leading" id="Skr-T8-F7e"/>
-                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" constant="18" id="Tof-3s-gfM"/>
-                            <constraint firstItem="1TH-5B-vsq" firstAttribute="trailing" secondItem="9IE-jf-Jyj" secondAttribute="trailing" id="ZTU-xG-ti1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1TH-5B-vsq" secondAttribute="trailing" constant="-3" id="h7L-FP-be7"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="top" secondItem="esV-WG-m5P" secondAttribute="bottom" id="jhm-l6-oMf"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="trailing" secondItem="oBq-um-TeV" secondAttribute="trailing" id="mfO-wb-jUx"/>
-                            <constraint firstAttribute="trailing" secondItem="esV-WG-m5P" secondAttribute="trailing" id="tNg-x8-97R"/>
-                            <constraint firstItem="1TH-5B-vsq" firstAttribute="top" secondItem="esV-WG-m5P" secondAttribute="top" id="xCq-bX-wNn"/>
-                            <constraint firstItem="1TH-5B-vsq" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leadingMargin" constant="-6" id="xKD-ce-Vkb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1TH-5B-vsq" secondAttribute="trailing" constant="-13" id="3ap-gG-vA7"/>
+                            <constraint firstItem="esV-WG-m5P" firstAttribute="trailing" secondItem="sD4-Ej-r3Z" secondAttribute="trailing" id="5Jr-qj-ajZ"/>
+                            <constraint firstItem="oBq-um-TeV" firstAttribute="top" secondItem="sD4-Ej-r3Z" secondAttribute="bottom" id="FE1-Wi-9qb"/>
+                            <constraint firstAttribute="trailing" secondItem="sD4-Ej-r3Z" secondAttribute="trailing" id="LcZ-1P-zc8"/>
+                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="oBq-um-TeV" secondAttribute="leading" id="NIB-R0-K9a"/>
+                            <constraint firstAttribute="bottom" secondItem="oBq-um-TeV" secondAttribute="bottom" id="WoD-wY-zDQ"/>
+                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="top" secondItem="1TH-5B-vsq" secondAttribute="bottom" constant="5" id="XQr-PA-k8B"/>
+                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="trailing" secondItem="1TH-5B-vsq" secondAttribute="trailing" id="aY4-8M-2NX"/>
+                            <constraint firstItem="1TH-5B-vsq" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" constant="7" id="dSI-lz-zoI"/>
+                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" id="hua-jF-UmM"/>
+                            <constraint firstItem="1TH-5B-vsq" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leadingMargin" constant="4" id="kSL-Xl-JQF"/>
+                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="trailing" secondItem="oBq-um-TeV" secondAttribute="trailing" id="nPA-EL-kb3"/>
+                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="leading" secondItem="1TH-5B-vsq" secondAttribute="leading" id="npr-Zz-Bgl"/>
+                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="esV-WG-m5P" secondAttribute="leading" id="uXL-5q-fCr"/>
+                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="top" secondItem="esV-WG-m5P" secondAttribute="bottom" id="uiB-oL-9eD"/>
+                            <constraint firstItem="esV-WG-m5P" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" id="vqJ-Cf-X8G"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qAq-4U-Ahn">
@@ -758,7 +758,7 @@
         <scene sceneID="hXs-aQ-jFK">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zyu-Ad-ATm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="Drawers" id="7D0-bd-nVL"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Contact" id="7D0-bd-nVL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kSn-Oh-fG2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1008,7 +1008,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Drawers" width="24" height="24"/>
+        <image name="Contact" width="25" height="25"/>
         <image name="Near_Me" width="25" height="25"/>
         <image name="Photos" width="27" height="22"/>
         <image name="button_camera.png" width="161" height="161"/>

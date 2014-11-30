@@ -90,7 +90,7 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -558,6 +558,7 @@
     }else{
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
         APPhotoViewController *vc = [[APPhotoViewController alloc] initWithMetadata:self.photoMetadata andSelectedIndex:indexPath.item];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

@@ -330,6 +330,48 @@
   }];
 }
 
+- (void)saveImageForUserAvatar:(UIImage *)image
+                   withSuccess:(APSuccessVoidBlock)successBlock
+                       failure:(APFailureErrorBlock)failureBlock {
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    PFFile *imageFile = [PFFile fileWithName:@"avatar.jpg" data:imageData];
+    __block PFUser *currentUser = [PFUser currentUser];
+    currentUser[@"avatarFile"] = imageFile;
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            failureBlock(error);
+        } else {
+            [self updateUserAvatarProfileURLWithSuccess:^{
+                successBlock();
+            } failure:^(NSError *error) {
+                failureBlock(error);
+            }];
+        }
+    }];
+}
+
+- (void)updateUserAvatarProfileURLWithSuccess:(APSuccessVoidBlock)successBlock
+                                      failure:(APFailureErrorBlock)failureBlock{
+    PFUser *currentUser = [PFUser currentUser];
+    PFFile *imageFile = currentUser[@"avatarFile"];
+    NSString *url = imageFile.url;
+    currentUser[kPFUserProfilePhotoURLKey] = url;
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        (error == nil) ? successBlock() : failureBlock(error);
+    }];
+}
+
+- (void)getImageForCurrentUserWithSuccess:(APSuccessStringBlock)successBlock
+                                  failure:(APFailureErrorBlock)failureBlock {
+    PFUser *currentUser = [PFUser currentUser];
+    PFFile *avatarFile = currentUser[@"avatarFile"];
+    NSString *url = avatarFile.url;
+    if (url) {
+        url = @"";
+    }
+    successBlock(url);
+}
+
 - (void)loginWithUsername:(NSString *)username
                  password:(NSString *)password
                   success:(APSuccessPFUserBlock)successBlock
@@ -353,6 +395,21 @@
   }];
 }
 
+- (void)unlinkFacebookWithSuccess:(APSuccessVoidBlock)successBlock
+                          failure:(APFailureErrorBlock)failureBlock {
+    [PFFacebookUtils unlinkUserInBackground:[PFUser currentUser] block:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            failureBlock(error);
+        } else {
+            PFUser *user = [PFUser currentUser];
+            PFFile *imageFile = user[@"avatarFile"];
+            user[kPFUserProfilePhotoURLKey] = imageFile.url ?: @"";
+            [user saveInBackground];
+            successBlock();
+        }
+    }];
+}
+
 - (void)linkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
                        failure:(APFailureErrorBlock)failureBlock {
   if ([PFUser currentUser]) {
@@ -360,6 +417,21 @@
       (error == nil) ? successBlock() : failureBlock(error);
     }];
   }
+}
+
+- (void)unlinkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
+                         failure:(APFailureErrorBlock)failureBlock {
+    [PFTwitterUtils unlinkUserInBackground:[PFUser currentUser] block:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            failureBlock(error);
+        } else {
+            PFUser *user = [PFUser currentUser];
+            PFFile *imageFile = user[@"avatarFile"];
+            user[kPFUserProfilePhotoURLKey] = imageFile.url ?: @"";
+            [user saveInBackground];
+            successBlock();
+        }
+    }];
 }
 
 - (void)loginWithFacebookUsingPermissions:(NSArray *)permissions
@@ -394,7 +466,6 @@
     PFUser *user = [PFUser currentUser];
     user.username = userData[@"name"];
     user.email = userData[@"email"];
-    user[kPFUserDataTrackingKey] = @(YES);
     [user setValue:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=large&redirect=true&width=300&height=300", userData[@"id"]] forKey:kPFUserProfilePhotoURLKey];
     [user saveInBackground];
     successBlock(userData);
@@ -426,7 +497,6 @@
     if (result) {
       PFUser *user = [PFUser currentUser];
       user.username = result[@"screen_name"];
-      user[kPFUserDataTrackingKey] = @(YES);
       [user setValue:result[@"profile_image_url"] forKey:kPFUserProfilePhotoURLKey];
       [user saveInBackground];
     }
@@ -472,7 +542,6 @@
   }
   user.password = hashedPassword;
   user.email = email;
-  user[kPFUserDataTrackingKey] = @(YES);
   [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
     (error == nil) ? successBlock(succeeded) : failureBlock(error);
   }];
@@ -496,16 +565,6 @@
       (error == nil) ? successBlock(succeeded) : failureBlock(error);
     }];
   }];
-}
-
-- (void)saveUserTrackingParameter:(BOOL)isTrackingData success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
-  PFUser *currentUser = [PFUser currentUser];
-  if (currentUser) {
-    currentUser[kPFUserDataTrackingKey] = @(isTrackingData);
-    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-      (error == nil) ? successBlock() : failureBlock(error);
-    }];
-  }
 }
 
 - (void)saveUserBlurb:(NSString*)blurb

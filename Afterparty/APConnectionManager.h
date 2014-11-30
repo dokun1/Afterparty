@@ -241,6 +241,22 @@ typedef void (^APProgressBlock)(int percentDone);
                                failure:(APFailureErrorBlock)failureBlock;
 
 /**
+ *  When you take a photo of yourself for your user avatar, this will save it and associate it with your user profile
+ *
+ *  @param image        UIImage to be saved as the avatar
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)saveImageForUserAvatar:(UIImage *)image
+                   withSuccess:(APSuccessVoidBlock)successBlock
+                       failure:(APFailureErrorBlock)failureBlock;
+
+- (void)getImageForCurrentUserWithSuccess:(APSuccessStringBlock)successBlock
+                                  failure:(APFailureErrorBlock)failureBlock;
+
+/**
  *  Logs in a user. This is only for Parse credentials
  *
  *  @param username     <#username description#>
@@ -264,6 +280,17 @@ typedef void (^APProgressBlock)(int percentDone);
                        failure:(APFailureErrorBlock)failureBlock;
 
 /**
+ *  Unlinks facebook with user account that already exists
+ *
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)unlinkFacebookWithSuccess:(APSuccessVoidBlock)successBlock
+                          failure:(APFailureErrorBlock)failureBlock;
+
+/**
  *  Delegates to twitter to link account with current user
  *
  *  @param successBlock Returns void block on success
@@ -273,6 +300,17 @@ typedef void (^APProgressBlock)(int percentDone);
  */
 - (void)linkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
                        failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Unlinks twitter with user account that already exists
+ *
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)unlinkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
+                         failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Logs into parse using facebook credentials and permissions
@@ -396,20 +434,6 @@ typedef void (^APProgressBlock)(int percentDone);
                 withNewVenue:(FSVenue*)newVenue
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock;
-
-
-/**
- *  Updates a boolean parameter on a user object to determine whether a user wants to opt out of having their user information tracked for our profit
- *
- *  @param isTrackingData BOOL to save on user database to see if they want to allow tracking of their data
- *  @param successBlock   Returns void block on success
- *  @param failureBlock   Returns NSError
- *
- *  @since 0.9.1
- */
-- (void)saveUserTrackingParameter:(BOOL)isTrackingData
-                          success:(APSuccessVoidBlock)successBlock
-                          failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Updates the blurb property on a user object. Initially blank for all users
