@@ -18,6 +18,7 @@
 #import "APConnectionManager.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "APSettingsTextViewController.h"
+#import "UIImage+APImage.h"
 
 static NSString *kVersionWhatsNewFilePath = @"APWhatsNew";
 static NSString *kTermsAndConditionsFilePath = @"APTermsAndConditions";
@@ -25,7 +26,7 @@ static NSString *kTermsAndConditionsFilePath = @"APTermsAndConditions";
 static NSString *kWhatsNewSegue = @"WhatsNewSegue";
 static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 
-@interface APSettingsTableViewController () <UITextFieldDelegate>
+@interface APSettingsTableViewController () <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UIImage *profileImage;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePhotoView;
@@ -42,7 +43,9 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 @property (weak, nonatomic) IBOutlet APLabel *signOutLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *facebookIconView;
 @property (weak, nonatomic) IBOutlet UIImageView *twitterIconView;
+
 @property (strong, nonatomic) PFUser *currentUser;
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
 
 @property (nonatomic) BOOL isLinkedWithFacebook;
 @property (nonatomic) BOOL isLinkedWithTwitter;
@@ -60,18 +63,22 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadUserData];
-    [self.profilePhotoView setImageWithURL:[NSURL URLWithString:self.currentUser[kPFUserProfilePhotoURLKey]]];
+    [self.facebookIconView setClipsToBounds:YES];
+    [self.twitterIconView setClipsToBounds:YES];
+    self.facebookIconView.layer.cornerRadius = 5.0f;
+    self.twitterIconView.layer.cornerRadius = 5.0f;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-
   [SVProgressHUD dismiss];
 
 }
 
 - (void)loadUserData {
     PFUser *user = [PFUser currentUser];
+    self.isLinkedWithFacebook = [PFFacebookUtils isLinkedWithUser:self.currentUser];
+    self.isLinkedWithTwitter = [PFTwitterUtils isLinkedWithUser:self.currentUser];
     [self.usernameLabel styleForType:LabelTypeStandard withText:user.username];
     self.usernameLabel.textAlignment = NSTextAlignmentLeft;
     if (self.profileImage) {
@@ -88,11 +95,11 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     if (user[kPFUserProfilePhotoURLKey]) {
         [self.profilePhotoView setImageWithURL:[NSURL URLWithString:user[kPFUserProfilePhotoURLKey]]];
     }
-    self.isLinkedWithFacebook = [PFFacebookUtils isLinkedWithUser:self.currentUser];
-    self.isLinkedWithTwitter = [PFTwitterUtils isLinkedWithUser:self.currentUser];
     self.blurbTextField.delegate = self;
     
     [self updateButtonsText];
+    [self.profilePhotoView setImageWithURL:[NSURL URLWithString:self.currentUser[kPFUserProfilePhotoURLKey]]];
+
 }
 
 - (void)updateButtonsText {
@@ -131,7 +138,10 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        [[[UIAlertView alloc] initWithTitle:@"Question for you" message:@"Should tapping this cell give you the option to change your photo, even if you have already linked your social media profile?" delegate:nil cancelButtonTitle:@"I'd better tell David" otherButtonTitles:nil] show];
+        if (!self.isLinkedWithFacebook && !self.isLinkedWithTwitter) {
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+            [actionSheet showInView:self.view];
+        }
     }
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -151,10 +161,10 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     }
     if (indexPath.section == 3) {
         if (indexPath.row == 0) {
-            // version cell tapped
+            // version cell tapped, uses prepareForSegue
         }
         if (indexPath.row == 1) {
-            //terms and conditions tapped
+            //terms and conditions tapped, uses prepareForSegue
         }
         if (indexPath.row == 2) {
             [self signOutButtonTapped];
@@ -162,30 +172,92 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     }
 }
 
-#pragma mark - IBAction Methods
+#pragma mark - UIActionSheetDelegate Methods
 
-- (void)twitterButtonLinkTapped {
-    [SVProgressHUD show];
-    [[APConnectionManager sharedManager] linkTwitterWithSuccess:^{
-        [SVProgressHUD showSuccessWithStatus:@"linked!"];
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"clicked index %ld", (long)buttonIndex);
+    if (buttonIndex == 2) {
+        return;
+    }
+    self.imagePickerController = [[UIImagePickerController alloc] init];
+    switch (buttonIndex) {
+        case 0:
+            self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+            break;
+        case 1:
+            self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        default:
+            break;
+    }
+    self.imagePickerController.delegate = self;
+    [self presentViewController:self.imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - UIImagePickerControllerDelegate Methods
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImage *croppedImage = [image imageSquareCrop:image];
+
+    [self.imagePickerController dismissViewControllerAnimated:YES completion:nil];
+    [self.profilePhotoView setImage:croppedImage];
+    [SVProgressHUD showWithStatus:@"saving avatar"];
+    [[APConnectionManager sharedManager] saveImageForUserAvatar:croppedImage withSuccess:^{
+        [SVProgressHUD showSuccessWithStatus:@"avatar saved!"];
         [self loadUserData];
     } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"couldn't link your twitter account"];
+        [SVProgressHUD showErrorWithStatus:@"could not save avatar"];
     }];
 }
 
-- (void)facebookButtonLinkTapped {
-    [SVProgressHUD show];
-    [[APConnectionManager sharedManager] linkFacebookWithSuccess:^{
-        [SVProgressHUD showSuccessWithStatus:@"linked!"];
-        [[APConnectionManager sharedManager] getFacebookUserDetailsWithSuccessBlock:^(NSDictionary *dictionary) {
+#pragma mark - IBAction Methods
+
+- (void)twitterButtonLinkTapped {
+    if (!self.isLinkedWithTwitter) {
+        [SVProgressHUD showWithStatus:@"linking twitter"];
+        [[APConnectionManager sharedManager] linkTwitterWithSuccess:^{
+            [SVProgressHUD showSuccessWithStatus:@"linked!"];
             [self loadUserData];
         } failure:^(NSError *error) {
-            NSLog(@"couldnt get details");
+            [SVProgressHUD showErrorWithStatus:@"couldn't link your twitter account"];
         }];
-    } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"couldn't link your facebook account"];
-    }];
+    }
+//    } else {
+//        [SVProgressHUD showWithStatus:@"unlinking twitter"];
+//        [[APConnectionManager sharedManager] unlinkTwitterWithSuccess:^{
+//            [SVProgressHUD showSuccessWithStatus:@"unlinked!"];
+//            self.profilePhotoView.image = [UIImage imageNamed:@"user_male3-512"];
+//            [self loadUserData];
+//        } failure:^(NSError *error) {
+//            [SVProgressHUD showErrorWithStatus:@"couldn't unlink your account"];
+//        }];
+//    }
+}
+
+- (void)facebookButtonLinkTapped {
+    if (!self.isLinkedWithFacebook) {
+        [SVProgressHUD showWithStatus:@"linking facebook"];
+        [[APConnectionManager sharedManager] linkFacebookWithSuccess:^{
+            [SVProgressHUD showSuccessWithStatus:@"linked!"];
+            [[APConnectionManager sharedManager] getFacebookUserDetailsWithSuccessBlock:^(NSDictionary *dictionary) {
+                [self loadUserData];
+            } failure:^(NSError *error) {
+                NSLog(@"couldnt get details");
+            }];
+        } failure:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"couldn't link your facebook account"];
+        }];
+    }
+//     else {
+//        [SVProgressHUD showWithStatus:@"unlinking facebook"];
+//        [[APConnectionManager sharedManager] unlinkFacebookWithSuccess:^{
+//            [SVProgressHUD showSuccessWithStatus:@"unlinked!"];
+//            self.profilePhotoView.image = [UIImage imageNamed:@"user_male3-512"];
+//            [self loadUserData];
+//        } failure:^(NSError *error) {
+//            [SVProgressHUD showErrorWithStatus:@"couldn't unlink your account"];
+//        }];
+//    }
 }
 
 

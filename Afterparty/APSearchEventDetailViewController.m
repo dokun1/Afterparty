@@ -20,8 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
 @property (weak, nonatomic) IBOutlet APButton *eventJoinButton;
-@property (weak, nonatomic) IBOutlet UILabel *eventAuthorNameOnTopImage;
-@property (weak, nonatomic) IBOutlet UILabel *eventTitleOnTopImage;
+@property (weak, nonatomic) IBOutlet APLabel *eventAuthorNameOnTopImage;
+@property (weak, nonatomic) IBOutlet APLabel *eventTitleOnTopImage;
 @property (weak, nonatomic) IBOutlet UITableView *eventDetailsTableView;
 @property (strong, nonatomic) APEvent *currentEvent;
 
@@ -73,13 +73,16 @@
     [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventDateLocationTableViewCell nibFile]
                                                            bundle:[NSBundle mainBundle]]
                                            forCellReuseIdentifier:[APSearchEventDateLocationTableViewCell cellIdentifier]];
+    
+//    self.eventTitleOnTopImage.font = [UIFont fontWithName:kBoldFont size:30.f];
+//    self.eventAuthorNameOnTopImage.font = [UIFont fontWithName:kRegularFont size:20.f];
+    [self.eventTitleOnTopImage styleForType:LabelTypeTableViewCellTitle];
+    [self.eventAuthorNameOnTopImage styleForType:LabelTypeTableViewCellAttribute];
 }
 
 - (void)awakeFromNib {
     self.eventTitleOnTopImage.text = @"title";
     self.eventAuthorNameOnTopImage.text = @"author";
-    self.eventTitleOnTopImage.font = [UIFont fontWithName:kBoldFont size:18.f];
-    self.eventAuthorNameOnTopImage.font = [UIFont fontWithName:kRegularFont size:14.f];
 }
 
 - (IBAction)eventJoinTapped:(id)sender {

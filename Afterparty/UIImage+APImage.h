@@ -13,6 +13,7 @@
 - (UIImage*)resizedImageWithSize:(CGSize)size;
 - (UIImage*)imageRotatedByRadians:(CGFloat)radians;
 - (UIImage*)imageRotatedByDegrees:(CGFloat)degrees;
-
+- (UIImage*)imageSquareCrop:(UIImage*)original;
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @end

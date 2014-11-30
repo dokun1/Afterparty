@@ -40,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIButton           *chooseEventDateButton;
 @property (weak, nonatomic) IBOutlet UIButton           *chooseEventFriendsButton;
 @property (weak, nonatomic) IBOutlet UIButton           *chooseEventPasswordButton;
+@property (weak, nonatomic) IBOutlet UIButton           *choosePhotoFakeButton;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *privatePasswordLabel;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *publicPasswordLabel;
 @property (weak, nonatomic) IBOutlet UISwitch           *privateEventSwitch;
@@ -75,6 +76,7 @@
 - (IBAction)chooseEventPasswordButtonTapped:(id)sender;
 - (IBAction)passwordSwitchChanged:(id)sender;
 - (IBAction)oneMoreThingButtonTapped:(id)sender;
+- (IBAction)choosePhotoFakeButtonTapped:(id)sender;
 
 @end
 
@@ -627,6 +629,10 @@
 
 - (IBAction)chooseEventTitleTapped:(id)sender {
     [self.eventNameField becomeFirstResponder];
+}
+
+- (IBAction)choosePhotoFakeButtonTapped:(id)sender {
+    [self choosePhotoButtonTapped:sender];
 }
 
 - (IBAction)choosePhotoButtonTapped:(id)sender {

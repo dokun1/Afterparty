@@ -62,4 +62,39 @@ CGFloat radiansToDegrees(CGFloat radians) {
     return newImage;
 }
 
+- (UIImage *)imageSquareCrop:(UIImage *)original {
+    UIImage *croppedImage = nil;
+    
+    float originalWidth  = original.size.width;
+    float originalHeight = original.size.height;
+    
+    float edge = fminf(originalWidth, originalHeight);
+    
+    float posX = (originalWidth   - edge) / 2.0f;
+    float posY = (originalHeight  - edge) / 2.0f;
+    
+    CGRect cropSquare = CGRectZero;
+    
+    // If orientation indicates a change to portrait.
+    if(original.imageOrientation == UIImageOrientationLeft || original.imageOrientation == UIImageOrientationRight) {
+        cropSquare = CGRectMake(posY, posX, edge, edge);
+    } else {
+        cropSquare = CGRectMake(posX, posY, edge, edge);
+    }
+    
+    CGImageRef imageRef = CGImageCreateWithImageInRect([original CGImage], cropSquare);
+    croppedImage = [UIImage imageWithCGImage:imageRef scale:original.scale orientation:original.imageOrientation];
+    CGImageRelease(imageRef);
+    
+    return [UIImage imageWithImage:croppedImage scaledToSize:CGSizeMake(50, 50)];
+}
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
 @end
