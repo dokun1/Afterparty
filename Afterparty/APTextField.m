@@ -28,7 +28,7 @@ CGFloat const APFextFielsLeftPadding = 10.0;
 
 - (void)styleForLogin {
   self.font = [UIFont fontWithName:kRegularFont size:16.0f];
-  self.backgroundColor = [UIColor whiteColor];
+  self.backgroundColor = [UIColor afterpartyOffWhiteColor];
   self.borderStyle = UITextBorderStyleNone;
 }
 
@@ -37,6 +37,13 @@ CGFloat const APFextFielsLeftPadding = 10.0;
   self.textColor = [UIColor whiteColor];
   self.backgroundColor = [UIColor afterpartyTealBlueColor];
   self.autocapitalizationType = UITextAutocapitalizationTypeNone;
+}
+
+- (void)styleForSettingsPage {
+    [self styleForLogin];
+    self.textColor = [UIColor afterpartyBlackColor];
+    self.backgroundColor = [UIColor clearColor];
+    self.autocapitalizationType = UITextAutocapitalizationTypeNone;
 }
 
 @end

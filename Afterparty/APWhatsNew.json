@@ -1,0 +1,13 @@
+{
+    "0.9.8": {
+        "1":"Responsive Design for new iPhone sizes.",
+        "2":"iPhone 6 Plus event layout now has 3 columns instead of just two! Bonus points!"
+    },
+    "0.9.7": {
+        "1":"New tab bar layout, much simpler to navigate throughout the app",
+        "2":"Login screen redone, oooo, shiny animation!"
+    },
+    "0.9.9": {
+        "1":"Settings screen FINALLY re-done!"
+    }
+}

@@ -15,18 +15,18 @@
 
 @import AssetsLibrary;
 
-@interface APPhotoViewController () <UIScrollViewDelegate, UIActionSheetDelegate>
+@interface APPhotoViewController () <UIActionSheetDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSArray *metadata;
-@property (assign, nonatomic) NSInteger selectedIndex;
-@property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) APMetadataPhotoOverlayView *metadataView;
-@property (strong, nonatomic) NSMutableArray *imageViewArray;
-@property (strong, nonatomic) NSMutableArray *downloadIndicators;
-@property (assign, nonatomic) NSInteger currentlyViewingIndex;
-@property (assign, nonatomic) BOOL longPressed;
-@property (strong, nonatomic) UITapGestureRecognizer *backRecognizer;
 @property (assign, nonatomic) CGFloat screenWidth;
+@property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UITapGestureRecognizer *backRecognizer;
+@property (assign, nonatomic) NSInteger selectedIndex;
+@property (assign, nonatomic) BOOL longPressed;
+@property (strong, nonatomic) APMetadataPhotoOverlayView *metadataView;
+@property (strong, nonatomic) NSMutableArray *downloadIndicators;
+@property (strong, nonatomic) NSMutableArray *imageViewArray;
 
 @end
 
@@ -35,11 +35,6 @@
 -(instancetype)initWithMetadata:(NSArray*)metadata andSelectedIndex:(NSInteger)selectedIndex{
     if (self = [super init]) {
         self.metadata = metadata;
-        self.selectedIndex = selectedIndex;
-        self.currentlyViewingIndex = self.selectedIndex;
-        self.imageViewArray = [[NSMutableArray alloc] initWithArray:self.metadata];
-        self.downloadIndicators = [[NSMutableArray alloc] initWithCapacity:[self.metadata count]];
-        self.longPressed = NO;
         self.screenWidth = [UIScreen mainScreen].bounds.size.width;
     }
     return self;
@@ -49,6 +44,8 @@
     [super viewDidLoad];
     
     [self setUpScrollView];
+    
+    self.collectionView = [[UICollectionView alloc] init];
     
     [self.metadata enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
