@@ -13,7 +13,6 @@
 		50105674196AFA0C00D7F800 /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50105670196AFA0C00D7F800 /* settingsTab.png */; };
 		501232B119BB70F1007099A4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501232B019BB70F1007099A4 /* AVFoundation.framework */; };
 		501232B419BB73DF007099A4 /* APAVSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 501232B319BB73DF007099A4 /* APAVSessionController.m */; };
-		502DC771196D77B6002C9C4A /* APSettingsProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502DC770196D77B6002C9C4A /* APSettingsProfileViewController.m */; };
 		5044E5691997FAF1003D5153 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5044E5681997FAF1003D5153 /* Images.xcassets */; };
 		5048D4AA194A1D0F0092178E /* APConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5048D4A9194A1D0F0092178E /* APConnectionManager.m */; };
 		504CA30E19408C82003EF9EB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA30D19408C82003EF9EB /* Foundation.framework */; };
@@ -68,6 +67,9 @@
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
+		5091A43E1A2B47AC00890639 /* APSettingsTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */; };
+		5091A4401A2B495800890639 /* APWhatsNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 5091A43F1A2B495800890639 /* APWhatsNew.json */; };
+		5091A4421A2B4E6200890639 /* APTermsAndConditions.json in Resources */ = {isa = PBXBuildFile; fileRef = 5091A4411A2B4E6200890639 /* APTermsAndConditions.json */; };
 		509B439319942584004CC33D /* button_redCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 509B439219942584004CC33D /* button_redCancel.png */; };
 		50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */; };
 		50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */; };
@@ -135,8 +137,6 @@
 		501232B019BB70F1007099A4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		501232B219BB73DF007099A4 /* APAVSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAVSessionController.h; sourceTree = "<group>"; };
 		501232B319BB73DF007099A4 /* APAVSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAVSessionController.m; sourceTree = "<group>"; };
-		502DC76F196D77B6002C9C4A /* APSettingsProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsProfileViewController.h; sourceTree = "<group>"; };
-		502DC770196D77B6002C9C4A /* APSettingsProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsProfileViewController.m; sourceTree = "<group>"; };
 		5044E5681997FAF1003D5153 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5048D4A8194A1D0F0092178E /* APConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConnectionManager.h; sourceTree = "<group>"; };
 		5048D4A9194A1D0F0092178E /* APConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConnectionManager.m; sourceTree = "<group>"; };
@@ -231,6 +231,10 @@
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
+		5091A43C1A2B47AC00890639 /* APSettingsTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsTextViewController.h; sourceTree = "<group>"; };
+		5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsTextViewController.m; sourceTree = "<group>"; };
+		5091A43F1A2B495800890639 /* APWhatsNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = APWhatsNew.json; sourceTree = "<group>"; };
+		5091A4411A2B4E6200890639 /* APTermsAndConditions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = APTermsAndConditions.json; sourceTree = "<group>"; };
 		509B439219942584004CC33D /* button_redCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_redCancel.png; sourceTree = "<group>"; };
 		50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMetadataPhotoOverlayView.h; sourceTree = "<group>"; };
 		50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMetadataPhotoOverlayView.m; sourceTree = "<group>"; };
@@ -557,8 +561,10 @@
 			children = (
 				50BF4C8B196C410600B6EA1F /* APSettingsTableViewController.h */,
 				50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */,
-				502DC76F196D77B6002C9C4A /* APSettingsProfileViewController.h */,
-				502DC770196D77B6002C9C4A /* APSettingsProfileViewController.m */,
+				5091A43C1A2B47AC00890639 /* APSettingsTextViewController.h */,
+				5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */,
+				5091A43F1A2B495800890639 /* APWhatsNew.json */,
+				5091A4411A2B4E6200890639 /* APTermsAndConditions.json */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -802,6 +808,7 @@
 				504CA3BA1940C035003EF9EB /* button_pluswhite.png in Resources */,
 				C9AEB3BC19C4918B009915BF /* APSearchEventDescriptionTableViewCell.xib in Resources */,
 				50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */,
+				5091A4421A2B4E6200890639 /* APTermsAndConditions.json in Resources */,
 				504CA3B71940C035003EF9EB /* button_flashon.png in Resources */,
 				509B439319942584004CC33D /* button_redCancel.png in Resources */,
 				504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */,
@@ -824,6 +831,7 @@
 				50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */,
 				504CA32119408C82003EF9EB /* Main.storyboard in Resources */,
 				50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */,
+				5091A4401A2B495800890639 /* APWhatsNew.json in Resources */,
 				C9AEB3B319C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib in Resources */,
 				504CA3BB1940C035003EF9EB /* button_savetocloud.png in Resources */,
 			);
@@ -910,7 +918,6 @@
 				50F64EC01952F40900E0B8DC /* APPhotoViewController.m in Sources */,
 				504CA31A19408C82003EF9EB /* main.m in Sources */,
 				50DE65891940C76D00C27B84 /* APLabel.m in Sources */,
-				502DC771196D77B6002C9C4A /* APSettingsProfileViewController.m in Sources */,
 				50F64ECF1952F64800E0B8DC /* APSearchEventTableViewCell.m in Sources */,
 				50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */,
 				50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */,
@@ -934,6 +941,7 @@
 				50F64EDA19531DF400E0B8DC /* APPhotoUploadQueue.m in Sources */,
 				504CA3791940BA5A003EF9EB /* APLoginViewController.m in Sources */,
 				504CA31E19408C82003EF9EB /* APAppDelegate.m in Sources */,
+				5091A43E1A2B47AC00890639 /* APSettingsTextViewController.m in Sources */,
 				50DE65921940D02500C27B84 /* APTextView.m in Sources */,
 				504CA36619409B9C003EF9EB /* UIAlertView+APAlert.m in Sources */,
 				50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */,
