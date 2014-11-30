@@ -126,13 +126,21 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     self.versionLabel.textColor = [UIColor afterpartyBlackColor];
 }
 
-#pragma mark - UITableViewDatasource Methods
-
-
 #pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        [[[UIAlertView alloc] initWithTitle:@"Question for you" message:@"Should tapping this cell give you the option to change your photo, even if you have already linked your social media profile?" delegate:nil cancelButtonTitle:@"I'd better tell David" otherButtonTitles:nil] show];
+    }
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            [self.emailTextField becomeFirstResponder];
+        }
+        if (indexPath.row == 1) {
+            [self.blurbTextField becomeFirstResponder];
+        }
+    }
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             [self facebookButtonLinkTapped];
@@ -152,7 +160,6 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             [self signOutButtonTapped];
         }
     }
-    NSLog(@"selected row %ld in section %ld", (long)indexPath.row, (long)indexPath.section);
 }
 
 #pragma mark - IBAction Methods
@@ -193,13 +200,13 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     [SVProgressHUD show];
     if (textField == self.blurbTextField) {
         [[APConnectionManager sharedManager] saveUserBlurb:self.blurbTextField.text success:^{
-            [SVProgressHUD showSuccessWithStatus:@"blurb saved"];
+            [SVProgressHUD showSuccessWithStatus:@"blurb saved!"];
         } failure:^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:@"couldn't save blurb"];
         }];
     } else if (textField == self.emailTextField) {
         [[APConnectionManager sharedManager] saveUserEmail:self.emailTextField.text success:^{
-            [SVProgressHUD showSuccessWithStatus:@"email saved"];
+            [SVProgressHUD showSuccessWithStatus:@"email saved!"];
         } failure:^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:@"couldn't save email"];
         }];
