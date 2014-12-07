@@ -8,24 +8,20 @@
 
 #import "APSearchEventTableViewCell.h"
 #import "UIColor+APColor.h"
+#import "APConstants.h"
 
 @implementation APSearchEventTableViewCell
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     // Initialization code
   [_eventNameLabel styleForType:LabelTypeTableViewCellTitle];
   [_countdownLabel styleForType:LabelTypeTableViewCellAttribute];
   [_userLabel styleForType:LabelTypeTableViewCellAttribute];
-  [_bannerView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
   _countdownLabel.textColor = [UIColor afterpartyOffWhiteColor];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 -(void)setCoverPhotoID:(NSString *)coverPhotoID {
@@ -33,6 +29,10 @@
         _coverPhotoID = coverPhotoID;
     }
     //init lazy loading for cover photo id and setting of the image
+}
+
++ (CGFloat)suggestedCellHeight {
+    return 170.f * ([UIScreen mainScreen].bounds.size.width/320);
 }
 
 @end

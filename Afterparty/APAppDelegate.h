@@ -10,7 +10,7 @@
 #import "UIColor+APColor.h"
 #import "NSString+APString.h"
 #import <Foursquare-API-v2/Foursquare2.h>
-#import <FacebookSDK/Facebook.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
 
 @interface APAppDelegate : UIResponder <UIApplicationDelegate>

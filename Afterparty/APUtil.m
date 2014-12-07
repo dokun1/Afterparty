@@ -7,6 +7,8 @@
 //
 
 #import "APUtil.h"
+#import "APConnectionManager.h"
+#import "APConstants.h"
 
 @implementation APUtil
 
@@ -179,7 +181,18 @@
     return NO;
 }
 
-+ (NSMutableArray*)getMyEventsArray {
++ (void)getMyEventsArrayWithSuccess:(void (^)(NSMutableArray *events))successBlock {
+    NSLog(@"calling getEvents");
+    if (![[[NSUserDefaults standardUserDefaults] valueForKey:kPFUserEventsJoinedKey] boolValue]) {
+        [self loadMyEventsOnLoginWithCompletion:^{
+            successBlock([self loadSavedEvents]);
+        }];
+    } else {
+        successBlock([self loadSavedEvents]);
+    }
+}
+
++ (NSMutableArray*)loadSavedEvents {
     NSArray *eventsArray = [self loadArrayForPath:@"myEventsArray"];
     NSMutableArray *myEventsArray = [eventsArray mutableCopy];
     [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
@@ -193,43 +206,84 @@
     return myEventsArray;
 }
 
++ (void)loadMyEventsOnLoginWithCompletion:(void (^)())completionBlock {
+    [[NSUserDefaults standardUserDefaults] setValue:@YES forKey:kPFUserEventsJoinedKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSArray *eventsJoined = [PFUser currentUser][kPFUserEventsJoinedKey];
+    NSInteger counter = 0;
+    for (NSString *eventID in eventsJoined) {
+        counter++;
+        [[APConnectionManager sharedManager] searchEventsByID:eventID success:^(NSArray *objects) {
+            if (objects.count > 0) {
+                APEvent *event = objects.firstObject;
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    PFFile *imageFile = (PFFile*)[event eventImage];
+                    NSData *imageData = [imageFile getData];
+                    [event setEventImageData:imageData];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSLog(@"%@", event.objectID);
+                        [self saveEventToMyEvents:event];
+                        if (counter == eventsJoined.count) {
+                            completionBlock();
+                        }
+                    });
+                });
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+}
+
 + (void)saveEventToMyEvents:(APEvent*)event{
-    NSMutableArray *myEventsArray = [[self getMyEventsArray] mutableCopy];
-    NSDictionary *eventInfo = @{@"deleteDate": [event deleteDate],
-                                @"endDate" : [event endDate],
-                                @"startDate" : [event startDate],
-                                @"eventName": [event eventName],
-                                @"eventLatitude": @([event location].latitude),
-                                @"eventLongitude": @([event location].longitude),
-                                @"createdByUsername": [event createdByUsername],
-                                @"eventImageData": [event eventImageData]};
-    NSDictionary *eventDict = @{[event objectID]: eventInfo};
-    __block BOOL containsEvent = NO;
-    [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
-        if ([[[eventDict allKeys] firstObject] isEqualToString:[event objectID]]) {
-            containsEvent = YES;
-            *stop = YES;
+    dispatch_async([self getBackgroundQueue], ^{
+        [[self cacheLock] lock];
+        NSMutableArray *myEventsArray = [[self loadSavedEvents] mutableCopy];
+        NSDictionary *eventInfo = @{@"deleteDate": [event deleteDate] ?: [event deleteDate],
+                                    @"endDate" : [event endDate] ?: [event endDate],
+                                    @"startDate" : [event startDate] ?: [event startDate],
+                                    @"eventName": [event eventName] ?: [event eventName],
+                                    @"eventLatitude": @([event location].latitude),
+                                    @"eventLongitude": @([event location].longitude),
+                                    @"createdByUsername": [event createdByUsername],
+                                    @"eventImageData": [event eventImageData]};
+        NSDictionary *eventDict = @{[event objectID]: eventInfo};
+        __block BOOL containsEvent = NO;
+        [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
+            if ([[[eventDict allKeys] firstObject] isEqualToString:[event objectID]]) {
+                containsEvent = YES;
+                *stop = YES;
+            }
+        }];
+        if (!containsEvent) {
+            [myEventsArray addObject:eventDict];
+            NSLog(@"saved event %@", event.objectID);
+            [[APConnectionManager sharedManager] joinEvent:event.objectID success:^{
+                
+            } failure:^(NSError *error) {
+                [[[UIAlertView alloc] initWithTitle:@"Event Error" message:@"For some reason, we couldn't register your name with the event. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }];
         }
-    }];
-    if (!containsEvent)
-        [myEventsArray addObject:eventDict];
-    [self saveArray:myEventsArray forPath:@"myEventsArray"];
+        [self saveArray:myEventsArray forPath:@"myEventsArray"];
+        [[self cacheLock] unlock];
+    });
 }
 
 + (void)updateEventVenue:(FSVenue*)newVenue forEventID:(NSString*)eventID {
-    NSMutableArray *myEventsArray = [[self getMyEventsArray] mutableCopy];
-    [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
-        if ([[[eventDict allKeys] firstObject] isEqualToString:eventID]) {
-            NSMutableDictionary *eventInfo = [[[eventDict allValues] firstObject] mutableCopy];
-            eventInfo[@"eventLatitude"] = @(newVenue.location.coordinate.latitude);
-            eventInfo[@"eventLongitude"] = @(newVenue.location.coordinate.longitude);
-            [myEventsArray removeObjectAtIndex:idx];
-            NSDictionary *newEventDict = @{[[eventDict allKeys] firstObject] : eventInfo};
-            [myEventsArray addObject:newEventDict];
-            *stop = YES;
-        }
+    [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *myEventsArray) {
+        [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
+            if ([[[eventDict allKeys] firstObject] isEqualToString:eventID]) {
+                NSMutableDictionary *eventInfo = [[[eventDict allValues] firstObject] mutableCopy];
+                eventInfo[@"eventLatitude"] = @(newVenue.location.coordinate.latitude);
+                eventInfo[@"eventLongitude"] = @(newVenue.location.coordinate.longitude);
+                [myEventsArray removeObjectAtIndex:idx];
+                NSDictionary *newEventDict = @{[[eventDict allKeys] firstObject] : eventInfo};
+                [myEventsArray addObject:newEventDict];
+                *stop = YES;
+            }
+        }];
+        [self saveArray:myEventsArray forPath:@"myEventsArray"];
     }];
-    [self saveArray:myEventsArray forPath:@"myEventsArray"];
 }
 
 + (NSString*)getVersion {
@@ -292,6 +346,41 @@
   
   NSString *dateString = [df stringFromDate:date];
   return dateString;
+}
+
++ (NSLock*) cacheLock {
+    static NSLock *lock;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        lock = [[NSLock alloc] init];
+    });
+    return lock;
+}
+
++ (dispatch_queue_t)getBackgroundQueue {
+    static dispatch_queue_t sharedQueue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedQueue = dispatch_queue_create("com.afterparty.eventSaveQueue", NULL);
+    });
+    return sharedQueue;
+    
+}
+
++ (NSArray *)getReportedPhotoIDs {
+    NSArray *photoIDArray = [self loadArrayForPath:@"reportedPhotos"];
+    if (!photoIDArray) {
+        photoIDArray = @[];
+    }
+    return photoIDArray;
+}
+
++ (void)saveReportedPhotoID:(NSString *)photoID {
+    NSMutableArray *reportedPhotos = [[self getReportedPhotoIDs] mutableCopy];
+    if (![reportedPhotos containsObject:photoID]) {
+        [reportedPhotos addObject:photoID];
+    }
+    [self saveArray:reportedPhotos forPath:@"reportedPhotos"];
 }
 
 

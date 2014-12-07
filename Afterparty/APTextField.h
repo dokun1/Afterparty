@@ -12,5 +12,6 @@
 
 - (void)styleForLogin;
 - (void)styleForPasswordEntry;
+- (void)styleForSettingsPage;
 
 @end

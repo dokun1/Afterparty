@@ -1,0 +1,23 @@
+{
+    "0.9.8": {
+        "1":"Responsive Design for new iPhone sizes.",
+        "2":"iPhone 6 Plus event layout now has 3 columns instead of just two! Bonus points!"
+    },
+    "0.9.7": {
+        "1":"New tab bar layout, much simpler to navigate throughout the app",
+        "2":"Login screen redone, oooo, shiny animation!"
+    },
+    "0.9.9": {
+        "1":"Settings screen FINALLY re-done!"
+    },
+    "0.9.10": {
+        "1":"Twitter login re-activated",
+        "2":"Neat new parallax effect when viewing photos full screen"
+    },
+    "0.9.11": {
+        "1":"Create event page refactored and spaced evenly",
+        "2":"Map view added for nearby events",
+        "3":"Ability to report or save photos added on long press",
+        "4":"Added website link to profile page"
+    }
+}

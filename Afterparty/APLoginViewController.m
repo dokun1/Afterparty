@@ -11,7 +11,7 @@
 #import "APLabel.h"
 #import "APButton.h"
 #import <FXBlurView.h>
-#import <FacebookSDK/Facebook.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "UIColor+APColor.h"
 #import "UIView+APViewAnimations.h"
 #import "APConnectionManager.h"
@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
     _sunRisingImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sunRising"]];
     [self.view addSubview:_sunRisingImageView];
   }
-  _sunRisingImageView.frame = CGRectMake(0, self.view.frame.size.height, 320, 202);
+  _sunRisingImageView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 202 * (self.view.frame.size.width/320));
 }
 
 - (void)viewDidLoad
@@ -262,12 +262,14 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)loginUser {
-  [[APConnectionManager sharedManager] loginWithUsername:self.usernameLoginField.text password:self.passwordLoginField.text success:^(PFUser *user) {
-    [SVProgressHUD showSuccessWithStatus:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
-  } failure:^(NSError *error) {
-    [SVProgressHUD showErrorWithStatus:nil];
-  }];
+  [[APConnectionManager sharedManager] loginWithUsername:self.usernameLoginField.text
+                                                password:self.passwordLoginField.text
+                                                 success:^(PFUser *user) {
+                                                     [SVProgressHUD showSuccessWithStatus:nil];
+                                                     [self dismissViewControllerAnimated:YES completion:nil];
+                                                 } failure:^(NSError *error) {
+                                                     [SVProgressHUD showErrorWithStatus:nil];
+                                                 }];
 }
 
 #pragma mark - Twitter Account Action Sheet Methods
@@ -309,7 +311,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
 #pragma mark - UITextField Delegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  [textField resignFirstResponder];
-  return YES;
+    [textField resignFirstResponder];
+    [self loginCredentialsButtonTapped:nil];
+    return YES;
 }  
 @end

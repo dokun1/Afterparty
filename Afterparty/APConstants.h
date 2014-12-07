@@ -38,6 +38,7 @@ extern NSString *const kPasswordSalt;
 extern NSString *const kEventSearchParseClass;
 extern NSString *const kPhotosParseClass;
 extern NSString *const kUserParseClass;
+extern NSString *const kUserAvatarParseClass;
 
 
 // NSNotification Names
@@ -51,11 +52,14 @@ extern NSString *const kCheckCurrentUser;
 
 extern NSString *const kRegularFont;
 extern NSString *const kBoldFont;
+extern CGFloat const kIPhone5Width;
+extern CGFloat const kIPhone6Width;
+extern CGFloat const kIPhone6PlusWidth;
 
 // PFUser Keys
 
 extern NSString *const kPFUserProfilePhotoURLKey;
 extern NSString *const kPFUserBlurbKey;
-extern NSString *const kPFUserDataTrackingKey;
+extern NSString *const kPFUserEventsJoinedKey;
 
 @end

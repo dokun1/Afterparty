@@ -14,18 +14,15 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "APMyEventViewController.h"
 #import "APConstants.h"
+#import "APSearchEventTableViewCellFactory.h"
 
-@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate>
+@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *userAvatar;
-@property (weak, nonatomic) IBOutlet APLabel *eventCreatedByName;
-@property (weak, nonatomic) IBOutlet APLabel *eventCreatedByBlurb;
-@property (weak, nonatomic) IBOutlet APLabel *eventDescription;
-@property (weak, nonatomic) IBOutlet APLabel *eventStartDateLabel;
-@property (weak, nonatomic) IBOutlet APLabel *eventFirstAddressString;
 @property (weak, nonatomic) IBOutlet APButton *eventJoinButton;
-
+@property (weak, nonatomic) IBOutlet APLabel *eventAuthorNameOnTopImage;
+@property (weak, nonatomic) IBOutlet APLabel *eventTitleOnTopImage;
+@property (weak, nonatomic) IBOutlet UITableView *eventDetailsTableView;
 @property (strong, nonatomic) APEvent *currentEvent;
 
 - (IBAction)eventJoinTapped:(id)sender;
@@ -51,17 +48,41 @@
   [super viewDidLoad];
     
   [self setTitle:self.currentEvent.eventName];
-  [self.eventCreatedByName styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.createdByUsername];
-  [self.eventCreatedByBlurb styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventUserBlurb];
-  [self.eventDescription styleForType:LabelTypeSearchDetailDescription withText:self.currentEvent.eventDescription];
-  [self.eventStartDateLabel styleForType:LabelTypeSearchDetailAttribute withText:[APUtil formatDateForEventDetailScreen:self.currentEvent.startDate]];
-  [self.eventFirstAddressString styleForType:LabelTypeSearchDetailAttribute withText:self.currentEvent.eventAddress];
   
   [self.eventJoinButton style];
     
   UIImage *image = [UIImage imageWithData:self.currentEvent.eventImageData];
   [self.eventImageView setImage:image];
-  [self.userAvatar setImageWithURL:[NSURL URLWithString:self.currentEvent.eventUserPhotoURL]];
+    
+    if ([self hasAlreadyAuthenticatedEvent]) {
+        [self.eventJoinButton setTitle:@"GO!!" forState:UIControlStateNormal];
+    }
+    self.eventAuthorNameOnTopImage.text = [[self.currentEvent.createdByUsername uppercaseString] stringByAppendingString:@"'S"];
+    self.eventTitleOnTopImage.text = [self.currentEvent.eventName uppercaseString];
+    
+    self.eventDetailsTableView.dataSource = self;
+    self.eventDetailsTableView.delegate = self;
+    self.eventDetailsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.eventDetailsTableView.bounces = NO;
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventUserDetailsTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                                           forCellReuseIdentifier:[APSearchEventUserDetailsTableViewCell cellIdentifier]];
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventDescriptionTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                     forCellReuseIdentifier:[APSearchEventDescriptionTableViewCell cellIdentifier]];
+    [self.eventDetailsTableView registerNib:[UINib nibWithNibName:[APSearchEventDateLocationTableViewCell nibFile]
+                                                           bundle:[NSBundle mainBundle]]
+                                           forCellReuseIdentifier:[APSearchEventDateLocationTableViewCell cellIdentifier]];
+    
+//    self.eventTitleOnTopImage.font = [UIFont fontWithName:kBoldFont size:30.f];
+//    self.eventAuthorNameOnTopImage.font = [UIFont fontWithName:kRegularFont size:20.f];
+    [self.eventTitleOnTopImage styleForType:LabelTypeTableViewCellTitle];
+    [self.eventAuthorNameOnTopImage styleForType:LabelTypeTableViewCellAttribute];
+}
+
+- (void)awakeFromNib {
+    self.eventTitleOnTopImage.text = @"title";
+    self.eventAuthorNameOnTopImage.text = @"author";
 }
 
 - (IBAction)eventJoinTapped:(id)sender {
@@ -80,14 +101,15 @@
 
 - (BOOL)hasAlreadyAuthenticatedEvent {
     //an event gets added to their array when they get to the page, meaning theyve already entered the password once.
-    NSMutableArray *eventsArray = [APUtil getMyEventsArray];
     __block BOOL eventExists;
-    [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
-        NSString *eventID = eventDict.allKeys.firstObject;
-        if ([eventID isEqualToString:self.currentEvent.objectID]) {
-            eventExists = YES;
-            *stop = YES;
-        }
+    [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *eventsArray) {
+        [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
+            NSString *eventID = eventDict.allKeys.firstObject;
+            if ([eventID isEqualToString:self.currentEvent.objectID]) {
+                eventExists = YES;
+                *stop = YES;
+            }
+        }];
     }];
     return eventExists;
 }
@@ -104,8 +126,22 @@
 }
 
 -(void)confirmJoinEvent{
-  [APUtil saveEventToMyEvents:self.currentEvent];
-  NSDictionary *eventInfo = @{@"deleteDate": [_currentEvent deleteDate],
+    [PFAnalytics trackEvent:@"eventJoined" dimensions:@{@"userID":[PFUser currentUser].objectId}];
+    [APUtil saveEventToMyEvents:self.currentEvent];
+    NSMutableArray *attendees = [self.currentEvent.attendees mutableCopy];
+    if (!attendees) {
+        attendees = [NSMutableArray array];
+    }
+    if (![attendees containsObject:[PFUser currentUser].objectId]) {
+        [attendees addObject:[PFUser currentUser].objectId];
+        self.currentEvent.attendees = attendees;
+        [[APConnectionManager sharedManager] updateEventForNewAttendee:self.currentEvent success:^() {
+            NSLog(@"updated attendees");
+        } failure:^(NSError *error) {
+            NSLog(@"couldnt update event attendees");
+        }];
+    }
+    NSDictionary *eventInfo = @{@"deleteDate": [_currentEvent deleteDate],
                               @"endDate" : [_currentEvent endDate],
                               @"startDate" : [_currentEvent startDate],
                               @"eventName": [_currentEvent eventName],
@@ -113,8 +149,8 @@
                               @"eventLongitude": @([_currentEvent location].longitude),
                               @"createdByUsername": [_currentEvent createdByUsername],
                               @"eventImageData": [_currentEvent eventImageData]};
-  NSDictionary *eventDict = @{[_currentEvent objectID]: eventInfo};
-  [self performSegueWithIdentifier:@"EventDetailsGoToEventSegue" sender:eventDict];
+    NSDictionary *eventDict = @{[_currentEvent objectID]: eventInfo};
+    [self performSegueWithIdentifier:@"EventDetailsGoToEventSegue" sender:eventDict];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -125,5 +161,18 @@
   }
 }
 
+#pragma mark - UITableViewDataSource delegate methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [APSearchEventTableViewCellFactory initializedCellForTableView:tableView
+                                                              atIndexPath:indexPath
+                                                                 andEvent:self.currentEvent];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [APSearchEventTableViewCellFactory appropriateHeightForIndexPath:indexPath andEvent:self.currentEvent];
+}
 
 @end

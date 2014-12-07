@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSData                 *eventImageData;
 @property (strong, nonatomic) NSString               *eventUserPhotoURL;
 @property (strong, nonatomic) NSString               *eventUserBlurb;
+@property (strong, nonatomic) NSArray                *attendees;
 
 - (instancetype)initWithName:(NSString*)name
                        venue:(FSVenue*)venue

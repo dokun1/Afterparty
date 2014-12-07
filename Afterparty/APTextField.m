@@ -10,11 +10,25 @@
 #import "UIColor+APColor.h"
 #import "APConstants.h"
 
+CGFloat const APTextFieldLeftPadding = 10.0;
+
 @implementation APTextField
+
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (!self.leftView) {
+        self.leftView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
+                                                                 self.bounds.origin.y,
+                                                                 APTextFieldLeftPadding,
+                                                                 self.bounds.size.height)];
+        self.leftViewMode = UITextFieldViewModeAlways;
+    }
+}
 
 - (void)styleForLogin {
   self.font = [UIFont fontWithName:kRegularFont size:16.0f];
-  self.backgroundColor = [UIColor whiteColor];
+  self.backgroundColor = [UIColor afterpartyOffWhiteColor];
   self.borderStyle = UITextBorderStyleNone;
 }
 
@@ -23,6 +37,13 @@
   self.textColor = [UIColor whiteColor];
   self.backgroundColor = [UIColor afterpartyTealBlueColor];
   self.autocapitalizationType = UITextAutocapitalizationTypeNone;
+}
+
+- (void)styleForSettingsPage {
+    [self styleForLogin];
+    self.textColor = [UIColor afterpartyBlackColor];
+    self.backgroundColor = [UIColor clearColor];
+    self.autocapitalizationType = UITextAutocapitalizationTypeNone;
 }
 
 @end

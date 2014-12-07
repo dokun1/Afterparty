@@ -18,7 +18,7 @@ typedef void (^APSuccessDataBlock)(NSData *data);
 typedef void (^APSuccessPFUserBlock)(PFUser *user);
 typedef void (^APSuccessStringBlock)(NSString *string);
 typedef void (^APSuccessDictionaryBlock)(NSDictionary *dictionary);
-typedef void (^APSuccessVoidBlock)();
+typedef void (^APSuccessVoidBlock)(void);
 
 typedef void (^APFailureErrorBlock)(NSError *error);
 
@@ -137,6 +137,32 @@ typedef void (^APProgressBlock)(int percentDone);
          failure:(APFailureErrorBlock)failureBlock;
 
 /**
+ *  Updates list of event attendees to include your PFUser objectID
+ *
+ *  @param event        APEvent object to query using objectID
+ *  @param successBlock Returns void on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.10
+ */
+- (void)updateEventForNewAttendee:(APEvent *)event
+                          success:(APSuccessVoidBlock)successBlock
+                          failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  When you join an event, this adds the eventID to an array on the server under your username so that you always know which events you are actively participating in.
+ *
+ *  @param eventID      NSString for the eventID that you are joining
+ *  @param successBlock Returns void
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)joinEvent:(NSString*)eventID
+          success:(APSuccessVoidBlock)successBlock
+          failure:(APFailureErrorBlock)failureBlock;
+
+/**
  *  Gets event that user has just created to see if the user wants to save it right away. Probably should deprecate, but it is a reliable way to ensure that the event previously created truly exists.
  *
  *  @param name         NSString of event name
@@ -146,8 +172,7 @@ typedef void (^APProgressBlock)(int percentDone);
  *
  *  @since 0.6.0
  */
-
--(void)lookupEventByName:(NSString *)name
+- (void)lookupEventByName:(NSString *)name
                     user:(PFUser *)user
                  success:(APSuccessArrayBlock)successBlock
                  failure:(APFailureErrorBlock)failureBlock;
@@ -167,25 +192,15 @@ typedef void (^APProgressBlock)(int percentDone);
                failure:(APFailureErrorBlock)failureBlock;
 
 /**
- *  Uploads image to Parse after it has been taken and confirmed. Probably needs refactoring, because will only return success if image, thumbnail, and PFObject created properly on server
+ *  Uploads image to Parse after it has been taken and confirmed.
  *
- *  @param image         UIImage being uploaded, full resolution
- *  @param thumbnail     UIImage of thumbnail of image, will show in collage for myEvent
+ *  @param image         UIImage being uploaded, full resolution. Thumbnail gets created on server automatically.
  *  @param eventID       NSString for eventID for which the photo is being uploaded
  *  @param successBlock  Returns YES as BOOL
  *  @param failureBlock  Returns NSError
- *  @param progressBlock Returns int of progress of image upload
  *
  *  @since 0.6.0
  */
-
--(void)uploadImage:(UIImage *)image
-     withThumbnail:(UIImage *)thumbnail
-        forEventID:(NSString *)eventID
-           success:(APSuccessBooleanBlock)successBlock
-           failure:(APFailureErrorBlock)failureBlock
-          progress:(APProgressBlock)progressBlock;
-
 - (void)uploadImage:(UIImage*)image forEventID:(NSString*)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
 
 /**
@@ -216,6 +231,19 @@ typedef void (^APProgressBlock)(int percentDone);
                    failure:(APFailureErrorBlock)failureBlock;
 
 /**
+ *  Informs the server that the specified image needs to be reported for inappropriate content
+ *
+ *  @param refID        NSString with the reference ID for the image being reported
+ *  @param successBlock Returns BOOL if the photo has been reported three times or more, meaning it needs to be deleted from the feed
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.11
+ */
+- (void)reportImageForImageRefID:(NSString *)refID
+                         success:(APSuccessBooleanBlock)successBlock
+                         failure:(APFailureErrorBlock)failureBlock;
+
+/**
  *  Gets sheet of metadata containing information for each image that comprises an event. This must be called upon opening and refreshing current event screen
  *
  *  @param eventID      NSString for eventID to load metadata
@@ -227,6 +255,22 @@ typedef void (^APProgressBlock)(int percentDone);
 -(void)downloadImageMetadataForEventID:(NSString *)eventID
                                success:(APSuccessArrayBlock)successBlock
                                failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  When you take a photo of yourself for your user avatar, this will save it and associate it with your user profile
+ *
+ *  @param image        UIImage to be saved as the avatar
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)saveImageForUserAvatar:(UIImage *)image
+                   withSuccess:(APSuccessVoidBlock)successBlock
+                       failure:(APFailureErrorBlock)failureBlock;
+
+- (void)getImageForCurrentUserWithSuccess:(APSuccessStringBlock)successBlock
+                                  failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Logs in a user. This is only for Parse credentials
@@ -252,6 +296,17 @@ typedef void (^APProgressBlock)(int percentDone);
                        failure:(APFailureErrorBlock)failureBlock;
 
 /**
+ *  Unlinks facebook with user account that already exists
+ *
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)unlinkFacebookWithSuccess:(APSuccessVoidBlock)successBlock
+                          failure:(APFailureErrorBlock)failureBlock;
+
+/**
  *  Delegates to twitter to link account with current user
  *
  *  @param successBlock Returns void block on success
@@ -261,6 +316,17 @@ typedef void (^APProgressBlock)(int percentDone);
  */
 - (void)linkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
                        failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Unlinks twitter with user account that already exists
+ *
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.9
+ */
+- (void)unlinkTwitterWithSuccess:(APSuccessVoidBlock)successBlock
+                         failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Logs into parse using facebook credentials and permissions
@@ -384,20 +450,6 @@ typedef void (^APProgressBlock)(int percentDone);
                 withNewVenue:(FSVenue*)newVenue
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock;
-
-
-/**
- *  Updates a boolean parameter on a user object to determine whether a user wants to opt out of having their user information tracked for our profit
- *
- *  @param isTrackingData BOOL to save on user database to see if they want to allow tracking of their data
- *  @param successBlock   Returns void block on success
- *  @param failureBlock   Returns NSError
- *
- *  @since 0.9.1
- */
-- (void)saveUserTrackingParameter:(BOOL)isTrackingData
-                          success:(APSuccessVoidBlock)successBlock
-                          failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Updates the blurb property on a user object. Initially blank for all users
