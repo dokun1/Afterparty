@@ -13,5 +13,11 @@
     "0.9.10": {
         "1":"Twitter login re-activated",
         "2":"Neat new parallax effect when viewing photos full screen"
+    },
+    "0.9.11": {
+        "1":"Create event page refactored and spaced evenly",
+        "2":"Map view added for nearby events",
+        "3":"Ability to report or save photos added on long press",
+        "4":"Added website link to profile page"
     }
 }

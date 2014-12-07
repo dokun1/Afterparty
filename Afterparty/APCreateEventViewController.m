@@ -21,30 +21,35 @@
 #import <FXBlurView/FXBlurView.h>
 #import "UIAlertView+APAlert.h"
 #import "APConstants.h"
+#import "APCreateEventTimeViewController.h"
+#import "APCreateEventPasswordViewController.h"
 
 @import MessageUI;
 @import AddressBook;
 @import QuartzCore;
 
-@interface APCreateEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, VenueChoiceDelegate, UIScrollViewDelegate, FriendInviteDelegate, UITextViewDelegate, MFMessageComposeViewControllerDelegate, UIActionSheetDelegate>
+static NSString *kSetTimeSegue = @"setEventTimeSegue";
+static NSString *kSetPasswordSegue = @"setPasswordSegue";
 
-@property (weak, nonatomic) IBOutlet APLabel            *titleLabel;
-@property (weak, nonatomic) IBOutlet APLabel            *eventOwnerLabel;
-@property (weak, nonatomic) IBOutlet APTextField        *eventNameField;
-@property (weak, nonatomic) IBOutlet APLabel            *chooseEventLocationLabel;
-@property (weak, nonatomic) IBOutlet APLabel            *chooseEventDateLabel;
-@property (weak, nonatomic) IBOutlet APLabel            *chooseEventFriendsLabel;
-@property (weak, nonatomic) IBOutlet UIButton           *chooseEventTitleButton;
-@property (weak, nonatomic) IBOutlet UIButton           *choosePhotoButton;
-@property (weak, nonatomic) IBOutlet UIButton           *chooseEventLocationButton;
-@property (weak, nonatomic) IBOutlet UIButton           *chooseEventDateButton;
-@property (weak, nonatomic) IBOutlet UIButton           *chooseEventFriendsButton;
-@property (weak, nonatomic) IBOutlet UIButton           *chooseEventPasswordButton;
-@property (weak, nonatomic) IBOutlet UIButton           *choosePhotoFakeButton;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *privatePasswordLabel;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *publicPasswordLabel;
-@property (weak, nonatomic) IBOutlet UISwitch           *privateEventSwitch;
-@property (weak, nonatomic) IBOutlet APButton           *createEventButton;
+@interface APCreateEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, VenueChoiceDelegate, UIScrollViewDelegate, FriendInviteDelegate, UITextViewDelegate, MFMessageComposeViewControllerDelegate, UIActionSheetDelegate, APEventTimeDelegate, PasswordDelegate>
+
+@property (strong, nonatomic) APLabel            *titleLabel;
+@property (strong, nonatomic) APLabel            *eventOwnerLabel;
+@property (strong, nonatomic) APTextField        *eventNameField;
+@property (strong, nonatomic) APLabel            *chooseEventLocationLabel;
+@property (strong, nonatomic) APLabel            *chooseEventDateLabel;
+@property (strong, nonatomic) APLabel            *chooseEventFriendsLabel;
+@property (strong, nonatomic) UIButton           *chooseEventTitleButton;
+@property (strong, nonatomic) UIButton           *choosePhotoButton;
+@property (strong, nonatomic) UIButton           *chooseEventLocationButton;
+@property (strong, nonatomic) UIButton           *chooseEventDateButton;
+@property (strong, nonatomic) UIButton           *chooseEventFriendsButton;
+@property (strong, nonatomic) UIButton           *chooseEventPasswordButton;
+@property (strong, nonatomic) UIButton           *choosePhotoFakeButton;
+@property (strong, nonatomic) TTTAttributedLabel *privatePasswordLabel;
+@property (strong, nonatomic) TTTAttributedLabel *publicPasswordLabel;
+@property (strong, nonatomic) UISwitch           *privateEventSwitch;
+@property (strong, nonatomic) APButton           *createEventButton;
 
 @property (strong, nonatomic) APEvent                 *currentEvent;
 @property (strong, nonatomic) NSArray                 *currentInvitees;
@@ -59,9 +64,7 @@
 @property (strong, nonatomic) TTTAttributedLabel      *eventDescriptionLabel;
 @property (strong, nonatomic) UIView                  *separatorView;
 @property (strong, nonatomic) APButton                *confirmEventButton;
-@property (strong, nonatomic) FXBlurView              *blurView;
 @property (strong, nonatomic) APButton                *dismissDateButton;
-@property (strong, nonatomic) APButton                *endEventCreationButton;
 @property (strong, nonatomic) APTextField             *passwordTextField;
 @property (strong, nonatomic) APTextField             *confirmPasswordTextField;
 @property (strong, nonatomic) UIView                  *passwordFieldContainerView;
@@ -104,105 +107,195 @@
     _currentEvent = [[APEvent alloc] init];
     _currentEvent.createdByUsername = [[PFUser currentUser] username];
   }
+    self.widthFactor = self.view.frame.size.width / 320;
     
     [self pulsePhotoButton:NO];
   
   [self getContactPermission];
   
   [self initializeCustomUI];
+}
+
+- (UIButton *)generateAddElementButtonForPoint:(CGPoint)point {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(point.x, point.y, 30, 30);
+    [button setImage:[UIImage imageNamed:@"button_plusblack"] forState:UIControlStateNormal];
+    return button;
+}
+
+- (void)initializeCustomUI {
+    self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
+    NSString *partyOwner = [NSString stringWithFormat:@"%@'S", [[PFUser currentUser] username]];
+
+    [self.titleLabel styleForType:LabelTypeStandard];
     
-    self.widthFactor = self.view.frame.size.width / 320;
-  
-  [UIApplication sharedApplication].statusBarHidden = YES;
-  
-  self.coverPhotoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 40, 320 * self.widthFactor, 170 * self.widthFactor)];
-  
-  self.coverPhotoScrollView.backgroundColor = [UIColor afterpartyTealBlueColor];
-  self.coverPhotoScrollView.contentSize = self.coverPhotoScrollView.bounds.size;
-  [self.view addSubview:self.coverPhotoScrollView];
-  self.coverPhotoImageView = [[UIImageView alloc] initWithFrame:self.coverPhotoScrollView.bounds];
-  [self.coverPhotoScrollView addSubview:self.coverPhotoImageView];
-  
-  self.coverPhotoScrollView.delegate = self;
-  self.coverPhotoScrollView.minimumZoomScale = 0.1;
-  self.coverPhotoScrollView.zoomScale = 1.0;
-  self.coverPhotoScrollView.maximumZoomScale = 3.0;
-  
-  [self.coverPhotoImageView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
+    self.coverPhotoScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320 * self.widthFactor, 170 * self.widthFactor)];
+    
+    self.coverPhotoScrollView.backgroundColor = [UIColor afterpartyTealBlueColor];
+    self.coverPhotoScrollView.contentSize = self.coverPhotoScrollView.bounds.size;
+    [self.view addSubview:self.coverPhotoScrollView];
+    self.coverPhotoImageView = [[UIImageView alloc] initWithFrame:self.coverPhotoScrollView.bounds];
+    [self.coverPhotoScrollView addSubview:self.coverPhotoImageView];
+    
+    self.coverPhotoScrollView.delegate = self;
+    self.coverPhotoScrollView.minimumZoomScale = 0.1;
+    self.coverPhotoScrollView.zoomScale = 1.0;
+    self.coverPhotoScrollView.maximumZoomScale = 3.0;
+    
+    [self.coverPhotoImageView setBackgroundColor:[UIColor afterpartyTealBlueColor]];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosePhotoButtonTapped:)];
     tapRecognizer.numberOfTapsRequired = 1;
     [self.coverPhotoScrollView addGestureRecognizer:tapRecognizer];
-  [self.view sendSubviewToBack:self.coverPhotoScrollView];
-  
-  [self.eventNameField setFont:[UIFont fontWithName:kBoldFont size:20.f]];
-  [self.eventNameField setTextColor:[UIColor afterpartyOffWhiteColor]];
-  [self.eventNameField setText:@""];
-  [self.eventNameField setPlaceholder:@"NAME YOUR EVENT"];
-  [self.eventNameField setAutocapitalizationType:UITextAutocapitalizationTypeAllCharacters];
-  [self.eventNameField setDelegate:self];
-  [self.eventNameField setReturnKeyType:UIReturnKeyDone];
-
-
-    // Do any additional setup after loading the view.
-}
-
-- (void)initializeCustomUI {
-  self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
-  NSString *partyOwner = [NSString stringWithFormat:@"%@'S", [[PFUser currentUser] username]];
-
-  [self.titleLabel styleForType:LabelTypeStandard];
+    [self.view sendSubviewToBack:self.coverPhotoScrollView];
+    
+    CGFloat y = 10;
+    
+    CGFloat elementX = 10.f;
+    CGFloat elementWidth = self.view.frame.size.width - elementX * 2;
+    CGFloat elementHeight = 30.f;
+    
+    self.eventOwnerLabel = [[APLabel alloc] initWithFrame:CGRectMake(elementX, y, elementWidth, elementHeight)];
   [self.eventOwnerLabel styleForType:LabelTypeTableViewCellTitle withText:[partyOwner uppercaseString]];
   self.eventOwnerLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:self.eventOwnerLabel];
+    
+    y += self.eventOwnerLabel.frame.size.height + elementX;
+    
+    self.chooseEventTitleButton = [self generateAddElementButtonForPoint:CGPointMake(elementX, y)];
+    [self.chooseEventTitleButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateNormal];
+    [self.chooseEventTitleButton addTarget:self action:@selector(chooseEventTitleTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.chooseEventTitleButton];
+    
+    self.eventNameField = [[APTextField alloc] initWithFrame:CGRectMake(40, y, elementWidth - 40, elementHeight)];
+    [self.eventNameField setFont:[UIFont fontWithName:kBoldFont size:20.f]];
+    [self.eventNameField setTextColor:[UIColor afterpartyOffWhiteColor]];
+    [self.eventNameField setText:@""];
+    [self.eventNameField setPlaceholder:@"NAME YOUR EVENT"];
+    [self.eventNameField setAutocapitalizationType:UITextAutocapitalizationTypeAllCharacters];
+    [self.eventNameField setDelegate:self];
+    [self.eventNameField setReturnKeyType:UIReturnKeyDone];
+    [self.view addSubview:self.eventNameField];
+    
+    y += self.eventNameField.frame.size.height + elementX;
+    
+    self.choosePhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.choosePhotoButton setImage:[UIImage imageNamed:@"photo-512copy"] forState:UIControlStateNormal];
+    self.choosePhotoButton.frame = CGRectMake(CGRectGetMidX(self.view.frame) - 40, y, 80, 80);
+    [self.choosePhotoButton addTarget:self action:@selector(choosePhotoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.choosePhotoButton];
+    
+    self.choosePhotoFakeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.choosePhotoFakeButton.frame = self.choosePhotoButton.frame;
+    [self.choosePhotoFakeButton addTarget:self action:@selector(choosePhotoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.choosePhotoFakeButton];
+    [self.view bringSubviewToFront:self.choosePhotoFakeButton];
+    
+    y = self.coverPhotoScrollView.frame.size.height;
+    
+    y += 20;
+    if (self.view.frame.size.height == 480.f) {
+        y -= 10;
+    }
+    
+    CGFloat theta = y;
+    
+    CGFloat doneButtonHeight = self.view.frame.size.height - 124;
+    
+    CGFloat phi = doneButtonHeight - 50;
+    if (self.view.frame.size.height == 480.f) {
+        phi += 10;
+    }
+    
+    self.createEventButton = [[APButton alloc] initWithFrame:CGRectMake(elementX, doneButtonHeight, elementWidth, 50)];
+    [self.createEventButton style];
+    [self.createEventButton setTitle:@"AND ONE LAST THING. ONWARD!" forState:UIControlStateNormal];
+    [self.createEventButton addTarget:self action:@selector(oneMoreThingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.createEventButton];
+    
+    CGFloat spacing = (phi - theta - 100) / 3;
+    
+    CGFloat yIncrement = spacing + 30;
+    
+    self.chooseEventLocationButton = [self generateAddElementButtonForPoint:CGPointMake(elementX, y)];
+    [self.chooseEventLocationButton addTarget:self action:@selector(chooseEventLocationButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.chooseEventLocationButton];
+    
+    self.chooseEventLocationLabel = [[APLabel alloc] initWithFrame:CGRectMake(50, y, elementWidth - 50, elementHeight)];
+    self.chooseEventLocationLabel.text = @"Where is it going to be?";
+    [self.view addSubview:self.chooseEventLocationLabel];
+    
+    y += yIncrement;
+    
+    self.chooseEventDateButton = [self generateAddElementButtonForPoint:CGPointMake(elementX, y)];
+    [self.chooseEventDateButton addTarget:self action:@selector(chooseEventDateButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.chooseEventDateButton];
+    
+    self.chooseEventDateLabel = [[APLabel alloc] initWithFrame:CGRectMake(50, y, elementWidth - 50, elementHeight)];
+    self.chooseEventDateLabel.text = @"What date and at what time?";
+    [self.view addSubview:self.chooseEventDateLabel];
+    
+    y += yIncrement;
+    
+    self.chooseEventFriendsButton = [self generateAddElementButtonForPoint:CGPointMake(elementX, y)];
+    [self.chooseEventFriendsButton addTarget:self action:@selector(chooseEventFriendsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.chooseEventFriendsButton];
+    
+    self.chooseEventFriendsLabel = [[APLabel alloc] initWithFrame:CGRectMake(50, y, elementWidth - 50, elementHeight)];
+    self.chooseEventFriendsLabel.text = @"Now, invite your friends!";
+    [self.view addSubview:self.chooseEventFriendsLabel];
+    
+    y += yIncrement;
+    
+    self.chooseEventPasswordButton = [self generateAddElementButtonForPoint:CGPointMake(elementX, y)];
+    [self.chooseEventPasswordButton addTarget:self action:@selector(chooseEventPasswordButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.chooseEventPasswordButton];
+    self.chooseEventPasswordButton.alpha = 0.0f;
+    
+    self.publicPasswordLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(elementX, y, elementWidth, 30)];
+    self.publicPasswordLabel.font = [UIFont fontWithName:kRegularFont size:13.f];
+    self.publicPasswordLabel.textColor = [UIColor afterpartyBlackColor];
+    [self.publicPasswordLabel setText:@"This event is public." afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange greenRange = [@"This event is public." rangeOfString:@"public"];
+        if (greenRange.location != NSNotFound) {
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[UIColor afterpartyBrightGreenColor].CGColor range:greenRange];
+        }
+        return mutableAttributedString;
+    }];
+    [self.view addSubview:self.publicPasswordLabel];
+    
+    self.privatePasswordLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(50, y, elementWidth - 50, elementHeight)];
+    self.privatePasswordLabel.font = [UIFont fontWithName:kRegularFont size:13.f];
+    self.privatePasswordLabel.textColor = [UIColor afterpartyBlackColor];
+    [self.privatePasswordLabel setText:@"Add password, it's private." afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange redRange = [@"Add password, it's private." rangeOfString:@"private"];
+        if (redRange.location != NSNotFound) {
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[UIColor afterpartyCoralRedColor] range:redRange];
+        }
+        return mutableAttributedString;
+    }];
+    [self.view addSubview:self.privatePasswordLabel];
+    self.privatePasswordLabel.alpha = 0.0f;
+    
   [self.chooseEventLocationLabel styleForType:LabelTypeCreateLabel];
   [self.chooseEventDateLabel styleForType:LabelTypeCreateLabel];
   [self.chooseEventFriendsLabel styleForType:LabelTypeCreateLabel];
   [self.createEventButton style];
   
-  self.publicPasswordLabel.font = [UIFont fontWithName:kRegularFont size:13.f];
-  self.publicPasswordLabel.textColor = [UIColor afterpartyBlackColor];
-  
-  [self.publicPasswordLabel setText:@"This event is public." afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-    NSRange greenRange = [self.publicPasswordLabel.text rangeOfString:@"public"];
-    if (greenRange.location != NSNotFound) {
-      [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[UIColor afterpartyBrightGreenColor].CGColor range:greenRange];
-    }
-    return mutableAttributedString;
-  }];
-  
-  self.privatePasswordLabel.font = [UIFont fontWithName:kRegularFont size:13.f];
-  self.privatePasswordLabel.textColor = [UIColor afterpartyBlackColor];
-  [self.privatePasswordLabel setText:@"Add password, it's private." afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-    NSRange redRange = [self.privatePasswordLabel.text rangeOfString:@"private"];
-    if (redRange.location != NSNotFound) {
-      [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[UIColor afterpartyCoralRedColor] range:redRange];
-    }
-    return mutableAttributedString;
-  }];
-  
-  [self.privateEventSwitch setTintColor:[UIColor afterpartyCoralRedColor]];
-  [self.privateEventSwitch setOnTintColor:[UIColor afterpartyBrightGreenColor]];
+    self.privateEventSwitch = [[UISwitch alloc] init];
+    [self.privateEventSwitch setCenter:CGPointMake(self.view.frame.size.width - 36, y + 15)];
+    [self.privateEventSwitch setTintColor:[UIColor afterpartyCoralRedColor]];
+    [self.privateEventSwitch setOnTintColor:[UIColor afterpartyBrightGreenColor]];
+    [self.privateEventSwitch addTarget:self action:@selector(passwordSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:self.privateEventSwitch];
+    self.privateEventSwitch.on = YES;
   
   [self.chooseEventDateButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
   [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
   [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
   [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
-  
-  self.endEventCreationButton = [[APButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 35, 5, 30, 30)];
-  [self.endEventCreationButton setImage:[UIImage imageNamed:@"button_plusblack"] forState:UIControlStateNormal];
-  [self.endEventCreationButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
-  self.endEventCreationButton.transform = CGAffineTransformMakeRotation(45.0*M_PI/180.0);
-  [self.endEventCreationButton addTarget:self action:@selector(endButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:self.endEventCreationButton];
-  
-  self.blurView = [[FXBlurView alloc] initWithFrame:self.view.bounds];
-  self.blurView.underlyingView = self.view;
-  self.blurView.tintColor = [UIColor clearColor];
-  self.blurView.updateInterval = 1;
-  self.blurView.blurRadius = 50.f;
-  self.blurView.alpha = 0.f;
-  [self.view addSubview:self.blurView];
-
+    
+    [self.view bringSubviewToFront:self.eventNameField];
 }
 
 - (void)endButtonTapped {
@@ -211,7 +304,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -229,11 +321,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 -(void)createEventDescriptionUI {
-  self.eventDescriptionView = [[APTextView alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 90, self.view.frame.size.width - 20, 140)];
+  self.eventDescriptionView = [[APTextView alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 50, self.view.frame.size.width - 20, 140)];
   [self.eventDescriptionView setDelegate:self];
   [self.eventDescriptionView styleWithFontSize:15.f];
   [self.eventDescriptionView.layer setBorderColor:[[UIColor clearColor] CGColor]];
@@ -244,12 +335,12 @@
   [self.eventDescriptionView setReturnKeyType:UIReturnKeyDone];
   [self.view addSubview:self.eventDescriptionView];
   
-  self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(-1, self.coverPhotoScrollView.frame.size.height + 80, self.view.frame.size.width + 2, 0.5f)];
+  self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(-1, self.coverPhotoScrollView.frame.size.height + 40, self.view.frame.size.width + 2, 0.5f)];
   [self.separatorView setBackgroundColor:[UIColor lightGrayColor]];
   [self.separatorView setAlpha:0.0f];
   [self.view addSubview:self.separatorView];
   
-  self.eventDescriptionLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 42, self.view.frame.size.width - 20, 40)];
+  self.eventDescriptionLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 2, self.view.frame.size.width - 20, 40)];
   [self.eventDescriptionLabel setNumberOfLines:2];
   [self.eventDescriptionLabel setFont:[UIFont fontWithName:kRegularFont size:14.f]];
   [self.eventDescriptionLabel setTextAlignment:NSTextAlignmentCenter];
@@ -306,95 +397,9 @@
     [textView setText:text];
   }
   [UIView animateWithDuration:0.2 animations:^{
-    [textView setFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 90, self.view.frame.size.width - 20, 140)];
+    [textView setFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 50, self.view.frame.size.width - 20, 140)];
   }];
 }
-
-#pragma mark - UIDatePicker Methods
-
-- (void)createDatePickerContainer {
-  self.isReceivingPassword = NO;
-  
-  [self.blurView.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-    [view removeFromSuperview];
-  }];
-    
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-  
-  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame) - 25, self.view.bounds.size.height - 60, 50, 30)];
-  [self.dismissDateButton style];
-  [self.dismissDateButton setTitle:@"save" forState:UIControlStateNormal];
-  [self.dismissDateButton addTarget:self action:@selector(dismissDatePickerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-  self.dismissDateButton.alpha = 0.0f;
-  [self.view addSubview:self.dismissDateButton];
-  
-  self.datePickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, screenWidth, 440)];
-  
-  APLabel *startDateLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 30)];
-  [startDateLabel styleForType:LabelTypeStandard withText:@"START TIME"];
-  [self.datePickerContainerView addSubview:startDateLabel];
-  
-  UIDatePicker *picker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 15, screenWidth, 162)];
-  [picker setDate:[NSDate date]];
-  [picker setMinuteInterval:15];
-  [picker setMinimumDate:[NSDate date]];
-  self.startDatePicker = picker;
-  [self.datePickerContainerView addSubview:picker];
-  
-  APLabel *endDateLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 225, screenWidth, 30)];
-  [endDateLabel styleForType:LabelTypeStandard withText:@"END TIME"];
-  [self.datePickerContainerView addSubview:endDateLabel];
-  
-  UIDatePicker *endPicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 240, screenWidth, 162)];
-  [endPicker setMinimumDate:[NSDate dateWithTimeIntervalSinceNow:60*60*4]];
-  [endPicker setMinuteInterval:15];
-  [endPicker setDate:[NSDate dateWithTimeIntervalSinceNow:60*60*4]];
-  self.endDatePicker = endPicker;
-  [self.datePickerContainerView addSubview:endPicker];
-  
-  [self.view addSubview:self.datePickerContainerView];
-  
-  [self.view bringSubviewToFront:self.dismissDateButton];
-  
-  [UIView animateWithDuration:0.5
-                        delay:0.0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     [self.datePickerContainerView setCenter:self.view.center];
-                     self.dismissDateButton.alpha = 1.0f;
-                   } completion:^(BOOL finished) {
-                     self.currentEvent.startDate = self.startDatePicker.date;
-                   }];
-}
-
-- (void)dismissDatePickerButtonTapped {
-  if (self.isReceivingPassword) {
-    if (![self.passwordTextField.text isEqualToString:self.confirmPasswordTextField.text]) {
-      return;
-    }
-    self.currentEvent.password = self.passwordTextField.text;
-    self.privatePasswordLabel.text = [NSString stringWithFormat:@"Password - %@", self.currentEvent.password];
-    [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
-    [self.passwordTextField resignFirstResponder];
-  } else {
-    self.currentEvent.startDate = self.startDatePicker.date;
-    self.currentEvent.endDate = self.endDatePicker.date;
-    self.chooseEventDateLabel.text = [NSString stringWithFormat:@"%@ to %@", [APUtil formatDateForEventCreationScreen:self.currentEvent.startDate] , [APUtil formatDateForEventCreationScreen:self.currentEvent.endDate]];
-    [self.chooseEventDateButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
-  }
-
-  [UIView animateWithDuration:0.5
-                        delay:0.0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     [self.datePickerContainerView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) + self.view.bounds.size.height)];
-                     [self.passwordFieldContainerView setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) + self.view.bounds.size.height)];
-                   } completion:^(BOOL finished) {
-                     [UIView animateWithDuration:0.5 animations:^{
-                       self.blurView.alpha = 0.f;
-                       self.dismissDateButton.alpha = 0.0f;
-                     }];
-                   }];}
 
 #pragma mark - UIScrollViewDelegate Methods
 
@@ -418,17 +423,28 @@
 #pragma mark - UITextFieldDelegate methods
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == self.passwordTextField || textField == self.confirmPasswordTextField) {
-      if (![self passwordFieldsAreValid]) {
-        return YES;
-      }
-    }
     if (textField == self.eventNameField && textField.text.length > 0) {
         [self.chooseEventTitleButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
     }
   [textField resignFirstResponder];
   [self.currentEvent setEventName:self.eventNameField.text];
   return NO;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.eventNameField) {
+        NSRange lowercaseCharRange = [string rangeOfCharacterFromSet:[NSCharacterSet lowercaseLetterCharacterSet]];
+        
+        if (lowercaseCharRange.location != NSNotFound) {
+            textField.text = [textField.text stringByReplacingCharactersInRange:range
+                                                                     withString:[string uppercaseString]];
+            return NO;
+        }
+        
+        return YES;
+    } else {
+        return YES;
+    }
 }
 
 #pragma mark - UIImagePickerDelegate methods
@@ -458,16 +474,22 @@
   [self.currentEvent setEventAddress:address];
   [self.chooseEventLocationLabel setText:venue.name];
   [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
-  [controller dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 #pragma mark - FriendInviteDelegate
 
 -(void)didConfirmInvitees:(NSArray *)invitees forController:(APInviteFriendsViewController *)controller{
-  self.currentInvitees = invitees;
-  [self.chooseEventFriendsLabel setText:([self.currentInvitees count] != 1)?[NSString stringWithFormat:@"%lu friends are invited.", (unsigned long)[self.currentInvitees count]]:[NSString stringWithFormat:@"%lu friend is invited.", (unsigned long)[self.currentInvitees count]]];
-  [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
-  [controller dismissViewControllerAnimated:YES completion:nil];
+    self.currentInvitees = invitees;
+    [self.chooseEventFriendsLabel setText:([self.currentInvitees count] != 1)?[NSString stringWithFormat:@"%lu friends are invited.", (unsigned long)[self.currentInvitees count]]:[NSString stringWithFormat:@"%lu friend is invited.", (unsigned long)[self.currentInvitees count]]];
+    [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    [self.navigationController popToViewController:self animated:YES];
+}
+
+- (void)didUpdateInvitees:(NSArray *)invitees forController:(APInviteFriendsViewController *)controller {
+    self.currentInvitees = invitees;
+    [self.chooseEventFriendsLabel setText:([self.currentInvitees count] != 1)?[NSString stringWithFormat:@"%lu friends are invited.", (unsigned long)[self.currentInvitees count]]:[NSString stringWithFormat:@"%lu friend is invited.", (unsigned long)[self.currentInvitees count]]];
+    [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate methods
@@ -492,6 +514,10 @@
 }
 
 -(void)sendInvitationsForEventID:(NSString*)eventID {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [PFAnalytics trackEvent:@"eventCreation"];
+    });
   [self.confirmEventButton setEnabled:NO];
   [self.confirmEventButton setAlpha:0.0f];
   if(![MFMessageComposeViewController canSendText]) {
@@ -509,7 +535,7 @@
     [numbers addObject:contactDict[@"phone"]];
   }];
     
-  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: afterparty://eventID:%@", eventID];
+  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://afterparty.io/event/%@", eventID];
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;
@@ -627,50 +653,42 @@
 
 #pragma mark - IBAction Methods
 
-- (IBAction)chooseEventTitleTapped:(id)sender {
+- (void)chooseEventTitleTapped:(id)sender {
     [self.eventNameField becomeFirstResponder];
 }
 
-- (IBAction)choosePhotoFakeButtonTapped:(id)sender {
+- (void)choosePhotoFakeButtonTapped:(id)sender {
     [self choosePhotoButtonTapped:sender];
 }
 
-- (IBAction)choosePhotoButtonTapped:(id)sender {
-  UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Go Back" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
-  [actionSheet showInView:self.view];
+- (void)choosePhotoButtonTapped:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Go Back" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+    [actionSheet showInView:self.view];
 }
 
-- (IBAction)chooseEventLocationButtonTapped:(id)sender {
-  APFindVenueTableViewController *vc = [[APFindVenueTableViewController alloc] init];
-  vc.delegate = self;
-  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-  [self presentViewController:nav animated:YES completion:nil];
+- (void)chooseEventLocationButtonTapped:(id)sender {
+    APFindVenueTableViewController *vc = [[APFindVenueTableViewController alloc] init];
+    vc.delegate = self;
+    vc.shouldShowDismissButton = NO;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (IBAction)chooseEventDateButtonTapped:(id)sender {
-  [UIView animateWithDuration:0.5 animations:^{
-    self.blurView.alpha = 1.0f;
-  } completion:^(BOOL finished) {
-    [self createDatePickerContainer];
-  }];
+- (void)chooseEventDateButtonTapped:(id)sender {
+    [self performSegueWithIdentifier:kSetTimeSegue sender:nil];
 }
 
-- (IBAction)chooseEventFriendsButtonTapped:(id)sender {
-  APInviteFriendsViewController *vc = [[APInviteFriendsViewController alloc] initWithSelectedContacts:self.currentInvitees];
-  vc.delegate = self;
-  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-  [self presentViewController:nav animated:YES completion:nil];
+- (void)chooseEventFriendsButtonTapped:(id)sender {
+    APInviteFriendsViewController *vc = [[APInviteFriendsViewController alloc] initWithSelectedContacts:self.currentInvitees];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
-- (IBAction)chooseEventPasswordButtonTapped:(id)sender {
-  [UIView animateWithDuration:0.5 animations:^{
-    self.blurView.alpha = 1.0f;
-  } completion:^(BOOL finished) {
-    [self showPasswordField];
-  }];
+- (void)chooseEventPasswordButtonTapped:(id)sender {
+    [self performSegueWithIdentifier:kSetPasswordSegue sender:nil];
 }
 
-- (IBAction)passwordSwitchChanged:(id)sender {
+- (void)passwordSwitchChanged:(id)sender {
   [UIView animateWithDuration:0.3 animations:^{
     BOOL on = self.privateEventSwitch.on;
     [self.publicPasswordLabel setAlpha:on ? 1.0 : 0.0];
@@ -679,7 +697,7 @@
   }];
 }
 
-- (IBAction)oneMoreThingButtonTapped:(id)sender {
+- (void)oneMoreThingButtonTapped:(id)sender {
   //check everything to see if its complete
   if ([[self.eventNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
     self.eventNameField.backgroundColor = [UIColor afterpartyCoralRedColor];
@@ -758,66 +776,62 @@
   [self presentViewController:self.picker animated:YES completion:nil];
 }
 
-#pragma mark - Password Methods
+#pragma mark - Navigation
 
-- (void)showPasswordField {
-  self.isReceivingPassword = YES;
-  [self.blurView.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
-    [view removeFromSuperview];
-  }];
-    
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-  
-  self.dismissDateButton = [[APButton alloc] initWithFrame:CGRectMake(screenWidth - 40, 10, 30, 30)];
-  [self.dismissDateButton setImage:[UIImage imageNamed:@"button_plusblack"] forState:UIControlStateNormal];
-  [self.dismissDateButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
-  [self.dismissDateButton addTarget:self action:@selector(dismissDatePickerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-  self.dismissDateButton.transform = CGAffineTransformMakeRotation(45.0*M_PI/180.0);
-  [self.view addSubview:self.dismissDateButton];
-  
-  self.passwordFieldContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, screenWidth, 200)];
-  self.passwordFieldContainerView.backgroundColor = [UIColor clearColor];
-  [self.view addSubview:self.passwordFieldContainerView];
-  
-  self.passwordTextField = [[APTextField alloc] initWithFrame:CGRectMake(40, 50, self.view.bounds.size.width - 80, 30)];
-  [self.passwordTextField styleForPasswordEntry];
-  self.passwordTextField.placeholder = @"enter password here";
-  self.passwordTextField.delegate = self;
-  if (_currentEvent.password) {
-    self.passwordTextField.text = _currentEvent.password;
-  }
-  [self.passwordFieldContainerView addSubview:self.passwordTextField];
-  
-  self.confirmPasswordTextField = [[APTextField alloc] initWithFrame:CGRectMake(40, 100, self.view.bounds.size.width - 80, 30)];
-  [self.confirmPasswordTextField styleForPasswordEntry];
-  self.confirmPasswordTextField.placeholder = @"confirm password here";
-  self.confirmPasswordTextField.delegate = self;
-  if (_currentEvent.password) {
-    self.confirmPasswordTextField.text = _currentEvent.password;
-  }
-  [self.passwordFieldContainerView addSubview:self.confirmPasswordTextField];
-  
-  [UIView animateWithDuration:0.5
-                        delay:0.0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     [self.passwordFieldContainerView setCenter:self.view.center];
-                   } completion:^(BOOL finished) {
-                     
-                   }];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:kSetTimeSegue]) {
+        APCreateEventTimeViewController *vc = (APCreateEventTimeViewController *)segue.destinationViewController;
+        vc.delegate = self;
+    } else if ([segue.identifier isEqualToString:kSetPasswordSegue]) {
+        APCreateEventPasswordViewController *vc = (APCreateEventPasswordViewController *)segue.destinationViewController;
+        vc.delegate = self;
+    }
 }
 
-- (BOOL)passwordFieldsAreValid {
-  NSString *field1 = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  NSString *field2 = [self.confirmPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  if (![field1 isEqualToString:field2]) {
-    [SVProgressHUD showErrorWithStatus:@"passwords do not match"];
-    return NO;
-  }
-  if (field1.length < 4) {
-    [SVProgressHUD showErrorWithStatus:@"password must have at least four letters"];
-    return NO;
-  }
-  return YES;
+#pragma mark - APEventTimeDelegate Methods
+
+- (void)updateForStartTime:(NSDate *)startTime andEndTime:(NSDate *)endTime {
+    [self.currentEvent setStartDate:startTime];
+    [self.currentEvent setEndDate:endTime];
+    [self.chooseEventDateButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    self.chooseEventDateLabel.text = [NSString stringWithFormat:@"%@ - %@", [APUtil formatDateForEventCreationScreen:self.currentEvent.startDate], [APUtil formatDateForEventCreationScreen:self.currentEvent.endDate]];
 }
+
+#pragma mark - PasswordDelegate Methods
+
+- (void)controller:(APCreateEventPasswordViewController *)controller didUpdatePassword:(NSString *)password {
+    self.currentEvent.password = password;
+    NSString *passwordString = [NSString stringWithFormat:@"Your password is %@.", password];
+    __block NSRange lastWordRange = NSMakeRange([passwordString length], 0);
+    NSStringEnumerationOptions opts = NSStringEnumerationByWords | NSStringEnumerationReverse | NSStringEnumerationSubstringNotRequired;
+    [passwordString enumerateSubstringsInRange:NSMakeRange(0, [passwordString length]) options:opts usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+        lastWordRange = substringRange;
+        *stop = YES;
+    }];
+    [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    [self.privatePasswordLabel setText:passwordString afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[UIColor afterpartyCoralRedColor] range:lastWordRange];
+        [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont fontWithName:kBoldFont size:13.f] range:lastWordRange];
+        return mutableAttributedString;
+    }];
+}
+
+- (void)controller:(APCreateEventPasswordViewController *)controller didSavePassword:(NSString *)password {
+    self.currentEvent.password = password;
+    NSString *passwordString = [NSString stringWithFormat:@"Your password is %@.", password];
+    __block NSRange lastWordRange = NSMakeRange([passwordString length], 0);
+    NSStringEnumerationOptions opts = NSStringEnumerationByWords | NSStringEnumerationReverse | NSStringEnumerationSubstringNotRequired;
+    [passwordString enumerateSubstringsInRange:NSMakeRange(0, [passwordString length]) options:opts usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+        lastWordRange = substringRange;
+        *stop = YES;
+    }];
+    [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    [self.privatePasswordLabel setText:passwordString afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[UIColor afterpartyCoralRedColor] range:lastWordRange];
+        [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)[UIFont fontWithName:kBoldFont size:13.f] range:lastWordRange];
+        return mutableAttributedString;
+    }];
+    [self.navigationController popToViewController:self animated:YES];
+}
+
 @end

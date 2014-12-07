@@ -37,5 +37,7 @@
 + (NSString *)formatDateForEventDetailScreen:(NSDate*)date;
 + (NSString *)formatDateForEventCreationScreen:(NSDate*)date;
 + (NSLock *)cacheLock;
++ (NSArray *)getReportedPhotoIDs;
++ (void)saveReportedPhotoID:(NSString *)photoID;
 
 @end

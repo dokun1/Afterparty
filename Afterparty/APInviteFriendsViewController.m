@@ -337,6 +337,7 @@
     [cell.buttonImage setImage:(isSelected)?[UIImage imageNamed:@"icon_checkempty"]:[UIImage imageNamed:@"icon_checkgreen"]];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self setFriendCountLabel];
+    [self.delegate didUpdateInvitees:self.selectedContacts forController:self];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView { //returns the scrub bar on right hand side

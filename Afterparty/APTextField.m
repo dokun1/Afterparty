@@ -10,7 +10,7 @@
 #import "UIColor+APColor.h"
 #import "APConstants.h"
 
-CGFloat const APFextFielsLeftPadding = 10.0;
+CGFloat const APTextFieldLeftPadding = 10.0;
 
 @implementation APTextField
 
@@ -20,7 +20,7 @@ CGFloat const APFextFielsLeftPadding = 10.0;
     if (!self.leftView) {
         self.leftView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                  self.bounds.origin.y,
-                                                                 APFextFielsLeftPadding,
+                                                                 APTextFieldLeftPadding,
                                                                  self.bounds.size.height)];
         self.leftViewMode = UITextFieldViewModeAlways;
     }

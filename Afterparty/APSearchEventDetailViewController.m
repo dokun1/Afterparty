@@ -126,8 +126,22 @@
 }
 
 -(void)confirmJoinEvent{
-  [APUtil saveEventToMyEvents:self.currentEvent];
-  NSDictionary *eventInfo = @{@"deleteDate": [_currentEvent deleteDate],
+    [PFAnalytics trackEvent:@"eventJoined" dimensions:@{@"userID":[PFUser currentUser].objectId}];
+    [APUtil saveEventToMyEvents:self.currentEvent];
+    NSMutableArray *attendees = [self.currentEvent.attendees mutableCopy];
+    if (!attendees) {
+        attendees = [NSMutableArray array];
+    }
+    if (![attendees containsObject:[PFUser currentUser].objectId]) {
+        [attendees addObject:[PFUser currentUser].objectId];
+        self.currentEvent.attendees = attendees;
+        [[APConnectionManager sharedManager] updateEventForNewAttendee:self.currentEvent success:^() {
+            NSLog(@"updated attendees");
+        } failure:^(NSError *error) {
+            NSLog(@"couldnt update event attendees");
+        }];
+    }
+    NSDictionary *eventInfo = @{@"deleteDate": [_currentEvent deleteDate],
                               @"endDate" : [_currentEvent endDate],
                               @"startDate" : [_currentEvent startDate],
                               @"eventName": [_currentEvent eventName],
@@ -135,8 +149,8 @@
                               @"eventLongitude": @([_currentEvent location].longitude),
                               @"createdByUsername": [_currentEvent createdByUsername],
                               @"eventImageData": [_currentEvent eventImageData]};
-  NSDictionary *eventDict = @{[_currentEvent objectID]: eventInfo};
-  [self performSegueWithIdentifier:@"EventDetailsGoToEventSegue" sender:eventDict];
+    NSDictionary *eventDict = @{[_currentEvent objectID]: eventInfo};
+    [self performSegueWithIdentifier:@"EventDetailsGoToEventSegue" sender:eventDict];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -20,5 +20,6 @@
 @interface APFindVenueTableViewController : UITableViewController
 
 @property (weak, nonatomic) id<VenueChoiceDelegate> delegate;
+@property (nonatomic) BOOL shouldShowDismissButton;
 
 @end

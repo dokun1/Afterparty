@@ -40,6 +40,7 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 @property (weak, nonatomic) IBOutlet APLabel *versionLabel;
 @property (weak, nonatomic) IBOutlet APLabel *versionFieldLabel;
 @property (weak, nonatomic) IBOutlet APLabel *termsAndConditionsLabel;
+@property (weak, nonatomic) IBOutlet APLabel *websiteLabel;
 @property (weak, nonatomic) IBOutlet APLabel *signOutLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *facebookIconView;
 @property (weak, nonatomic) IBOutlet UIImageView *twitterIconView;
@@ -122,9 +123,11 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 #endif
     [self.versionFieldLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.termsAndConditionsLabel styleForType:LabelTypeTableViewCellAttribute];
+    [self.websiteLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.signOutLabel styleForType:LabelTypeTableViewCellAttribute];
     self.versionFieldLabel.textColor = [UIColor afterpartyBlackColor];
     self.signOutLabel.textColor = [UIColor afterpartyBlackColor];
+    self.websiteLabel.textColor = [UIColor afterpartyBlackColor];
     self.termsAndConditionsLabel.textColor = [UIColor afterpartyBlackColor];
     self.facebookLinkLabel.text = self.isLinkedWithFacebook ? @"facebook linked!" : @"link with facebook";
     self.facebookIconView.image = self.isLinkedWithFacebook ? [UIImage imageNamed:@"facebookLogo"] : [UIImage imageNamed:@"facebookLogoGray"];
@@ -167,6 +170,9 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             //terms and conditions tapped, uses prepareForSegue
         }
         if (indexPath.row == 2) {
+            [self websiteButtonTapped];
+        }
+        if (indexPath.row == 3) {
             [self signOutButtonTapped];
         }
     }
@@ -222,16 +228,6 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             [SVProgressHUD showErrorWithStatus:@"couldn't link your twitter account"];
         }];
     }
-//    } else {
-//        [SVProgressHUD showWithStatus:@"unlinking twitter"];
-//        [[APConnectionManager sharedManager] unlinkTwitterWithSuccess:^{
-//            [SVProgressHUD showSuccessWithStatus:@"unlinked!"];
-//            self.profilePhotoView.image = [UIImage imageNamed:@"user_male3-512"];
-//            [self loadUserData];
-//        } failure:^(NSError *error) {
-//            [SVProgressHUD showErrorWithStatus:@"couldn't unlink your account"];
-//        }];
-//    }
 }
 
 - (void)facebookButtonLinkTapped {
@@ -248,16 +244,10 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             [SVProgressHUD showErrorWithStatus:@"couldn't link your facebook account"];
         }];
     }
-//     else {
-//        [SVProgressHUD showWithStatus:@"unlinking facebook"];
-//        [[APConnectionManager sharedManager] unlinkFacebookWithSuccess:^{
-//            [SVProgressHUD showSuccessWithStatus:@"unlinked!"];
-//            self.profilePhotoView.image = [UIImage imageNamed:@"user_male3-512"];
-//            [self loadUserData];
-//        } failure:^(NSError *error) {
-//            [SVProgressHUD showErrorWithStatus:@"couldn't unlink your account"];
-//        }];
-//    }
+}
+
+- (void)websiteButtonTapped {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://afterparty.io"]];
 }
 
 

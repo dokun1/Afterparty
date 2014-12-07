@@ -44,6 +44,8 @@
 
 @property (strong, nonatomic) UICollectionViewFlowLayout *photoViewLayout;
 
+@property (strong, nonatomic) NSString *longPressPhotoID;
+
 @property dispatch_queue_t photoUploadQueue;
 @property dispatch_queue_t photoDownloadQueue;
 
@@ -65,7 +67,9 @@
   [[APConnectionManager sharedManager] downloadImageMetadataForEventID:self.eventID success:^(NSArray *objects) {
     [objects enumerateObjectsUsingBlock:^(PFObject *obj, NSUInteger idx, BOOL *stop) {
       APPhotoInfo *info = [[APPhotoInfo alloc] initWithParseObject:obj forEvent:self.eventID];
-      [data addObject:info];
+        if ([info.reports intValue] < 3) {
+            [data addObject:info];
+        }
     }];
     [SVProgressHUD dismiss];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -85,6 +89,7 @@
     [super viewDidLoad];
     [self setUpUI];
     [self setUpCountdown];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedLongPressNotification:) name:@"photoLongPressedNotification" object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -184,14 +189,6 @@
   self.photoMetadata = [[NSArray alloc] init];
   
   [self refreshPhotos];
-  
-//  dispatch_async(self.photoDownloadQueue, ^{
-//    [self getLatestMetadata];
-//    self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//      [self.collectionView reloadData];
-//    });
-//  });
 }
 
 
@@ -348,6 +345,57 @@
     NSLog(@"manager failed: %@", [error localizedDescription]);
 }
 
+#pragma mark - Long Press Methods
+
+- (void)receivedLongPressNotification:(NSNotification *)notification {
+    NSString *photoID = notification.userInfo[@"photoID"];
+    self.longPressPhotoID = photoID;
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Go Back" destructiveButtonTitle:@"Report" otherButtonTitles:@"Save", nil];
+    sheet.tag = 9000;
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet.tag == 9000) {
+        if (buttonIndex == 0) {
+            NSArray *reportedPhotos = [APUtil getReportedPhotoIDs];
+            if (![reportedPhotos containsObject:self.longPressPhotoID]) {
+                [APUtil saveReportedPhotoID:self.longPressPhotoID];
+                [SVProgressHUD showWithStatus:@"reporting..."];
+                [[APConnectionManager sharedManager] reportImageForImageRefID:self.longPressPhotoID success:^(BOOL succeeded) {
+                    if (succeeded) {
+                        [self getLatestMetadata];
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"The photo you reported has been deleted from our servers. We apologize for the inconvenience." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    } else {
+                        [SVProgressHUD showSuccessWithStatus:@"photo reported"];
+                    }
+                } failure:^(NSError *error) {
+                    [SVProgressHUD showErrorWithStatus:@"please try again"];
+                }];
+            } else {
+                [SVProgressHUD showErrorWithStatus:@"already reported"];
+            }
+        }
+        if (buttonIndex == 1) {
+            [SVProgressHUD showWithStatus:@"saving..."];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                [self.photoMetadata enumerateObjectsUsingBlock:^(APPhotoInfo *photoInfo, NSUInteger idx, BOOL *stop) {
+                    if ([photoInfo.refID isEqualToString:self.longPressPhotoID]) {
+                        NSData *imgData = [NSData dataWithContentsOfURL:photoInfo.photoURL];
+                        UIImage *img = [UIImage imageWithData:imgData];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self saveImageToCameraRoll:img];
+                            [SVProgressHUD showSuccessWithStatus:@"photo saved!"];
+                        });
+                        *stop = YES;
+                    }
+                }];
+            });
+        }
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:[NSString stringWithFormat:@"reset%@", self.longPressPhotoID] object:nil];
+    self.longPressPhotoID = nil;
+}
 
 #pragma mark -
 #pragma mark - Action methods for my event
@@ -510,6 +558,7 @@
 
 -(void)uploadImage:(UIImage*)image {
   [SVProgressHUD show];
+    [PFAnalytics trackEvent:@"photoUpload"];
   [[APPhotoUploadQueue sharedQueue] addPhotoToQueue:image forEventID:self.eventID];
 }
 

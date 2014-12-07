@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSString       *eventID;
 @property (strong, nonatomic) NSString       *thumbID;
 @property (assign, nonatomic) CGSize         size;
+@property (strong, nonatomic) NSNumber       *reports;
 
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 

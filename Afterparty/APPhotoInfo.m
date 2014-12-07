@@ -23,6 +23,7 @@
     for (NSDictionary *commentDict in commentArray)
       [comments addObject:[[APComment alloc] initWithDictionary:commentDict]];
     _comments            = comments;
+    _reports             = dictionary[@"reports"];
   }
   return self;
 }
@@ -33,6 +34,7 @@
     _timestamp = parseObject[@"timestamp"];
     _refID     = parseObject[@"refID"];
     _thumbID   = parseObject[@"thumbID"];
+    _reports   = parseObject[@"reports"];
     _comments  = [NSMutableArray array];
     _size      = CGSizeMake([parseObject[@"width"] floatValue], [parseObject[@"height"] floatValue]);
     for (NSDictionary *commentDict in [parseObject valueForKey:@"comments"])
@@ -53,6 +55,7 @@
   [dict setObject:_refID forKey:@"refID"];
   [dict setObject:_thumbID forKey:@"thumbID"];
   [dict setObject:_eventID forKey:@"eventID"];
+  [dict setObject:_reports forKey:@"reports"];
   [dict setObject:[NSNumber numberWithFloat:_size.width] forKey:@"width"];
   [dict setObject:[NSNumber numberWithFloat:_size.height] forKey:@"height"];
   NSMutableArray *commentArray = [NSMutableArray arrayWithCapacity:_comments.count];
@@ -68,6 +71,6 @@
 }
 
 -(NSString *)description {
-  return [NSString stringWithFormat:@"username=%@\ntimestamp=%@\ncomments=%@\nrefID=%@\nthumbID=%@\neventID=%@", self.username, self.timestamp, self.comments, self.refID, self.thumbID, self.eventID];
+  return [NSString stringWithFormat:@"username=%@\ntimestamp=%@\ncomments=%@\nrefID=%@\nthumbID=%@\neventID=%@\nreports=%d", self.username, self.timestamp, self.comments, self.refID, self.thumbID, self.eventID, [self.reports intValue]];
 }
 @end

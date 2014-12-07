@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "APConnectionManager.h"
 
-@interface APSearchEventsViewController : UITableViewController
+@interface APSearchEventsViewController : UIViewController
 
 -(id)initWithSearchForEvent:(NSString*)eventID;
 

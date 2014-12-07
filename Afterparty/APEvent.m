@@ -28,6 +28,7 @@
     _eventImage        = eventImage;
     _eventUserPhotoURL = eventUserPhotoURL;
     _eventUserBlurb    = eventUserBlurb;
+    _attendees         = @[];
   }
   return self;
 }
@@ -49,6 +50,7 @@
     _eventImage        = parseObject[@"eventImage"];
     _eventUserPhotoURL = parseObject[kPFUserProfilePhotoURLKey];
     _eventUserBlurb    = parseObject[kPFUserBlurbKey];
+    _attendees         = parseObject[@"attendees"];
   }
   return self;
 }

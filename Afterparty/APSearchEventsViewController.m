@@ -16,10 +16,12 @@
 #import "APEvent.h"
 #import "APConstants.h"
 #import "APUtil.h"
+#import <MapKit/MapKit.h>
+#import "APEventAnnotation.h"
 
 @import AddressBook;
 
-@interface APSearchEventsViewController () <UISearchBarDelegate, CLLocationManagerDelegate, SearchEventDetailDelegate, UINavigationControllerDelegate, UINavigationBarDelegate>
+@interface APSearchEventsViewController () <UISearchBarDelegate, CLLocationManagerDelegate, SearchEventDetailDelegate, UINavigationControllerDelegate, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *venues;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -29,19 +31,14 @@
 @property (assign, nonatomic) BOOL isForSearch;
 @property (strong, nonatomic) NSString *initialSearch;
 @property (assign, nonatomic) BOOL isLoading;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) NSMutableArray *venueAnnotations;
 
 @end
 
 @implementation APSearchEventsViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (id)initWithSearchForEvent:(NSString *)eventID {
     self = [super init];
@@ -83,12 +80,15 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.tableView setBackgroundColor:[UIColor afterpartyOffWhiteColor]];
     
+    self.mapView.delegate = self;
+    
     (self.isForSearch) ? [self searchForEventByID] : [self refreshEvents];
   
-    [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MyEventCell"];
   
   UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshEvents)];
   [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
+    self.venueAnnotations = [NSMutableArray array];
 }
 
 
@@ -135,6 +135,7 @@
       self.isLoading = NO;
       self.venues = [objects mutableCopy];
       dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadEventsToMap];
         if ([self.venues count] == 0) {
           [SVProgressHUD showErrorWithStatus:@"No events nearby"];
         }else{
@@ -149,6 +150,118 @@
     }];
   }
 }
+
+#pragma mark - MKMapViewDelegate Methods
+
+- (MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    if ([annotation isKindOfClass:[APEventAnnotation class]]) {
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+        if (annotationView == nil) {
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Pin"];
+            annotationView.pinColor = MKPinAnnotationColorGreen;
+            annotationView.canShowCallout = YES;
+            annotationView.animatesDrop = YES;
+            annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        }
+        return annotationView;
+    }
+    return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    APEventAnnotation *annotation = (APEventAnnotation *)view.annotation;
+    APEvent *selectedEvent = annotation.event;
+    [self performSegueWithIdentifier:kNearbyEventDetailSegue sender:selectedEvent];
+}
+
+- (void)loadEventsToMap {
+    CLLocationDegrees minx = NAN;
+    CLLocationDegrees miny = NAN;
+    CLLocationDegrees maxx = NAN;
+    CLLocationDegrees maxy = NAN;
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    for(APEvent *event in self.venues) {
+        CLLocationCoordinate2D location = CLLocationCoordinate2DMake(NAN, NAN);
+        location = event.location;
+        if (!isnan(location.latitude) && !isnan(location.longitude)) {
+            APEventAnnotation *annotation = [[APEventAnnotation alloc] initWithEvent:event];
+            [self.venueAnnotations addObject:annotation];
+            if(isnan(minx))
+                minx = location.longitude;
+            else
+                minx = MIN(minx, location.longitude);
+            if(isnan(maxx))
+                maxx = location.longitude;
+            else
+                maxx = MAX(maxx, location.longitude);
+            if(isnan(miny))
+                miny = location.latitude;
+            else
+                miny = MIN(miny, location.latitude);
+            if(isnan(maxy))
+                maxy = location.latitude;
+            else
+                maxy = MAX(maxy, location.latitude);
+        }
+    }
+    CLLocationCoordinate2D currentLocation = self.currentLocation.coordinate;
+    
+    if(isnan(minx))
+        minx = currentLocation.longitude;
+    else
+        minx = MIN(minx, currentLocation.longitude);
+    if(isnan(maxx))
+        maxx = currentLocation.longitude;
+    else
+        maxx = MAX(maxx, currentLocation.longitude);
+    if(isnan(miny))
+        miny = currentLocation.latitude;
+    else
+        miny = MIN(miny, currentLocation.latitude);
+    if(isnan(maxy))
+        maxy = currentLocation.latitude;
+    else
+        maxy = MAX(maxy, currentLocation.latitude);
+    
+    if (self.venueAnnotations != nil) {
+        [self.mapView addAnnotations:self.venueAnnotations];
+    }
+    
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    span.latitudeDelta = (maxx - minx) + 0.002;
+    span.longitudeDelta = (maxy - miny) + 0.002;
+    
+    region.span = span;
+    region.center = CLLocationCoordinate2DMake((maxy + miny)/2, (maxx + minx)/2);
+
+    if (self.venues.count > 0 && !isnan(region.center.latitude) && !isnan(region.center.longitude)) {
+        [self.mapView setCenterCoordinate:region.center animated:NO];
+        [self.mapView setRegion:region animated:NO];
+        [self.mapView regionThatFits:region];
+    }
+}
+
+- (void)alterMap {
+    self.mapView.showsUserLocation = YES;
+    
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.05;
+    span.longitudeDelta = 0.05;
+    
+    region.span = span;
+    region.center = self.currentLocation.coordinate;
+    
+    [self.mapView setCenterCoordinate:region.center animated:NO];
+    [self.mapView setRegion:region animated:NO];
+    [self.mapView regionThatFits:region];
+}
+
 
 #pragma mark - UISearchBarDelegate Methods
 
@@ -188,6 +301,8 @@
 
 -(void)refreshEvents {
   if ([PFUser currentUser] && !self.initialSearch) {
+      [self.mapView removeAnnotations:self.venueAnnotations];
+      [self.venueAnnotations removeAllObjects];
       [self.locationManager startUpdatingLocation];
   }
 }
@@ -214,7 +329,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"NearbyEventCell";
+    static NSString *CellIdentifier = @"MyEventCell";
     APSearchEventTableViewCell *cell = (APSearchEventTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[APSearchEventTableViewCell alloc] init];

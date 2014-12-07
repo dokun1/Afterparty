@@ -12,7 +12,8 @@
 
 @protocol FriendInviteDelegate <NSObject>
 
--(void)didConfirmInvitees:(NSArray*)invitees forController:(APInviteFriendsViewController*)controller;
+- (void)didConfirmInvitees:(NSArray *)invitees forController:(APInviteFriendsViewController *)controller;
+- (void)didUpdateInvitees:(NSArray *)invitees forController:(APInviteFriendsViewController *)controller;
 
 @end
 

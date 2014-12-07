@@ -144,6 +144,7 @@
 
 
 -(void)saveImageToCameraRoll {
+    [PFAnalytics trackEvent:@"photoSaved"];
     self.longPressed = NO;
     
     MPParallaxCollectionViewCell *cell = (MPParallaxCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0]];
