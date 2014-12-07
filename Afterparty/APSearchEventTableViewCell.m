@@ -12,8 +12,7 @@
 
 @implementation APSearchEventTableViewCell
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     // Initialization code
   [_eventNameLabel styleForType:LabelTypeTableViewCellTitle];
   [_countdownLabel styleForType:LabelTypeTableViewCellAttribute];
@@ -21,11 +20,8 @@
   _countdownLabel.textColor = [UIColor afterpartyOffWhiteColor];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 -(void)setCoverPhotoID:(NSString *)coverPhotoID {

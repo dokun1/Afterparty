@@ -137,6 +137,19 @@ typedef void (^APProgressBlock)(int percentDone);
          failure:(APFailureErrorBlock)failureBlock;
 
 /**
+ *  Updates list of event attendees to include your PFUser objectID
+ *
+ *  @param event        APEvent object to query using objectID
+ *  @param successBlock Returns void on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.10
+ */
+- (void)updateEventForNewAttendee:(APEvent *)event
+                          success:(APSuccessVoidBlock)successBlock
+                          failure:(APFailureErrorBlock)failureBlock;
+
+/**
  *  When you join an event, this adds the eventID to an array on the server under your username so that you always know which events you are actively participating in.
  *
  *  @param eventID      NSString for the eventID that you are joining
@@ -179,25 +192,15 @@ typedef void (^APProgressBlock)(int percentDone);
                failure:(APFailureErrorBlock)failureBlock;
 
 /**
- *  Uploads image to Parse after it has been taken and confirmed. Probably needs refactoring, because will only return success if image, thumbnail, and PFObject created properly on server
+ *  Uploads image to Parse after it has been taken and confirmed.
  *
- *  @param image         UIImage being uploaded, full resolution
- *  @param thumbnail     UIImage of thumbnail of image, will show in collage for myEvent
+ *  @param image         UIImage being uploaded, full resolution. Thumbnail gets created on server automatically.
  *  @param eventID       NSString for eventID for which the photo is being uploaded
  *  @param successBlock  Returns YES as BOOL
  *  @param failureBlock  Returns NSError
- *  @param progressBlock Returns int of progress of image upload
  *
  *  @since 0.6.0
  */
-
--(void)uploadImage:(UIImage *)image
-     withThumbnail:(UIImage *)thumbnail
-        forEventID:(NSString *)eventID
-           success:(APSuccessBooleanBlock)successBlock
-           failure:(APFailureErrorBlock)failureBlock
-          progress:(APProgressBlock)progressBlock;
-
 - (void)uploadImage:(UIImage*)image forEventID:(NSString*)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
 
 /**
@@ -226,6 +229,19 @@ typedef void (^APProgressBlock)(int percentDone);
 -(void)getURLForImageRefID:(NSString *)refID
                    success:(APSuccessStringBlock)successBlock
                    failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Informs the server that the specified image needs to be reported for inappropriate content
+ *
+ *  @param refID        NSString with the reference ID for the image being reported
+ *  @param successBlock Returns BOOL if the photo has been reported three times or more, meaning it needs to be deleted from the feed
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.11
+ */
+- (void)reportImageForImageRefID:(NSString *)refID
+                         success:(APSuccessBooleanBlock)successBlock
+                         failure:(APFailureErrorBlock)failureBlock;
 
 /**
  *  Gets sheet of metadata containing information for each image that comprises an event. This must be called upon opening and refreshing current event screen

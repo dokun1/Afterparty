@@ -367,5 +367,21 @@
     
 }
 
++ (NSArray *)getReportedPhotoIDs {
+    NSArray *photoIDArray = [self loadArrayForPath:@"reportedPhotos"];
+    if (!photoIDArray) {
+        photoIDArray = @[];
+    }
+    return photoIDArray;
+}
+
++ (void)saveReportedPhotoID:(NSString *)photoID {
+    NSMutableArray *reportedPhotos = [[self getReportedPhotoIDs] mutableCopy];
+    if (![reportedPhotos containsObject:photoID]) {
+        [reportedPhotos addObject:photoID];
+    }
+    [self saveArray:reportedPhotos forPath:@"reportedPhotos"];
+}
+
 
 @end

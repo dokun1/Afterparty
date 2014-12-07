@@ -44,7 +44,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tabBarController setSelectedIndex:1];    
+    [self.tabBarController setSelectedIndex:2];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

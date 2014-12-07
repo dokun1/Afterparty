@@ -9,6 +9,13 @@
 #import "APPhotoCell.h"
 #import <UIKit+AFNetworking.h>
 
+@interface APPhotoCell ()
+
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
+@property (nonatomic) BOOL longPressed;
+
+@end
+
 @implementation APPhotoCell
 
 @synthesize imageView = _imageView;
@@ -17,6 +24,9 @@
     if (self = [super initWithCoder:aDecoder]) {
         //init logic here
         _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
+        self.longPressRecognizer.minimumPressDuration = 0.7;
+        [self addGestureRecognizer:self.longPressRecognizer];
     }
     return self;
 }
@@ -76,6 +86,20 @@
   }
   
   return newSize;
+}
+
+- (void)longPressRecognized:(UILongPressGestureRecognizer *)recognizer {
+    if (self.longPressed == YES) {
+        return;
+    }
+    self.longPressed = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"photoLongPressedNotification" object:nil userInfo:@{@"photoID":self.photoInfo.refID}];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetLongPressState) name:[NSString stringWithFormat:@"reset%@", self.photoInfo.refID] object:nil];
+}
+
+- (void)resetLongPressState {
+    self.longPressed = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:[NSString stringWithFormat:@"reset%@", self.photoInfo.refID] object:nil];
 }
 
 - (void)setSelected:(BOOL)selected {

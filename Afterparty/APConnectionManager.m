@@ -143,11 +143,25 @@
     savedEvent[@"eventImage"]             = imageFile;
     savedEvent[kPFUserProfilePhotoURLKey] = [event eventUserPhotoURL];
     savedEvent[kPFUserBlurbKey]           = [event eventUserBlurb];
+    savedEvent[@"attendees"]              = @[];
     [savedEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
       (error == nil) ? successBlock(succeeded) : failureBlock(error);
     }];
   }];
   
+}
+
+- (void)updateEventForNewAttendee:(APEvent *)event success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
+    [query getObjectInBackgroundWithId:event.objectID block:^(PFObject *eventObject, NSError *error) {
+        if (error) {
+            failureBlock(error);
+        }
+        eventObject[@"attendees"] = event.attendees;
+        [eventObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            error == nil ? successBlock() : failureBlock(error);
+        }];
+    }];
 }
 
 -(void)lookupEventByName:(NSString *)name
@@ -221,38 +235,10 @@
     photoData[@"width"] = @(image.size.width);
     photoData[@"height"] = @(image.size.height);
     photoData[@"imageFile"] = imageFile;
+    photoData[@"reports"] = @(0);
     [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         (succeeded) ? successBlock() : failureBlock(error);
     }];
-}
-
--(void)uploadImage:(UIImage *)image
-     withThumbnail:(UIImage *)thumbnail
-        forEventID:(NSString *)eventID
-           success:(APSuccessBooleanBlock)successBlock
-           failure:(APFailureErrorBlock)failureBlock
-          progress:(APProgressBlock)progressBlock {
-  
-  NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
-  NSData *thumbData = UIImageJPEGRepresentation(thumbnail, 0.6);
-  PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
-  PFFile *thumbFile = [PFFile fileWithName:@"thumb.jpg" data:thumbData];
-  NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
-  PFObject *photoData = [PFObject objectWithClassName:kPhotosParseClass];
-  
-  photoData[@"eventID"] = eventID;
-  photoData[@"timestamp"] = [NSDate date];
-  photoData[@"user"] = [[PFUser currentUser] username];
-  photoData[@"comments"] = @[];
-  photoData[@"refID"] = refID;
-  photoData[@"thumbID"] = [NSString stringWithFormat:@"THUMB%@", refID];
-  photoData[@"width"] = @(image.size.width);
-  photoData[@"height"] = @(image.size.height);
-  photoData[@"imageFile"] = imageFile;
-  photoData[@"thumbFile"] = thumbFile;
-  [photoData saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    (succeeded) ? successBlock(YES) : failureBlock(error);
-  }];
 }
 
 -(void)downloadImageMetadataForEventID:(NSString *)eventID
@@ -265,6 +251,35 @@
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
     (error == nil) ? successBlock(objects) : failureBlock(error);
   }];
+}
+
+- (void)reportImageForImageRefID:(NSString *)refID
+                         success:(APSuccessBooleanBlock)successBlock
+                         failure:(APFailureErrorBlock)failureBlock {
+    PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
+    [query whereKey:@"refID" equalTo:refID];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            failureBlock(error);
+        } else {
+            if (objects.count == 0) {
+                successBlock(YES); //return that the report was successful and delete the photo, because if the object is gone, its already been reported and deleted
+            } else {
+                PFObject *object = [objects firstObject];
+                [object incrementKey:@"reports"];
+                NSNumber *reports = object[@"reports"];
+                [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (error) {
+                        failureBlock(error);
+                    } else {
+                        BOOL shouldDelete = [reports doubleValue] >= 3;
+                        successBlock(shouldDelete);
+                    }
+                }];
+            }
+        }
+    }];
+    
 }
 
 -(void)getURLForImageRefID:(NSString *)refID

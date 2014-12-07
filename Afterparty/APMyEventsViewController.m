@@ -28,7 +28,7 @@
   [super viewDidLoad];
   self.navigationController.navigationBar.barTintColor = [UIColor afterpartyOffWhiteColor];
     
-  [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"NearbyEventCell"];
+  [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MyEventCell"];
   UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped)];
   [self.navigationItem setRightBarButtonItems:@[btnAdd]];
   self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
@@ -68,7 +68,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"NearbyEventCell";
+    static NSString *CellIdentifier = @"MyEventCell";
     APSearchEventTableViewCell *cell = (APSearchEventTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     [self configureCell:cell atIndexPath:indexPath];

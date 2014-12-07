@@ -68,8 +68,10 @@
     
     [self refreshVenues];
     
-    UIBarButtonItem *btnDismiss = [[UIBarButtonItem alloc] initWithTitle:@"DISMISS" style:UIBarButtonItemStylePlain target:self action:@selector(dismissScreen)];
-    [self.navigationItem setRightBarButtonItems:@[btnDismiss]];
+    if (self.shouldShowDismissButton) {
+        UIBarButtonItem *btnDismiss = [[UIBarButtonItem alloc] initWithTitle:@"DISMISS" style:UIBarButtonItemStylePlain target:self action:@selector(dismissScreen)];
+        [self.navigationItem setRightBarButtonItems:@[btnDismiss]];
+    }
     
     [self.tableView registerNib:[UINib nibWithNibName:@"APVenueTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"APVenueCell"];
 }
