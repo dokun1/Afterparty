@@ -627,5 +627,22 @@
     }
 }
 
+- (void)attemptEventDeleteForPhotoCleanupForEventID:(NSString *)eventID success:(APSuccessNumberBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    [PFCloud callFunctionInBackground:@"attemptPhotoCleanup" withParameters:@{@"eventID":eventID} block:^(id object, NSError *error) {
+        error == nil ? successBlock((NSNumber *)object) : failureBlock(error);
+    }];
+}
+
+- (void)deleteEventForEventID:(NSString *)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    [[PFQuery queryWithClassName:kEventSearchParseClass] getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
+        if (error) {
+            failureBlock(error);
+        }
+        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            error == nil ? successBlock() : failureBlock(error);
+        }];
+    }];
+}
+
 
 @end

@@ -10,6 +10,8 @@
 #import "APConnectionManager.h"
 #import "APConstants.h"
 
+static NSString *kExpiredEventsKey = @"expiredEvents";
+
 @implementation APUtil
 
 +(void)setNetworkActivityIndicator:(BOOL)status {
@@ -195,15 +197,48 @@
 + (NSMutableArray*)loadSavedEvents {
     NSArray *eventsArray = [self loadArrayForPath:@"myEventsArray"];
     NSMutableArray *myEventsArray = [eventsArray mutableCopy];
+    NSMutableArray *expiredEvents = [NSMutableArray array];
     [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
         NSDictionary *eventInfo = [eventDict allValues].firstObject;
         NSDate *deleteDate = [eventInfo objectForKey:@"deleteDate"];
         NSComparisonResult result = [deleteDate compare:[NSDate date]];
-        if (result == NSOrderedAscending)
+        if (result == NSOrderedAscending) {
             [myEventsArray removeObject:eventDict];
+            [expiredEvents addObject:eventDict];
+        }
     }];
     [self saveArray:[NSArray arrayWithArray:myEventsArray] forPath:@"myEventsArray"];
+    [self attemptExpiredEventDestructionWithNewEvents:expiredEvents];
     return myEventsArray;
+}
+
++ (void)attemptExpiredEventDestructionWithNewEvents:(NSArray *)newEvents {
+    NSArray *expiredEvents = [self loadArrayForPath:kExpiredEventsKey];
+    if (!expiredEvents) {
+        expiredEvents = @[];
+    }
+    NSMutableArray *newExpiredEvents = [expiredEvents mutableCopy];
+    if (newEvents.count > 0) {
+        [newExpiredEvents addObjectsFromArray:newEvents];
+    }
+    [self saveArray:[NSArray arrayWithArray:newExpiredEvents] forPath:kExpiredEventsKey];
+    if (newExpiredEvents.count > 0) {
+        NSDictionary *attemptDict = (NSDictionary *)newExpiredEvents.firstObject;
+        NSString *eventID = attemptDict.allKeys.firstObject;
+        [[APConnectionManager sharedManager] attemptEventDeleteForPhotoCleanupForEventID:eventID success:^(NSNumber *number) {
+            if ([number doubleValue] == 0) {
+                [[APConnectionManager sharedManager] deleteEventForEventID:eventID success:^{
+                    NSLog(@"removing event with eventID %@", eventID);
+                    [newExpiredEvents removeObject:attemptDict];
+                    [self saveArray:[NSArray arrayWithArray:newExpiredEvents] forPath:kExpiredEventsKey];
+                } failure:^(NSError *error) {
+                    NSLog(@"could not delete event object for eventID %@", eventID);
+                }];
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"could not attempt destruction for eventID %@", eventID);
+        }];
+    }
 }
 
 + (void)loadMyEventsOnLoginWithCompletion:(void (^)())completionBlock {

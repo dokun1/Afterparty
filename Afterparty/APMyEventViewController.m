@@ -274,18 +274,21 @@
     int seconds = m.rem;
     
     NSString *hoursStr, *minutesStr, *secondsStr;
-    if (hours < 10)
+    if (hours < 10) {
         hoursStr = [NSString stringWithFormat:@"0%d", hours];
-    else
+    } else {
         hoursStr = [NSString stringWithFormat:@"%d", hours];
-    if (minutes < 10)
+    }
+    if (minutes < 10) {
         minutesStr = [NSString stringWithFormat:@"0%d", minutes];
-    else
+    } else {
         minutesStr = [NSString stringWithFormat:@"%d", minutes];
-    if (seconds < 10)
+    }
+    if (seconds < 10) {
         secondsStr = [NSString stringWithFormat:@"0%d", seconds];
-    else
+    } else {
         secondsStr = [NSString stringWithFormat:@"%d", seconds];
+    }
     
     if (seconds < 0)
         [self dismissButtonTapped];

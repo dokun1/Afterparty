@@ -53,7 +53,6 @@
 		504CA3BA1940C035003EF9EB /* button_pluswhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3AD1940C035003EF9EB /* button_pluswhite.png */; };
 		504CA3BB1940C035003EF9EB /* button_savetocloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3AE1940C035003EF9EB /* button_savetocloud.png */; };
 		504CA3BC1940C035003EF9EB /* icon_checkempty.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3AF1940C035003EF9EB /* icon_checkempty.png */; };
-		504CA3BD1940C035003EF9EB /* icon_checkgreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3B01940C035003EF9EB /* icon_checkgreen.png */; };
 		504CA3BE1940C035003EF9EB /* icon_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3B11940C035003EF9EB /* icon_close.png */; };
 		504CA3BF1940C035003EF9EB /* icon_lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3B21940C035003EF9EB /* icon_lock.png */; };
 		504CA3C01940C035003EF9EB /* icon_magnifyingglass.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3B31940C035003EF9EB /* icon_magnifyingglass.png */; };
@@ -72,7 +71,6 @@
 		5091A43E1A2B47AC00890639 /* APSettingsTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */; };
 		5091A4401A2B495800890639 /* APWhatsNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 5091A43F1A2B495800890639 /* APWhatsNew.json */; };
 		5091A4421A2B4E6200890639 /* APTermsAndConditions.json in Resources */ = {isa = PBXBuildFile; fileRef = 5091A4411A2B4E6200890639 /* APTermsAndConditions.json */; };
-		509B439319942584004CC33D /* button_redCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 509B439219942584004CC33D /* button_redCancel.png */; };
 		509F18CC1A2BB60400C37742 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509F18CB1A2BB60400C37742 /* Social.framework */; };
 		509F18CE1A2BB60B00C37742 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509F18CD1A2BB60B00C37742 /* Accounts.framework */; };
 		509FE67B1A33A8A6003FFD3F /* APCreateEventTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509FE67A1A33A8A6003FFD3F /* APCreateEventTimeViewController.m */; };
@@ -223,7 +221,6 @@
 		504CA3AD1940C035003EF9EB /* button_pluswhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_pluswhite.png; sourceTree = "<group>"; };
 		504CA3AE1940C035003EF9EB /* button_savetocloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_savetocloud.png; sourceTree = "<group>"; };
 		504CA3AF1940C035003EF9EB /* icon_checkempty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_checkempty.png; sourceTree = "<group>"; };
-		504CA3B01940C035003EF9EB /* icon_checkgreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_checkgreen.png; sourceTree = "<group>"; };
 		504CA3B11940C035003EF9EB /* icon_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_close.png; sourceTree = "<group>"; };
 		504CA3B21940C035003EF9EB /* icon_lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_lock.png; sourceTree = "<group>"; };
 		504CA3B31940C035003EF9EB /* icon_magnifyingglass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_magnifyingglass.png; sourceTree = "<group>"; };
@@ -244,7 +241,6 @@
 		5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsTextViewController.m; sourceTree = "<group>"; };
 		5091A43F1A2B495800890639 /* APWhatsNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = APWhatsNew.json; sourceTree = "<group>"; };
 		5091A4411A2B4E6200890639 /* APTermsAndConditions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = APTermsAndConditions.json; sourceTree = "<group>"; };
-		509B439219942584004CC33D /* button_redCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_redCancel.png; sourceTree = "<group>"; };
 		509F18CB1A2BB60400C37742 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Social.framework; sourceTree = DEVELOPER_DIR; };
 		509F18CD1A2BB60B00C37742 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Accounts.framework; sourceTree = DEVELOPER_DIR; };
 		509FE6791A33A8A6003FFD3F /* APCreateEventTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventTimeViewController.h; sourceTree = "<group>"; };
@@ -659,12 +655,10 @@
 				504CA3AA1940C035003EF9EB /* button_flashon.png */,
 				504CA3AB1940C035003EF9EB /* button_frontfacingcamera.png */,
 				504CA3AC1940C035003EF9EB /* button_plusblack.png */,
-				509B439219942584004CC33D /* button_redCancel.png */,
 				504CA3AD1940C035003EF9EB /* button_pluswhite.png */,
 				504CA3AE1940C035003EF9EB /* button_savetocloud.png */,
 				50C015B919697BF500E9E26F /* default_avatar_large.png */,
 				504CA3AF1940C035003EF9EB /* icon_checkempty.png */,
-				504CA3B01940C035003EF9EB /* icon_checkgreen.png */,
 				504CA3B11940C035003EF9EB /* icon_close.png */,
 				504CA3B21940C035003EF9EB /* icon_lock.png */,
 				504CA3B31940C035003EF9EB /* icon_magnifyingglass.png */,
@@ -811,7 +805,6 @@
 				504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */,
 				5044E5691997FAF1003D5153 /* Images.xcassets in Resources */,
 				50F64EC51952F40900E0B8DC /* APPhotoCell.xib in Resources */,
-				504CA3BD1940C035003EF9EB /* icon_checkgreen.png in Resources */,
 				504CA3C71940C043003EF9EB /* stock4.jpeg in Resources */,
 				504CA3B81940C035003EF9EB /* button_frontfacingcamera.png in Resources */,
 				504CA3BF1940C035003EF9EB /* icon_lock.png in Resources */,
@@ -829,7 +822,6 @@
 				50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */,
 				5091A4421A2B4E6200890639 /* APTermsAndConditions.json in Resources */,
 				504CA3B71940C035003EF9EB /* button_flashon.png in Resources */,
-				509B439319942584004CC33D /* button_redCancel.png in Resources */,
 				504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */,
 				50105672196AFA0C00D7F800 /* myEventsTab.png in Resources */,
 				504CA3C01940C035003EF9EB /* icon_magnifyingglass.png in Resources */,

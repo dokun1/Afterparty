@@ -18,6 +18,7 @@ typedef void (^APSuccessDataBlock)(NSData *data);
 typedef void (^APSuccessPFUserBlock)(PFUser *user);
 typedef void (^APSuccessStringBlock)(NSString *string);
 typedef void (^APSuccessDictionaryBlock)(NSDictionary *dictionary);
+typedef void (^APSuccessNumberBlock)(NSNumber *number);
 typedef void (^APSuccessVoidBlock)(void);
 
 typedef void (^APFailureErrorBlock)(NSError *error);
@@ -476,5 +477,22 @@ typedef void (^APProgressBlock)(int percentDone);
 - (void)saveUserEmail:(NSString*)email
               success:(APSuccessVoidBlock)successBlock
               failure:(APFailureErrorBlock)failureBlock;
+
+
+/**
+ *  Attempts to delete photos for a particular event. It calls a server function that tries to delete 10 photos at a time for a given event on the server. This is to try and sneak around the rate limit!
+ *
+ *  @param eventID      NSString for eventID that we are trying to delete
+ *  @param successBlock Returns number of photos left for that event
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 0.9.12
+ */
+- (void)attemptEventDeleteForPhotoCleanupForEventID:(NSString *)eventID
+                                            success:(APSuccessNumberBlock)successBlock
+                                            failure:(APFailureErrorBlock)failureBlock;
+
+- (void)deleteEventForEventID:(NSString *)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
+
 
 @end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="APImagePreviewViewController">
@@ -22,11 +22,11 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWX-WK-1XT" customClass="APButton">
-                    <rect key="frame" x="221" y="475" width="79" height="73"/>
+                    <rect key="frame" x="240" y="494" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="79" id="YtG-fn-L7P"/>
+                        <constraint firstAttribute="width" constant="44" id="Sqx-0q-SqQ"/>
                     </constraints>
-                    <state key="normal" image="icon_checkgreen.png">
+                    <state key="normal" image="icon_checkgreen">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -34,12 +34,12 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHh-q6-n0v" customClass="APButton">
-                    <rect key="frame" x="20" y="475" width="73" height="73"/>
+                    <rect key="frame" x="36" y="494" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="73" id="0ck-S3-yP7"/>
-                        <constraint firstAttribute="height" constant="73" id="q8X-73-ecF"/>
+                        <constraint firstAttribute="height" constant="44" id="5lt-Oc-SVw"/>
+                        <constraint firstAttribute="width" constant="44" id="AuQ-HH-wt8"/>
                     </constraints>
-                    <state key="normal" image="button_redCancel.png">
+                    <state key="normal" image="button_redCancel">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -49,21 +49,21 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="gWX-WK-1XT" secondAttribute="trailing" constant="20" symbolic="YES" id="5Yr-s2-ahl"/>
-                <constraint firstItem="qHh-q6-n0v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" symbolic="YES" id="G3i-Fn-cak"/>
+                <constraint firstItem="gWX-WK-1XT" firstAttribute="bottom" secondItem="qHh-q6-n0v" secondAttribute="bottom" id="Nqd-0j-plm"/>
+                <constraint firstItem="gWX-WK-1XT" firstAttribute="top" secondItem="qHh-q6-n0v" secondAttribute="top" id="O0v-Aj-7CU"/>
                 <constraint firstItem="IaT-jJ-Z3Q" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="SF0-VB-E9Z"/>
-                <constraint firstItem="qHh-q6-n0v" firstAttribute="bottom" secondItem="gWX-WK-1XT" secondAttribute="bottom" id="Tuc-kS-khE"/>
                 <constraint firstItem="IaT-jJ-Z3Q" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Zmy-th-s1I"/>
-                <constraint firstAttribute="bottom" secondItem="qHh-q6-n0v" secondAttribute="bottom" constant="20" symbolic="YES" id="cKh-s6-Hkx"/>
-                <constraint firstItem="qHh-q6-n0v" firstAttribute="top" secondItem="gWX-WK-1XT" secondAttribute="top" id="dju-Ti-gGJ"/>
+                <constraint firstItem="qHh-q6-n0v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="36" id="ad1-QD-9uo"/>
                 <constraint firstAttribute="trailing" secondItem="IaT-jJ-Z3Q" secondAttribute="trailing" id="gld-0t-G40"/>
+                <constraint firstAttribute="bottom" secondItem="qHh-q6-n0v" secondAttribute="bottom" constant="30" id="n7Q-mf-6Fd"/>
                 <constraint firstAttribute="bottom" secondItem="IaT-jJ-Z3Q" secondAttribute="bottom" id="uoG-YT-bZb"/>
+                <constraint firstAttribute="trailing" secondItem="gWX-WK-1XT" secondAttribute="trailing" constant="36" id="xS4-Zt-Zoi"/>
             </constraints>
         </view>
     </objects>
     <resources>
-        <image name="button_redCancel.png" width="63" height="63"/>
-        <image name="icon_checkgreen.png" width="44" height="44"/>
+        <image name="button_redCancel" width="100" height="100"/>
+        <image name="icon_checkgreen" width="100" height="100"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
