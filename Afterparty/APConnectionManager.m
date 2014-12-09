@@ -13,6 +13,7 @@
 #import <Foursquare-API-v2/Foursquare2.h>
 #import "FSConverter.h"
 #import "APConstants.h"
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 @implementation APConnectionManager
 

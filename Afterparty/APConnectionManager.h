@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "APComment.h"
 #import "APEvent.h"
+#import <Social/Social.h>
 
 typedef void (^APSuccessBooleanBlock)(BOOL succeeded);
 typedef void (^APSuccessBooleanPlusObjectBlock)(BOOL succeeded, id object);

@@ -29,7 +29,6 @@
 		504CA32F19408C82003EF9EB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 504CA31119408C82003EF9EB /* UIKit.framework */; };
 		504CA33719408C82003EF9EB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 504CA33519408C82003EF9EB /* InfoPlist.strings */; };
 		504CA33919408C82003EF9EB /* AfterpartyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA33819408C82003EF9EB /* AfterpartyTests.m */; };
-		504CA3441940941A003EF9EB /* APRestConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA3431940941A003EF9EB /* APRestConnectionManager.m */; };
 		504CA347194096A8003EF9EB /* APUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA346194096A8003EF9EB /* APUser.m */; };
 		504CA34B194096BA003EF9EB /* APEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA34A194096BA003EF9EB /* APEvent.m */; };
 		504CA34E194096C5003EF9EB /* APPhotoInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504CA34D194096C5003EF9EB /* APPhotoInfo.m */; };
@@ -163,8 +162,6 @@
 		504CA33419408C82003EF9EB /* AfterpartyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AfterpartyTests-Info.plist"; sourceTree = "<group>"; };
 		504CA33619408C82003EF9EB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		504CA33819408C82003EF9EB /* AfterpartyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AfterpartyTests.m; sourceTree = "<group>"; };
-		504CA3421940941A003EF9EB /* APRestConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APRestConnectionManager.h; sourceTree = "<group>"; };
-		504CA3431940941A003EF9EB /* APRestConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRestConnectionManager.m; sourceTree = "<group>"; };
 		504CA345194096A8003EF9EB /* APUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APUser.h; sourceTree = "<group>"; };
 		504CA346194096A8003EF9EB /* APUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APUser.m; sourceTree = "<group>"; };
 		504CA349194096BA003EF9EB /* APEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEvent.h; sourceTree = "<group>"; };
@@ -415,8 +412,6 @@
 				50D10E3D1A2093D600D185CC /* Launch Screen.xib */,
 				5048D4A8194A1D0F0092178E /* APConnectionManager.h */,
 				5048D4A9194A1D0F0092178E /* APConnectionManager.m */,
-				504CA3421940941A003EF9EB /* APRestConnectionManager.h */,
-				504CA3431940941A003EF9EB /* APRestConnectionManager.m */,
 				50C1E08D196704B900105E64 /* APValueTransformer.h */,
 				50C1E08E196704B900105E64 /* APValueTransformer.m */,
 				50C015E3196AC64600E9E26F /* APConstants.h */,
@@ -910,7 +905,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				50F64EBE1952F40900E0B8DC /* APImagePreviewViewController.m in Sources */,
-				504CA3441940941A003EF9EB /* APRestConnectionManager.m in Sources */,
 				C9AEB3C019C49482009915BF /* APSearchEventDateLocationTableViewCell.m in Sources */,
 				501232B419BB73DF007099A4 /* APAVSessionController.m in Sources */,
 				50C015E5196AC64600E9E26F /* APConstants.m in Sources */,

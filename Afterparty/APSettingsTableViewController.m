@@ -20,6 +20,7 @@
 #import "APSettingsTextViewController.h"
 #import "UIImage+APImage.h"
 #import <Bolts/Bolts.h>
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 static NSString *kVersionWhatsNewFilePath = @"APWhatsNew";
 static NSString *kTermsAndConditionsFilePath = @"APTermsAndConditions";
