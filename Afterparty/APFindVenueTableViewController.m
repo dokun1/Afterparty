@@ -62,7 +62,11 @@
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
-    [self.locationManager requestWhenInUseAuthorization];
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+    }
     
     [self.tableView setBackgroundColor:[UIColor colorWithHexString:@"e5e5e5" withAlpha:1.0]];
     

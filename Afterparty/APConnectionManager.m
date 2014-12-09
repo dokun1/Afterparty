@@ -635,6 +635,10 @@
 }
 
 - (void)deleteEventForEventID:(NSString *)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    NSMutableArray *eventsJoined = [[PFUser currentUser][kPFUserEventsJoinedKey] mutableCopy];
+    [eventsJoined removeObject:eventID];
+    [[PFUser currentUser] setObject:eventsJoined forKey:kPFUserEventsJoinedKey];
+    [[PFUser currentUser] saveEventually];
     [[PFQuery queryWithClassName:kEventSearchParseClass] getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
         if (error) {
             failureBlock(error);
