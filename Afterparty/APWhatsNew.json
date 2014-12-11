@@ -19,5 +19,9 @@
         "2":"Map view added for nearby events",
         "3":"Ability to report or save photos added on long press",
         "4":"Added website link to profile page"
+    },
+    "0.9.12": {
+        "1":"Fixed bug where iOS 7 users couldn't create event",
+        "2":"Javascript changes on server for proper event destruction"
     }
 }
