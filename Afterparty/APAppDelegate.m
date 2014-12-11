@@ -11,6 +11,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "APConstants.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 @implementation APAppDelegate
 
@@ -30,6 +31,7 @@
     [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
+    
 
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
   
@@ -37,13 +39,6 @@
     [[UIBarButtonItem appearance] setTintColor:[UIColor afterpartyBlackColor]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:kRegularFont size:12.0f]];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kRegularFont size:11.f], NSFontAttributeName, nil] forState:UIControlStateNormal];
-  
-
-//    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
-//        [application registerForRemoteNotifications];
-//    } else {
-//        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
-//    }
     
     [SVProgressHUD setFont:[UIFont fontWithName:kRegularFont size:13.f]];
     [SVProgressHUD setBackgroundColor:[UIColor afterpartyTealBlueColor]];

@@ -13,6 +13,7 @@
 #import <Foursquare-API-v2/Foursquare2.h>
 #import "FSConverter.h"
 #import "APConstants.h"
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 
 @implementation APConnectionManager
 
@@ -625,6 +626,27 @@
             succeeded?successBlock():failureBlock(nil);
         }];
     }
+}
+
+- (void)attemptEventDeleteForPhotoCleanupForEventID:(NSString *)eventID success:(APSuccessNumberBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    [PFCloud callFunctionInBackground:@"attemptPhotoCleanup" withParameters:@{@"eventID":eventID} block:^(id object, NSError *error) {
+        error == nil ? successBlock((NSNumber *)object) : failureBlock(error);
+    }];
+}
+
+- (void)deleteEventForEventID:(NSString *)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    NSMutableArray *eventsJoined = [[PFUser currentUser][kPFUserEventsJoinedKey] mutableCopy];
+    [eventsJoined removeObject:eventID];
+    [[PFUser currentUser] setObject:eventsJoined forKey:kPFUserEventsJoinedKey];
+    [[PFUser currentUser] saveEventually];
+    [[PFQuery queryWithClassName:kEventSearchParseClass] getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
+        if (error) {
+            failureBlock(error);
+        }
+        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            error == nil ? successBlock() : failureBlock(error);
+        }];
+    }];
 }
 
 

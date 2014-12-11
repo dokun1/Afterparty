@@ -535,7 +535,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     [numbers addObject:contactDict[@"phone"]];
   }];
     
-  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://afterparty.io/event/%@", eventID];
+  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://afterparty.io/event.html?eventID=%@", eventID];
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;
