@@ -719,6 +719,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
         [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
         isComplete = NO;
     }
+    if (!self.privateEventSwitch.isOn && [self.chooseEventPasswordButton.imageView.image isEqual:[UIImage imageNamed:@"button_plusblack"]]) {
+        [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
+        isComplete = NO;
+    }
     
     if (!isComplete) {
         [self changeEventButtonColor];
