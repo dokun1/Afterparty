@@ -51,11 +51,10 @@
 }
 
 - (IBAction)retakeTapped:(id)sender {
-    [self.delegate imageDenied];
-    
+    [self.delegate controllerDidNotApproveImage:self];
 }
 
 - (IBAction)acceptTapped:(id)sender {
-    [self.delegate imageApproved:self.image];
+    [self.delegate controller:self approvedImage:self.image];
 }
 @end

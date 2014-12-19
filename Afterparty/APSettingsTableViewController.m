@@ -43,6 +43,7 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 @property (weak, nonatomic) IBOutlet APLabel *versionFieldLabel;
 @property (weak, nonatomic) IBOutlet APLabel *termsAndConditionsLabel;
 @property (weak, nonatomic) IBOutlet APLabel *websiteLabel;
+@property (weak, nonatomic) IBOutlet APLabel *introScreenLabel;
 @property (weak, nonatomic) IBOutlet APLabel *signOutLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *facebookIconView;
 @property (weak, nonatomic) IBOutlet UIImageView *twitterIconView;
@@ -126,10 +127,12 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     [self.versionFieldLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.termsAndConditionsLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.websiteLabel styleForType:LabelTypeTableViewCellAttribute];
+    [self.introScreenLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.signOutLabel styleForType:LabelTypeTableViewCellAttribute];
     self.versionFieldLabel.textColor = [UIColor afterpartyBlackColor];
     self.signOutLabel.textColor = [UIColor afterpartyBlackColor];
     self.websiteLabel.textColor = [UIColor afterpartyBlackColor];
+    self.introScreenLabel.textColor = [UIColor afterpartyBlackColor];
     self.termsAndConditionsLabel.textColor = [UIColor afterpartyBlackColor];
     self.facebookLinkLabel.text = self.isLinkedWithFacebook ? @"facebook linked!" : @"link with facebook";
     self.facebookIconView.image = self.isLinkedWithFacebook ? [UIImage imageNamed:@"facebookLogo"] : [UIImage imageNamed:@"facebookLogoGray"];
@@ -175,6 +178,9 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             [self websiteButtonTapped];
         }
         if (indexPath.row == 3) {
+            [self introScreenButtonTapped];
+        }
+        if (indexPath.row == 4) {
             [self signOutButtonTapped];
         }
     }
@@ -252,6 +258,10 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://afterparty.io"]];
 }
 
+- (void)introScreenButtonTapped {
+    [[[UIAlertView alloc] initWithTitle:@"Coming soon" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    //TODO: add method to show intro screen again after we have created it
+}
 
 - (void)signOutButtonTapped {
     [PFUser logOut];

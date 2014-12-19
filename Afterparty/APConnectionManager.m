@@ -144,7 +144,7 @@
     savedEvent[@"eventImage"]             = imageFile;
     savedEvent[kPFUserProfilePhotoURLKey] = [event eventUserPhotoURL];
     savedEvent[kPFUserBlurbKey]           = [event eventUserBlurb];
-    savedEvent[@"attendees"]              = @[];
+    savedEvent[@"attendees"]              = @[[PFUser currentUser].objectId];
     [savedEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
       (error == nil) ? successBlock(succeeded) : failureBlock(error);
     }];
@@ -248,6 +248,7 @@
   if (!eventID) return;
   PFQuery *query = [PFQuery queryWithClassName:kPhotosParseClass];
   [query whereKey:@"eventID" equalTo:eventID];
+    [query setLimit:1000];
   [query orderByDescending:@"createdAt"];
   [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
     (error == nil) ? successBlock(objects) : failureBlock(error);

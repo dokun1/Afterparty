@@ -17,7 +17,8 @@
 
 @interface APMyEventsViewController () <CreateEventDelegate>
 
-@property (strong, nonatomic) NSArray *events;
+@property (nonatomic, strong) NSArray *events;
+@property (nonatomic, strong) NSString *pushToEventID;
 
 @end
 
@@ -32,6 +33,14 @@
   UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTapped)];
   [self.navigationItem setRightBarButtonItems:@[btnAdd]];
   self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
+    self.pushToEventID = @"";
+    
+    if (!([self.tableView numberOfRowsInSection:0] > 0)) {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"startHere"]];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.tableView addSubview:imageView];
+        self.tableView.backgroundView = imageView;
+    }
     
 }
 
@@ -43,6 +52,18 @@
     [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *events) {
         self.events = events;
         [self.tableView reloadData];
+        if (![self.pushToEventID isEqualToString:@""]) {
+            NSDictionary *pushEventDict = @{};
+            for (NSDictionary *eventDict in events) {
+                NSString *checkEventID = eventDict.allKeys.firstObject;
+                if ([checkEventID isEqualToString:self.pushToEventID]) {
+                    pushEventDict = eventDict;
+                    break;
+                }
+            }
+            self.pushToEventID = @"";
+            [self performSegueWithIdentifier:kMyEventSelectedSegue sender:pushEventDict];
+        }
     }];
 }
 
@@ -57,8 +78,10 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.events.count > 0) {
+        self.tableView.backgroundView = nil;
+    }
     return [self.events count];
 }
 
@@ -148,16 +171,8 @@
 
 - (void)controllerDidFinish:(APCreateEventViewController *)controller withEventID:(NSString *)eventID{
     [self.tabBarController setSelectedIndex:1];
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *events) {
-        [events enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
-            NSString *checkEventID = eventDict.allKeys.firstObject;
-            if ([checkEventID isEqualToString:eventID]) {
-                [self performSegueWithIdentifier:kMyEventSelectedSegue sender:eventDict];
-                *stop = YES;
-            }
-        }];
-    }];
+    self.pushToEventID = eventID;
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 @end

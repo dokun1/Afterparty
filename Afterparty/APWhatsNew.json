@@ -23,5 +23,9 @@
     "0.9.12": {
         "1":"Fixed bug where iOS 7 users couldn't create event",
         "2":"Javascript changes on server for proper event destruction"
+    },
+    "0.9.13": {
+        "1":"Events that have a password will not show up on the map",
+        "2":"Various bug fixes",
     }
 }

@@ -140,13 +140,13 @@
 
 #pragma mark - PreviewDelegate Methods
 
--(void)imageApproved:(UIImage *)image {
-    [self dismissViewControllerAnimated:NO completion:nil];
+- (void)controller:(APImagePreviewViewController *)controller approvedImage:(UIImage *)image {
+    [controller dismissViewControllerAnimated:NO completion:nil];
     [self.delegate capturedImage:image];
 }
 
--(void)imageDenied {
-    [self dismissViewControllerAnimated:NO completion:nil];
+- (void)controllerDidNotApproveImage:(APImagePreviewViewController *)controller {
+    [controller dismissViewControllerAnimated:NO completion:nil];
 }
 
 -(CGFloat)degreesToRadians:(CGFloat)degrees{

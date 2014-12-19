@@ -21,5 +21,6 @@
 + (UIColor*)afterpartyDarkGrayColor;
 + (UIColor*)afterpartyRedColor;
 + (UIColor*)afterpartyOffWhiteColor;
++ (UIColor*)afterpartyLoginBackgroundColor;
 
 @end

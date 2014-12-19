@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface APPhotoViewController : UIViewController 
+@interface APPhotoViewController : UIViewController
 
--(instancetype)initWithMetadata:(NSArray*)metadata andSelectedIndex:(NSInteger)selectedIndex;
+@property (strong, nonatomic) NSArray *metadata;
+@property (assign, nonatomic) NSInteger selectedIndex;
 
 @end

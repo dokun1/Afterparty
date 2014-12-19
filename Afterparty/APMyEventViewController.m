@@ -13,6 +13,8 @@
 @import AssetsLibrary;
 @import AVFoundation;
 
+static NSString *const kPhotoPreviewSegue = @"kPhotoPreviewSegue";
+
 @interface APMyEventViewController () <UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, CLLocationManagerDelegate, StackedGridLayoutDelegate, CaptureDelegate, UIAlertViewDelegate, UpdateLocationDelegate>
 
 @property (strong, nonatomic) AVCaptureSession  *session;
@@ -182,9 +184,9 @@
   
   [self.manager startUpdatingLocation];
   
-  UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonTapped)];
+    UIBarButtonItem *btnSelect = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonTapped)];
   UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
-  [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:btnSave, btnRefresh, nil]];
+  [self.navigationItem setRightBarButtonItems:@[btnSelect, btnRefresh]];
   
   self.photoMetadata = [[NSArray alloc] init];
   
@@ -205,7 +207,8 @@
                            
                        } completion:^(BOOL finished) {
                            UIBarButtonItem *btnCancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTapped)];
-                           [self.navigationItem setRightBarButtonItems:@[btnCancel]];
+                           UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(photoButtonTapped)];
+                           [self.navigationItem setRightBarButtonItems:@[btnSave, btnCancel]];
                        }];
 }
 
@@ -224,9 +227,9 @@
                        } completion:^(BOOL finished) {
                            [self deselectAllCells];
                            self.collectionView.allowsMultipleSelection = NO;
-                           UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonTapped)];
+                           UIBarButtonItem *btnSelect = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonTapped)];
                            UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
-                           [self.navigationItem setRightBarButtonItems:@[btnSave, btnRefresh]];
+                           [self.navigationItem setRightBarButtonItems:@[btnSelect, btnRefresh]];
                        }];
 }
 
@@ -409,7 +412,7 @@
   [self.blurView setAlpha:0.0f];
   [self.blurView setBlurEnabled:YES];
   [self.blurView setBlurRadius:20];
-  [SVProgressHUD showWithStatus:@"Refreshing event photos"];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
   [self.view insertSubview:self.blurView aboveSubview:self.collectionView];
   [UIView animateWithDuration:0.5 animations:^{
       [self.blurView setAlpha:1.0f];
@@ -417,7 +420,7 @@
   dispatch_async(self.photoDownloadQueue, ^{
     [self getLatestMetadata];
     dispatch_async(dispatch_get_main_queue(), ^{
-      [SVProgressHUD dismiss];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
       self.photoButton.enabled = YES;
       self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
 //      [self.collectionView reloadData];
@@ -546,11 +549,10 @@
 
 -(void)capturedImage:(UIImage *)image {
     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-    [self.navigationController popToViewController:self animated:NO];
-    [self.navigationController setNavigationBarHidden:NO];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+//    [self.navigationController popToViewController:self animated:NO];
+//    [self.navigationController setNavigationBarHidden:NO];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self uploadImage:image];
-    
 }
 
 - (void)cameraControllerDidCancel:(APCameraOverlayViewController *)controller {
@@ -560,9 +562,8 @@
 }
 
 -(void)uploadImage:(UIImage*)image {
-  [SVProgressHUD show];
     [PFAnalytics trackEvent:@"photoUpload"];
-  [[APPhotoUploadQueue sharedQueue] addPhotoToQueue:image forEventID:self.eventID];
+    [[APPhotoUploadQueue sharedQueue] addPhotoToQueue:image forEventID:self.eventID];
 }
 
 -(void)receivedRefreshNotification {
@@ -609,12 +610,20 @@
 
     }else{
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-        APPhotoViewController *vc = [[APPhotoViewController alloc] initWithMetadata:self.photoMetadata andSelectedIndex:indexPath.item];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self performSegueWithIdentifier:kPhotoPreviewSegue sender:indexPath];
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:kPhotoPreviewSegue]) {
+        NSArray *metadata = self.photoMetadata;
+        APPhotoViewController *controller = (APPhotoViewController *)segue.destinationViewController;
+        controller.metadata = metadata;
+        NSIndexPath *indexPath = (NSIndexPath *)sender;
+        controller.selectedIndex = indexPath.item;
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    }
+}
 
 #pragma mark - StackedGridLayoutDelegate Methods 
 

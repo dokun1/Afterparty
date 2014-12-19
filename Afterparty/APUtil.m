@@ -196,6 +196,9 @@ static NSString *kExpiredEventsKey = @"expiredEvents";
 
 + (NSMutableArray*)loadSavedEvents {
     NSArray *eventsArray = [self loadArrayForPath:@"myEventsArray"];
+    if (!eventsArray) {
+        eventsArray = @[];
+    }
     NSMutableArray *myEventsArray = [eventsArray mutableCopy];
     NSMutableArray *expiredEvents = [NSMutableArray array];
     [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
