@@ -30,7 +30,7 @@
     if (self.eventDescriptionTextView.text.length) {
         CGRect textNecessaryRect = [self.eventDescriptionTextView.text boundingRectWithSize: CGSizeMake(self.eventDescriptionTextView.bounds.size.width, NSUIntegerMax)
                                                                                     options: (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                                                 attributes: @{NSFontAttributeName: [UIFont systemFontOfSize:14.0]}
+                                                                                 attributes: @{NSFontAttributeName: [UIFont fontWithName:kRegularFont size:14.0]}
                                                                                     context: nil];
         cellHeight = textNecessaryRect.size.height + 10.0;
     }

@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class APImagePreviewViewController;
+
 @protocol PreviewDelegate <NSObject>
 
--(void)imageApproved:(UIImage*)image;
--(void)imageDenied;
+-(void)controller:(APImagePreviewViewController *)controller approvedImage:(UIImage*)image;
+-(void)controllerDidNotApproveImage:(APImagePreviewViewController *)controller;
 
 @end
 

@@ -84,6 +84,10 @@
   return [self colorWithHexString:@"EEEEEE" withAlpha:1.0f];
 }
 
++ (UIColor*)afterpartyLoginBackgroundColor {
+    return [self colorWithHexString:@"92C0BB" withAlpha:1.0f];
+}
+
 
 
 @end

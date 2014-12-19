@@ -86,8 +86,8 @@
   
     [self.tableView registerNib:[UINib nibWithNibName:@"APSearchEventTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"MyEventCell"];
   
-  UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshEvents)];
-  [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
+    UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshEvents)];
+    [self.navigationItem setRightBarButtonItems:@[btnRefresh]];
     self.venueAnnotations = [NSMutableArray array];
 }
 
@@ -158,7 +158,7 @@
         return nil;
     }
     if ([annotation isKindOfClass:[APEventAnnotation class]]) {
-        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
         if (annotationView == nil) {
             annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Pin"];
             annotationView.pinColor = MKPinAnnotationColorGreen;
@@ -185,6 +185,9 @@
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     for(APEvent *event in self.venues) {
+        if (![[event.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+            continue;
+        }
         CLLocationCoordinate2D location = CLLocationCoordinate2DMake(NAN, NAN);
         location = event.location;
         if (!isnan(location.latitude) && !isnan(location.longitude)) {
@@ -297,6 +300,16 @@
     } failure:^(NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"couldn't find event"];
     }];
+}
+
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSRange lowercaseCharRange = [text rangeOfCharacterFromSet:[NSCharacterSet lowercaseLetterCharacterSet]];
+    
+    if (lowercaseCharRange.location != NSNotFound) {
+        searchBar.text = [searchBar.text stringByReplacingCharactersInRange:range withString:[text uppercaseString]];
+        return NO;
+    }
+    return YES;
 }
 
 -(void)refreshEvents {

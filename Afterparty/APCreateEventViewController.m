@@ -65,21 +65,9 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 @property (strong, nonatomic) UIView                  *separatorView;
 @property (strong, nonatomic) APButton                *confirmEventButton;
 @property (strong, nonatomic) APButton                *dismissDateButton;
-@property (strong, nonatomic) APTextField             *passwordTextField;
-@property (strong, nonatomic) APTextField             *confirmPasswordTextField;
 @property (strong, nonatomic) UIView                  *passwordFieldContainerView;
 @property (assign, nonatomic) BOOL                    isReceivingPassword;
 @property (assign, nonatomic) CGFloat                 widthFactor;
-
-- (IBAction)chooseEventTitleTapped:(id)sender;
-- (IBAction)choosePhotoButtonTapped:(id)sender;
-- (IBAction)chooseEventLocationButtonTapped:(id)sender;
-- (IBAction)chooseEventDateButtonTapped:(id)sender;
-- (IBAction)chooseEventFriendsButtonTapped:(id)sender;
-- (IBAction)chooseEventPasswordButtonTapped:(id)sender;
-- (IBAction)passwordSwitchChanged:(id)sender;
-- (IBAction)oneMoreThingButtonTapped:(id)sender;
-- (IBAction)choosePhotoFakeButtonTapped:(id)sender;
 
 @end
 
@@ -360,9 +348,9 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 
 -(void)updateDescriptionCharacterText {
   NSString *descriptionText = self.eventDescriptionView.text;
-  NSString *charsRemaining = [NSString stringWithFormat:@"%lu", 140-(unsigned long)[descriptionText length]];
+  NSString *charsRemaining = [NSString stringWithFormat:@"%lu", 100-(unsigned long)[descriptionText length]];
   if ([descriptionText isEqualToString:@"Start typing here."]) {
-    charsRemaining = @"140";
+    charsRemaining = @"100";
   }
   NSString *labelText = [NSString stringWithFormat:@"You've got %@ characters left to tell us all about the event. Choose your words wisely.", charsRemaining];
   [self.eventDescriptionLabel setText:labelText afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
@@ -426,9 +414,9 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     if (textField == self.eventNameField && textField.text.length > 0) {
         [self.chooseEventTitleButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
     }
-  [textField resignFirstResponder];
-  [self.currentEvent setEventName:self.eventNameField.text];
-  return NO;
+    [textField resignFirstResponder];
+    [self.currentEvent setEventName:self.eventNameField.text];
+    return NO;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -445,6 +433,17 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     } else {
         return YES;
     }
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    NSUInteger oldLength = [textView.text length];
+    NSUInteger replacementLength = [text length];
+    NSUInteger rangeLength = range.length;
+    
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    
+    return newLength <= 100;
 }
 
 #pragma mark - UIImagePickerDelegate methods
@@ -535,7 +534,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     [numbers addObject:contactDict[@"phone"]];
   }];
     
-  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://afterparty.io/event.html?eventID=%@", eventID];
+  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", eventID];
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;
@@ -546,8 +545,8 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 -(void)changeEventButtonColor {
-  self.createEventButton.titleLabel.text = @"HANG ON, YOU'RE MISSING STUFF!";
-  [self.createEventButton setBackgroundColor:[UIColor afterpartyCoralRedColor]];
+    [self.createEventButton setTitle:@"HANG ON, YOU'RE MISSING STUFF!!" forState:UIControlStateNormal];
+    [self.createEventButton setBackgroundColor:[UIColor afterpartyCoralRedColor]];
 }
 
 -(void)confirmEventButtonTapped:(id)sender {
@@ -698,29 +697,39 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 - (void)oneMoreThingButtonTapped:(id)sender {
-  //check everything to see if its complete
-  if ([[self.eventNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
-    self.eventNameField.backgroundColor = [UIColor afterpartyCoralRedColor];
-    [self changeEventButtonColor];
-    return;
-  }
-  if (!self.coverPhotoImageView.image) {
-    [self changeEventButtonColor];
-    return;
-  }
-  if (!self.currentEvent.eventVenue) {
-    [self changeEventButtonColor];
-    return;
-  }
-  if (!self.currentEvent.startDate || !self.currentEvent.endDate) {
-    [self changeEventButtonColor];
-    return;
-  }
-  
-  self.currentEvent.eventImage = [self getScrollViewVisibleImage];
-  self.currentEvent.eventName = self.eventNameField.text;
-  self.currentEvent.password = self.privateEventSwitch.isOn ? @"" : self.passwordTextField.text;
-  [self fadeOutFirstLabels];
+    //check everything to see if its complete
+    BOOL isComplete = YES;
+    if ([[self.eventNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        [self.chooseEventTitleButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
+        isComplete = NO;
+    }
+    if (!self.coverPhotoImageView.image) {
+        self.coverPhotoImageView.backgroundColor = [UIColor afterpartyCoralRedColor];
+        isComplete = NO;
+    }
+    if (!self.currentEvent.eventVenue) {
+        [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
+        isComplete = NO;
+    }
+    if (!self.currentEvent.startDate || !self.currentEvent.endDate) {
+        [self.chooseEventDateButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
+        isComplete = NO;
+    }
+    if ([self.chooseEventFriendsButton.imageView.image isEqual:[UIImage imageNamed:@"button_plusblack"]]) {
+        [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
+        isComplete = NO;
+    }
+    
+    if (!isComplete) {
+        [self changeEventButtonColor];
+    } else {
+        self.currentEvent.eventImage = [self getScrollViewVisibleImage];
+        self.currentEvent.eventName = self.eventNameField.text;
+        if (self.privateEventSwitch.isOn) {
+            self.currentEvent.password = @"";
+        }
+        [self fadeOutFirstLabels];
+    }
 }
 
 - (UIImage *)getScrollViewVisibleImage {
