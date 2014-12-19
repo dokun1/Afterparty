@@ -124,9 +124,33 @@ typedef NS_ENUM(NSInteger, LoginState) {
     sunFrame.origin.y = self.view.bounds.size.height;
     self.sunRisingImageView.frame = sunFrame;
   } completion:^(BOOL finished) {
-      [self fadeOutInitialSceneForLoginWithCompletion:^{
-          [self dismissViewControllerAnimated:YES completion:nil];
-      }];
+      switch (self.currentState) {
+          case kNothing:
+          case kFacebook:
+          case kTwitter:
+          {
+              [self fadeOutInitialSceneForLoginWithCompletion:^{
+                  [self dismissViewControllerAnimated:YES completion:nil];
+              }];
+              break;
+          }
+          case kAfterpartyLogin:
+          {
+              [self fadeOutLoginSceneWithCompletion:^{
+                  [self dismissViewControllerAnimated:YES completion:nil];
+              }];
+              break;
+          }
+          case kAfterpartySignup:
+          {
+              [self fadeOutSignupSceneWithCompletion:^{
+                  [self dismissViewControllerAnimated:YES completion:nil];
+              }];
+              break;
+          }
+          default:
+              break;
+      }
   }];
 }
 
@@ -139,6 +163,32 @@ typedef NS_ENUM(NSInteger, LoginState) {
     [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.7 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        completionBlock();
+    });
+}
+
+- (void)fadeOutLoginSceneWithCompletion:(void (^)(void))completionBlock {
+    [self.usernameLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
+    [self.passwordLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
+    [self.afterpartyCredentialsLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
+    [self.forgotPasswordButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
+    [self.goBackButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.4];
+    [self clearAllTextFields];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        completionBlock();
+    });
+}
+
+- (void)fadeOutSignupSceneWithCompletion:(void (^)(void))completionBlock {
+    [self.usernameLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
+    [self.passwordLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
+    [self.emailAddressLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
+    [self.signUpCredentialsButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
+    [self.goBackButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.4];
+    [self clearAllTextFields];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         completionBlock();
     });
 }
@@ -160,6 +210,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [self.signUpButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.1];
   [self.facebookLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.2];
   [self.twitterLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.3];
+    self.currentState = kNothing;
 }
 
 - (void)fadeOutSignUpScene {
@@ -178,6 +229,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [self.emailAddressLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.2];
   [self.signUpCredentialsButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.3];
   [self.goBackButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.4];
+    self.currentState = kAfterpartySignup;
 }
 
 - (void)fadeOutLoginScene {
@@ -196,6 +248,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [self.afterpartyCredentialsLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.2];
     [self.forgotPasswordButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.3];
   [self.goBackButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.4];
+    self.currentState = kAfterpartyLogin;
 }
 
 - (void)clearAllTextFields {
@@ -221,16 +274,15 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (IBAction)signUpCredentialsButton:(id)sender {
-  [self.usernameLoginField resignFirstResponder];
-  [SVProgressHUD show];
-  [[APConnectionManager sharedManager] signUpUser:self.usernameLoginField.text
-                                         password:self.passwordLoginField.text
-                                            email:self.emailAddressLoginField.text
-                                          success:^(BOOL succeeded) {
-                                            [self loginUser];
-                                          } failure:^(NSError *error) {
-                                            [SVProgressHUD showErrorWithStatus:nil];
-                                          }];
+    [self.usernameLoginField resignFirstResponder];
+    [self.passwordLoginField resignFirstResponder];
+    [self.emailAddressLoginField resignFirstResponder];
+    [SVProgressHUD show];
+    [[APConnectionManager sharedManager] signUpUser:self.usernameLoginField.text password:self.passwordLoginField.text email:self.emailAddressLoginField.text success:^(BOOL succeeded) {
+        [self loginUser];
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:nil];
+    }];
 }
 
 - (IBAction)goBackButtonTapped:(id)sender {
@@ -293,6 +345,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)loginUser {
+    [self.usernameLoginField resignFirstResponder];
+    [self.passwordLoginField resignFirstResponder];
   [[APConnectionManager sharedManager] loginWithUsername:self.usernameLoginField.text
                                                 password:self.passwordLoginField.text
                                                  success:^(PFUser *user) {
