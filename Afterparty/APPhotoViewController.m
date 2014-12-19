@@ -19,6 +19,8 @@
 
 @import AssetsLibrary;
 
+static NSString *const kCollectionViewCellIdentifier = @"imageCollectionViewCell";
+
 @interface APPhotoViewController () <UIActionSheetDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegateFlowLayout,UIScrollViewDelegate, UIScrollViewDelegate>
 
 @property (assign, nonatomic) CGFloat screenWidth;
@@ -46,16 +48,11 @@
     
     self.view.backgroundColor = [UIColor afterpartyBlackColor];
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    [flowLayout setMinimumLineSpacing:0.0f];
-    [flowLayout setMinimumInteritemSpacing:0.0f];
-    
     self.collectionView.pagingEnabled = YES;
     self.collectionView.backgroundColor = [UIColor afterpartyBlackColor];
-    [self.collectionView registerClass:[APImageCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+//    [self.collectionView registerClass:[APImageCollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
     
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+//    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     
     self.backRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
     [self.view addGestureRecognizer:self.backRecognizer];
@@ -74,9 +71,13 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    APImageCollectionViewCell *cell =  (APImageCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    APPhotoInfo *photoInfo = self.metadata[indexPath.item];
-    cell.photoInfo = photoInfo;
+//    APImageCollectionViewCell *cell =  (APImageCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewCellIdentifier forIndexPath:indexPath];
+//    APPhotoInfo *photoInfo = self.metadata[indexPath.item];
+//    cell.photoInfo = photoInfo;
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewCellIdentifier forIndexPath:indexPath];
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:123];
+    
+    [imageView setImage:[UIImage imageNamed:@"stock3"]];
     
     return cell;
 }

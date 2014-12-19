@@ -66,7 +66,6 @@
 		504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */; };
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
 		50648A1A1A43364F0044A1BE /* APImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */; };
-		50648A1B1A43364F0044A1BE /* APImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50648A191A43364F0044A1BE /* APImageCollectionViewCell.xib */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
 		5091A43E1A2B47AC00890639 /* APSettingsTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */; };
@@ -235,7 +234,6 @@
 		504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProLight.otf"; sourceTree = "<group>"; };
 		50648A171A43364F0044A1BE /* APImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APImageCollectionViewCell.h; sourceTree = "<group>"; };
 		50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APImageCollectionViewCell.m; sourceTree = "<group>"; };
-		50648A191A43364F0044A1BE /* APImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
 		508849EC1958C49B00B1CA5E /* UIView+APViewAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+APViewAnimations.h"; sourceTree = "<group>"; };
 		508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+APViewAnimations.m"; sourceTree = "<group>"; };
@@ -624,7 +622,6 @@
 				503C92831A2C788A00ED06B5 /* APEventAnnotation.m */,
 				50648A171A43364F0044A1BE /* APImageCollectionViewCell.h */,
 				50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */,
-				50648A191A43364F0044A1BE /* APImageCollectionViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -848,7 +845,6 @@
 				504CA32119408C82003EF9EB /* Main.storyboard in Resources */,
 				50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */,
 				5091A4401A2B495800890639 /* APWhatsNew.json in Resources */,
-				50648A1B1A43364F0044A1BE /* APImageCollectionViewCell.xib in Resources */,
 				C9AEB3B319C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib in Resources */,
 				504CA3BB1940C035003EF9EB /* button_savetocloud.png in Resources */,
 			);
