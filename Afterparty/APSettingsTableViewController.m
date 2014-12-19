@@ -265,6 +265,10 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 
 - (void)signOutButtonTapped {
     [PFUser logOut];
+    [self.tableView reloadData];
+    [APUtil eraseAllEventsFromMyEvents];
+    [self loadUserData];
+    [self.tabBarController setSelectedIndex:0];
     [[NSNotificationCenter defaultCenter] postNotificationName:kCheckCurrentUser object:nil userInfo:nil];
 }
 

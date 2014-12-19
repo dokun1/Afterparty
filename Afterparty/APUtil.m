@@ -11,6 +11,7 @@
 #import "APConstants.h"
 
 static NSString *kExpiredEventsKey = @"expiredEvents";
+static NSString *kMyEventsKey = @"myEventsArray";
 
 @implementation APUtil
 
@@ -195,7 +196,7 @@ static NSString *kExpiredEventsKey = @"expiredEvents";
 }
 
 + (NSMutableArray*)loadSavedEvents {
-    NSArray *eventsArray = [self loadArrayForPath:@"myEventsArray"];
+    NSArray *eventsArray = [self loadArrayForPath:kMyEventsKey];
     if (!eventsArray) {
         eventsArray = @[];
     }
@@ -210,9 +211,13 @@ static NSString *kExpiredEventsKey = @"expiredEvents";
             [expiredEvents addObject:eventDict];
         }
     }];
-    [self saveArray:[NSArray arrayWithArray:myEventsArray] forPath:@"myEventsArray"];
+    [self saveArray:[NSArray arrayWithArray:myEventsArray] forPath:kMyEventsKey];
     [self attemptExpiredEventDestructionWithNewEvents:expiredEvents];
     return myEventsArray;
+}
+
++ (void)eraseAllEventsFromMyEvents {
+    [self saveArray:@[] forPath:kMyEventsKey];
 }
 
 + (void)attemptExpiredEventDestructionWithNewEvents:(NSArray *)newEvents {
@@ -302,7 +307,7 @@ static NSString *kExpiredEventsKey = @"expiredEvents";
                 [[[UIAlertView alloc] initWithTitle:@"Event Error" message:@"For some reason, we couldn't register your name with the event. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             }];
         }
-        [self saveArray:myEventsArray forPath:@"myEventsArray"];
+        [self saveArray:myEventsArray forPath:kMyEventsKey];
         [[self cacheLock] unlock];
     });
 }
@@ -320,7 +325,7 @@ static NSString *kExpiredEventsKey = @"expiredEvents";
                 *stop = YES;
             }
         }];
-        [self saveArray:myEventsArray forPath:@"myEventsArray"];
+        [self saveArray:myEventsArray forPath:kMyEventsKey];
     }];
 }
 

@@ -30,6 +30,7 @@
 + (BOOL)loggedIn;
 + (void)getMyEventsArrayWithSuccess:(void (^)(NSMutableArray *events))successBlock;
 + (void)saveEventToMyEvents:(APEvent*)event;
++ (void)eraseAllEventsFromMyEvents;
 + (void)updateEventVenue:(FSVenue*)newVenue forEventID:(NSString*)eventID;
 + (NSString*)getVersion;
 + (BOOL)shouldDownloadNewVersion;
