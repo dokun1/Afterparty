@@ -71,6 +71,7 @@
 		5091A43E1A2B47AC00890639 /* APSettingsTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */; };
 		5091A4401A2B495800890639 /* APWhatsNew.json in Resources */ = {isa = PBXBuildFile; fileRef = 5091A43F1A2B495800890639 /* APWhatsNew.json */; };
 		5091A4421A2B4E6200890639 /* APTermsAndConditions.json in Resources */ = {isa = PBXBuildFile; fileRef = 5091A4411A2B4E6200890639 /* APTermsAndConditions.json */; };
+		5099D73F1A446D9A003F58D2 /* APIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5099D73E1A446D9A003F58D2 /* APIntroViewController.m */; };
 		509F18CC1A2BB60400C37742 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509F18CB1A2BB60400C37742 /* Social.framework */; };
 		509F18CE1A2BB60B00C37742 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509F18CD1A2BB60B00C37742 /* Accounts.framework */; };
 		509FE67B1A33A8A6003FFD3F /* APCreateEventTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509FE67A1A33A8A6003FFD3F /* APCreateEventTimeViewController.m */; };
@@ -241,6 +242,8 @@
 		5091A43D1A2B47AC00890639 /* APSettingsTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsTextViewController.m; sourceTree = "<group>"; };
 		5091A43F1A2B495800890639 /* APWhatsNew.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = APWhatsNew.json; sourceTree = "<group>"; };
 		5091A4411A2B4E6200890639 /* APTermsAndConditions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = APTermsAndConditions.json; sourceTree = "<group>"; };
+		5099D73D1A446D9A003F58D2 /* APIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIntroViewController.h; sourceTree = "<group>"; };
+		5099D73E1A446D9A003F58D2 /* APIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIntroViewController.m; sourceTree = "<group>"; };
 		509F18CB1A2BB60400C37742 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Social.framework; sourceTree = DEVELOPER_DIR; };
 		509F18CD1A2BB60B00C37742 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Accounts.framework; sourceTree = DEVELOPER_DIR; };
 		509FE6791A33A8A6003FFD3F /* APCreateEventTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventTimeViewController.h; sourceTree = "<group>"; };
@@ -600,6 +603,8 @@
 			children = (
 				504CA3771940BA5A003EF9EB /* APLoginViewController.h */,
 				504CA3781940BA5A003EF9EB /* APLoginViewController.m */,
+				5099D73D1A446D9A003F58D2 /* APIntroViewController.h */,
+				5099D73E1A446D9A003F58D2 /* APIntroViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -940,6 +945,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5099D73F1A446D9A003F58D2 /* APIntroViewController.m in Sources */,
 				50F64EBE1952F40900E0B8DC /* APImagePreviewViewController.m in Sources */,
 				C9AEB3C019C49482009915BF /* APSearchEventDateLocationTableViewCell.m in Sources */,
 				501232B419BB73DF007099A4 /* APAVSessionController.m in Sources */,
