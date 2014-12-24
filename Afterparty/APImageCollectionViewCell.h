@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "APPhotoInfo.h"
 
+extern NSString *const APImageCollectionCellIdentifier;
+
 @interface APImageCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) APPhotoInfo *photoInfo;
-@property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, weak) UINavigationController *navigationControllerContainer;
 
 @end

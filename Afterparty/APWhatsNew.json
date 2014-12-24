@@ -27,5 +27,6 @@
     "0.9.13": {
         "1":"Events that have a password will not show up on the map",
         "2":"Various bug fixes",
+        "3":"Photo preview fixed to allow panning and zooming of photos, including saving and reporting"
     }
 }

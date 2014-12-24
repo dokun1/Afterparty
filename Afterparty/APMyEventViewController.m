@@ -9,11 +9,10 @@
 #import "APMyEventViewController.h"
 #import "APConstants.h"
 #import <pop/POP.h>
+#import "APCollectionViewGalleryFlowLayout.h"
 
 @import AssetsLibrary;
 @import AVFoundation;
-
-static NSString *const kPhotoPreviewSegue = @"kPhotoPreviewSegue";
 
 @interface APMyEventViewController () <UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, CLLocationManagerDelegate, StackedGridLayoutDelegate, CaptureDelegate, UIAlertViewDelegate, UpdateLocationDelegate>
 
@@ -610,19 +609,15 @@ static NSString *const kPhotoPreviewSegue = @"kPhotoPreviewSegue";
 
     }else{
         [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-        [self performSegueWithIdentifier:kPhotoPreviewSegue sender:indexPath];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+        APCollectionViewGalleryFlowLayout *layout = [[APCollectionViewGalleryFlowLayout alloc] init];
+        APPhotoViewController *controller = [[APPhotoViewController alloc] initWithMetadata:self.photoMetadata atIndexPath:indexPath forCollectionViewLayout:layout];
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:kPhotoPreviewSegue]) {
-        NSArray *metadata = self.photoMetadata;
-        APPhotoViewController *controller = (APPhotoViewController *)segue.destinationViewController;
-        controller.metadata = metadata;
-        NSIndexPath *indexPath = (NSIndexPath *)sender;
-        controller.selectedIndex = indexPath.item;
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    }
+
 }
 
 #pragma mark - StackedGridLayoutDelegate Methods 
