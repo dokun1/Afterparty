@@ -555,79 +555,11 @@
                         <outlet property="countdownLabel" destination="JwD-NB-8fK" id="8jx-AW-Rff"/>
                         <outlet property="eventEndsLabel" destination="8QQ-lv-iZN" id="Wfh-le-O6z"/>
                         <outlet property="photoButton" destination="oWq-WG-BpE" id="XzL-NB-CQt"/>
-                        <segue destination="9AZ-bN-muM" kind="push" identifier="kPhotoPreviewSegue" id="lLd-sI-aHr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nyr-rQ-g3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1583" y="-296"/>
-        </scene>
-        <!--Photo View Controller-->
-        <scene sceneID="6oI-sW-6Xu">
-            <objects>
-                <viewController id="9AZ-bN-muM" customClass="APPhotoViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Mqd-gs-e54"/>
-                        <viewControllerLayoutGuide type="bottom" id="o6u-Uq-h5W"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="FME-pQ-Nmp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YqX-OJ-O5V">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cht-Au-jPJ">
-                                    <size key="itemSize" width="160" height="160"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCollectionViewCell" id="cDd-ul-fpd">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="123" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitterLogoGray" translatesAutoresizingMaskIntoConstraints="NO" id="0p2-tm-zRR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="0p2-tm-zRR" secondAttribute="trailing" id="60i-Uh-IeR"/>
-                                            <constraint firstItem="0p2-tm-zRR" firstAttribute="top" secondItem="cDd-ul-fpd" secondAttribute="top" id="jch-vV-bzY"/>
-                                            <constraint firstItem="0p2-tm-zRR" firstAttribute="leading" secondItem="cDd-ul-fpd" secondAttribute="leading" id="p7M-Hc-x8T"/>
-                                            <constraint firstAttribute="bottom" secondItem="0p2-tm-zRR" secondAttribute="bottom" id="w6i-MK-RlH"/>
-                                        </constraints>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="9AZ-bN-muM" id="3UI-Oh-LdM"/>
-                                    <outlet property="delegate" destination="9AZ-bN-muM" id="qaS-ak-uib"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="YqX-OJ-O5V" secondAttribute="trailing" id="Uxb-Wh-8EI"/>
-                            <constraint firstItem="YqX-OJ-O5V" firstAttribute="top" secondItem="FME-pQ-Nmp" secondAttribute="top" id="Z6G-KH-uLz"/>
-                            <constraint firstItem="YqX-OJ-O5V" firstAttribute="bottom" secondItem="o6u-Uq-h5W" secondAttribute="top" id="aN6-ga-YDs"/>
-                            <constraint firstItem="YqX-OJ-O5V" firstAttribute="leading" secondItem="FME-pQ-Nmp" secondAttribute="leading" id="pPq-EY-cvy"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="cCy-hX-h7g"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="collectionView" destination="YqX-OJ-O5V" id="Mke-h7-fR4"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aXE-3Q-znr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2101" y="-296"/>
         </scene>
         <!--SET TIME-->
         <scene sceneID="56v-nZ-Dxf">

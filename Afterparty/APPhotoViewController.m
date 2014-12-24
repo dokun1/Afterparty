@@ -19,26 +19,22 @@
 
 @import AssetsLibrary;
 
-static NSString *const kCollectionViewCellIdentifier = @"imageCollectionViewCell";
-
 @interface APPhotoViewController () <UIActionSheetDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegateFlowLayout,UIScrollViewDelegate, UIScrollViewDelegate>
 
-@property (assign, nonatomic) CGFloat screenWidth;
-@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UITapGestureRecognizer *backRecognizer;
-@property (strong, nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
 @property (assign, nonatomic) BOOL longPressed;
-@property (strong, nonatomic) APMetadataPhotoOverlayView *metadataView;
-
+@property (strong, nonatomic) NSArray *metadata;
+@property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 
 @end
 
 @implementation APPhotoViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        self.screenWidth = [UIScreen mainScreen].bounds.size.width;
+- (instancetype)initWithMetadata:(NSArray *)metadata atIndexPath:(NSIndexPath *)indexPath forCollectionViewLayout:(UICollectionViewLayout *)layout {
+    if (self = [super initWithCollectionViewLayout:layout]) {
+        self.clearsSelectionOnViewWillAppear = YES;
+        _metadata = [metadata copy];
+        _selectedIndexPath = indexPath;
     }
     return self;
 }
@@ -46,51 +42,10 @@ static NSString *const kCollectionViewCellIdentifier = @"imageCollectionViewCell
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor afterpartyBlackColor];
+    [self.collectionView setPagingEnabled:YES];
+    [self.collectionView registerClass:[APImageCollectionViewCell class] forCellWithReuseIdentifier:APImageCollectionCellIdentifier];
     
-    self.collectionView.pagingEnabled = YES;
-    self.collectionView.backgroundColor = [UIColor afterpartyBlackColor];
-//    [self.collectionView registerClass:[APImageCollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
-    
-//    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-    
-    self.backRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognized:)];
-    [self.view addGestureRecognizer:self.backRecognizer];
-    
-    self.longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressRecognized:)];
-    self.longPressRecognizer.minimumPressDuration = 0.7;
-    [self.view addGestureRecognizer:self.longPressRecognizer];
-}
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.metadata.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-//    APImageCollectionViewCell *cell =  (APImageCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewCellIdentifier forIndexPath:indexPath];
-//    APPhotoInfo *photoInfo = self.metadata[indexPath.item];
-//    cell.photoInfo = photoInfo;
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewCellIdentifier forIndexPath:indexPath];
-    UIImageView *imageView = (UIImageView *)[cell viewWithTag:123];
-    
-    [imageView setImage:[UIImage imageNamed:@"stock3"]];
-    
-    return cell;
-}
-
--(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return self.collectionView.frame.size;
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    for (APImageCollectionViewCell *cell in [self.collectionView visibleCells]) {
-        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-        self.selectedIndex = indexPath.item;
-    }
+    [self.collectionView scrollToItemAtIndexPath:self.selectedIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -103,19 +58,32 @@ static NSString *const kCollectionViewCellIdentifier = @"imageCollectionViewCell
     [super viewWillDisappear:animated];
 }
 
+#pragma mark - UICollectionViewDelegate and Datasource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.metadata.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    APImageCollectionViewCell *cell = (APImageCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:APImageCollectionCellIdentifier forIndexPath:indexPath];
+    cell.navigationControllerContainer = self.navigationController;
+    APPhotoInfo *photoInfo = self.metadata[indexPath.item];
+    [cell setPhotoInfo:photoInfo];
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return self.view.bounds.size;
+}
+
 - (void)tapGestureRecognized:(UITapGestureRecognizer*)recognizer {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)longPressRecognized:(id)sender {
-    if (self.longPressed == YES) {
-        return;
-    }
-    self.longPressed = YES;
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Report" otherButtonTitles:@"Save", nil];
-    actionSheet.tag = 200;
-    [actionSheet showInView:self.view];
-}
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (actionSheet.tag == 100) {
@@ -128,7 +96,7 @@ static NSString *const kCollectionViewCellIdentifier = @"imageCollectionViewCell
         switch (buttonIndex) {
             case 0:{
                 NSArray *reportedPhotos = [APUtil getReportedPhotoIDs];
-                APPhotoInfo *reportedPhotoInfo = self.metadata[self.selectedIndex];
+                APPhotoInfo *reportedPhotoInfo = self.metadata[self.selectedIndexPath.item];
                 NSString *reportedPhotoID = reportedPhotoInfo.refID;
                 if (![reportedPhotos containsObject:reportedPhotoID]) {
                     [APUtil saveReportedPhotoID:reportedPhotoID];
@@ -161,7 +129,7 @@ static NSString *const kCollectionViewCellIdentifier = @"imageCollectionViewCell
     [PFAnalytics trackEvent:@"photoSaved"];
     self.longPressed = NO;
     
-    APImageCollectionViewCell *cell = (APImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex inSection:0]];
+    APImageCollectionViewCell *cell = (APImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndexPath.item inSection:0]];
     UIImage *selectedImage = cell.imageView.image;
 
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
