@@ -29,8 +29,6 @@
 @property (weak, nonatomic  ) NSTimer           *switchTimer;
 @property (weak, nonatomic  ) NSTimer           *checkTimer;
 
-@property (strong, nonatomic) NSMutableArray    *thumbnailCacheArray;
-
 @property (assign, nonatomic) BOOL              isSavingBulk;
 
 @property (strong, nonatomic) CLLocation        *eventLocation;
@@ -40,8 +38,6 @@
 @property (assign, nonatomic) BOOL              shouldAskAboutMove;
 
 @property (strong, nonatomic) NSMutableArray    *selectedPhotos;
-
-@property (strong, nonatomic) FXBlurView        *blurView;
 
 @property (strong, nonatomic) UICollectionViewFlowLayout *photoViewLayout;
 
@@ -64,7 +60,9 @@
 
 - (void)getLatestMetadata {
   __block NSMutableArray *data = [@[] mutableCopy];
-  [SVProgressHUD show];
+    dispatch_async(dispatch_get_main_queue(), ^{
+          [SVProgressHUD show];
+    });
   [[APConnectionManager sharedManager] downloadImageMetadataForEventID:self.eventID success:^(NSArray *objects) {
     [objects enumerateObjectsUsingBlock:^(PFObject *obj, NSUInteger idx, BOOL *stop) {
       APPhotoInfo *info = [[APPhotoInfo alloc] initWithParseObject:obj forEvent:self.eventID];
@@ -72,16 +70,18 @@
             [data addObject:info];
         }
     }];
-    [SVProgressHUD dismiss];
     dispatch_async(dispatch_get_main_queue(), ^{
-      if (!self.photoMetadata) {
-        self.photoMetadata = [NSArray array];
-      }
-      self.photoMetadata = data;
+        [SVProgressHUD dismiss];
+        if (!self.photoMetadata) {
+            self.photoMetadata = [NSArray array];
+        }
+        self.photoMetadata = data;
         [self.collectionView reloadData];
     });
   } failure:^(NSError *error) {
-    [SVProgressHUD showErrorWithStatus:@"could not get photos"];
+      dispatch_async(dispatch_get_main_queue(), ^{
+          [SVProgressHUD showErrorWithStatus:@"could not get photos"];
+      });
   }];
 }
 
@@ -135,7 +135,6 @@
     self.shouldAskAboutMove = YES;
   }
   
-  self.thumbnailCacheArray = [[NSMutableArray alloc] init];
   self.selectedPhotos = nil;
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kQueueIsDoneUploading object:nil];
@@ -326,7 +325,7 @@
 
 #pragma mark - UpdateLocationDelegate methods
 
--(void)venueSuccessfullyUpdated:(FSVenue *)newVenue {
+-(void)venueSuccessfullyUpdated:(APVenue *)newVenue {
     self.eventLocation = [[CLLocation alloc] initWithLatitude:newVenue.location.coordinate.latitude
                                                         longitude:newVenue.location.coordinate.longitude];
     [APUtil updateEventVenue:newVenue forEventID:self.eventID];
@@ -406,39 +405,19 @@
 #pragma mark - Action methods for my event
 
 - (void)refreshPhotos {
-  [self.thumbnailCacheArray removeAllObjects];
-  self.blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
-  [self.blurView setAlpha:0.0f];
-  [self.blurView setBlurEnabled:YES];
-  [self.blurView setBlurRadius:20];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-  [self.view insertSubview:self.blurView aboveSubview:self.collectionView];
-  [UIView animateWithDuration:0.5 animations:^{
-      [self.blurView setAlpha:1.0f];
-  }];
-  dispatch_async(self.photoDownloadQueue, ^{
-    [self getLatestMetadata];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-      self.photoButton.enabled = YES;
-      self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
-//      [self.collectionView reloadData];
-      [self.refreshControl endRefreshing];
-      [UIView animateWithDuration:0.5
-                            delay:0.3
-                          options:UIViewAnimationOptionCurveLinear
-                       animations:^{
-                         [self.blurView setAlpha:0.0f];
-                       } completion:^(BOOL finished) {
-                         self.blurView = nil;
-                       }];
+    dispatch_async(self.photoDownloadQueue, ^{
+        [self getLatestMetadata];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            self.photoButton.enabled = YES;
+            [self.refreshControl endRefreshing];
+        });
     });
-  });
 }
 
 - (void)photoButtonTapped {
     if (self.isSavingBulk) {
-        NSLog(@"need to add method for saving all selected photos");
       if (self.selectedPhotos && self.selectedPhotos.count > 0) {
         [self saveBulkPhotos];
         [SVProgressHUD showWithStatus:@"saving photos..."];
@@ -460,7 +439,7 @@
                 [self uploadImage:image];
             }
         }else
-            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a mile of the party center to contribute, ya big jerk."];
+            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a mile of the party center to contribute. Try moving closer!"];
     }
 }
 
@@ -548,9 +527,6 @@
 
 -(void)capturedImage:(UIImage *)image {
     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-//    [self.navigationController popToViewController:self animated:NO];
-//    [self.navigationController setNavigationBarHidden:NO];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self uploadImage:image];
 }
 

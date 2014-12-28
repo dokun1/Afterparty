@@ -13,6 +13,7 @@
 #import "UIColor+APColor.h"
 #import "UIAlertView+APAlert.h"
 #import "APConstants.h"
+#import <UIKit+AFNetworking.h>
 
 @interface APMyEventUpdateLocationViewController () <UISearchBarDelegate, UIAlertViewDelegate>
 
@@ -20,7 +21,7 @@
 @property (strong, nonatomic) NSDictionary *info;
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) CLLocation *currentLocation;
-@property (weak, nonatomic) FSVenue *selectedVenue;
+@property (weak, nonatomic) APVenue *selectedVenue;
 @property (strong, nonatomic) NSString *eventID;
 
 @end
@@ -56,7 +57,7 @@
     self.searchBar.placeholder = @"search venues";
     self.searchBar.tintColor = [UIColor afterpartyTealBlueColor];
     self.tableView.tableHeaderView = self.searchBar;
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:kRegularFont size:6]];
     
@@ -64,7 +65,7 @@
     self.refreshControl.tintColor = [UIColor afterpartyTealBlueColor];
     [self.refreshControl addTarget:self action:@selector(refreshVenues) forControlEvents:UIControlEventValueChanged];
     
-    [self.tableView setBackgroundColor:[UIColor colorWithHexString:@"e5e5e5" withAlpha:1.0]];
+    [self.tableView setBackgroundColor:[UIColor afterpartyOffWhiteColor]];
     
     [self refreshVenues];
     
@@ -80,7 +81,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(void)selectNewVenue:(FSVenue*)newVenue {
+-(void)selectNewVenue:(APVenue*)newVenue {
     self.selectedVenue = newVenue;
     UIAlertView *view = [[UIAlertView alloc] initWithTitle:newVenue.name
                                 message:@"Are you sure you want to move this party here?"
@@ -157,7 +158,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,16 +166,15 @@
     static NSString *CellIdentifier = @"APVenueCell";
     APVenueTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    FSVenue *venue = self.venues[indexPath.row];
+    APVenue *venue = self.venues[indexPath.row];
     
     [cell.venueName setText:venue.name];
-    [cell.venueAddress setText:venue.location.address];
-    NSString *venueDistance = ([venue.location.distance floatValue] < 528) ? [NSString stringWithFormat:@"%@ft", venue.location.distance] : [NSString stringWithFormat:@"%.1fmi", [venue.location.distance floatValue]/5280];
-    [cell.venueDistance setText:venueDistance];
+    [cell.venueAddress setText:venue.prettyAddress];
+
     [cell.venueName setFont:[UIFont fontWithName:kRegularFont size:17.0f]];
     [cell.venueAddress setFont:[UIFont fontWithName:kRegularFont size:14.0f]];
-    [cell.venueDistance setFont:[UIFont fontWithName:kRegularFont size:18.0f]];
     
+    [cell.venueIcon setImageWithURL:[NSURL URLWithString:venue.iconURL]];
     
     // Configure the cell...
     
@@ -182,7 +182,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    FSVenue *venue = self.venues[indexPath.row];
+    APVenue *venue = self.venues[indexPath.row];
     [self selectNewVenue:venue];
 }
 

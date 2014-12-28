@@ -75,6 +75,7 @@
 		509F18CE1A2BB60B00C37742 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 509F18CD1A2BB60B00C37742 /* Accounts.framework */; };
 		509FE67B1A33A8A6003FFD3F /* APCreateEventTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509FE67A1A33A8A6003FFD3F /* APCreateEventTimeViewController.m */; };
 		50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */; };
+		50B8D5C81A5001C30039BFE4 /* APVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B8D5C71A5001C30039BFE4 /* APVenue.m */; };
 		50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */; };
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
@@ -248,6 +249,8 @@
 		509FE67A1A33A8A6003FFD3F /* APCreateEventTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventTimeViewController.m; sourceTree = "<group>"; };
 		50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMetadataPhotoOverlayView.h; sourceTree = "<group>"; };
 		50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMetadataPhotoOverlayView.m; sourceTree = "<group>"; };
+		50B8D5C61A5001C30039BFE4 /* APVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APVenue.h; sourceTree = "<group>"; };
+		50B8D5C71A5001C30039BFE4 /* APVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APVenue.m; sourceTree = "<group>"; };
 		50BF4C8B196C410600B6EA1F /* APSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsTableViewController.h; sourceTree = "<group>"; };
 		50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsTableViewController.m; sourceTree = "<group>"; };
 		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
@@ -476,6 +479,8 @@
 				504CA35319409899003EF9EB /* FSConverter.m */,
 				504CA35419409899003EF9EB /* FSVenue.h */,
 				504CA35519409899003EF9EB /* FSVenue.m */,
+				50B8D5C61A5001C30039BFE4 /* APVenue.h */,
+				50B8D5C71A5001C30039BFE4 /* APVenue.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -737,7 +742,6 @@
 				504CA30819408C82003EF9EB /* Resources */,
 				3180AAEDAFBD4721A08DEE10 /* Copy Pods Resources */,
 				50C015B819686DF300E9E26F /* Initialize Crashlytics */,
-				5093FC9B1A39947F005430BE /* Update build version when app is archived */,
 				5093FC9C1A3994B9005430BE /* Update build number when app runs */,
 			);
 			buildRules = (
@@ -881,20 +885,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5093FC9B1A39947F005430BE /* Update build version when app is archived */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Update build version when app is archived";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
-		};
 		5093FC9C1A3994B9005430BE /* Update build number when app runs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -983,6 +973,7 @@
 				50DE658C1940CE9F00C27B84 /* UIColor+APColor.m in Sources */,
 				50F64ECE1952F64800E0B8DC /* APSearchEventsViewController.m in Sources */,
 				50F64EC31952F40900E0B8DC /* APPhotoCommentTableView.m in Sources */,
+				50B8D5C81A5001C30039BFE4 /* APVenue.m in Sources */,
 				50F64ED11952F64800E0B8DC /* APSearchEventDetailViewController.m in Sources */,
 				504CA37C1940BF74003EF9EB /* APTextField.m in Sources */,
 				50F64EBC1952F40900E0B8DC /* APCameraOverlayViewController.m in Sources */,

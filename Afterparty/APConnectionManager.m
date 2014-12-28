@@ -13,6 +13,7 @@
 #import <Foursquare-API-v2/Foursquare2.h>
 #import "FSConverter.h"
 #import "APConstants.h"
+#import "APVenue.h"
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 
 @implementation APConnectionManager
@@ -565,7 +566,7 @@
 }
 
 -(void)updateEventForEventID:(NSString*)eventID
-                withNewVenue:(FSVenue*)newVenue
+                withNewVenue:(APVenue*)newVenue
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock {
   PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];

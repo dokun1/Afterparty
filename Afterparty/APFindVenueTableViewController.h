@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FSVenue.h"
+#import "APVenue.h"
 
 @class APFindVenueTableViewController;
 
 @protocol VenueChoiceDelegate <NSObject>
 
-- (void)controller:(APFindVenueTableViewController*)controller didChooseVenue:(FSVenue*)venue;
+- (void)controller:(APFindVenueTableViewController*)controller didChooseVenue:(APVenue*)venue;
 
 @end
 

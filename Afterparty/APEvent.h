@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FSVenue.h"
+#import "APVenue.h"
 #import "APUser.h"
 #import <Parse/Parse.h>
 
@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) NSString               *objectID;
 @property (strong, nonatomic) NSString               *eventName;
-@property (strong, nonatomic) FSVenue                *eventVenue;
+@property (strong, nonatomic) APVenue                *eventVenue;
 @property (strong, nonatomic) NSString               *password;
 @property (strong, nonatomic) NSString               *createdByUsername;
 @property (strong, nonatomic) NSDate                 *startDate;
@@ -32,7 +32,7 @@
 @property (strong, nonatomic) NSArray                *attendees;
 
 - (instancetype)initWithName:(NSString*)name
-                       venue:(FSVenue*)venue
+                       venue:(APVenue*)venue
                     password:(NSString*)password
                    startDate:(NSDate*)startDate
                      endDate:(NSDate*)endDate

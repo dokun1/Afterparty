@@ -449,7 +449,7 @@ typedef void (^APProgressBlock)(int percentDone);
  */
 
 -(void)updateEventForEventID:(NSString*)eventID
-                withNewVenue:(FSVenue*)newVenue
+                withNewVenue:(APVenue*)newVenue
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock;
 

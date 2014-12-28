@@ -12,6 +12,7 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "UIColor+APColor.h"
 #import "APConstants.h"
+#import <UIKit+AFNetworking.h>
 
 
 @interface APFindVenueTableViewController () <UISearchBarDelegate, CLLocationManagerDelegate>
@@ -49,6 +50,10 @@
     
     [self.tableView setTableHeaderView:self.searchBar];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    UIImageView *footer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByFoursquare_gray"]];
+    footer.contentMode = UIViewContentModeScaleAspectFit;
+    self.tableView.tableFooterView = footer;
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:kRegularFont size:6]];
     
@@ -163,7 +168,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 50;
 }
 
 #pragma mark - TableViewDelegate Methods
@@ -173,22 +178,20 @@
     static NSString *CellIdentifier = @"APVenueCell";
     APVenueTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    FSVenue *venue = self.venues[indexPath.row];
+    APVenue *venue = self.venues[indexPath.row];
     
     [cell.venueName setText:venue.name];
-    [cell.venueAddress setText:venue.location.address];
-    NSString *venueDistance = ([venue.location.distance floatValue] < 528) ? [NSString stringWithFormat:@"%@ft", venue.location.distance] : [NSString stringWithFormat:@"%.1fmi", [venue.location.distance floatValue]/5280];
-    [cell.venueDistance setText:venueDistance];
-    [cell.venueName setFont:[UIFont fontWithName:kRegularFont size:17.0f]];
-    [cell.venueAddress setFont:[UIFont fontWithName:kRegularFont size:14.0f]];
-    [cell.venueDistance setFont:[UIFont fontWithName:kRegularFont size:18.0f]];
-    
+    [cell.venueAddress setText:venue.prettyAddress];
+
+    [cell.venueName setFont:[UIFont fontWithName:kRegularFont size:14.0f]];
+    [cell.venueAddress setFont:[UIFont fontWithName:kRegularFont size:10.0f]];
+    [cell.venueIcon setImageWithURL:[NSURL URLWithString:venue.iconURL]];
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  FSVenue *venue = self.venues[indexPath.row];
+  APVenue *venue = self.venues[indexPath.row];
   [self.delegate controller:self didChooseVenue:venue];
   
 }

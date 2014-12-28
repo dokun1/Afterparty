@@ -23,6 +23,7 @@
 #import "APConstants.h"
 #import "APCreateEventTimeViewController.h"
 #import "APCreateEventPasswordViewController.h"
+#import "APVenue.h"
 
 @import MessageUI;
 @import AddressBook;
@@ -463,7 +464,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 
 #pragma mark - VenueChoiceDelegate Methods
 
-- (void)controller:(APFindVenueTableViewController *)controller didChooseVenue:(FSVenue *)venue {
+- (void)controller:(APFindVenueTableViewController *)controller didChooseVenue:(APVenue *)venue {
   [self.currentEvent setEventVenue:venue];
   [self.currentEvent setLocation:venue.location.coordinate];
   NSString *address = @"";

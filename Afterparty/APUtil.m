@@ -312,7 +312,7 @@ static NSString *kMyEventsKey = @"myEventsArray";
     });
 }
 
-+ (void)updateEventVenue:(FSVenue*)newVenue forEventID:(NSString*)eventID {
++ (void)updateEventVenue:(APVenue*)newVenue forEventID:(NSString*)eventID {
     [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *myEventsArray) {
         [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
             if ([[[eventDict allKeys] firstObject] isEqualToString:eventID]) {
