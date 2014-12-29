@@ -25,6 +25,7 @@ PODS:
     - Bolts (~> 1.0)
   - Foursquare-API-v2 (1.4.8)
   - FXBlurView (1.6.3)
+  - JazzHands (0.1.1)
   - Parse (1.6.0):
     - Bolts (~> 1.1.3)
   - ParseFacebookUtils (1.6.0):
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - AFNetworking
   - Foursquare-API-v2 (~> 1.4)
   - FXBlurView (~> 1.6.2)
+  - JazzHands
   - Parse
   - ParseFacebookUtils
   - pop (~> 1.0)
@@ -50,6 +52,7 @@ SPEC CHECKSUMS:
   Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
   Foursquare-API-v2: 6be0e2d5b4f0adde6d39a3ebcb38311f54bf9694
   FXBlurView: abe1046285813c4f6e9008abbc324fc5ab32af90
+  JazzHands: d39c6b19bfe34946d220fdede80930b7be37f199
   Parse: f15dfacd941ee8084a5decbef486da8b223c2810
   ParseFacebookUtils: 8d33da72678c4c03a3b94332179dc04548bbd268
   pop: 2f14a1ea61339767af9e66741b418c831b3844df
