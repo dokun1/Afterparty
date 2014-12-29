@@ -91,7 +91,6 @@ static NSString *const kCache = @"cachedUploadPhotos";
           }
         }
       } failure:^(NSError *error) {
-        NSLog(@"error uploading photo for eventID: %@", eventID);
       }];
     }];
   });

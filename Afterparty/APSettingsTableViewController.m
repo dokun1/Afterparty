@@ -189,7 +189,6 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 #pragma mark - UIActionSheetDelegate Methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"clicked index %ld", (long)buttonIndex);
     if (buttonIndex == 2) {
         return;
     }
@@ -246,7 +245,6 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             [[APConnectionManager sharedManager] getFacebookUserDetailsWithSuccessBlock:^(NSDictionary *dictionary) {
                 [self loadUserData];
             } failure:^(NSError *error) {
-                NSLog(@"couldnt get details");
             }];
         } failure:^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:@"couldn't link your facebook account"];
@@ -265,6 +263,7 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 
 - (void)signOutButtonTapped {
     [PFUser logOut];
+    [FBSession.activeSession close];
     [self.tableView reloadData];
     [APUtil eraseAllEventsFromMyEvents];
     [self loadUserData];

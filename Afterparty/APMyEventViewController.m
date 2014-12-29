@@ -60,9 +60,6 @@
 
 - (void)getLatestMetadata {
   __block NSMutableArray *data = [@[] mutableCopy];
-    dispatch_async(dispatch_get_main_queue(), ^{
-          [SVProgressHUD show];
-    });
   [[APConnectionManager sharedManager] downloadImageMetadataForEventID:self.eventID success:^(NSArray *objects) {
     [objects enumerateObjectsUsingBlock:^(PFObject *obj, NSUInteger idx, BOOL *stop) {
       APPhotoInfo *info = [[APPhotoInfo alloc] initWithParseObject:obj forEvent:self.eventID];
@@ -71,7 +68,6 @@
         }
     }];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
         if (!self.photoMetadata) {
             self.photoMetadata = [NSArray array];
         }
@@ -315,7 +311,6 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([[alertView title] isEqualToString:@"Keep the party going?"]) {
         if (buttonIndex == 1) {
-            NSLog(@"lets update the location");
             APMyEventUpdateLocationViewController *vc = [[APMyEventUpdateLocationViewController alloc] initWithCurrentLocation:self.currentLocation forEventID:self.eventID];
             vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];
@@ -338,15 +333,14 @@
     CLLocation *currentLocation = [locations lastObject];
     self.currentLocation = currentLocation;
     CLLocationDistance meters = [self.eventLocation distanceFromLocation:currentLocation];
-    self.canTakePhoto = (meters < 1620);
+    self.canTakePhoto = (meters < 850);
     if (!self.canTakePhoto && self.shouldAskAboutMove) {
         self.shouldAskAboutMove = NO;
-        [[[UIAlertView alloc] initWithTitle:@"Keep the party going?" message:@"It looks like you moved since creating the party - do you want to update the location?" delegate:self cancelButtonTitle:@"Nah" otherButtonTitles:@"OK!", nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Keep the party going?" message:@"It looks like you moved since creating the party - do you want to update the location?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
     }
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"manager failed: %@", [error localizedDescription]);
 }
 
 #pragma mark - Long Press Methods
@@ -432,14 +426,14 @@
                 [self.navigationController pushViewController:vc animated:NO];
             }else{
                 // Device has no camera
-                NSUInteger randNum = arc4random_uniform(5) + 1;
-                NSString *imageName = [NSString stringWithFormat:@"stock%lu.jpeg", (unsigned long)randNum];
+                NSUInteger randNum = arc4random_uniform(7) + 1;
+                NSString *imageName = [NSString stringWithFormat:@"stock%lu.png", (unsigned long)randNum];
                 UIImage *image = [UIImage imageNamed:imageName];
 
                 [self uploadImage:image];
             }
         }else
-            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a mile of the party center to contribute. Try moving closer!"];
+            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a half mile of the party center to contribute. Try moving closer!"];
     }
 }
 
@@ -479,27 +473,22 @@
     NSNumber *hasFolder = [[NSUserDefaults standardUserDefaults] objectForKey:@"hasFolder"];
     if (![hasFolder boolValue]) {
       [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-        NSLog(@"Added folder:%@", albumName);
         folder = group;
       } failureBlock:^(NSError *error) {
-        NSLog(@"Error adding folder");
       }];
       hasFolder = [NSNumber numberWithBool:YES];
       [[NSUserDefaults standardUserDefaults] setValue:hasFolder forKey:@"hasFolder"];
       [[NSUserDefaults standardUserDefaults] synchronize];
     }
     [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-      NSLog(@"found folder %@", [group valueForProperty:ALAssetsGroupPropertyName]);
       if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:albumName]) {
         folder = group;
         *stop = YES;
       }
     } failureBlock:^(NSError *error) {
       [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-        NSLog(@"Added folder:%@", albumName);
         folder = group;
       } failureBlock:^(NSError *error) {
-        NSLog(@"Error adding folder");
       }];
     }];
     
@@ -510,10 +499,7 @@
           [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
             [folder addAsset:asset];
           } failureBlock:^(NSError *error) {
-            NSLog(@"Error adding image");
           }];
-        }else{
-          NSLog(@"Error adding image: %@", error.localizedDescription);
         }
       }];
     });

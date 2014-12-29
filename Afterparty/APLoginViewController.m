@@ -397,13 +397,10 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [[APConnectionManager sharedManager] loginWithTwitterAccount:account success:^(PFUser *user) {
     [SVProgressHUD dismiss];
     [[APConnectionManager sharedManager] getTwitterUserDetailsForUsername:self.twitterAccount.username success:^(NSDictionary *dictionary) {
-      NSLog(@"%@", dictionary);
     } failure:^(NSError *error) {
-      NSLog(@"failure");
     }];
       [self animateSunDown];
   } failure:^(NSError *error) {
-    NSLog(@"failure");
     [SVProgressHUD showErrorWithStatus:nil];
   }];
 }

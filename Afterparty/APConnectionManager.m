@@ -101,8 +101,6 @@
   NSNumber *longUp = @(location.coordinate.longitude + 0.07);
   NSNumber *longDown = @(location.coordinate.longitude - 0.07);
   
-  NSLog(@"Searching for coord range (%@, %@), (%@, %@)", latDown, latUp, longDown, longUp);
-  
   [query whereKey:@"latitude" greaterThan:latDown];
   [query whereKey:@"latitude" lessThan:latUp];
   [query whereKey:@"longitude" greaterThan:longDown];
@@ -643,11 +641,16 @@
     [[PFUser currentUser] saveEventually];
     [[PFQuery queryWithClassName:kEventSearchParseClass] getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
         if (error) {
-            failureBlock(error);
+            if (error.code == kPFErrorObjectNotFound) {
+                successBlock();
+            } else {
+                failureBlock(error);
+            }
+        } else {
+            [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                error == nil ? successBlock() : failureBlock(error);
+            }];
         }
-        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            error == nil ? successBlock() : failureBlock(error);
-        }];
     }];
 }
 

@@ -177,7 +177,6 @@
             [self.flashButton setImage:[UIImage imageNamed:@"button_flashoff.png"] forState:UIControlStateNormal];
             break;
         default:
-            NSLog(@"unrecognized flash state");
             break;
     }
 

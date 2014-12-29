@@ -69,7 +69,6 @@
     weakcell.imageView.frame = frame;
     weakcell.imageView.image = image;
   } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-    NSLog(@"error download");
   }];
 }
 

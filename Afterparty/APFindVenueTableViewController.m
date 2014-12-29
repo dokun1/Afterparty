@@ -49,7 +49,7 @@
     [self.searchBar setTintColor:[UIColor afterpartyTealBlueColor]];
     
     [self.tableView setTableHeaderView:self.searchBar];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
     UIImageView *footer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByFoursquare_gray"]];
     footer.contentMode = UIViewContentModeScaleAspectFit;
@@ -73,7 +73,7 @@
         }
     }
     
-    [self.tableView setBackgroundColor:[UIColor colorWithHexString:@"e5e5e5" withAlpha:1.0]];
+    [self.tableView setBackgroundColor:[UIColor afterpartyOffWhiteColor]];
     
     [self refreshVenues];
     
@@ -106,8 +106,12 @@
         self.currentLocation = [locations lastObject];
         [self.locationManager stopUpdatingLocation];
         [self getVenues];
+        return;
     }
     self.currentLocation = [locations lastObject];
+    [self.locationManager stopUpdatingLocation];
+    [self.refreshControl endRefreshing];
+    [self getVenues];
 }
 
 #pragma mark - UISearchBarDelegate Methods
@@ -177,6 +181,9 @@
 {
     static NSString *CellIdentifier = @"APVenueCell";
     APVenueTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[APVenueTableViewCell alloc] init];
+    }
     
     APVenue *venue = self.venues[indexPath.row];
     

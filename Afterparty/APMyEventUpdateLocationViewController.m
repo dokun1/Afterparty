@@ -49,7 +49,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Set Venue";
+    self.title = @"SET VENUE";
     
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
     [self.searchBar sizeToFit];
@@ -61,6 +61,10 @@
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setFont:[UIFont fontWithName:kRegularFont size:6]];
     
+    UIImageView *footer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByFoursquare_gray"]];
+    footer.contentMode = UIViewContentModeScaleAspectFit;
+    self.tableView.tableFooterView = footer;
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = [UIColor afterpartyTealBlueColor];
     [self.refreshControl addTarget:self action:@selector(refreshVenues) forControlEvents:UIControlEventValueChanged];
@@ -69,16 +73,7 @@
     
     [self refreshVenues];
     
-    UIBarButtonItem *btnChoose = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(selectNewVenue:)];
-    [self.navigationItem setRightBarButtonItems:@[btnChoose]];
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"APVenueTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"APVenueCell"];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 -(void)selectNewVenue:(APVenue*)newVenue {
@@ -86,7 +81,7 @@
     UIAlertView *view = [[UIAlertView alloc] initWithTitle:newVenue.name
                                 message:@"Are you sure you want to move this party here?"
                                delegate:self
-                      cancelButtonTitle:@"Nah"
+                      cancelButtonTitle:@"No"
                       otherButtonTitles:@"Yes", nil];
     view.tag = 100;
     [view show];
@@ -170,10 +165,9 @@
     
     [cell.venueName setText:venue.name];
     [cell.venueAddress setText:venue.prettyAddress];
-
-    [cell.venueName setFont:[UIFont fontWithName:kRegularFont size:17.0f]];
-    [cell.venueAddress setFont:[UIFont fontWithName:kRegularFont size:14.0f]];
     
+    [cell.venueName setFont:[UIFont fontWithName:kRegularFont size:14.0f]];
+    [cell.venueAddress setFont:[UIFont fontWithName:kRegularFont size:10.0f]];
     [cell.venueIcon setImageWithURL:[NSURL URLWithString:venue.iconURL]];
     
     // Configure the cell...

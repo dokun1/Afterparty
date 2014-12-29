@@ -160,11 +160,6 @@ static const CGFloat MAX_ZOOM_FACTOR = 4.0f;
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (actionSheet.tag == 100) {
-        if (buttonIndex == 0) {
-            NSLog(@"not yet...");
-        }
-    }
     if (actionSheet.tag == 200) {
         self.longPressed = NO;
         switch (buttonIndex) {
@@ -214,27 +209,22 @@ static const CGFloat MAX_ZOOM_FACTOR = 4.0f;
         NSNumber *hasFolder = [[NSUserDefaults standardUserDefaults] objectForKey:@"hasFolder"];
         if (![hasFolder boolValue]) {
             [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-                NSLog(@"Added folder:%@", albumName);
                 folder = group;
             } failureBlock:^(NSError *error) {
-                NSLog(@"Error adding folder");
             }];
             hasFolder = [NSNumber numberWithBool:YES];
             [[NSUserDefaults standardUserDefaults] setValue:hasFolder forKey:@"hasFolder"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
         [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-            NSLog(@"found folder %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:albumName]) {
                 folder = group;
                 *stop = YES;
             }
         } failureBlock:^(NSError *error) {
             [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-                NSLog(@"Added folder:%@", albumName);
                 folder = group;
             } failureBlock:^(NSError *error) {
-                NSLog(@"Error adding folder");
             }];
         }];
         
@@ -245,10 +235,7 @@ static const CGFloat MAX_ZOOM_FACTOR = 4.0f;
                     [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
                         [folder addAsset:asset];
                     } failureBlock:^(NSError *error) {
-                        NSLog(@"Error adding image");
                     }];
-                }else{
-                    NSLog(@"Error adding image: %@", error.localizedDescription);
                 }
             }];
         });

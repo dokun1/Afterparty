@@ -345,6 +345,8 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
   [self.confirmEventButton setAlpha:0.0f];
   [self.confirmEventButton addTarget:self action:@selector(confirmEventButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.confirmEventButton];
+    
+    self.eventNameField.enabled = NO;
 }
 
 -(void)updateDescriptionCharacterText {
@@ -551,6 +553,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 -(void)confirmEventButtonTapped:(id)sender {
+    if ([self.eventDescriptionView.text isEqualToString:@"Start typing here."]) {
+        [SVProgressHUD showErrorWithStatus:@"needs a better description"];
+        return;
+    }
   [SVProgressHUD showWithStatus:@"saving event"];
   self.confirmEventButton.enabled = NO;
   [self.currentEvent setEventDescription:self.eventDescriptionView.text];
@@ -720,7 +726,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
         [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
         isComplete = NO;
     }
-    if (!self.privateEventSwitch.isOn && [self.chooseEventPasswordButton.imageView.image isEqual:[UIImage imageNamed:@"button_plusblack"]]) {
+    if (!self.privateEventSwitch.isOn && ([self.currentEvent.password isEqualToString:@""] || !self.currentEvent.password)) {
         [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
         isComplete = NO;
     }
