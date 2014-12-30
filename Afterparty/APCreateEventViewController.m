@@ -18,11 +18,11 @@
 #import <TTTAttributedLabel/TTTAttributedLabel.h>
 #import "APFindVenueTableViewController.h"
 #import "APUtil.h"
-#import <FXBlurView/FXBlurView.h>
 #import "UIAlertView+APAlert.h"
 #import "APConstants.h"
 #import "APCreateEventTimeViewController.h"
 #import "APCreateEventPasswordViewController.h"
+#import "APVenue.h"
 
 @import MessageUI;
 @import AddressBook;
@@ -344,6 +344,8 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
   [self.confirmEventButton setAlpha:0.0f];
   [self.confirmEventButton addTarget:self action:@selector(confirmEventButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:self.confirmEventButton];
+    
+    self.eventNameField.enabled = NO;
 }
 
 -(void)updateDescriptionCharacterText {
@@ -463,7 +465,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 
 #pragma mark - VenueChoiceDelegate Methods
 
-- (void)controller:(APFindVenueTableViewController *)controller didChooseVenue:(FSVenue *)venue {
+- (void)controller:(APFindVenueTableViewController *)controller didChooseVenue:(APVenue *)venue {
   [self.currentEvent setEventVenue:venue];
   [self.currentEvent setLocation:venue.location.coordinate];
   NSString *address = @"";
@@ -534,7 +536,11 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     [numbers addObject:contactDict[@"phone"]];
   }];
     
-  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", eventID];
+  NSString *message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", eventID];
+    if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.currentEvent.password];
+        message = [NSString stringWithFormat:@"%@%@", message, addOn];
+    }    
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;
@@ -550,6 +556,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 -(void)confirmEventButtonTapped:(id)sender {
+    if ([self.eventDescriptionView.text isEqualToString:@"Start typing here."]) {
+        [SVProgressHUD showErrorWithStatus:@"needs a better description"];
+        return;
+    }
   [SVProgressHUD showWithStatus:@"saving event"];
   self.confirmEventButton.enabled = NO;
   [self.currentEvent setEventDescription:self.eventDescriptionView.text];
@@ -719,7 +729,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
         [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
         isComplete = NO;
     }
-    if (!self.privateEventSwitch.isOn && [self.chooseEventPasswordButton.imageView.image isEqual:[UIImage imageNamed:@"button_plusblack"]]) {
+    if (!self.privateEventSwitch.isOn && ([self.currentEvent.password isEqualToString:@""] || !self.currentEvent.password)) {
         [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
         isComplete = NO;
     }

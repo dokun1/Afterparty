@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FSVenue.h"
+#import "APVenue.h"
 
 @protocol UpdateLocationDelegate <NSObject>
 
--(void)venueSuccessfullyUpdated:(FSVenue*)newVenue;
+-(void)venueSuccessfullyUpdated:(APVenue*)newVenue;
 
 @end
 

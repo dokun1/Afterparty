@@ -21,6 +21,7 @@
 #import "UIImage+APImage.h"
 #import <Bolts/Bolts.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+#import "APIntroViewController.h"
 
 static NSString *kVersionWhatsNewFilePath = @"APWhatsNew";
 static NSString *kTermsAndConditionsFilePath = @"APTermsAndConditions";
@@ -28,7 +29,7 @@ static NSString *kTermsAndConditionsFilePath = @"APTermsAndConditions";
 static NSString *kWhatsNewSegue = @"WhatsNewSegue";
 static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 
-@interface APSettingsTableViewController () <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface APSettingsTableViewController () <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, IntroControllerDelegate>
 
 @property (strong, nonatomic) UIImage *profileImage;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePhotoView;
@@ -172,7 +173,7 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             // version cell tapped, uses prepareForSegue
         }
         if (indexPath.row == 1) {
-            //terms and conditions tapped, uses prepareForSegue
+            [self termsAndConditionsRowTapped];
         }
         if (indexPath.row == 2) {
             [self websiteButtonTapped];
@@ -189,7 +190,6 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 #pragma mark - UIActionSheetDelegate Methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSLog(@"clicked index %ld", (long)buttonIndex);
     if (buttonIndex == 2) {
         return;
     }
@@ -246,7 +246,6 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             [[APConnectionManager sharedManager] getFacebookUserDetailsWithSuccessBlock:^(NSDictionary *dictionary) {
                 [self loadUserData];
             } failure:^(NSError *error) {
-                NSLog(@"couldnt get details");
             }];
         } failure:^(NSError *error) {
             [SVProgressHUD showErrorWithStatus:@"couldn't link your facebook account"];
@@ -254,22 +253,35 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     }
 }
 
+- (void)termsAndConditionsRowTapped {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://afterparty.io/terms.html"]];
+}
+
 - (void)websiteButtonTapped {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://afterparty.io"]];
 }
 
 - (void)introScreenButtonTapped {
-    [[[UIAlertView alloc] initWithTitle:@"Coming soon" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    //TODO: add method to show intro screen again after we have created it
+    APIntroViewController *controller = [[APIntroViewController alloc] init];
+    controller.introDelegate = self;
+    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)signOutButtonTapped {
     [PFUser logOut];
+    [FBSession.activeSession close];
     [self.tableView reloadData];
     [APUtil eraseAllEventsFromMyEvents];
     [self loadUserData];
     [self.tabBarController setSelectedIndex:0];
     [[NSNotificationCenter defaultCenter] postNotificationName:kCheckCurrentUser object:nil userInfo:nil];
+}
+
+#pragma mark - IntroDelegate Methods
+
+- (void)controllerDidFinish:(APIntroViewController *)controller {
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITextFieldDelegate Methods
@@ -302,10 +314,6 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     if ([segue.identifier isEqualToString:kWhatsNewSegue]) {
         APSettingsTextViewController *vc = (APSettingsTextViewController *)segue.destinationViewController;
         vc.textFilePath = kVersionWhatsNewFilePath;
-    }
-    else if ([segue.identifier isEqualToString:kTermsAndConditionsSegue]) {
-        APSettingsTextViewController *vc = (APSettingsTextViewController *)segue.destinationViewController;
-        vc.textFilePath = kTermsAndConditionsFilePath;
     }
 }
 

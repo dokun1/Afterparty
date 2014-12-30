@@ -89,10 +89,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 		AVCaptureDevice *videoDevice = [[self class] deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
 		AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
 		
-		if (error) {
-			NSLog(@"%@", error);
-		}
-		
 		if ([session canAddInput:videoDeviceInput]) {
 			[session addInput:videoDeviceInput];
 			[self setVideoDeviceInput:videoDeviceInput];
@@ -101,9 +97,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 		AVCaptureDevice *audioDevice = [[AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio] firstObject];
 		AVCaptureDeviceInput *audioDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:audioDevice error:&error];
 		
-		if (error) {
-			NSLog(@"%@", error);
-		}
 		
 		if ([session canAddInput:audioDeviceInput]) {
 			[session addInput:audioDeviceInput];
@@ -210,7 +203,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 			APAVSessionController *strongSelf = weakSelf;
 			dispatch_async([strongSelf sessionQueue], ^{
 				// Manually restarting the session since it must have been stopped due to an error.
-                NSLog(@"session restarted");
 				[[strongSelf session] startRunning];
 			});
 		}]];
@@ -293,48 +285,36 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
         [currentCamera lockForConfiguration:&error];
         if (!error) {
             if (self.isUsingFrontFacingCamera) {
-                NSLog(@"front camera flash change");
                 switch (self.flashState) {
                     case kFlashAuto:
-                        NSLog(@"auto changing to off");
                         self.flashState = kFlashOff;
                         [currentCamera setFlashMode:AVCaptureFlashModeOff];
                         break;
                     case kFlashOn:
-                        NSLog(@"on changing to off");
                         self.flashState = kFlashOff;
                         [currentCamera setFlashMode:AVCaptureFlashModeOff];
                         break;
                     case kFlashOff:
-                        NSLog(@"off staying at off");
                     default:
-                        NSLog(@"unrecognized flash state");
-                        NSLog(@"unrecognized changing to auto");
                         [currentCamera setFlashMode:AVCaptureFlashModeAuto];
                         self.flashState = kFlashAuto;
                         break;
                 }
             } else {
-                NSLog(@"back camera flash change");
                 switch (self.flashState) {
                     case kFlashAuto:
-                        NSLog(@"auto changing to on");
                         [currentCamera setFlashMode:AVCaptureFlashModeOn];
                         self.flashState = kFlashOn;
                         break;
                     case kFlashOn:
-                        NSLog(@"on changing to off");
                         self.flashState = kFlashOff;
                         [currentCamera setFlashMode:AVCaptureFlashModeOff];
                         break;
                     case kFlashOff:
-                        NSLog(@"off changing to auto");
                         [currentCamera setFlashMode:AVCaptureFlashModeAuto];
                         self.flashState = kFlashAuto;
                         break;
                     default:
-                        NSLog(@"unrecognized flash state");
-                        NSLog(@"unrecognized changing to auto");
                         [currentCamera setFlashMode:AVCaptureFlashModeAuto];
                         self.flashState = kFlashAuto;
                         break;

@@ -67,7 +67,6 @@
       [[NSUserDefaults standardUserDefaults] setObject:[APUtil getVersion] forKey:@"latestVersion"];
       [[NSUserDefaults standardUserDefaults] synchronize];
     } failure:^(NSError *error) {
-      NSLog(@"Couldnt update version for user = %@", [error localizedDescription]);
     }];
   }
 }

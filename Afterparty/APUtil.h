@@ -19,7 +19,6 @@
 + (CGRect) getViewFrame:(UIViewController *)controller;
 + (UIImage *) imageWithColor:(UIColor *)color;
 + (UIImage *) imageWithColor:(UIColor *)color withSize:(CGSize)newSize;
-+ (CTTelephonyNetworkInfo*) getCurrentConnection;
 + (BOOL)validateEmailWithString:(NSString*)email;
 + (void)saveImage:(UIImage*)image forPath:(NSString*)path;
 + (void)saveFile:(NSObject*)file forPath:(NSString*)path;
@@ -31,7 +30,7 @@
 + (void)getMyEventsArrayWithSuccess:(void (^)(NSMutableArray *events))successBlock;
 + (void)saveEventToMyEvents:(APEvent*)event;
 + (void)eraseAllEventsFromMyEvents;
-+ (void)updateEventVenue:(FSVenue*)newVenue forEventID:(NSString*)eventID;
++ (void)updateEventVenue:(APVenue*)newVenue forEventID:(NSString*)eventID;
 + (NSString*)getVersion;
 + (BOOL)shouldDownloadNewVersion;
 + (NSString *) genRandIdString;

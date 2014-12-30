@@ -13,6 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet APLabel *venueName;
 @property (weak, nonatomic) IBOutlet APLabel *venueAddress;
-@property (weak, nonatomic) IBOutlet APLabel *venueDistance;
+@property (weak, nonatomic) IBOutlet UIImageView *venueIcon;
 
 @end

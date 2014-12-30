@@ -403,8 +403,12 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  APEvent *event = self.venues[indexPath.row];
-  [self performSegueWithIdentifier:kNearbyEventDetailSegue sender:event];
+    [SVProgressHUD showWithStatus:@"loading event"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        APEvent *event = self.venues[indexPath.row];
+        [self performSegueWithIdentifier:kNearbyEventDetailSegue sender:event];
+    });
+
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -423,7 +427,6 @@
 }
 
 - (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
-  NSLog(@"done popping!!");
 }
 
 @end

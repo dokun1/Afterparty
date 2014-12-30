@@ -11,7 +11,7 @@
 
 @implementation APEvent
 
-- (instancetype)initWithName:(NSString *)name venue:(FSVenue *)venue password:(NSString *)password startDate:(NSDate *)startDate endDate:(NSDate *)endDate deleteDate:(NSDate *)deleteDate createdByUsername:(NSString *)createdByUsername atLocation:(CLLocationCoordinate2D)location coverPhotoID:(NSString *)coverPhotoID eventDescription:(NSString *)eventDescription eventAddress:(NSString *)eventAddress eventImage:(UIImage *)eventImage eventUserPhotoURL:(NSString *)eventUserPhotoURL eventUserBlurb:(NSString *)eventUserBlurb{
+- (instancetype)initWithName:(NSString *)name venue:(APVenue *)venue password:(NSString *)password startDate:(NSDate *)startDate endDate:(NSDate *)endDate deleteDate:(NSDate *)deleteDate createdByUsername:(NSString *)createdByUsername atLocation:(CLLocationCoordinate2D)location coverPhotoID:(NSString *)coverPhotoID eventDescription:(NSString *)eventDescription eventAddress:(NSString *)eventAddress eventImage:(UIImage *)eventImage eventUserPhotoURL:(NSString *)eventUserPhotoURL eventUserBlurb:(NSString *)eventUserBlurb{
   if (self = [super init]) {
     _eventName         = name;
     _eventVenue        = venue;

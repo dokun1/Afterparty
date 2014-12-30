@@ -13,6 +13,7 @@
 #import <Foursquare-API-v2/Foursquare2.h>
 #import "FSConverter.h"
 #import "APConstants.h"
+#import "APVenue.h"
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 
 @implementation APConnectionManager
@@ -99,8 +100,6 @@
   NSNumber *latDown = @(location.coordinate.latitude - 0.07);
   NSNumber *longUp = @(location.coordinate.longitude + 0.07);
   NSNumber *longDown = @(location.coordinate.longitude - 0.07);
-  
-  NSLog(@"Searching for coord range (%@, %@), (%@, %@)", latDown, latUp, longDown, longUp);
   
   [query whereKey:@"latitude" greaterThan:latDown];
   [query whereKey:@"latitude" lessThan:latUp];
@@ -565,7 +564,7 @@
 }
 
 -(void)updateEventForEventID:(NSString*)eventID
-                withNewVenue:(FSVenue*)newVenue
+                withNewVenue:(APVenue*)newVenue
                      success:(APSuccessBooleanBlock)successBlock
                      failure:(APFailureErrorBlock)failureBlock {
   PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
@@ -642,11 +641,16 @@
     [[PFUser currentUser] saveEventually];
     [[PFQuery queryWithClassName:kEventSearchParseClass] getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
         if (error) {
-            failureBlock(error);
+            if (error.code == kPFErrorObjectNotFound) {
+                successBlock();
+            } else {
+                failureBlock(error);
+            }
+        } else {
+            [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                error == nil ? successBlock() : failureBlock(error);
+            }];
         }
-        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            error == nil ? successBlock() : failureBlock(error);
-        }];
     }];
 }
 

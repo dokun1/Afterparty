@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "APConnectionManager.h"
-#import "FXBlurView.h"
 #import "APPhotoCommentTableView.h"
 #import "APStackedGridLayout.h"
 #import "APPhotoViewController.h"

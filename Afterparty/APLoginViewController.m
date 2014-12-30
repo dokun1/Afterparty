@@ -10,14 +10,16 @@
 #import "APTextField.h"
 #import "APLabel.h"
 #import "APButton.h"
-#import <FXBlurView.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "UIColor+APColor.h"
 #import "UIView+APViewAnimations.h"
 #import "APConnectionManager.h"
 #import <SVProgressHUD/SVProgressHUD.h>
+#import "APIntroViewController.h"
 
-@interface APLoginViewController () <FBLoginViewDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+static NSString *const kFirstTimeLoginKey = @"hasSeenIntro";
+
+@interface APLoginViewController () <FBLoginViewDelegate, UITextFieldDelegate, UIActionSheetDelegate, UIAlertViewDelegate, IntroControllerDelegate>
 
 typedef NS_ENUM(NSInteger, LoginState) {
   kNothing,
@@ -130,21 +132,21 @@ typedef NS_ENUM(NSInteger, LoginState) {
           case kTwitter:
           {
               [self fadeOutInitialSceneForLoginWithCompletion:^{
-                  [self dismissViewControllerAnimated:YES completion:nil];
+                  [self showIntroController];
               }];
               break;
           }
           case kAfterpartyLogin:
           {
               [self fadeOutLoginSceneWithCompletion:^{
-                  [self dismissViewControllerAnimated:YES completion:nil];
+                  [self showIntroController];
               }];
               break;
           }
           case kAfterpartySignup:
           {
               [self fadeOutSignupSceneWithCompletion:^{
-                  [self dismissViewControllerAnimated:YES completion:nil];
+                  [self showIntroController];
               }];
               break;
           }
@@ -152,6 +154,27 @@ typedef NS_ENUM(NSInteger, LoginState) {
               break;
       }
   }];
+}
+
+- (void)showIntroController {
+    BOOL shouldShow = [[NSUserDefaults standardUserDefaults] valueForKey:kFirstTimeLoginKey];
+    if (!shouldShow) {
+        shouldShow = YES;
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        APIntroViewController *controller = [[APIntroViewController alloc] init];
+        controller.introDelegate = self;
+        [self presentViewController:controller animated:NO completion:nil];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - IntroDelegate Methods
+
+- (void)controllerDidFinish:(APIntroViewController *)controller {
+    [controller dismissViewControllerAnimated:NO completion:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 #pragma mark - Field Animation Methods
@@ -397,13 +420,10 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [[APConnectionManager sharedManager] loginWithTwitterAccount:account success:^(PFUser *user) {
     [SVProgressHUD dismiss];
     [[APConnectionManager sharedManager] getTwitterUserDetailsForUsername:self.twitterAccount.username success:^(NSDictionary *dictionary) {
-      NSLog(@"%@", dictionary);
     } failure:^(NSError *error) {
-      NSLog(@"failure");
     }];
       [self animateSunDown];
   } failure:^(NSError *error) {
-    NSLog(@"failure");
     [SVProgressHUD showErrorWithStatus:nil];
   }];
 }

@@ -29,8 +29,6 @@
 @property (weak, nonatomic  ) NSTimer           *switchTimer;
 @property (weak, nonatomic  ) NSTimer           *checkTimer;
 
-@property (strong, nonatomic) NSMutableArray    *thumbnailCacheArray;
-
 @property (assign, nonatomic) BOOL              isSavingBulk;
 
 @property (strong, nonatomic) CLLocation        *eventLocation;
@@ -40,8 +38,6 @@
 @property (assign, nonatomic) BOOL              shouldAskAboutMove;
 
 @property (strong, nonatomic) NSMutableArray    *selectedPhotos;
-
-@property (strong, nonatomic) FXBlurView        *blurView;
 
 @property (strong, nonatomic) UICollectionViewFlowLayout *photoViewLayout;
 
@@ -64,7 +60,6 @@
 
 - (void)getLatestMetadata {
   __block NSMutableArray *data = [@[] mutableCopy];
-  [SVProgressHUD show];
   [[APConnectionManager sharedManager] downloadImageMetadataForEventID:self.eventID success:^(NSArray *objects) {
     [objects enumerateObjectsUsingBlock:^(PFObject *obj, NSUInteger idx, BOOL *stop) {
       APPhotoInfo *info = [[APPhotoInfo alloc] initWithParseObject:obj forEvent:self.eventID];
@@ -72,16 +67,17 @@
             [data addObject:info];
         }
     }];
-    [SVProgressHUD dismiss];
     dispatch_async(dispatch_get_main_queue(), ^{
-      if (!self.photoMetadata) {
-        self.photoMetadata = [NSArray array];
-      }
-      self.photoMetadata = data;
+        if (!self.photoMetadata) {
+            self.photoMetadata = [NSArray array];
+        }
+        self.photoMetadata = data;
         [self.collectionView reloadData];
     });
   } failure:^(NSError *error) {
-    [SVProgressHUD showErrorWithStatus:@"could not get photos"];
+      dispatch_async(dispatch_get_main_queue(), ^{
+          [SVProgressHUD showErrorWithStatus:@"could not get photos"];
+      });
   }];
 }
 
@@ -135,7 +131,6 @@
     self.shouldAskAboutMove = YES;
   }
   
-  self.thumbnailCacheArray = [[NSMutableArray alloc] init];
   self.selectedPhotos = nil;
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kQueueIsDoneUploading object:nil];
@@ -316,7 +311,6 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([[alertView title] isEqualToString:@"Keep the party going?"]) {
         if (buttonIndex == 1) {
-            NSLog(@"lets update the location");
             APMyEventUpdateLocationViewController *vc = [[APMyEventUpdateLocationViewController alloc] initWithCurrentLocation:self.currentLocation forEventID:self.eventID];
             vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];
@@ -326,7 +320,7 @@
 
 #pragma mark - UpdateLocationDelegate methods
 
--(void)venueSuccessfullyUpdated:(FSVenue *)newVenue {
+-(void)venueSuccessfullyUpdated:(APVenue *)newVenue {
     self.eventLocation = [[CLLocation alloc] initWithLatitude:newVenue.location.coordinate.latitude
                                                         longitude:newVenue.location.coordinate.longitude];
     [APUtil updateEventVenue:newVenue forEventID:self.eventID];
@@ -339,15 +333,14 @@
     CLLocation *currentLocation = [locations lastObject];
     self.currentLocation = currentLocation;
     CLLocationDistance meters = [self.eventLocation distanceFromLocation:currentLocation];
-    self.canTakePhoto = (meters < 1620);
+    self.canTakePhoto = (meters < 850);
     if (!self.canTakePhoto && self.shouldAskAboutMove) {
         self.shouldAskAboutMove = NO;
-        [[[UIAlertView alloc] initWithTitle:@"Keep the party going?" message:@"It looks like you moved since creating the party - do you want to update the location?" delegate:self cancelButtonTitle:@"Nah" otherButtonTitles:@"OK!", nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Keep the party going?" message:@"It looks like you moved since creating the party - do you want to update the location?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
     }
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"manager failed: %@", [error localizedDescription]);
 }
 
 #pragma mark - Long Press Methods
@@ -406,39 +399,19 @@
 #pragma mark - Action methods for my event
 
 - (void)refreshPhotos {
-  [self.thumbnailCacheArray removeAllObjects];
-  self.blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
-  [self.blurView setAlpha:0.0f];
-  [self.blurView setBlurEnabled:YES];
-  [self.blurView setBlurRadius:20];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-  [self.view insertSubview:self.blurView aboveSubview:self.collectionView];
-  [UIView animateWithDuration:0.5 animations:^{
-      [self.blurView setAlpha:1.0f];
-  }];
-  dispatch_async(self.photoDownloadQueue, ^{
-    [self getLatestMetadata];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-      self.photoButton.enabled = YES;
-      self.thumbnailCacheArray = [self.photoMetadata mutableCopy];
-//      [self.collectionView reloadData];
-      [self.refreshControl endRefreshing];
-      [UIView animateWithDuration:0.5
-                            delay:0.3
-                          options:UIViewAnimationOptionCurveLinear
-                       animations:^{
-                         [self.blurView setAlpha:0.0f];
-                       } completion:^(BOOL finished) {
-                         self.blurView = nil;
-                       }];
+    dispatch_async(self.photoDownloadQueue, ^{
+        [self getLatestMetadata];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            self.photoButton.enabled = YES;
+            [self.refreshControl endRefreshing];
+        });
     });
-  });
 }
 
 - (void)photoButtonTapped {
     if (self.isSavingBulk) {
-        NSLog(@"need to add method for saving all selected photos");
       if (self.selectedPhotos && self.selectedPhotos.count > 0) {
         [self saveBulkPhotos];
         [SVProgressHUD showWithStatus:@"saving photos..."];
@@ -453,14 +426,14 @@
                 [self.navigationController pushViewController:vc animated:NO];
             }else{
                 // Device has no camera
-                NSUInteger randNum = arc4random_uniform(5) + 1;
-                NSString *imageName = [NSString stringWithFormat:@"stock%lu.jpeg", (unsigned long)randNum];
+                NSUInteger randNum = arc4random_uniform(7) + 1;
+                NSString *imageName = [NSString stringWithFormat:@"stock%lu.png", (unsigned long)randNum];
                 UIImage *image = [UIImage imageNamed:imageName];
 
                 [self uploadImage:image];
             }
         }else
-            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a mile of the party center to contribute, ya big jerk."];
+            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a half mile of the party center to contribute. Try moving closer!"];
     }
 }
 
@@ -500,27 +473,22 @@
     NSNumber *hasFolder = [[NSUserDefaults standardUserDefaults] objectForKey:@"hasFolder"];
     if (![hasFolder boolValue]) {
       [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-        NSLog(@"Added folder:%@", albumName);
         folder = group;
       } failureBlock:^(NSError *error) {
-        NSLog(@"Error adding folder");
       }];
       hasFolder = [NSNumber numberWithBool:YES];
       [[NSUserDefaults standardUserDefaults] setValue:hasFolder forKey:@"hasFolder"];
       [[NSUserDefaults standardUserDefaults] synchronize];
     }
     [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-      NSLog(@"found folder %@", [group valueForProperty:ALAssetsGroupPropertyName]);
       if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:albumName]) {
         folder = group;
         *stop = YES;
       }
     } failureBlock:^(NSError *error) {
       [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-        NSLog(@"Added folder:%@", albumName);
         folder = group;
       } failureBlock:^(NSError *error) {
-        NSLog(@"Error adding folder");
       }];
     }];
     
@@ -531,10 +499,7 @@
           [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
             [folder addAsset:asset];
           } failureBlock:^(NSError *error) {
-            NSLog(@"Error adding image");
           }];
-        }else{
-          NSLog(@"Error adding image: %@", error.localizedDescription);
         }
       }];
     });
@@ -548,9 +513,6 @@
 
 -(void)capturedImage:(UIImage *)image {
     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-//    [self.navigationController popToViewController:self animated:NO];
-//    [self.navigationController setNavigationBarHidden:NO];
-//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self uploadImage:image];
 }
 

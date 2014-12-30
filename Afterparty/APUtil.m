@@ -119,20 +119,6 @@ static NSString *kMyEventsKey = @"myEventsArray";
     
 }
 
-+ (CTTelephonyNetworkInfo *)getCurrentConnection {
-    CTTelephonyNetworkInfo *telephonyInfo = [[CTTelephonyNetworkInfo alloc] init];
-    NSLog(@"Current Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
-//    [NSNotificationCenter.defaultCenter addObserverForName:CTRadioAccessTechnologyDidChangeNotification
-//                                                    object:nil
-//                                                     queue:nil
-//                                                usingBlock:^(NSNotification *note)
-//    {
-//        NSLog(@"New Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
-//    }];
-    
-    return telephonyInfo;
-}
-
 + (NSObject*)getFileForPath:(NSString*)path {
     NSObject *obj = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     return obj;
@@ -185,7 +171,6 @@ static NSString *kMyEventsKey = @"myEventsArray";
 }
 
 + (void)getMyEventsArrayWithSuccess:(void (^)(NSMutableArray *events))successBlock {
-    NSLog(@"calling getEvents");
     if (![[[NSUserDefaults standardUserDefaults] valueForKey:kPFUserEventsJoinedKey] boolValue]) {
         [self loadMyEventsOnLoginWithCompletion:^{
             successBlock([self loadSavedEvents]);
@@ -236,15 +221,12 @@ static NSString *kMyEventsKey = @"myEventsArray";
         [[APConnectionManager sharedManager] attemptEventDeleteForPhotoCleanupForEventID:eventID success:^(NSNumber *number) {
             if ([number doubleValue] == 0) {
                 [[APConnectionManager sharedManager] deleteEventForEventID:eventID success:^{
-                    NSLog(@"removing event with eventID %@", eventID);
                     [newExpiredEvents removeObject:attemptDict];
                     [self saveArray:[NSArray arrayWithArray:newExpiredEvents] forPath:kExpiredEventsKey];
                 } failure:^(NSError *error) {
-                    NSLog(@"could not delete event object for eventID %@", eventID);
                 }];
             }
         } failure:^(NSError *error) {
-            NSLog(@"could not attempt destruction for eventID %@", eventID);
         }];
     }
 }
@@ -264,7 +246,6 @@ static NSString *kMyEventsKey = @"myEventsArray";
                     NSData *imageData = [imageFile getData];
                     [event setEventImageData:imageData];
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        NSLog(@"%@", event.objectID);
                         [self saveEventToMyEvents:event];
                         if (counter == eventsJoined.count) {
                             completionBlock();
@@ -300,7 +281,6 @@ static NSString *kMyEventsKey = @"myEventsArray";
         }];
         if (!containsEvent) {
             [myEventsArray addObject:eventDict];
-            NSLog(@"saved event %@", event.objectID);
             [[APConnectionManager sharedManager] joinEvent:event.objectID success:^{
                 
             } failure:^(NSError *error) {
@@ -312,7 +292,7 @@ static NSString *kMyEventsKey = @"myEventsArray";
     });
 }
 
-+ (void)updateEventVenue:(FSVenue*)newVenue forEventID:(NSString*)eventID {
++ (void)updateEventVenue:(APVenue*)newVenue forEventID:(NSString*)eventID {
     [APUtil getMyEventsArrayWithSuccess:^(NSMutableArray *myEventsArray) {
         [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
             if ([[[eventDict allKeys] firstObject] isEqualToString:eventID]) {
@@ -345,8 +325,6 @@ static NSString *kMyEventsKey = @"myEventsArray";
     NSArray *items = [plist allValues].firstObject;
     NSDictionary *metadata = [items.firstObject objectForKey:@"metadata"];
     NSString *webVersion = [metadata objectForKey:@"bundle-version"];
-    
-    NSLog(@"\nCurrent Version: %@\nServer Version: %@", [self getVersion], webVersion);
   
   if ([[self getVersion] compare:webVersion options:NSNumericSearch] == NSOrderedAscending) { //checks to see if current version is less than web version
     return YES;

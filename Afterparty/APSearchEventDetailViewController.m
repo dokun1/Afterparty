@@ -80,6 +80,11 @@
     [self.eventAuthorNameOnTopImage styleForType:LabelTypeTableViewCellAttribute];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SVProgressHUD dismiss];
+}
+
 - (void)awakeFromNib {
     self.eventTitleOnTopImage.text = @"title";
     self.eventAuthorNameOnTopImage.text = @"author";
@@ -136,9 +141,7 @@
         [attendees addObject:[PFUser currentUser].objectId];
         self.currentEvent.attendees = attendees;
         [[APConnectionManager sharedManager] updateEventForNewAttendee:self.currentEvent success:^() {
-            NSLog(@"updated attendees");
         } failure:^(NSError *error) {
-            NSLog(@"couldnt update event attendees");
         }];
     }
     NSDictionary *eventInfo = @{@"deleteDate": [_currentEvent deleteDate],
