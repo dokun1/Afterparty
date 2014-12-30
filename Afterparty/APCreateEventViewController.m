@@ -18,7 +18,6 @@
 #import <TTTAttributedLabel/TTTAttributedLabel.h>
 #import "APFindVenueTableViewController.h"
 #import "APUtil.h"
-#import <FXBlurView/FXBlurView.h>
 #import "UIAlertView+APAlert.h"
 #import "APConstants.h"
 #import "APCreateEventTimeViewController.h"
@@ -537,7 +536,11 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     [numbers addObject:contactDict[@"phone"]];
   }];
     
-  NSString * message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", eventID];
+  NSString *message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", eventID];
+    if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.currentEvent.password];
+        message = [NSString stringWithFormat:@"%@%@", message, addOn];
+    }    
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;

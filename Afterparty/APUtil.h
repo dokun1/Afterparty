@@ -19,7 +19,6 @@
 + (CGRect) getViewFrame:(UIViewController *)controller;
 + (UIImage *) imageWithColor:(UIColor *)color;
 + (UIImage *) imageWithColor:(UIColor *)color withSize:(CGSize)newSize;
-+ (CTTelephonyNetworkInfo*) getCurrentConnection;
 + (BOOL)validateEmailWithString:(NSString*)email;
 + (void)saveImage:(UIImage*)image forPath:(NSString*)path;
 + (void)saveFile:(NSObject*)file forPath:(NSString*)path;

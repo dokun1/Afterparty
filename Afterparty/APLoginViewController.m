@@ -10,7 +10,6 @@
 #import "APTextField.h"
 #import "APLabel.h"
 #import "APButton.h"
-#import <FXBlurView.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "UIColor+APColor.h"
 #import "UIView+APViewAnimations.h"
@@ -159,8 +158,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
 
 - (void)showIntroController {
     BOOL shouldShow = [[NSUserDefaults standardUserDefaults] valueForKey:kFirstTimeLoginKey];
-#warning reset when done experimenting
-    if (1 == 1) {
+    if (!shouldShow) {
         shouldShow = YES;
         [[NSUserDefaults standardUserDefaults] synchronize];
         APIntroViewController *controller = [[APIntroViewController alloc] init];

@@ -967,9 +967,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="P0M-Rd-DeY" kind="push" identifier="TermsAndConditionsSegue" id="Afl-6S-Lbe"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="lastSectionCell" rowHeight="38" id="0Wy-kx-Key">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1100,6 +1097,5 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="f8i-cj-h7P"/>
-        <segue reference="Afl-6S-Lbe"/>
     </inferredMetricsTieBreakers>
 </document>

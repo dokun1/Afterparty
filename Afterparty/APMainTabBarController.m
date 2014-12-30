@@ -53,8 +53,7 @@
 }
 
 - (void)checkCurrentUser {
-#warning replace with if (![PFUser currentUser])
-  if (1 == 1) {
+  if (![PFUser currentUser]) {
     [self performSegueWithIdentifier:kLoginSegue sender:self];
   }
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{

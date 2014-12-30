@@ -18,23 +18,19 @@ static NSInteger const kNumberOfPages = 5;
 @interface APIntroViewController ()
 
 @property (strong, nonatomic) APLabel *titleLabel;
-@property (strong, nonatomic) UIImageView *logo;
-@property (strong, nonatomic) APLabel *firstDescriptionLabel;
-@property (strong, nonatomic) APLabel *secondPlayLabel;
-@property (strong, nonatomic) UIImageView *secondImageView;
+
+@property (strong, nonatomic) APLabel *descriptionOne;
+@property (strong, nonatomic) APLabel *descriptionTwo;
+@property (strong, nonatomic) APLabel *descriptionThree;
+@property (strong, nonatomic) APLabel *descriptionFour;
+
+@property (strong, nonatomic) UIImageView *imageViewOne;
+@property (strong, nonatomic) UIImageView *imageViewTwo;
+@property (strong, nonatomic) UIImageView *imageViewThree;
+
 @property (strong, nonatomic) APButton *closeButton;
-@property (strong, nonatomic) UIImageView *iPhoneFrameCamera;
-@property (strong, nonatomic) UIImageView *iPhoneFrameEvent;
 
-@property (strong, nonatomic) UIImageView *iPhoneOneFrame;
-@property (strong, nonatomic) UIImageView *iPhoneTwoFrame;
-@property (strong, nonatomic) UIImageView *iPhoneThreeFrame;
-
-@property (strong, nonatomic) UIImageView *stockPhotoOne;
-@property (strong, nonatomic) UIImageView *stockPhotoTwo;
-@property (strong, nonatomic) UIImageView *stockPhotoThree;
-
-@property (strong, nonatomic) UIImageView *mapImageView;
+@property (strong, nonatomic) UIImageView *swipeIcon;
 
 @end
 
@@ -53,6 +49,14 @@ static NSInteger const kNumberOfPages = 5;
     // Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.swipeIcon.center = self.view.center;
+        self.swipeIcon.alpha = 1.0f;
+    } completion:nil];
+}
+
 - (void)placeViews {
     
     self.titleLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
@@ -61,130 +65,79 @@ static NSInteger const kNumberOfPages = 5;
     self.titleLabel.center = CGPointMake(self.view.center.x, 67);
     [self.scrollView addSubview:self.titleLabel];
     
-    self.logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"facebookLogo"]];
-    self.logo.center = self.view.center;
-    self.logo.frame = CGRectOffset(self.logo.frame, self.view.frame.size.width, -100);
-    self.logo.alpha = 0.0f;
-    [self.scrollView addSubview:self.logo];
+    self.descriptionOne = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 40, 200)];
+    [self.descriptionOne styleForType:LabelTypeStandard withText:@"find an event near you, or make one yourself..."];
+    self.descriptionOne.backgroundColor = [UIColor clearColor];
+    self.descriptionOne.textColor = [UIColor afterpartyOffWhiteColor];
+    self.descriptionOne.numberOfLines = 3;
+    self.descriptionOne.center = self.view.center;
+    self.descriptionOne.frame = CGRectOffset(self.descriptionOne.frame, timeForPage(2), -(self.view.frame.size.height/2 - 60));
+    [self.scrollView addSubview:self.descriptionOne];
     
-    self.firstDescriptionLabel = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 40, 200)];
-    [self.firstDescriptionLabel styleForType:LabelTypeStandard withText:@"step 1: find or create an event"];
-    self.firstDescriptionLabel.backgroundColor = [UIColor clearColor];
-    self.firstDescriptionLabel.textColor = [UIColor afterpartyOffWhiteColor];
-    self.firstDescriptionLabel.numberOfLines = 3;
-    self.firstDescriptionLabel.center = self.view.center;
-    self.firstDescriptionLabel.frame = CGRectOffset(self.firstDescriptionLabel.frame, timeForPage(2), self.view.frame.size.height/2 - 40);
-    [self.scrollView addSubview:self.firstDescriptionLabel];
+    self.imageViewOne = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tutPhoto1"]];
+    self.imageViewOne.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageViewOne.frame = CGRectMake(timeForPage(2), 120, self.view.frame.size.width, self.view.frame.size.height - 100);
+    [self.scrollView addSubview:self.imageViewOne];
     
-    self.mapImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"stockMap"]];
-    self.mapImageView.center = self.view.center;
-    self.mapImageView.frame = CGRectOffset(self.mapImageView.frame, timeForPage(2), 0);
-    self.mapImageView.alpha = 0.0f;
-    [self.scrollView addSubview:self.mapImageView];
+    self.swipeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"swipeIcon"]];
+    self.swipeIcon.contentMode = UIViewContentModeScaleAspectFit;
+    self.swipeIcon.frame = CGRectMake(timeForPage(2) + 30, (self.view.frame.size.height / 2) - 100, 200, 200);
+    self.swipeIcon.alpha = 0.0f;
+    [self.scrollView addSubview:self.swipeIcon];
     
-    self.iPhoneOneFrame = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iPhoneFrameEmpty"]];
-    self.iPhoneOneFrame.frame = CGRectMake(10, self.view.frame.size.height + 10, self.view.frame.size.width / 2, (self.view.frame.size.height / 5) * 3);
-    [self.scrollView addSubview:self.iPhoneOneFrame];
+    self.descriptionTwo = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 40, 200)];
+    [self.descriptionTwo styleForType:LabelTypeStandard withText:@"start taking photos while you're there..."];
+    self.descriptionTwo.backgroundColor = [UIColor clearColor];
+    self.descriptionTwo.textColor = [UIColor afterpartyOffWhiteColor];
+    self.descriptionTwo.numberOfLines = 3;
+    self.descriptionTwo.center = self.view.center;
+    self.descriptionTwo.frame = CGRectOffset(self.descriptionTwo.frame, timeForPage(3), -(self.view.frame.size.height/2 - 60));
+    [self.scrollView addSubview:self.descriptionTwo];
     
-    self.iPhoneTwoFrame = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iPhoneFrameEmptyHorizontal"]];
-    self.iPhoneTwoFrame.frame = CGRectMake(-10 - ((self.view.frame.size.height / 5) * 3), 200, (self.view.frame.size.height / 5) * 3, self.view.frame.size.width / 2);
-    [self.scrollView addSubview:self.iPhoneTwoFrame];
+    self.imageViewTwo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tutPhoto3"]];
+    self.imageViewTwo.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageViewTwo.frame = CGRectMake(timeForPage(3), 120, self.view.frame.size.width, self.view.frame.size.height - 100);
+    [self.scrollView addSubview:self.imageViewTwo];
     
-    self.stockPhotoOne = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"introPhoto3"]];
-    self.stockPhotoOne.frame = CGRectMake(22, self.view.frame.size.height + 40, self.iPhoneOneFrame.frame.size.width - 25, self.iPhoneOneFrame.frame.size.height - 100);
-    [self.scrollView addSubview:self.stockPhotoOne];
+    self.descriptionThree = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 40, 200)];
+    [self.descriptionThree styleForType:LabelTypeStandard withText:@"and watch the photos add up!"];
+    self.descriptionThree.backgroundColor = [UIColor clearColor];
+    self.descriptionThree.textColor = [UIColor afterpartyOffWhiteColor];
+    self.descriptionThree.numberOfLines = 3;
+    self.descriptionThree.center = self.view.center;
+    self.descriptionThree.frame = CGRectOffset(self.descriptionThree.frame, timeForPage(4), -(self.view.frame.size.height/2 - 60));
+    [self.scrollView addSubview:self.descriptionThree];
     
-    self.iPhoneFrameEvent = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"introPhoneFrameSemiComplete"]];
-    self.iPhoneFrameEvent.frame = CGRectMake(0, 0, self.view.frame.size.width - 40, self.view.frame.size.height - 140);
-    self.iPhoneFrameEvent.contentMode = UIViewContentModeScaleAspectFit;
-    self.iPhoneFrameEvent.center = CGPointMake(self.view.center.x, self.view.frame.size.height + 500);
-    [self.scrollView addSubview:self.iPhoneFrameEvent];
+    self.imageViewThree = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tutPhoto2"]];
+    self.imageViewThree.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageViewThree.frame = CGRectMake(timeForPage(4), 120, self.view.frame.size.width, self.view.frame.size.height - 100);
+    [self.scrollView addSubview:self.imageViewThree];
+    
+    self.descriptionFour = [[APLabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 40, 200)];
+    [self.descriptionFour styleForType:LabelTypeStandard withText:@"an event disappears 24 hours after it ends, and so do all the photos, so get started now!"];
+    self.descriptionFour.backgroundColor = [UIColor clearColor];
+    self.descriptionFour.textColor = [UIColor afterpartyOffWhiteColor];
+    self.descriptionFour.numberOfLines = 3;
+    self.descriptionFour.center = self.view.center;
+    self.descriptionFour.frame = CGRectOffset(self.descriptionFour.frame, timeForPage(5), -(self.view.frame.size.height/2 - 60));
+    [self.scrollView addSubview:self.descriptionFour];
+    
+    self.closeButton = [[APButton alloc] initWithFrame:CGRectMake(timeForPage(5) + 10, self.view.frame.size.height - 60, self.view.frame.size.width - 20, 50)];
+    [self.closeButton style];
+    [self.closeButton setTitle:@"GET STARTED NOW!!" forState:UIControlStateNormal];
+    self.closeButton.backgroundColor = [UIColor afterpartyCoralRedColor];
+    [self.closeButton addTarget:self action:@selector(closeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollView addSubview:self.closeButton];
 }
 
 - (void)configureAnimation {
-    //title label animations
-    IFTTTAngleAnimation *firstLabelRotateAnimation = [IFTTTAngleAnimation animationWithView:self.titleLabel];
-    [self.animator addAnimation:firstLabelRotateAnimation];
-    [firstLabelRotateAnimation addKeyFrames:@[
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAngle:0.0f],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAngle:(CGFloat)(2 * M_PI)]
-    ]];
-    
-    IFTTTFrameAnimation *firstLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.titleLabel];
-    [self.animator addAnimation:firstLabelFrameAnimation];
-    [firstLabelFrameAnimation addKeyFrames:@[
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.titleLabel.frame],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.titleLabel.frame, self.view.frame.size.width, 0)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.titleLabel.frame, self.view.frame.size.width * 2, 0)]
-    ]];
-    
-    //map view animations
-    IFTTTAlphaAnimation *mapAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.mapImageView];
-    [self.animator addAnimation:mapAlphaAnimation];
-    [mapAlphaAnimation addKeyFrames:@[
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:0.0f]
-                                      ]];
-    
-    IFTTTFrameAnimation *mapFrameAnimation = [IFTTTFrameAnimation animationWithView:self.mapImageView];
-    [self.animator addAnimation:mapFrameAnimation];
-    [mapFrameAnimation addKeyFrames:@[
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.mapImageView.frame],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.mapImageView.frame, timeForPage(1), 0)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.mapImageView.frame, timeForPage(2), 0)]
-                                      ]];
-    
-    //phoneFrameOne animations
-    IFTTTFrameAnimation *phoneFrameOneAnimation = [IFTTTFrameAnimation animationWithView:self.iPhoneOneFrame];
-    [self.animator addAnimation:phoneFrameOneAnimation];
-    [phoneFrameOneAnimation addKeyFrames:@[
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.iPhoneOneFrame.frame, 0, 0)],
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.iPhoneOneFrame.frame, self.view.frame.size.width, 0)],
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.iPhoneOneFrame.frame, self.view.frame.size.width * 2, -300)],
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.iPhoneOneFrame.frame, self.view.frame.size.width * 3, 0)]
-                                           ]];
-    
-    //stockPhotoOneAnimations
-    IFTTTFrameAnimation *stockPhotoOneAnimation = [IFTTTFrameAnimation animationWithView:self.stockPhotoOne];
-    [self.animator addAnimation:stockPhotoOneAnimation];
-    [stockPhotoOneAnimation addKeyFrames:@[
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.stockPhotoOne.frame, 0, 0)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.stockPhotoOne.frame, self.view.frame.size.width, 0)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.stockPhotoOne.frame, self.view.frame.size.width * 2, -285)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.stockPhotoOne.frame, self.view.frame.size.width * 3 + 28, -539)]
-                                                   ]];
-    
-    IFTTTScaleAnimation *stockPhotoOneScaleAnimation = [IFTTTScaleAnimation animationWithView:self.stockPhotoOne];
-    [self.animator addAnimation:stockPhotoOneScaleAnimation];
-    [stockPhotoOneScaleAnimation addKeyFrames:@[
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andScale:1.0f],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andScale:1.0f],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andScale:1.0f],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andScale:0.715f],
-                                                ]];
-    
-    //phoneFrameTwo animations
-    IFTTTFrameAnimation *phoneFrameTwoAnimation = [IFTTTFrameAnimation animationWithView:self.iPhoneTwoFrame];
-    [self.animator addAnimation:phoneFrameTwoAnimation];
-    [phoneFrameTwoAnimation addKeyFrames:@[
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.iPhoneTwoFrame.frame, 0, 0)],
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.iPhoneTwoFrame.frame, self.view.frame.size.width, 0)],
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.iPhoneTwoFrame.frame, self.view.frame.size.width * 2 + self.iPhoneTwoFrame.frame.size.width - 50, 0)],
-       [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.iPhoneTwoFrame.frame, self.view.frame.size.width * 3 - self.iPhoneTwoFrame.frame.size.width - 70, 0)]
-                                           ]];
-    
-    
-    //phoneFrameEvent animations
-    IFTTTFrameAnimation *phoneFrameEventAnimation = [IFTTTFrameAnimation animationWithView:self.iPhoneFrameEvent];
-    [self.animator addAnimation:phoneFrameEventAnimation];
-    [phoneFrameEventAnimation addKeyFrames:@[
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.iPhoneFrameEvent.frame, 0, 0)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.iPhoneFrameEvent.frame, self.view.frame.size.width, 0)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.iPhoneFrameEvent.frame, self.view.frame.size.width * 2, 0)],
-        [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.iPhoneFrameEvent.frame, self.view.frame.size.width * 3, -750)],
-                                             ]];
-    
+    //when we make more use of the animations in IFTTT, well need this here for keyframe animations
+}
+
+- (void)closeButtonTapped {
+    if ([self.introDelegate respondsToSelector:@selector(controllerDidFinish:)]) {
+        [self.introDelegate controllerDidFinish:self];
+    }
 }
 
 #pragma mark - IFTTTAnimatedScrollViewControllerDelegate
