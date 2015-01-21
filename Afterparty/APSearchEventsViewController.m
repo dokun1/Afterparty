@@ -9,7 +9,6 @@
 #import "APSearchEventsViewController.h"
 #import <Parse/Parse.h>
 #import "APSearchEventTableViewCell.h"
-#import <SVProgressHUD/SVProgressHUD.h>
 #import "APSearchEventDetailViewController.h"
 #import "UIColor+APColor.h"
 #import "UIAlertView+APAlert.h"
@@ -18,6 +17,7 @@
 #import "APUtil.h"
 #import <MapKit/MapKit.h>
 #import "APEventAnnotation.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @import AddressBook;
 
@@ -114,7 +114,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     self.initialSearch = nil;
-    [SVProgressHUD dismiss];
+
 }
 
 #pragma mark - CLLocationManagerDelegate Methods
@@ -128,7 +128,6 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
   self.currentLocation = [locations lastObject];
   [self.locationManager stopUpdatingLocation];
-  [SVProgressHUD showWithStatus:@"finding events"];
   self.isLoading = YES;
   if ([PFUser currentUser]) {
     [[APConnectionManager sharedManager] getNearbyEventsForLocation:self.currentLocation success:^(NSArray *objects) {
@@ -137,15 +136,12 @@
       dispatch_async(dispatch_get_main_queue(), ^{
         [self loadEventsToMap];
         if ([self.venues count] == 0) {
-          [SVProgressHUD showErrorWithStatus:@"No events nearby"];
         }else{
-          [SVProgressHUD dismiss];
         }
         [self.refreshControl endRefreshing];
         [self.tableView reloadData];
       });
     } failure:^(NSError *error) {
-      [SVProgressHUD showErrorWithStatus:@"Server error"];
       self.isLoading = NO;
     }];
   }
@@ -281,10 +277,8 @@
 }
 
 -(void)searchForEventByID {
-    [SVProgressHUD showWithStatus:@"searching for event"];
     [self.searchBar resignFirstResponder];
     [[APConnectionManager sharedManager] searchEventsByID:self.initialSearch success:^(NSArray *objects) {
-        [SVProgressHUD dismiss];
         self.venues = [objects mutableCopy];
         APEvent *searchedEvent = self.venues.firstObject;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -298,7 +292,6 @@
         });
 
     } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"couldn't find event"];
     }];
 }
 

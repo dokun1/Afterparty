@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)showIntroController {
-    BOOL shouldShow = [[NSUserDefaults standardUserDefaults] valueForKey:kFirstTimeLoginKey];
+    BOOL shouldShow = [[NSUserDefaults standardUserDefaults] boolForKey:kFirstTimeLoginKey];
     if (!shouldShow) {
         shouldShow = YES;
         [[NSUserDefaults standardUserDefaults] synchronize];
