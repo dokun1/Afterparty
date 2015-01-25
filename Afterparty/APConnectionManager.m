@@ -220,7 +220,6 @@
     PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
     NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
     PFObject *photoData = [PFObject objectWithClassName:kPhotosParseClass];
-    
     photoData[@"eventID"] = eventID;
     photoData[@"timestamp"] = [NSDate date];
     photoData[@"user"] = [[PFUser currentUser] username];

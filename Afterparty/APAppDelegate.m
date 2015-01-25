@@ -68,7 +68,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-#warning entry point for all push notifications is here.
     NSLog(@"push notification user info: %@", userInfo);
     [PFPush handlePush:userInfo];
 }
