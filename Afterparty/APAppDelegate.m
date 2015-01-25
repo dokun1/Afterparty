@@ -45,7 +45,32 @@
     [SVProgressHUD setForegroundColor:[UIColor afterpartyOffWhiteColor]];
     [SVProgressHUD setRingThickness:2.0f];
     
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    currentInstallation.channels = @[@"global"];
+    [currentInstallation saveInBackground];
+    
+    /* HOW AFTERPARTY HANDLES PUSH NOTIFICATIONS
+     
+     Whenever a user goes to an event, add the objectID of the event to the array of channels for this currentInstallation object. All push notifications will be sent via cloud code to a specific channel, being able to avoid having to query the service for all users with a certain installation or userID.
+     */
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+#warning entry point for all push notifications is here.
+    NSLog(@"push notification user info: %@", userInfo);
+    [PFPush handlePush:userInfo];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {

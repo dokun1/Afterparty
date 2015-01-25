@@ -137,11 +137,13 @@
     if (!attendees) {
         attendees = [NSMutableArray array];
     }
-    if (![attendees containsObject:[PFUser currentUser].objectId]) {
-        [attendees addObject:[PFUser currentUser].objectId];
+    if (![attendees containsObject:[PFUser currentUser]]) {
+        [attendees addObject:[PFUser currentUser]];
         self.currentEvent.attendees = attendees;
         [[APConnectionManager sharedManager] updateEventForNewAttendee:self.currentEvent success:^() {
+            
         } failure:^(NSError *error) {
+            
         }];
     }
     NSDictionary *eventInfo = @{@"deleteDate": [_currentEvent deleteDate],
