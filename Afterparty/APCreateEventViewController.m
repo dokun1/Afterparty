@@ -144,8 +144,8 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     CGFloat elementHeight = 30.f;
     
     self.eventOwnerLabel = [[APLabel alloc] initWithFrame:CGRectMake(elementX, y, elementWidth, elementHeight)];
-  [self.eventOwnerLabel styleForType:LabelTypeTableViewCellTitle withText:[partyOwner uppercaseString]];
-  self.eventOwnerLabel.textColor = [UIColor whiteColor];
+    [self.eventOwnerLabel styleForType:LabelTypeTableViewCellTitle withText:[partyOwner uppercaseString]];
+    self.eventOwnerLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:self.eventOwnerLabel];
     
     y += self.eventOwnerLabel.frame.size.height + elementX;
@@ -560,31 +560,31 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
         [SVProgressHUD showErrorWithStatus:@"needs a better description"];
         return;
     }
-  [SVProgressHUD showWithStatus:@"saving event"];
-  self.confirmEventButton.enabled = NO;
-  [self.currentEvent setEventDescription:self.eventDescriptionView.text];
-  self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*60*60];
-  PFUser *currentUser = [PFUser currentUser];
-  self.currentEvent.eventUserBlurb = currentUser[kPFUserBlurbKey] ? currentUser[kPFUserBlurbKey] : @"This user has no blurb";
-  self.currentEvent.eventUserPhotoURL = currentUser[kPFUserProfilePhotoURLKey] ? currentUser[kPFUserProfilePhotoURLKey] : @"";
-  [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
-    [[APConnectionManager sharedManager] lookupEventByName:self.currentEvent.eventName user:[PFUser currentUser] success:^(NSArray *objects) {
-      PFObject *object = [objects lastObject];
-      APEvent *thisEvent = [[APEvent alloc] initWithParseObject:object];
-      NSData *photoData = UIImagePNGRepresentation(self.currentEvent.eventImage);
-      [thisEvent setEventImageData:photoData];
-      [APUtil saveEventToMyEvents:thisEvent];
-        self.currentEvent.objectID = object.objectId;
-      [self sendInvitationsForEventID:object.objectId];
+    [SVProgressHUD showWithStatus:@"saving event"];
+    self.confirmEventButton.enabled = NO;
+    [self.currentEvent setEventDescription:self.eventDescriptionView.text];
+    self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*60*60];
+    PFUser *currentUser = [PFUser currentUser];
+    self.currentEvent.eventUserBlurb = currentUser[kPFUserBlurbKey] ? currentUser[kPFUserBlurbKey] : @"This user has no blurb";
+    self.currentEvent.eventUserPhotoURL = currentUser[kPFUserProfilePhotoURLKey] ? currentUser[kPFUserProfilePhotoURLKey] : @"";
+    [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
+        [[APConnectionManager sharedManager] lookupEventByName:self.currentEvent.eventName user:[PFUser currentUser] success:^(NSArray *objects) {
+            PFObject *object = [objects lastObject];
+            APEvent *thisEvent = [[APEvent alloc] initWithParseObject:object];
+            NSData *photoData = UIImagePNGRepresentation(self.currentEvent.eventImage);
+            [thisEvent setEventImageData:photoData];
+            [APUtil saveEventToMyEvents:thisEvent];
+            self.currentEvent.objectID = object.objectId;
+            [self sendInvitationsForEventID:object.objectId];
+        } failure:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
+            self.confirmEventButton.enabled = YES;
+        }];
+        [SVProgressHUD showSuccessWithStatus:@"event saved!"];
     } failure:^(NSError *error) {
-      [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
-      self.confirmEventButton.enabled = YES;
+        [SVProgressHUD showErrorWithStatus:@"error saving, try again"];
+        self.confirmEventButton.enabled = YES;
     }];
-    [SVProgressHUD showSuccessWithStatus:@"event saved!"];
-  } failure:^(NSError *error) {
-    [SVProgressHUD showErrorWithStatus:@"error saving, try again"];
-    self.confirmEventButton.enabled = YES;
-  }];
 }
 
 -(void)fadeOutFirstLabels {

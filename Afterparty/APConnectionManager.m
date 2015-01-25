@@ -123,32 +123,32 @@
          success:(APSuccessBooleanBlock)successBlock
          failure:(APFailureErrorBlock)failureBlock {
   
-  UIImage *eventImage = [event eventImage];
-  NSData *imageData = UIImageJPEGRepresentation(eventImage, 0.8);
-  PFFile *imageFile = [PFFile fileWithName:@"eventImage.jpg" data:imageData];
-  [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    PFObject *savedEvent = [PFObject objectWithClassName:kEventSearchParseClass];
-    savedEvent[@"eventName"]              = [event eventName];
-    savedEvent[@"eventVenueID"]           = [event eventVenue].venueId;
-    savedEvent[@"eventVenueName"]         = [event eventVenue].name;
-    savedEvent[@"password"]               = event.password ? [event password] : @"";
-    savedEvent[@"startDate"]              = [event startDate];
-    savedEvent[@"endDate"]                = [event endDate];
-    savedEvent[@"deleteDate"]             = [event deleteDate];
-    savedEvent[@"createdByUsername"]      = [event createdByUsername];
-    savedEvent[@"latitude"]               = @([event location].latitude);
-    savedEvent[@"longitude"]              = @([event location].longitude);
-    savedEvent[@"eventDescription"]       = [event eventDescription];
-    savedEvent[@"eventAddress"]           = [event eventAddress];
-    savedEvent[@"eventImage"]             = imageFile;
-    savedEvent[kPFUserProfilePhotoURLKey] = [event eventUserPhotoURL];
-    savedEvent[kPFUserBlurbKey]           = [event eventUserBlurb];
-    savedEvent[@"attendees"]              = @[[PFUser currentUser].objectId];
-    [savedEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-      (error == nil) ? successBlock(succeeded) : failureBlock(error);
+    UIImage *eventImage = [event eventImage];
+    NSData *imageData = UIImageJPEGRepresentation(eventImage, 0.8);
+    PFFile *imageFile = [PFFile fileWithName:@"eventImage.jpg" data:imageData];
+    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        PFObject *savedEvent = [PFObject objectWithClassName:kEventSearchParseClass];
+        savedEvent[@"eventName"]              = [event eventName];
+        savedEvent[@"eventVenueID"]           = [event eventVenue].venueId;
+        savedEvent[@"eventVenueName"]         = [event eventVenue].name;
+        savedEvent[@"password"]               = event.password ? [event password] : @"";
+        savedEvent[@"startDate"]              = [event startDate];
+        savedEvent[@"endDate"]                = [event endDate];
+        savedEvent[@"deleteDate"]             = [event deleteDate];
+        savedEvent[@"createdByUsername"]      = [event createdByUsername];
+        savedEvent[@"latitude"]               = @([event location].latitude);
+        savedEvent[@"longitude"]              = @([event location].longitude);
+        savedEvent[@"eventDescription"]       = [event eventDescription];
+        savedEvent[@"eventAddress"]           = [event eventAddress];
+        savedEvent[@"eventImage"]             = imageFile;
+        savedEvent[kPFUserProfilePhotoURLKey] = [event eventUserPhotoURL];
+        savedEvent[kPFUserBlurbKey]           = [event eventUserBlurb];
+        savedEvent[@"attendees"]              = @[[PFUser currentUser]];
+        savedEvent[@"newAttendeeFlag"]        = @NO;
+        [savedEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            (error == nil) ? successBlock(succeeded) : failureBlock(error);
+        }];
     }];
-  }];
-  
 }
 
 - (void)updateEventForNewAttendee:(APEvent *)event success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
@@ -158,6 +158,7 @@
             failureBlock(error);
         }
         eventObject[@"attendees"] = event.attendees;
+        eventObject[@"newAttendeeFlag"] = @YES;
         [eventObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             error == nil ? successBlock() : failureBlock(error);
         }];
@@ -216,7 +217,7 @@
                success:(APSuccessBooleanPlusObjectBlock)successBlock
                failure:(APFailureErrorBlock)failureBlock {
   [Foursquare2 venueGetDetail:venueID callback:^(BOOL success, id result) {
-    (result != nil) ? successBlock(success, result) : failureBlock([[NSError alloc] initWithDomain:@"com.dmos.afterparty" code:404 userInfo:@{@"Couldn't get venues" : NSLocalizedFailureReasonErrorKey}]);
+    (result != nil) ? successBlock(success, result) : failureBlock([[NSError alloc] initWithDomain:@"com.afterparty.afterparty" code:404 userInfo:@{@"Couldn't get venues" : NSLocalizedFailureReasonErrorKey}]);
   }];
 }
 
@@ -652,6 +653,12 @@
             }];
         }
     }];
+}
+
+#pragma mark - Private Connection Methods
+
+- (void)sendEventUpdateNotificationForEventID:(NSString *)eventID {
+    [PFCloud callFunctionInBackground:@"notifyPartyUpdate" withParameters:@{@"eventID":eventID}];
 }
 
 

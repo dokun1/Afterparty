@@ -55,12 +55,10 @@
 - (void)checkCurrentUser {
   if (![PFUser currentUser]) {
     [self performSegueWithIdentifier:kLoginSegue sender:self];
+  } else {
+      [[PFInstallation currentInstallation] setObject:[PFUser currentUser] forKey:@"user"];
+      [[PFInstallation currentInstallation] saveEventually];
   }
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-    if ([APUtil shouldDownloadNewVersion]) {
-      [SVProgressHUD showWithStatus:@"new version available"];
-    }
-  });
   NSString *latestVersion= [[NSUserDefaults standardUserDefaults] objectForKey:@"latestVersion"];
   if (![[APUtil getVersion] isEqualToString:latestVersion] && [PFUser currentUser] != nil) {
     [[APConnectionManager sharedManager] updateInstallVersionForUser:[PFUser currentUser] success:^(BOOL succeeded) {
