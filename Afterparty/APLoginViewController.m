@@ -121,39 +121,39 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)animateSunDown {
-  [UIView animateWithDuration:0.6 delay:0.f options:UIViewAnimationOptionCurveEaseIn animations:^{
-    CGRect sunFrame = self.sunRisingImageView.frame;
-    sunFrame.origin.y = self.view.bounds.size.height;
-    self.sunRisingImageView.frame = sunFrame;
-  } completion:^(BOOL finished) {
-      switch (self.currentState) {
-          case kNothing:
-          case kFacebook:
-          case kTwitter:
-          {
-              [self fadeOutInitialSceneForLoginWithCompletion:^{
-                  [self showIntroController];
-              }];
-              break;
-          }
-          case kAfterpartyLogin:
-          {
-              [self fadeOutLoginSceneWithCompletion:^{
-                  [self showIntroController];
-              }];
-              break;
-          }
-          case kAfterpartySignup:
-          {
-              [self fadeOutSignupSceneWithCompletion:^{
-                  [self showIntroController];
-              }];
-              break;
-          }
-          default:
-              break;
-      }
-  }];
+    [UIView animateWithDuration:0.6 delay:0.f options:UIViewAnimationOptionCurveEaseIn animations:^{
+        CGRect sunFrame = self.sunRisingImageView.frame;
+        sunFrame.origin.y = self.view.bounds.size.height;
+        self.sunRisingImageView.frame = sunFrame;
+    } completion:^(BOOL finished) {
+        switch (self.currentState) {
+            case kNothing:
+            case kFacebook:
+            case kTwitter:
+            {
+                [self fadeOutInitialSceneForLoginWithCompletion:^{
+                    [self showIntroController];
+                }];
+                break;
+            }
+            case kAfterpartyLogin:
+            {
+                [self fadeOutLoginSceneWithCompletion:^{
+                    [self showIntroController];
+                }];
+                break;
+            }
+            case kAfterpartySignup:
+            {
+                [self fadeOutSignupSceneWithCompletion:^{
+                    [self showIntroController];
+                }];
+                break;
+            }
+            default:
+                break;
+        }
+    }];
 }
 
 - (void)showIntroController {
@@ -217,60 +217,60 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)fadeOutInitialSceneForLogin:(BOOL)isForLogin {
-  [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
-  [self.signUpButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
-  [self.facebookLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
-  [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
-  if (isForLogin) {
-    [self performSelector:@selector(fadeInLoginScene) withObject:nil afterDelay:0.7];
-  } else {
-    [self performSelector:@selector(fadeInSignUpScene) withObject:nil afterDelay:0.7];
-  }
+    [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
+    [self.signUpButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
+    [self.facebookLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
+    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
+    if (isForLogin) {
+        [self performSelector:@selector(fadeInLoginScene) withObject:nil afterDelay:0.7];
+    } else {
+        [self performSelector:@selector(fadeInSignUpScene) withObject:nil afterDelay:0.7];
+    }
 }
 
 - (void)fadeInInitialSceneWithDelay:(NSTimeInterval)delay {
-  [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay];
-  [self.signUpButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.1];
-  [self.facebookLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.2];
-  [self.twitterLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.3];
+    [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay];
+    [self.signUpButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.1];
+    [self.facebookLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.2];
+    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.3];
     self.currentState = kNothing;
 }
 
 - (void)fadeOutSignUpScene {
-  [self.usernameLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
-  [self.passwordLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
-  [self.emailAddressLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
-  [self.signUpCredentialsButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
-  [self.goBackButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.4];
+    [self.usernameLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
+    [self.passwordLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
+    [self.emailAddressLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
+    [self.signUpCredentialsButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
+    [self.goBackButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.4];
     [self clearAllTextFields];
 }
 
 - (void)fadeInSignUpScene {
-  self.currentState = kAfterpartySignup;
-  [self.usernameLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0];
-  [self.passwordLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.1];
-  [self.emailAddressLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.2];
-  [self.signUpCredentialsButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.3];
-  [self.goBackButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.4];
+    self.currentState = kAfterpartySignup;
+    [self.usernameLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0];
+    [self.passwordLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.1];
+    [self.emailAddressLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.2];
+    [self.signUpCredentialsButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.3];
+    [self.goBackButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.4];
     self.currentState = kAfterpartySignup;
 }
 
 - (void)fadeOutLoginScene {
-  [self.usernameLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
-  [self.passwordLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
-  [self.afterpartyCredentialsLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
+    [self.usernameLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
+    [self.passwordLoginField performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
+    [self.afterpartyCredentialsLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
     [self.forgotPasswordButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
     [self.goBackButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.4];
     [self clearAllTextFields];
 }
 
 - (void)fadeInLoginScene {
-  self.currentState = kAfterpartyLogin;
-  [self.usernameLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0];
-  [self.passwordLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.1];
-  [self.afterpartyCredentialsLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.2];
+    self.currentState = kAfterpartyLogin;
+    [self.usernameLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0];
+    [self.passwordLoginField performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.1];
+    [self.afterpartyCredentialsLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.2];
     [self.forgotPasswordButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.3];
-  [self.goBackButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.4];
+    [self.goBackButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:0.4];
     self.currentState = kAfterpartyLogin;
 }
 
