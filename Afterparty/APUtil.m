@@ -311,7 +311,6 @@ static NSString *kMyEventsKey = @"myEventsArray";
 
 + (NSString*)getVersion {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-
 }
 
 +(BOOL)shouldDownloadNewVersion { // should only call on background thread

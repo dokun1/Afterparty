@@ -302,8 +302,8 @@
     }
 }
 
--(void)dismissButtonTapped {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)dismissButtonTapped {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - UIAlertViewDelegate Methods

@@ -116,6 +116,7 @@
 		50F64ED71952FB7A00E0B8DC /* APVenueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F64ED51952FB7A00E0B8DC /* APVenueTableViewCell.xib */; };
 		50F64EDA19531DF400E0B8DC /* APPhotoUploadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64ED919531DF400E0B8DC /* APPhotoUploadQueue.m */; };
 		50F990B41A33B10500F3FF00 /* APCreateEventPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F990B31A33B10500F3FF00 /* APCreateEventPasswordViewController.m */; };
+		50FDEF711A7AAAAA0096B454 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FDEF701A7AAAAA0096B454 /* CFNetwork.framework */; };
 		64110BA7EDC5490CB3C28E6C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E13799ABE623491984920737 /* libPods.a */; };
 		C9AEB3B219C48503009915BF /* APSearchEventUserDetailsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AEB3B019C48503009915BF /* APSearchEventUserDetailsTableViewCell.m */; };
 		C9AEB3B319C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AEB3B119C48503009915BF /* APSearchEventUserDetailsTableViewCell.xib */; };
@@ -324,6 +325,7 @@
 		50F64ED919531DF400E0B8DC /* APPhotoUploadQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPhotoUploadQueue.m; sourceTree = "<group>"; };
 		50F990B21A33B10500F3FF00 /* APCreateEventPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventPasswordViewController.h; sourceTree = "<group>"; };
 		50F990B31A33B10500F3FF00 /* APCreateEventPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventPasswordViewController.m; sourceTree = "<group>"; };
+		50FDEF701A7AAAAA0096B454 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C8833B16F229571813F997A6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C9AEB3AF19C48503009915BF /* APSearchEventUserDetailsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventUserDetailsTableViewCell.h; sourceTree = "<group>"; };
 		C9AEB3B019C48503009915BF /* APSearchEventUserDetailsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventUserDetailsTableViewCell.m; sourceTree = "<group>"; };
@@ -347,6 +349,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				504CA30E19408C82003EF9EB /* Foundation.framework in Frameworks */,
+				50FDEF711A7AAAAA0096B454 /* CFNetwork.framework in Frameworks */,
 				503C92811A2C747A00ED06B5 /* MapKit.framework in Frameworks */,
 				509F18CE1A2BB60B00C37742 /* Accounts.framework in Frameworks */,
 				509F18CC1A2BB60400C37742 /* Social.framework in Frameworks */,
@@ -354,7 +358,6 @@
 				504CA31019408C82003EF9EB /* CoreGraphics.framework in Frameworks */,
 				504CA36A19409BFC003EF9EB /* Crashlytics.framework in Frameworks */,
 				504CA31219408C82003EF9EB /* UIKit.framework in Frameworks */,
-				504CA30E19408C82003EF9EB /* Foundation.framework in Frameworks */,
 				64110BA7EDC5490CB3C28E6C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +408,7 @@
 		504CA30C19408C82003EF9EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50FDEF701A7AAAAA0096B454 /* CFNetwork.framework */,
 				503C92801A2C747A00ED06B5 /* MapKit.framework */,
 				509F18CD1A2BB60B00C37742 /* Accounts.framework */,
 				509F18CB1A2BB60400C37742 /* Social.framework */,
@@ -1072,8 +1076,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: David Okun (ATL9M5R398)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1091,7 +1095,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "67923750-ae14-4aeb-be61-638d79f02f35";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1112,8 +1116,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: David Okun (ATL9M5R398)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1124,7 +1128,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "67923750-ae14-4aeb-be61-638d79f02f35";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
