@@ -14,7 +14,7 @@
 @import AssetsLibrary;
 @import AVFoundation;
 
-@interface APMyEventViewController () <UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, CLLocationManagerDelegate, StackedGridLayoutDelegate, CaptureDelegate, UIAlertViewDelegate, UpdateLocationDelegate>
+@interface APMyEventViewController () <UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, CLLocationManagerDelegate, StackedGridLayoutDelegate, CaptureDelegate, UIAlertViewDelegate, VenueChoiceDelegate>
 
 @property (strong, nonatomic) AVCaptureSession  *session;
 
@@ -311,7 +311,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([[alertView title] isEqualToString:@"Keep the party going?"]) {
         if (buttonIndex == 1) {
-            APMyEventUpdateLocationViewController *vc = [[APMyEventUpdateLocationViewController alloc] initWithCurrentLocation:self.currentLocation forEventID:self.eventID];
+            APFindVenueTableViewController *vc = [[APFindVenueTableViewController alloc] init];
             vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -320,10 +320,10 @@
 
 #pragma mark - UpdateLocationDelegate methods
 
--(void)venueSuccessfullyUpdated:(APVenue *)newVenue {
-    self.eventLocation = [[CLLocation alloc] initWithLatitude:newVenue.location.coordinate.latitude
-                                                        longitude:newVenue.location.coordinate.longitude];
-    [APUtil updateEventVenue:newVenue forEventID:self.eventID];
+- (void)controller:(APFindVenueTableViewController *)controller didChooseVenue:(APVenue *)venue {
+    self.eventLocation = [[CLLocation alloc] initWithLatitude:venue.location.coordinate.latitude
+                                                    longitude:venue.location.coordinate.longitude];
+    [APUtil updateEventVenue:venue forEventID:self.eventID];
     [self.navigationController popToViewController:self animated:YES];
 }
 

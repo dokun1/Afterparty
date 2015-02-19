@@ -51,7 +51,7 @@
     [self.tableView setTableHeaderView:self.searchBar];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
-    UIImageView *footer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByFoursquare_gray"]];
+    UIImageView *footer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredby_foursquare"]];
     footer.contentMode = UIViewContentModeScaleAspectFit;
     self.tableView.tableFooterView = footer;
     

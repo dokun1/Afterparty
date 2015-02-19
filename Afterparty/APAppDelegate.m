@@ -73,29 +73,28 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  if ([url.absoluteString containsString:@"foursquare"]) {
-    return [Foursquare2 handleURL:url];
-  }
-  else if([url.absoluteString containsString:kFacebookAppIDWithPrefix]){
-    return [FBAppCall handleOpenURL:url
-                  sourceApplication:sourceApplication
-                        withSession:[PFFacebookUtils session]];
-  }else if([url.absoluteString containsString:@"eventID"]) {
-    NSArray *components = [url.absoluteString componentsSeparatedByString:@":"];
-    NSString *eventID = [components lastObject];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSearchSpecificEventNotification object:eventID];
-  }else{
-    return YES;
-  }
-  return NO;
+    if ([url.absoluteString containsString:@"foursquare"]) {
+        return [Foursquare2 handleURL:url];
+    } else if([url.absoluteString containsString:kFacebookAppIDWithPrefix]){
+        return [FBAppCall handleOpenURL:url
+                      sourceApplication:sourceApplication
+                            withSession:[PFFacebookUtils session]];
+    } else if([url.absoluteString containsString:@"eventID"]) {
+        NSArray *components = [url.absoluteString componentsSeparatedByString:@":"];
+        NSString *eventID = [components lastObject];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSearchSpecificEventNotification object:eventID];
+    } else {
+        return YES;
+    }
+    return NO;
 }
 
 + (UIViewController*) topMostController {
-  UIViewController *topController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-  while (topController.presentedViewController) {
-    topController = topController.presentedViewController;
-  }
-  return topController;
+    UIViewController *topController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    return topController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -122,7 +121,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-  [FBSession.activeSession close];
+    [FBSession.activeSession close];
   
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }

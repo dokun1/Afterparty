@@ -15,8 +15,11 @@
 #import "APMyEventViewController.h"
 #import "APConstants.h"
 #import "APSearchEventTableViewCellFactory.h"
+#import "APCreateEventViewController.h"
 
-@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@import MessageUI;
+
+@interface APSearchEventDetailViewController () <UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, CreateEventDelegate, UIActionSheetDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *eventImageView;
 @property (weak, nonatomic) IBOutlet APButton *eventJoinButton;
@@ -25,7 +28,10 @@
 @property (weak, nonatomic) IBOutlet UITableView *eventDetailsTableView;
 @property (strong, nonatomic) APEvent *currentEvent;
 
+@property (strong, nonatomic) APButton *editEventButton;
+
 - (IBAction)eventJoinTapped:(id)sender;
+
 @end
 
 @implementation APSearchEventDetailViewController
@@ -38,13 +44,12 @@
 }
 
 - (void)setCurrentEvent:(APEvent *)event {
-  if (_currentEvent != event) {
-    _currentEvent = event;
-  }
+    if (_currentEvent != event) {
+      _currentEvent = event;
+    }
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
   [super viewDidLoad];
     
   [self setTitle:self.currentEvent.eventName];
@@ -74,10 +79,76 @@
                                                            bundle:[NSBundle mainBundle]]
                                            forCellReuseIdentifier:[APSearchEventDateLocationTableViewCell cellIdentifier]];
     
-//    self.eventTitleOnTopImage.font = [UIFont fontWithName:kBoldFont size:30.f];
-//    self.eventAuthorNameOnTopImage.font = [UIFont fontWithName:kRegularFont size:20.f];
     [self.eventTitleOnTopImage styleForType:LabelTypeTableViewCellTitle];
     [self.eventAuthorNameOnTopImage styleForType:LabelTypeTableViewCellAttribute];
+    
+    if ([self.currentEvent.createdByUsername isEqualToString:[PFUser currentUser].username]) {
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(editButtonTapped)];
+        [self.navigationItem setRightBarButtonItem:editButton];
+//        self.editEventButton = [[APButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
+//        [self.editEventButton setTitle:@"EDIT EVENT" forState:UIControlStateNormal];
+//        [self.editEventButton addTarget:self action:@selector(editEventTapped) forControlEvents:UIControlEventTouchUpInside];
+//        [self.editEventButton style];
+//        [self.view addSubview:self.editEventButton];
+//        self.eventJoinButton.hidden = YES;
+    }
+}
+
+#pragma mark - EditEventActions
+
+- (void)editButtonTapped {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit Event", @"Share Event", nil];
+    [actionSheet showInView:self.view.window];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            [self editEventSelected];
+            break;
+        case 1:
+            [self shareEventSelected];
+            break;
+        case 2:
+        default:
+            break;
+    }
+    
+}
+
+- (void)shareEventSelected {
+    NSString *message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", self.currentEvent.objectID];
+    if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.currentEvent.password];
+        message = [NSString stringWithFormat:@"%@%@", message, addOn];
+    }
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = self;
+    [messageController setBody:message];
+    
+    [self presentViewController:messageController animated:YES completion:nil];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    switch (result) {
+        case MessageComposeResultCancelled:
+            [SVProgressHUD dismiss];
+            break;
+        case MessageComposeResultFailed:
+            [SVProgressHUD showErrorWithStatus:@"invitations failed"];
+            break;
+        case MessageComposeResultSent:
+            [SVProgressHUD showSuccessWithStatus:@"invitations sent"];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)editEventSelected {
+    [self performSegueWithIdentifier:kEditEventSegue sender:self.currentEvent];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -159,11 +230,15 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([[segue identifier] isEqualToString:kNearbyEventGoToSegue]) {
-    APMyEventViewController *vc = (APMyEventViewController*)segue.destinationViewController;
-    vc.eventDict = sender;
-    vc.hidesBottomBarWhenPushed = YES;
-  }
+    if ([[segue identifier] isEqualToString:kNearbyEventGoToSegue]) {
+        APMyEventViewController *vc = (APMyEventViewController*)segue.destinationViewController;
+        vc.eventDict = sender;
+        vc.hidesBottomBarWhenPushed = YES;
+    } else if ([segue.identifier isEqualToString:kEditEventSegue]) {
+        APCreateEventViewController *editVC = (APCreateEventViewController *)segue.destinationViewController;
+        editVC.delegate = self;
+        [editVC setEventForEditing:(APEvent *)sender];
+    }
 }
 
 #pragma mark - UITableViewDataSource delegate methods

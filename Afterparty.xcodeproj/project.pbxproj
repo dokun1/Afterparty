@@ -83,6 +83,7 @@
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
 		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
+		50C214321A9675F4006E9D4D /* APSearchEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C214311A9675F4006E9D4D /* APSearchEventDetailsViewController.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
 		50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */; };
 		50C3AA8F195F0ECB00A0297A /* APInviteFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8C195F0ECB00A0297A /* APInviteFriendTableViewCell.m */; };
@@ -97,7 +98,6 @@
 		50E0A9931A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0A9921A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.m */; };
 		50F64EB81952F40900E0B8DC /* APMyEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA11952F40900E0B8DC /* APMyEventsViewController.m */; };
 		50F64EB91952F40900E0B8DC /* APMyEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA31952F40900E0B8DC /* APMyEventViewController.m */; };
-		50F64EBB1952F40900E0B8DC /* APMyEventUpdateLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA61952F40900E0B8DC /* APMyEventUpdateLocationViewController.m */; };
 		50F64EBC1952F40900E0B8DC /* APCameraOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA81952F40900E0B8DC /* APCameraOverlayViewController.m */; };
 		50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F64EA91952F40900E0B8DC /* APCameraOverlayViewController.xib */; };
 		50F64EBE1952F40900E0B8DC /* APImagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EAB1952F40900E0B8DC /* APImagePreviewViewController.m */; };
@@ -265,6 +265,8 @@
 		50C015E4196AC64600E9E26F /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
 		50C1E08D196704B900105E64 /* APValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APValueTransformer.h; sourceTree = "<group>"; };
 		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
+		50C214301A9675F4006E9D4D /* APSearchEventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventDetailsViewController.h; sourceTree = "<group>"; };
+		50C214311A9675F4006E9D4D /* APSearchEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventDetailsViewController.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
 		50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventViewController.m; sourceTree = "<group>"; };
 		50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInviteFriendsViewController.h; sourceTree = "<group>"; };
@@ -291,8 +293,6 @@
 		50F64EA11952F40900E0B8DC /* APMyEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyEventsViewController.m; sourceTree = "<group>"; };
 		50F64EA21952F40900E0B8DC /* APMyEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyEventViewController.h; sourceTree = "<group>"; };
 		50F64EA31952F40900E0B8DC /* APMyEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyEventViewController.m; sourceTree = "<group>"; };
-		50F64EA51952F40900E0B8DC /* APMyEventUpdateLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyEventUpdateLocationViewController.h; sourceTree = "<group>"; };
-		50F64EA61952F40900E0B8DC /* APMyEventUpdateLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyEventUpdateLocationViewController.m; sourceTree = "<group>"; };
 		50F64EA71952F40900E0B8DC /* APCameraOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCameraOverlayViewController.h; sourceTree = "<group>"; };
 		50F64EA81952F40900E0B8DC /* APCameraOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCameraOverlayViewController.m; sourceTree = "<group>"; };
 		50F64EA91952F40900E0B8DC /* APCameraOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APCameraOverlayViewController.xib; sourceTree = "<group>"; };
@@ -526,6 +526,8 @@
 				50F64EC71952F64800E0B8DC /* APSearchEventsViewController.m */,
 				50F64ECB1952F64800E0B8DC /* APSearchEventDetailViewController.h */,
 				50F64ECC1952F64800E0B8DC /* APSearchEventDetailViewController.m */,
+				50C214301A9675F4006E9D4D /* APSearchEventDetailsViewController.h */,
+				50C214311A9675F4006E9D4D /* APSearchEventDetailsViewController.m */,
 			);
 			name = NearbyEvents;
 			sourceTree = "<group>";
@@ -539,8 +541,6 @@
 				50F64EA31952F40900E0B8DC /* APMyEventViewController.m */,
 				50F64ED819531DF400E0B8DC /* APPhotoUploadQueue.h */,
 				50F64ED919531DF400E0B8DC /* APPhotoUploadQueue.m */,
-				50F64EA51952F40900E0B8DC /* APMyEventUpdateLocationViewController.h */,
-				50F64EA61952F40900E0B8DC /* APMyEventUpdateLocationViewController.m */,
 				50F64EA71952F40900E0B8DC /* APCameraOverlayViewController.h */,
 				50F64EA81952F40900E0B8DC /* APCameraOverlayViewController.m */,
 				501232B219BB73DF007099A4 /* APAVSessionController.h */,
@@ -961,8 +961,8 @@
 				504CA351194096CE003EF9EB /* APComment.m in Sources */,
 				504CA3751940B8F8003EF9EB /* APMainTabBarController.m in Sources */,
 				50F64EB91952F40900E0B8DC /* APMyEventViewController.m in Sources */,
-				50F64EBB1952F40900E0B8DC /* APMyEventUpdateLocationViewController.m in Sources */,
 				5048D4AA194A1D0F0092178E /* APConnectionManager.m in Sources */,
+				50C214321A9675F4006E9D4D /* APSearchEventDetailsViewController.m in Sources */,
 				50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */,
 				50C3AA93195F171D00A0297A /* APFindVenueTableViewController.m in Sources */,
 				C9F2B40B19CCD6B30027BC95 /* APSearchEventTableViewCellFactory.m in Sources */,
@@ -1147,7 +1147,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "67923750-ae14-4aeb-be61-638d79f02f35";
+				PROVISIONING_PROFILE = "9dcd93f8-c7eb-43ab-9c0f-b5ca2bc6c6de";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -1171,7 +1171,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "67923750-ae14-4aeb-be61-638d79f02f35";
+				PROVISIONING_PROFILE = "9dcd93f8-c7eb-43ab-9c0f-b5ca2bc6c6de";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;

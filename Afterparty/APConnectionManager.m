@@ -646,10 +646,56 @@
     }];
 }
 
+- (void)addVenueToLocationSearch:(APVenue *)venue success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    [Foursquare2 venueAddWithName:venue.name address:venue.prettyAddress crossStreet:nil city:nil state:nil zip:nil phone:nil twitter:nil description:nil latitude:@(venue.coordinate.latitude) longitude:@(venue.coordinate.longitude) primaryCategoryId:nil callback:^(BOOL success, id result) {
+        if (success) {
+            successBlock();
+        } else {
+            failureBlock(nil);
+        }
+    }];
+}
+
+- (void)updateEventAfterEdit:(APEvent *)event success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
+    if (!event.objectID) {
+        failureBlock(nil);
+        return;
+    }
+    PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
+    [query getObjectInBackgroundWithId:event.objectID block:^(PFObject *object, NSError *error) {
+        if (!object || error) {
+            failureBlock(error);
+        } else {
+            PFObject *savedEvent = object;
+            savedEvent[@"eventName"]              = [event eventName];
+            savedEvent[@"eventVenueID"]           = [event eventVenue].venueId;
+            savedEvent[@"eventVenueName"]         = [event eventVenue].name;
+            savedEvent[@"password"]               = event.password ? [event password] : @"";
+            savedEvent[@"startDate"]              = [event startDate];
+            savedEvent[@"endDate"]                = [event endDate];
+            savedEvent[@"deleteDate"]             = [event deleteDate];
+            savedEvent[@"latitude"]               = @([event location].latitude);
+            savedEvent[@"longitude"]              = @([event location].longitude);
+            savedEvent[@"eventDescription"]       = [event eventDescription];
+            savedEvent[@"eventAddress"]           = [event eventAddress];
+            savedEvent[kPFUserProfilePhotoURLKey] = [event eventUserPhotoURL];
+            savedEvent[kPFUserBlurbKey]           = [event eventUserBlurb];
+            [savedEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!succeeded || error) {
+                    failureBlock(error);
+                } else {
+                    [self sendEventUpdateNotificationForEventID:event.objectID];
+                    successBlock();
+                }
+            }];
+        }
+    }];
+}
+
 #pragma mark - Private Connection Methods
 
 - (void)sendEventUpdateNotificationForEventID:(NSString *)eventID {
-    [PFCloud callFunctionInBackground:@"notifyPartyUpdate" withParameters:@{@"eventID":eventID}];
+    [PFCloud callFunctionInBackground:@"notifyPartyUpdate" withParameters:@{@"eventID":eventID, @"userID":[PFUser currentUser]}];
 }
 
 

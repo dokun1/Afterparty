@@ -69,39 +69,62 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 @property (assign, nonatomic) BOOL                    isReceivingPassword;
 @property (assign, nonatomic) CGFloat                 widthFactor;
 
+@property (assign, nonatomic) BOOL                    isForEditing;
+
 @end
 
 @implementation APCreateEventViewController
 
 -(id)initForNewEvent {
-  if (self = [super init]) {
-    _currentEvent = [[APEvent alloc] init];
-    _currentEvent.createdByUsername = [[PFUser currentUser] username];
-  }
-  return self;
+    if (self = [super init]) {
+        _currentEvent = [[APEvent alloc] init];
+        _currentEvent.createdByUsername = [[PFUser currentUser] username];
+    }
+    return self;
 }
 
 -(id)initForEditingWithEvent:(APEvent *)event {
-  if (self = [super init]) {
+    if (self = [super init]) {
+        _currentEvent = event;
+    }
+    return self;
+}
+
+- (void)setEventForEditing:(APEvent *)event {
     _currentEvent = event;
-  }
-  return self;
+    self.title = @"EDIT EVENT";
+    self.isForEditing = YES;
 }
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-  
-  if (!_currentEvent) {
-    _currentEvent = [[APEvent alloc] init];
-    _currentEvent.createdByUsername = [[PFUser currentUser] username];
-  }
+    [super viewDidLoad];
+    
+    if (!_currentEvent) {
+      _currentEvent = [[APEvent alloc] init];
+      _currentEvent.createdByUsername = [[PFUser currentUser] username];
+    }
     self.widthFactor = self.view.frame.size.width / 320;
     
     [self pulsePhotoButton:NO];
   
-  [self getContactPermission];
+    [self getContactPermission];
   
-  [self initializeCustomUI];
+    [self initializeCustomUI];
+    
+    if (self.isForEditing) {
+        [self setFieldsForEvent];
+    }
+}
+
+- (void)setFieldsForEvent {
+    self.eventNameField.text = self.currentEvent.eventName;
+    self.chooseEventLocationLabel.text = self.currentEvent.eventVenue.name;
+    self.chooseEventDateLabel.text = [NSString stringWithFormat:@"%@ - %@", [APUtil formatDateForEventCreationScreen:self.currentEvent.startDate], [APUtil formatDateForEventCreationScreen:self.currentEvent.endDate]];
+    self.coverPhotoImageView.image = [UIImage imageWithData:self.currentEvent.eventImageData];
+    self.choosePhotoButton.hidden = YES;
+    [self.chooseEventTitleButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    [self.chooseEventDateButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
 }
 
 - (UIButton *)generateAddElementButtonForPoint:(CGPoint)point {
@@ -265,10 +288,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     [self.view addSubview:self.privatePasswordLabel];
     self.privatePasswordLabel.alpha = 0.0f;
     
-  [self.chooseEventLocationLabel styleForType:LabelTypeCreateLabel];
-  [self.chooseEventDateLabel styleForType:LabelTypeCreateLabel];
-  [self.chooseEventFriendsLabel styleForType:LabelTypeCreateLabel];
-  [self.createEventButton style];
+    [self.chooseEventLocationLabel styleForType:LabelTypeCreateLabel];
+    [self.chooseEventDateLabel styleForType:LabelTypeCreateLabel];
+    [self.chooseEventFriendsLabel styleForType:LabelTypeCreateLabel];
+    [self.createEventButton style];
   
     self.privateEventSwitch = [[UISwitch alloc] init];
     [self.privateEventSwitch setCenter:CGPointMake(self.view.frame.size.width - 36, y + 15)];
@@ -278,10 +301,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     [self.view addSubview:self.privateEventSwitch];
     self.privateEventSwitch.on = YES;
   
-  [self.chooseEventDateButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
-  [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
-  [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
-  [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+    [self.chooseEventDateButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+    [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+    [self.chooseEventPasswordButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
+    [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"button_pluswhite"] forState:UIControlStateHighlighted];
     
     [self.view bringSubviewToFront:self.eventNameField];
 }
@@ -308,106 +331,109 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
+    [super viewWillDisappear:animated];
 }
 
 -(void)createEventDescriptionUI {
-  self.eventDescriptionView = [[APTextView alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 50, self.view.frame.size.width - 20, 140)];
-  [self.eventDescriptionView setDelegate:self];
-  [self.eventDescriptionView styleWithFontSize:15.f];
-  [self.eventDescriptionView.layer setBorderColor:[[UIColor clearColor] CGColor]];
-  [self.eventDescriptionView.layer setBorderWidth:0.f];
-  [self.eventDescriptionView setAlpha:0.0f];
-  [self.eventDescriptionView setBackgroundColor:[UIColor afterpartyOffWhiteColor]];
-  self.eventDescriptionView.text = @"Start typing here.";
-  [self.eventDescriptionView setReturnKeyType:UIReturnKeyDone];
-  [self.view addSubview:self.eventDescriptionView];
-  
-  self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(-1, self.coverPhotoScrollView.frame.size.height + 40, self.view.frame.size.width + 2, 0.5f)];
-  [self.separatorView setBackgroundColor:[UIColor lightGrayColor]];
-  [self.separatorView setAlpha:0.0f];
-  [self.view addSubview:self.separatorView];
-  
-  self.eventDescriptionLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 2, self.view.frame.size.width - 20, 40)];
-  [self.eventDescriptionLabel setNumberOfLines:2];
-  [self.eventDescriptionLabel setFont:[UIFont fontWithName:kRegularFont size:14.f]];
-  [self.eventDescriptionLabel setTextAlignment:NSTextAlignmentCenter];
-  [self updateDescriptionCharacterText];
-  [self.eventDescriptionLabel setAlpha:0.0f];
-  [self.view addSubview:self.eventDescriptionLabel];
-  
-  self.confirmEventButton = [[APButton alloc] init];
-  [self.confirmEventButton style];
-  self.confirmEventButton.titleLabel.text = @"DONE AND DONE. CREATE EVENT!";
-  [self.confirmEventButton setTitle:@"DONE AND DONE. CREATE EVENT!" forState:UIControlStateNormal];
-  [self.confirmEventButton setFrame:self.createEventButton.frame];
-  [self.confirmEventButton setAlpha:0.0f];
-  [self.confirmEventButton addTarget:self action:@selector(confirmEventButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:self.confirmEventButton];
-    
+    self.eventDescriptionView = [[APTextView alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 50, self.view.frame.size.width - 20, 140)];
+    [self.eventDescriptionView setDelegate:self];
+    [self.eventDescriptionView styleWithFontSize:15.f];
+    [self.eventDescriptionView.layer setBorderColor:[[UIColor clearColor] CGColor]];
+    [self.eventDescriptionView.layer setBorderWidth:0.f];
+    [self.eventDescriptionView setAlpha:0.0f];
+    [self.eventDescriptionView setBackgroundColor:[UIColor afterpartyOffWhiteColor]];
+    self.eventDescriptionView.text = (self.isForEditing) ? self.currentEvent.eventDescription : @"Start typing here.";
+    [self.eventDescriptionView setReturnKeyType:UIReturnKeyDone];
+    [self.view addSubview:self.eventDescriptionView];
+
+    self.separatorView = [[UIView alloc] initWithFrame:CGRectMake(-1, self.coverPhotoScrollView.frame.size.height + 40, self.view.frame.size.width + 2, 0.5f)];
+    [self.separatorView setBackgroundColor:[UIColor lightGrayColor]];
+    [self.separatorView setAlpha:0.0f];
+    [self.view addSubview:self.separatorView];
+
+    self.eventDescriptionLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 2, self.view.frame.size.width - 20, 40)];
+    [self.eventDescriptionLabel setNumberOfLines:2];
+    [self.eventDescriptionLabel setFont:[UIFont fontWithName:kRegularFont size:14.f]];
+    [self.eventDescriptionLabel setTextAlignment:NSTextAlignmentCenter];
+    [self updateDescriptionCharacterText];
+    [self.eventDescriptionLabel setAlpha:0.0f];
+    [self.view addSubview:self.eventDescriptionLabel];
+
+    self.confirmEventButton = [[APButton alloc] init];
+    [self.confirmEventButton style];
+    if (self.isForEditing) {
+        [self.confirmEventButton setTitle:@"DONE AND DONE. UPDATE EVENT!" forState:UIControlStateNormal];
+    } else {
+        [self.confirmEventButton setTitle:@"DONE AND DONE. CREATE EVENT!" forState:UIControlStateNormal];
+    }
+    [self.confirmEventButton setFrame:self.createEventButton.frame];
+    [self.confirmEventButton setAlpha:0.0f];
+    [self.confirmEventButton addTarget:self action:@selector(confirmEventButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.confirmEventButton];
+
     self.eventNameField.enabled = NO;
 }
 
 -(void)updateDescriptionCharacterText {
-  NSString *descriptionText = self.eventDescriptionView.text;
-  NSString *charsRemaining = [NSString stringWithFormat:@"%lu", 100-(unsigned long)[descriptionText length]];
-  if ([descriptionText isEqualToString:@"Start typing here."]) {
-    charsRemaining = @"100";
-  }
-  NSString *labelText = [NSString stringWithFormat:@"You've got %@ characters left to tell us all about the event. Choose your words wisely.", charsRemaining];
-  [self.eventDescriptionLabel setText:labelText afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+    NSString *descriptionText = self.eventDescriptionView.text;
+    NSString *charsRemaining = [NSString stringWithFormat:@"%lu", 100-(unsigned long)[descriptionText length]];
+    if ([descriptionText isEqualToString:@"Start typing here."]) {
+        charsRemaining = @"100";
+    }
+    NSString *labelText = [NSString stringWithFormat:@"You've got %@ characters left to tell us all about the event. Choose your words wisely.", charsRemaining];
+    [self.eventDescriptionLabel setText:labelText afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
     //customize to make the number in bold and maybe colored?
-    return mutableAttributedString;
-  }];
+        return mutableAttributedString;
+    }];
 }
 
 #pragma mark - UITextView Delegate Methods
 
 -(void)textViewDidChange:(UITextView *)textView {
-  if ([textView.text length] >= 1) {
-    if ([[textView.text substringFromIndex:([textView.text length]-1)] isEqualToString:@"\n"]) {
-      [textView endEditing:YES];
+    if ([textView.text length] >= 1) {
+        if ([[textView.text substringFromIndex:([textView.text length]-1)] isEqualToString:@"\n"]) {
+            [textView endEditing:YES];
+        }
     }
-  }
-  [self updateDescriptionCharacterText];
+    [self updateDescriptionCharacterText];
 }
 
 -(void)textViewDidBeginEditing:(UITextView *)textView {
-  if ([textView.text isEqualToString:@"Start typing here."]) {
-    [textView setText:@""];
-  }
-  [UIView animateWithDuration:0.2 animations:^{
-    [textView setFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 140)];
-  }];
+    if ([textView.text isEqualToString:@"Start typing here."]) {
+        [textView setText:@""];
+    }
+    [UIView animateWithDuration:0.2 animations:^{
+        [textView setFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 140)];
+    }];
 };
 
 -(void)textViewDidEndEditing:(UITextView *)textView {
-  if ([textView.text length] >= 1) {
-    NSString *text = [textView.text substringToIndex:([textView.text length]-1)];
-    [textView setText:text];
-  }
-  [UIView animateWithDuration:0.2 animations:^{
-    [textView setFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 50, self.view.frame.size.width - 20, 140)];
-  }];
+    if ([textView.text length] >= 1) {
+        NSString *text = [textView.text substringToIndex:([textView.text length]-1)];
+        [textView setText:text];
+    }
+    [UIView animateWithDuration:0.2 animations:^{
+        [textView setFrame:CGRectMake(10, self.coverPhotoScrollView.frame.size.height + 50, self.view.frame.size.width - 20, 140)];
+    }];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
 
 - (UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-  return self.coverPhotoImageView;
+    return self.coverPhotoImageView;
 }
 
 -(void)setZoomScales {
-  CGSize boundsSize = self.coverPhotoScrollView.bounds.size;
-  CGSize imageSize = self.coverPhotoImageView.bounds.size;
-  
-  CGFloat xScale = boundsSize.width/imageSize.width;
-  CGFloat yScale = boundsSize.height/imageSize.height;
-  CGFloat minScale = MAX(xScale,yScale);
-  
-  self.coverPhotoScrollView.minimumZoomScale = minScale;
-  self.coverPhotoScrollView.zoomScale = minScale;
-  self.coverPhotoScrollView.maximumZoomScale = 3.0;
+    CGSize boundsSize = self.coverPhotoScrollView.bounds.size;
+    CGSize imageSize = self.coverPhotoImageView.bounds.size;
+
+    CGFloat xScale = boundsSize.width/imageSize.width;
+    CGFloat yScale = boundsSize.height/imageSize.height;
+    CGFloat minScale = MAX(xScale,yScale);
+
+    self.coverPhotoScrollView.minimumZoomScale = minScale;
+    self.coverPhotoScrollView.zoomScale = minScale;
+    self.coverPhotoScrollView.maximumZoomScale = 3.0;
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -451,30 +477,30 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 #pragma mark - UIImagePickerDelegate methods
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-  UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     [self.choosePhotoButton.layer removeAllAnimations];
     self.choosePhotoButton.alpha = 0.0f;
-  [self.coverPhotoImageView removeFromSuperview];
-  self.coverPhotoImageView = nil;
-  self.coverPhotoImageView = [[UIImageView alloc] initWithImage:image];
-  [self.choosePhotoButton setImage:nil forState:UIControlStateNormal];
-  [self setZoomScales];
-  [self.coverPhotoScrollView addSubview:self.coverPhotoImageView];
-  [self.picker dismissViewControllerAnimated:YES completion:nil];
+    [self.coverPhotoImageView removeFromSuperview];
+    self.coverPhotoImageView = nil;
+    self.coverPhotoImageView = [[UIImageView alloc] initWithImage:image];
+    [self.choosePhotoButton setImage:nil forState:UIControlStateNormal];
+    [self setZoomScales];
+    [self.coverPhotoScrollView addSubview:self.coverPhotoImageView];
+    [self.picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - VenueChoiceDelegate Methods
 
 - (void)controller:(APFindVenueTableViewController *)controller didChooseVenue:(APVenue *)venue {
-  [self.currentEvent setEventVenue:venue];
-  [self.currentEvent setLocation:venue.location.coordinate];
-  NSString *address = @"";
-  if (venue.location.address) {
+    [self.currentEvent setEventVenue:venue];
+    [self.currentEvent setLocation:venue.location.coordinate];
+    NSString *address = @"";
+    if (venue.location.address) {
     address = venue.location.address;
-  }
-  [self.currentEvent setEventAddress:address];
-  [self.chooseEventLocationLabel setText:venue.name];
-  [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    }
+    [self.currentEvent setEventAddress:address];
+    [self.chooseEventLocationLabel setText:venue.name];
+    [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
     [self.navigationController popToViewController:self animated:YES];
 }
 
@@ -496,22 +522,21 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 #pragma mark - MFMailComposeViewControllerDelegate methods
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
-  [controller dismissViewControllerAnimated:YES completion:nil];
-  switch (result) {
-    case MessageComposeResultCancelled:
-      [SVProgressHUD dismiss];
-      break;
-    case MessageComposeResultFailed:
-      [SVProgressHUD showErrorWithStatus:@"invitations failed"];
-      break;
-    case MessageComposeResultSent:
-      [SVProgressHUD showSuccessWithStatus:@"invitations sent"];
-      break;
-    default:
-      break;
-  }
-    
-  [self.delegate controllerDidFinish:self withEventID:self.currentEvent.objectID];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    switch (result) {
+        case MessageComposeResultCancelled:
+            [SVProgressHUD dismiss];
+            break;
+        case MessageComposeResultFailed:
+            [SVProgressHUD showErrorWithStatus:@"invitations failed"];
+            break;
+        case MessageComposeResultSent:
+            [SVProgressHUD showSuccessWithStatus:@"invitations sent"];
+            break;
+        default:
+            break;
+        }
+    [self.delegate controllerDidFinish:self withEventID:self.currentEvent.objectID];
 }
 
 -(void)sendInvitationsForEventID:(NSString*)eventID {
@@ -519,35 +544,35 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [PFAnalytics trackEvent:@"eventCreation"];
     });
-  [self.confirmEventButton setEnabled:NO];
-  [self.confirmEventButton setAlpha:0.0f];
-  if(![MFMessageComposeViewController canSendText]) {
-    [SVProgressHUD showErrorWithStatus:@"can't send invitations"];
-    [self.delegate controllerDidFinish:self withEventID:eventID];
-    return;
-  }
+    [self.confirmEventButton setEnabled:NO];
+    [self.confirmEventButton setAlpha:0.0f];
+    if(![MFMessageComposeViewController canSendText]) {
+        [SVProgressHUD showErrorWithStatus:@"can't send invitations"];
+        [self.delegate controllerDidFinish:self withEventID:eventID];
+        return;
+    }
 
-  if (self.currentInvitees.count == 0) {
-      [self.delegate controllerDidFinish:self withEventID:eventID];
-      return;
-  }
-  NSMutableArray *numbers = [NSMutableArray array];
-  [self.currentInvitees enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
-    [numbers addObject:contactDict[@"phone"]];
-  }];
-    
-  NSString *message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", eventID];
+    if (self.currentInvitees.count == 0) {
+        [self.delegate controllerDidFinish:self withEventID:eventID];
+        return;
+    }
+    NSMutableArray *numbers = [NSMutableArray array];
+    [self.currentInvitees enumerateObjectsUsingBlock:^(NSDictionary *contactDict, NSUInteger idx, BOOL *stop) {
+        [numbers addObject:contactDict[@"phone"]];
+    }];
+
+    NSString *message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", eventID];
     if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
         NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.currentEvent.password];
         message = [NSString stringWithFormat:@"%@%@", message, addOn];
     }    
-  
-  MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
-  messageController.messageComposeDelegate = self;
-  [messageController setRecipients:numbers];
-  [messageController setBody:message];
-  
-  [self presentViewController:messageController animated:YES completion:nil];
+
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = self;
+    [messageController setRecipients:numbers];
+    [messageController setBody:message];
+
+    [self presentViewController:messageController animated:YES completion:nil];
 }
 
 -(void)changeEventButtonColor {
@@ -560,31 +585,42 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
         [SVProgressHUD showErrorWithStatus:@"needs a better description"];
         return;
     }
-    [SVProgressHUD showWithStatus:@"saving event"];
     self.confirmEventButton.enabled = NO;
     [self.currentEvent setEventDescription:self.eventDescriptionView.text];
-    self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*60*60];
-    PFUser *currentUser = [PFUser currentUser];
-    self.currentEvent.eventUserBlurb = currentUser[kPFUserBlurbKey] ? currentUser[kPFUserBlurbKey] : @"This user has no blurb";
-    self.currentEvent.eventUserPhotoURL = currentUser[kPFUserProfilePhotoURLKey] ? currentUser[kPFUserProfilePhotoURLKey] : @"";
-    [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
-        [[APConnectionManager sharedManager] lookupEventByName:self.currentEvent.eventName user:[PFUser currentUser] success:^(NSArray *objects) {
-            PFObject *object = [objects lastObject];
-            APEvent *thisEvent = [[APEvent alloc] initWithParseObject:object];
-            NSData *photoData = UIImagePNGRepresentation(self.currentEvent.eventImage);
-            [thisEvent setEventImageData:photoData];
-            [APUtil saveEventToMyEvents:thisEvent];
-            self.currentEvent.objectID = object.objectId;
-            [self sendInvitationsForEventID:object.objectId];
+    if (self.isForEditing) {
+        [SVProgressHUD showWithStatus:@"updating event"];
+        [[APConnectionManager sharedManager] updateEventAfterEdit:self.currentEvent success:^{
+            [SVProgressHUD showSuccessWithStatus:@"updated!"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         } failure:^(NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
+            [SVProgressHUD showErrorWithStatus:@"error saving, try again"];
             self.confirmEventButton.enabled = YES;
         }];
-        [SVProgressHUD showSuccessWithStatus:@"event saved!"];
-    } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"error saving, try again"];
-        self.confirmEventButton.enabled = YES;
-    }];
+    } else {
+        [SVProgressHUD showWithStatus:@"saving event"];
+        self.currentEvent.deleteDate  = [self.currentEvent.endDate dateByAddingTimeInterval:24*60*60];
+        PFUser *currentUser = [PFUser currentUser];
+        self.currentEvent.eventUserBlurb = currentUser[kPFUserBlurbKey] ? currentUser[kPFUserBlurbKey] : @"This user has no blurb";
+        self.currentEvent.eventUserPhotoURL = currentUser[kPFUserProfilePhotoURLKey] ? currentUser[kPFUserProfilePhotoURLKey] : @"";
+        [[APConnectionManager sharedManager] saveEvent:self.currentEvent success:^(BOOL succeeded) {
+            [[APConnectionManager sharedManager] lookupEventByName:self.currentEvent.eventName user:[PFUser currentUser] success:^(NSArray *objects) {
+                PFObject *object = [objects lastObject];
+                APEvent *thisEvent = [[APEvent alloc] initWithParseObject:object];
+                NSData *photoData = UIImagePNGRepresentation(self.currentEvent.eventImage);
+                [thisEvent setEventImageData:photoData];
+                [APUtil saveEventToMyEvents:thisEvent];
+                self.currentEvent.objectID = object.objectId;
+                [self sendInvitationsForEventID:object.objectId];
+            } failure:^(NSError *error) {
+                [SVProgressHUD showErrorWithStatus:@"unknown error occurred"];
+                self.confirmEventButton.enabled = YES;
+            }];
+            [SVProgressHUD showSuccessWithStatus:@"event saved!"];
+        } failure:^(NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"error saving, try again"];
+            self.confirmEventButton.enabled = YES;
+        }];
+    }
 }
 
 -(void)fadeOutFirstLabels {

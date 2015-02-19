@@ -273,9 +273,10 @@ static NSString *kMyEventsKey = @"myEventsArray";
                                     @"eventImageData": [event eventImageData]};
         NSDictionary *eventDict = @{[event objectID]: eventInfo};
         __block BOOL containsEvent = NO;
-        [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
-            if ([[[eventDict allKeys] firstObject] isEqualToString:[event objectID]]) {
+        [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *iterateEventDict, NSUInteger idx, BOOL *stop) {
+            if ([[[iterateEventDict allKeys] firstObject] isEqualToString:[event objectID]]) {
                 containsEvent = YES;
+                [myEventsArray replaceObjectAtIndex:idx withObject:eventDict];
                 *stop = YES;
             }
         }];
