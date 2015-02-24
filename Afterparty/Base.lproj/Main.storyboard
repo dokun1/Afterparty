@@ -327,16 +327,17 @@
         <!--Search Event Details View Controller-->
         <scene sceneID="Kcc-ao-YmZ">
             <objects>
-                <viewController id="IGl-kd-ezc" customClass="APSearchEventDetailsViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="IGl-kd-ezc" customClass="APSearchEventDetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eL2-BH-Nnt"/>
                         <viewControllerLayoutGuide type="bottom" id="xbZ-Sl-OAt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vhw-YK-H5F">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="Lzj-j2-Fz0"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>

@@ -24,57 +24,75 @@
 - (void)styleForType:(LabelType)type {
   switch (type) {
     case LabelTypeTitle:
-      [self setFont:[UIFont fontWithName:kBoldFont size:40.f]];
-      self.textAlignment = NSTextAlignmentCenter;
-      self.textColor = [UIColor afterpartyTealBlueColor];
-      break;
+          [self setFont:[UIFont fontWithName:kBoldFont size:40.f]];
+          self.textAlignment = NSTextAlignmentCenter;
+          self.textColor = [UIColor afterpartyTealBlueColor];
+          break;
     case LabelTypeHeading:
-      [self setFont:[UIFont fontWithName:kRegularFont size:30.0f]];
-      self.textAlignment = NSTextAlignmentCenter;
-      break;
+          [self setFont:[UIFont fontWithName:kRegularFont size:30.0f]];
+          self.textAlignment = NSTextAlignmentCenter;
+          break;
     case LabelTypeLoginHeading:
-      [self setFont:[UIFont fontWithName:kBoldFont size:26.f]];
-      self.textAlignment = NSTextAlignmentCenter;
-      self.textColor = [UIColor afterpartyOffWhiteColor];
-      break;
+          [self setFont:[UIFont fontWithName:kBoldFont size:26.f]];
+          self.textAlignment = NSTextAlignmentCenter;
+          self.textColor = [UIColor afterpartyOffWhiteColor];
+          break;
     case LabelTypeButtonDefault:
-      [self setFont:[UIFont fontWithName:kRegularFont size:20.0f]];
-      break;
+          [self setFont:[UIFont fontWithName:kRegularFont size:20.0f]];
+          break;
     case LabelTypeStandard:
-      self.textAlignment = NSTextAlignmentCenter;
-      [self setFont:[UIFont fontWithName:kRegularFont size:18.0f]];
-      break;
+          self.textAlignment = NSTextAlignmentCenter;
+          [self setFont:[UIFont fontWithName:kRegularFont size:18.0f]];
+          break;
     case LabelTypeTableViewCellAttribute:
-      [self setFont:[UIFont fontWithName:kRegularFont size:17.f]];
-      self.textColor = [UIColor afterpartyOffWhiteColor];
-      break;
+          [self setFont:[UIFont fontWithName:kRegularFont size:17.f]];
+          self.textColor = [UIColor afterpartyOffWhiteColor];
+          break;
     case LabelTypeTableViewCellTitle:
-      [self setFont:[UIFont fontWithName:kBoldFont size:22.f]];
-      self.textColor = [UIColor afterpartyOffWhiteColor];
-      break;
+          [self setFont:[UIFont fontWithName:kBoldFont size:22.f]];
+          self.textColor = [UIColor afterpartyOffWhiteColor];
+          break;
     case LabelTypeSearchDetailTitle:
-      [self setFont:[UIFont fontWithName:kBoldFont size:24.f]];
-      self.textColor = [UIColor afterpartyBlackColor];
-      break;
+          [self setFont:[UIFont fontWithName:kBoldFont size:24.f]];
+          self.textColor = [UIColor afterpartyBlackColor];
+          break;
     case LabelTypeSearchDetailAttribute:
-      [self setFont:[UIFont fontWithName:kRegularFont size:15.0f]];
-      [self setTextColor:[UIColor afterpartyBlackColor]];
-      break;
+          [self setFont:[UIFont fontWithName:kRegularFont size:15.0f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          break;
     case LabelTypeSearchDetailDescription:
-      [self setFont:[UIFont fontWithName:kRegularFont size:11.f]];
-      [self setTextColor:[UIColor afterpartyBlackColor]];
-      break;
+          [self setFont:[UIFont fontWithName:kRegularFont size:11.f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          break;
     case LabelTypeCreateLabel:
-      [self setFont:[UIFont fontWithName:kRegularFont size:13.f]];
-      [self setTextColor:[UIColor afterpartyBlackColor]];
-      break;
+          [self setFont:[UIFont fontWithName:kRegularFont size:13.f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          break;
     case LabelTypeFriendInvite:
-      [self setFont:[UIFont fontWithName:kRegularFont size:16.f]];
-      [self setTextColor:[UIColor afterpartyBlackColor]];
-      break;
+          [self setFont:[UIFont fontWithName:kRegularFont size:16.f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          break;
     case LabelTypeFriendHeader:
-      [self setFont:[UIFont fontWithName:kBoldFont size:18.f]];
-      [self setTextColor:[UIColor afterpartyBlackColor]];
+          [self setFont:[UIFont fontWithName:kBoldFont size:18.f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          break;
+    case LabelTypeNearbyUsername:
+          [self setFont:[UIFont fontWithName:kBoldFont size:16.f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          break;
+    case LabelTypeNearbyBlurb:
+          [self setFont:[UIFont fontWithName:kBoldFont size:14.f]];
+          [self setTextColor:[UIColor afterpartyLightGrayColor]];
+          break;
+    case LabelTypeNearbyDateView:
+          [self setFont:[UIFont fontWithName:kBoldFont size:20.f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          [self setTextAlignment:NSTextAlignmentCenter];
+          break;
+    case LabelTypeNearbyAddress:
+          [self setFont:[UIFont fontWithName:kBoldFont size:14.f]];
+          [self setTextColor:[UIColor afterpartyBlackColor]];
+          break;
     default:
       break;
 

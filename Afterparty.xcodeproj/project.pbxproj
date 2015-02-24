@@ -60,6 +60,7 @@
 		504CA3D01940C04E003EF9EB /* ap_appicon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3CD1940C04E003EF9EB /* ap_appicon120.png */; };
 		504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */; };
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
+		50529DBD1A9D1D6F00F89975 /* APEventDateAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */; };
 		50648A1A1A43364F0044A1BE /* APImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
@@ -232,6 +233,8 @@
 		504CA3CD1940C04E003EF9EB /* ap_appicon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ap_appicon120.png; sourceTree = "<group>"; };
 		504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProBold.otf"; sourceTree = "<group>"; };
 		504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProLight.otf"; sourceTree = "<group>"; };
+		50529DBB1A9D1D6F00F89975 /* APEventDateAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventDateAddressView.h; sourceTree = "<group>"; };
+		50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventDateAddressView.m; sourceTree = "<group>"; };
 		50648A171A43364F0044A1BE /* APImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APImageCollectionViewCell.h; sourceTree = "<group>"; };
 		50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APImageCollectionViewCell.m; sourceTree = "<group>"; };
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
@@ -633,6 +636,8 @@
 				50DE658E1940D01100C27B84 /* APButton.m */,
 				50DE65901940D02500C27B84 /* APTextView.h */,
 				50DE65911940D02500C27B84 /* APTextView.m */,
+				50529DBB1A9D1D6F00F89975 /* APEventDateAddressView.h */,
+				50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */,
 				50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */,
 				50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */,
 				503C92821A2C788A00ED06B5 /* APEventAnnotation.h */,
@@ -969,6 +974,7 @@
 				50F64EC01952F40900E0B8DC /* APPhotoViewController.m in Sources */,
 				504CA31A19408C82003EF9EB /* main.m in Sources */,
 				50DE65891940C76D00C27B84 /* APLabel.m in Sources */,
+				50529DBD1A9D1D6F00F89975 /* APEventDateAddressView.m in Sources */,
 				50F64ECF1952F64800E0B8DC /* APSearchEventTableViewCell.m in Sources */,
 				50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */,
 				50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */,
