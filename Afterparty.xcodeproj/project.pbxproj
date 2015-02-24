@@ -60,6 +60,8 @@
 		504CA3D01940C04E003EF9EB /* ap_appicon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3CD1940C04E003EF9EB /* ap_appicon120.png */; };
 		504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */; };
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
+		50529DB81A979DAA00F89975 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50529DB71A979DAA00F89975 /* AdSupport.framework */; };
+		50529DBA1A979F4B00F89975 /* DeeplinkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50529DB91A979F4B00F89975 /* DeeplinkSDK.framework */; };
 		50648A1A1A43364F0044A1BE /* APImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
@@ -232,6 +234,8 @@
 		504CA3CD1940C04E003EF9EB /* ap_appicon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ap_appicon120.png; sourceTree = "<group>"; };
 		504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProBold.otf"; sourceTree = "<group>"; };
 		504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProLight.otf"; sourceTree = "<group>"; };
+		50529DB71A979DAA00F89975 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		50529DB91A979F4B00F89975 /* DeeplinkSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DeeplinkSDK.framework; sourceTree = "<group>"; };
 		50648A171A43364F0044A1BE /* APImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APImageCollectionViewCell.h; sourceTree = "<group>"; };
 		50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APImageCollectionViewCell.m; sourceTree = "<group>"; };
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
@@ -347,12 +351,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50529DB81A979DAA00F89975 /* AdSupport.framework in Frameworks */,
 				503C92811A2C747A00ED06B5 /* MapKit.framework in Frameworks */,
 				509F18CE1A2BB60B00C37742 /* Accounts.framework in Frameworks */,
 				509F18CC1A2BB60400C37742 /* Social.framework in Frameworks */,
 				501232B119BB70F1007099A4 /* AVFoundation.framework in Frameworks */,
 				504CA31019408C82003EF9EB /* CoreGraphics.framework in Frameworks */,
 				504CA36A19409BFC003EF9EB /* Crashlytics.framework in Frameworks */,
+				50529DBA1A979F4B00F89975 /* DeeplinkSDK.framework in Frameworks */,
 				504CA31219408C82003EF9EB /* UIKit.framework in Frameworks */,
 				504CA30E19408C82003EF9EB /* Foundation.framework in Frameworks */,
 				64110BA7EDC5490CB3C28E6C /* libPods.a in Frameworks */,
@@ -405,6 +411,8 @@
 		504CA30C19408C82003EF9EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50529DB91A979F4B00F89975 /* DeeplinkSDK.framework */,
+				50529DB71A979DAA00F89975 /* AdSupport.framework */,
 				503C92801A2C747A00ED06B5 /* MapKit.framework */,
 				509F18CD1A2BB60B00C37742 /* Accounts.framework */,
 				509F18CB1A2BB60400C37742 /* Social.framework */,
@@ -1137,6 +1145,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(USER_LIBRARY_DIR)/Containers/com.apple.mail/Data/Library/Mail",
+					"Downloads/F0C53F00-9CCC-4EA6-8826-2AD5F7945E38/DeeplinkSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Afterparty/Afterparty-Prefix.pch";
@@ -1161,6 +1171,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(USER_LIBRARY_DIR)/Containers/com.apple.mail/Data/Library/Mail",
+					"Downloads/F0C53F00-9CCC-4EA6-8826-2AD5F7945E38/DeeplinkSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Afterparty/Afterparty-Prefix.pch";

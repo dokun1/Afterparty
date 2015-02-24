@@ -12,6 +12,7 @@
 #import "APConstants.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+#import <DeeplinkSDK/DeeplinkSDK.h>
 
 @implementation APAppDelegate
 
@@ -31,7 +32,9 @@
     [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
-    
+    [[DeeplinkSDK sharedInstance] initiateWithApiKey:kDeeplinkApiKey andAppID:kDeeplinkAppID completion:^(BOOL succeeded) {
+        NSLog(@"%@", succeeded?@"YES":@"NO");
+    }];
 
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
   

@@ -34,6 +34,8 @@ extern NSString *const kFoursquareSecret;
 extern NSString *const kCrashlyticsAPIKey;
 extern NSString *const kFacebookAppID;
 extern NSString *const kFacebookAppIDWithPrefix;
+extern NSString *const kDeeplinkApiKey;
+extern NSString *const kDeeplinkAppID;
 extern NSString *const kPasswordSalt;
 extern NSString *const kEventSearchParseClass;
 extern NSString *const kPhotosParseClass;

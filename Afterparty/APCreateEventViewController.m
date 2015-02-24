@@ -23,6 +23,7 @@
 #import "APCreateEventTimeViewController.h"
 #import "APCreateEventPasswordViewController.h"
 #import "APVenue.h"
+#import <DeeplinkSDK/DeeplinkSDK.h>
 
 @import MessageUI;
 @import AddressBook;
@@ -540,7 +541,12 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
         NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.currentEvent.password];
         message = [NSString stringWithFormat:@"%@%@", message, addOn];
-    }    
+    }
+    
+    [[DeeplinkSDK sharedInstance] getLinkWithKeywords:eventID completion:^(NSError *error, DLResultObject *result) {
+        NSLog(@"got a results");
+        NSLog(@"oh hey");
+    }];
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;

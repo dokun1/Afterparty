@@ -479,7 +479,6 @@ typedef void (^APProgressBlock)(int percentDone);
               success:(APSuccessVoidBlock)successBlock
               failure:(APFailureErrorBlock)failureBlock;
 
-
 /**
  *  Attempts to delete photos for a particular event. It calls a server function that tries to delete 10 photos at a time for a given event on the server. This is to try and sneak around the rate limit!
  *
