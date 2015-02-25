@@ -38,7 +38,8 @@
         self.eventDateTimeLabel = [[APLabel alloc] initWithFrame:self.eventDateTimeView.frame];
         self.eventDateAMPMLabel = [[APLabel alloc] initWithFrame:self.eventDateAMPMView.frame];
         
-        self.eventAddressLabel = [[APLabel alloc] initWithFrame:CGRectMake(160, 9, self.window.frame.size.width - 180, 60)];
+        self.eventAddressLabel = [[APLabel alloc] initWithFrame:CGRectMake(160, 9, [UIScreen mainScreen].bounds.size.width - 180, 60)];
+        self.eventAddressLabel.numberOfLines = 3;
         
         NSDateFormatter *formater = [self getDateFormatter];
         NSString *monthString = [[formater stringFromDate:date]uppercaseString];

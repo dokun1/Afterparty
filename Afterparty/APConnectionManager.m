@@ -685,6 +685,7 @@
                     failureBlock(error);
                 } else {
                     [self sendEventUpdateNotificationForEventID:event.objectID];
+                    [APUtil saveEventToMyEvents:event];
                     successBlock();
                 }
             }];
@@ -695,7 +696,7 @@
 #pragma mark - Private Connection Methods
 
 - (void)sendEventUpdateNotificationForEventID:(NSString *)eventID {
-    [PFCloud callFunctionInBackground:@"notifyPartyUpdate" withParameters:@{@"eventID":eventID, @"userID":[PFUser currentUser]}];
+    [PFCloud callFunctionInBackground:@"notifyPartyUpdate" withParameters:@{@"eventID":eventID, @"userID":[PFUser currentUser].objectId}];
 }
 
 

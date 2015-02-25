@@ -105,24 +105,25 @@
     [self.usernameBlurbLabel styleForType:LabelTypeNearbyBlurb withText:self.currentEvent.eventUserBlurb];
     [self.contentScrollView addSubview:self.usernameBlurbLabel];
     
-    height += 100;
-    scrollViewContentHeight += 100;
+    height += 90;
+    scrollViewContentHeight += 90;
     
     self.eventDescriptionView = [[APTextView alloc] init];
     self.eventDescriptionView.text = self.currentEvent.eventDescription;
+    self.eventDescriptionView.editable = NO;
+    self.eventDescriptionView.showsVerticalScrollIndicator = NO;
     [self.eventDescriptionView styleWithFontSize:12.f];
     
     CGFloat cellHeight = 0;
     if (self.eventDescriptionView.text.length) {
-        CGRect textNecessaryRect = [self.eventDescriptionView.text boundingRectWithSize: CGSizeMake(self.eventDescriptionView.bounds.size.width, NSUIntegerMax) options: (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont fontWithName:kRegularFont size:14.0]} context: nil];
+        CGRect textNecessaryRect = [self.eventDescriptionView.text boundingRectWithSize: CGSizeMake(self.view.frame.size.width, NSUIntegerMax) options: (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont fontWithName:kRegularFont size:12.0]} context: nil];
         cellHeight = textNecessaryRect.size.height + 10.0;
     }
     self.eventDescriptionView.frame = CGRectMake(10, scrollViewContentHeight, self.view.frame.size.width - 20, cellHeight);
-    
     [self.contentScrollView addSubview:self.eventDescriptionView];
     
     height += self.eventDescriptionView.frame.size.height;
-    scrollViewContentHeight += self.eventDescriptionView.frame.size.height;
+    scrollViewContentHeight += self.eventDescriptionView.frame.size.height + 10;
     
     self.dateAddressView = [[APEventDateAddressView alloc] initWithDate:self.currentEvent.startDate andAddress:self.currentEvent.eventAddress];
     self.dateAddressView.frame = CGRectMake(0, scrollViewContentHeight, self.view.frame.size.width, 80);
