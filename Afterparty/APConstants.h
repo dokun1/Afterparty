@@ -16,6 +16,7 @@ extern NSString *const kMyEventSelectedSegue;
 extern NSString *const kNearbyEventDetailSegue;
 extern NSString *const kNearbyEventGoToSegue;
 extern NSString *const kCreateEventSegue;
+extern NSString *const kEditEventSegue;
 extern NSString *const kSettingsProfileSegue;
 extern NSString *const kSettingsEventSegue;
 extern NSString *const kSettingsSocialNetworkingSegue;

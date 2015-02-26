@@ -9,18 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "APEvent.h"
 
-@class APSearchEventDetailViewController;
-
-@protocol SearchEventDetailDelegate <NSObject>
-
-@required
-- (void)controllerDidSelectEvent:(APSearchEventDetailViewController*)controller;
-
-@end
-
 @interface APSearchEventDetailViewController : UIViewController
-
-@property (weak, nonatomic) id<SearchEventDetailDelegate> delegate;
 
 - (id)initWithEvent:(APEvent*)event;
 - (void)setCurrentEvent:(APEvent*)event;

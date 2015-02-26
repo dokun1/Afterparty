@@ -22,7 +22,7 @@
 #import "APCameraOverlayViewController.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <UIKit+AFNetworking.h>
-#import "APMyEventUpdateLocationViewController.h"
+#import "APFindVenueTableViewController.h"
 #import "UIAlertView+APAlert.h"
 #import "UIColor+APColor.h"
 #import "APUtil.h"

@@ -5,5 +5,11 @@
     },
     "1.0.1": {
         "1":"Oops! iOS 7 phones no longer have problems running the app. Sorry about that one!"
+    },
+    "1.1.0": {
+        "1":"You asked, we listened. You can now edit events that you created while they're still in session! Even better, every user who's at that event already will now get a push notification that the event has changed!",
+        "2":"If you don't see the place where you want to throw your event, you can add one real easily now!",
+        "3":"Oh yeah, bug fixes, and all that jazz."
     }
+    
 }

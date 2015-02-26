@@ -9,7 +9,7 @@
 #import "APSearchEventsViewController.h"
 #import <Parse/Parse.h>
 #import "APSearchEventTableViewCell.h"
-#import "APSearchEventDetailViewController.h"
+#import "APSearchEventDetailsViewController.h"
 #import "UIColor+APColor.h"
 #import "UIAlertView+APAlert.h"
 #import "APEvent.h"
@@ -21,7 +21,7 @@
 
 @import AddressBook;
 
-@interface APSearchEventsViewController () <UISearchBarDelegate, CLLocationManagerDelegate, SearchEventDetailDelegate, UINavigationControllerDelegate, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate>
+@interface APSearchEventsViewController () <UISearchBarDelegate, CLLocationManagerDelegate, UINavigationControllerDelegate, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *venues;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -326,7 +326,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return [APSearchEventTableViewCell suggestedCellHeight];
+    return [APSearchEventTableViewCell suggestedCellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -396,30 +396,16 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [SVProgressHUD showWithStatus:@"loading event"];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        APEvent *event = self.venues[indexPath.row];
-        [self performSegueWithIdentifier:kNearbyEventDetailSegue sender:event];
-    });
-
+    APEvent *event = self.venues[indexPath.row];
+    [self performSegueWithIdentifier:kNearbyEventDetailSegue sender:event];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([segue.identifier isEqualToString:kNearbyEventDetailSegue]) {
-    APSearchEventDetailViewController *vc = (APSearchEventDetailViewController*)segue.destinationViewController;
-    [vc setCurrentEvent:sender];
-    vc.delegate = self;
-    vc.hidesBottomBarWhenPushed = YES;
-  }
-}
-
-#pragma mark - SearchEventDetailsDelegate methods
-
-- (void)controllerDidSelectEvent:(APSearchEventDetailViewController *)controller {
-  [self.navigationController popToViewController:self animated:YES];
-}
-
-- (void)navigationBar:(UINavigationBar *)navigationBar didPopItem:(UINavigationItem *)item {
+    if ([segue.identifier isEqualToString:kNearbyEventDetailSegue]) {
+        APSearchEventDetailsViewController *controller = (APSearchEventDetailsViewController *)segue.destinationViewController;
+        controller.currentEvent = sender;
+        controller.hidesBottomBarWhenPushed = YES;
+    }
 }
 
 @end

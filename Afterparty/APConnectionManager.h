@@ -493,7 +493,38 @@ typedef void (^APProgressBlock)(int percentDone);
                                             success:(APSuccessNumberBlock)successBlock
                                             failure:(APFailureErrorBlock)failureBlock;
 
+/**
+ *  Deletes an event on the server given an eventID
+ *
+ *  @param eventID      NSString for eventID that we are going to delete
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSerror
+ *
+ *  @since 1.0.0
+ */
 - (void)deleteEventForEventID:(NSString *)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Adds a location to the Foursquare API for when a location doesnt exist and a user wants to create one to associate with their event
+ *
+ *  @param venue        APVenue object, Name and coordinates are required
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 1.1.0
+ */
+- (void)addVenueToLocationSearch:(APVenue *)venue success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
+
+/**
+ *  Changes the properties of an event after the owner of the party has edited it
+ *
+ *  @param event        APEvent that has been updated by the user
+ *  @param successBlock Returns void block on success
+ *  @param failureBlock Returns NSError
+ *
+ *  @since 1.1.0
+ */
+- (void)updateEventAfterEdit:(APEvent *)event success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock;
 
 
 @end
