@@ -42,6 +42,7 @@
         self.eventAddressLabel.numberOfLines = 3;
         
         NSDateFormatter *formater = [self getDateFormatter];
+        formater.dateFormat = @"MMM";
         NSString *monthString = [[formater stringFromDate:date]uppercaseString];
         [self.eventDateMonthLabel styleForType:LabelTypeNearbyDateView withText:monthString];
         formater.dateFormat = @"dd";
@@ -66,7 +67,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         __df = [[NSDateFormatter alloc] init];
-        __df.dateFormat = @"MMM";
         __df.locale = [NSLocale currentLocale];
         __df.timeZone = [NSTimeZone timeZoneWithName:@"GMT"];
     });
