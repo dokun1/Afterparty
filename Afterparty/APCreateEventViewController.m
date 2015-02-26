@@ -542,11 +542,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
         NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.currentEvent.password];
         message = [NSString stringWithFormat:@"%@%@", message, addOn];
     }
-    
-    [[DeeplinkSDK sharedInstance] getLinkWithKeywords:eventID completion:^(NSError *error, DLResultObject *result) {
-        NSLog(@"got a results");
-        NSLog(@"oh hey");
-    }];
+
   
   MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
   messageController.messageComposeDelegate = self;

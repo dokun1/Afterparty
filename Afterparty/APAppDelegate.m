@@ -32,8 +32,11 @@
     [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
-    [[DeeplinkSDK sharedInstance] initiateWithApiKey:kDeeplinkApiKey andAppID:kDeeplinkAppID completion:^(BOOL succeeded) {
-        NSLog(@"%@", succeeded?@"YES":@"NO");
+    [[DeeplinkSDK sharedInstance] initializeWithApiKey:kDeeplinkApiKey andAppID:kDeeplinkAppID completion:^(NSError *error) {
+        [[DeeplinkSDK sharedInstance] getLinkWithKeywords:@"abcdefgh" completion:^(NSError *error, DLResultObject *result) {
+            NSLog(@"got a results");
+            NSLog(@"oh hey");
+        }];
     }];
 
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
