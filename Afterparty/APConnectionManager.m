@@ -113,6 +113,18 @@
     }];
 }
 
+- (void)getEventForId:(NSString *)eventID success:(void (^)(APEvent *event))successBlock failure:(APFailureErrorBlock)failureBlock {
+    PFQuery *query = [PFQuery queryWithClassName:kEventSearchParseClass];
+    [query getObjectInBackgroundWithId:eventID block:^(PFObject *object, NSError *error) {
+        if (error || !object) {
+            failureBlock(error);
+        } else {
+            APEvent *event = [[APEvent alloc] initWithParseObject:object];
+            successBlock(event);
+        }
+    }];
+}
+
 -(void)saveEvent:(APEvent *)event
          success:(APSuccessBooleanBlock)successBlock
          failure:(APFailureErrorBlock)failureBlock {
@@ -647,7 +659,7 @@
 }
 
 - (void)addVenueToLocationSearch:(APVenue *)venue success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
-    [Foursquare2 venueAddWithName:venue.name address:venue.prettyAddress crossStreet:nil city:nil state:nil zip:nil phone:nil twitter:nil description:nil latitude:@(venue.coordinate.latitude) longitude:@(venue.coordinate.longitude) primaryCategoryId:nil callback:^(BOOL success, id result) {
+    [Foursquare2 venueAddWithName:venue.name address:nil crossStreet:nil city:nil state:nil zip:nil phone:nil twitter:nil description:nil latitude:@(venue.coordinate.latitude) longitude:@(venue.coordinate.longitude) primaryCategoryId:nil callback:^(BOOL success, id result) {
         if (success) {
             successBlock();
         } else {

@@ -24,6 +24,7 @@ PODS:
   - Facebook-iOS-SDK (3.23.0):
     - Bolts (~> 1.0)
   - Foursquare-API-v2 (1.4.8)
+  - ISO8601DateFormatter (0.7)
   - JazzHands (0.2.0)
   - Parse (1.6.2):
     - Bolts (~> 1.1)
@@ -37,6 +38,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - Foursquare-API-v2 (~> 1.4)
+  - ISO8601DateFormatter
   - Jazzhands
   - Parse
   - ParseFacebookUtils
@@ -49,6 +51,7 @@ SPEC CHECKSUMS:
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   Facebook-iOS-SDK: 3d65f685348b789e46a9aacf92bfa85b60b63755
   Foursquare-API-v2: 6be0e2d5b4f0adde6d39a3ebcb38311f54bf9694
+  ISO8601DateFormatter: 59731cd880cf87e71b4fa95f0d6b713dcbc4cbce
   JazzHands: 700f8eed9e2b2dec07963fde59153dea3c194f85
   Parse: 60d65108fe39da77ec16c9e51d74b4d296b21424
   ParseFacebookUtils: 0b86cd67283c60d10e3ddc8427f989f5e60ebbd7

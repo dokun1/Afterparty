@@ -17,6 +17,10 @@
         APVenue *ann = [[APVenue alloc] init];
         ann.name = v[@"name"];
         ann.venueId = v[@"id"];
+        
+        if (!ann.venueId) {
+            continue;
+        }
 
         ann.location.address = v[@"location"][@"address"];
         ann.location.distance = v[@"location"][@"distance"];

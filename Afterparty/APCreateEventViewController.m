@@ -125,6 +125,15 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     [self.chooseEventTitleButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
     [self.chooseEventDateButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
     [self.chooseEventLocationButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    [self.chooseEventFriendsButton setImage:[UIImage imageNamed:@"icon_checkgreen"] forState:UIControlStateNormal];
+    self.chooseEventFriendsLabel.text = @"Want to invite more friends?";
+    if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        [self controller:nil didUpdatePassword:self.currentEvent.password];
+        self.privateEventSwitch.on = NO;
+        self.privatePasswordLabel.alpha = 1.0f;
+        self.publicPasswordLabel.alpha = 0.0f;
+        self.chooseEventPasswordButton.alpha = 1.0f;
+    }
 }
 
 - (UIButton *)generateAddElementButtonForPoint:(CGPoint)point {
@@ -707,8 +716,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 - (void)choosePhotoButtonTapped:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Go Back" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
-    [actionSheet showInView:self.view];
+    if (!self.isForEditing) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Go Back" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Library", nil];
+        [actionSheet showInView:self.view];
+    }
 }
 
 - (void)chooseEventLocationButtonTapped:(id)sender {
@@ -841,6 +852,9 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
     if ([segue.identifier isEqualToString:kSetTimeSegue]) {
         APCreateEventTimeViewController *vc = (APCreateEventTimeViewController *)segue.destinationViewController;
         vc.delegate = self;
+        if (self.isForEditing) {
+            [vc setStartDate:self.currentEvent.startDate endDate:self.currentEvent.endDate];
+        }
     } else if ([segue.identifier isEqualToString:kSetPasswordSegue]) {
         APCreateEventPasswordViewController *vc = (APCreateEventPasswordViewController *)segue.destinationViewController;
         vc.delegate = self;

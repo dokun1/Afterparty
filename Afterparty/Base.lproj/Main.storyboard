@@ -509,6 +509,7 @@
                         <outlet property="countdownLabel" destination="JwD-NB-8fK" id="8jx-AW-Rff"/>
                         <outlet property="eventEndsLabel" destination="8QQ-lv-iZN" id="Wfh-le-O6z"/>
                         <outlet property="photoButton" destination="oWq-WG-BpE" id="XzL-NB-CQt"/>
+                        <segue destination="bSh-UU-cpN" kind="push" identifier="editMyEventSegue" id="Gzm-d8-Nzg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nyr-rQ-g3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -613,7 +614,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="SET TIME" id="gtm-VW-DTS"/>
                     <connections>
-                        <outlet property="endTimePicker" destination="3sx-iW-Y9Z" id="sD7-9P-xA7"/>
+                        <outlet property="endDatePicker" destination="3sx-iW-Y9Z" id="b1n-LS-67H"/>
                         <outlet property="startDatePicker" destination="U2Z-p8-x3U" id="jUj-4g-Lvl"/>
                     </connections>
                 </tableViewController>
@@ -1068,7 +1069,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ykt-Ao-nhe"/>
         <segue reference="KHV-ht-fcI"/>
+        <segue reference="Gzm-d8-Nzg"/>
     </inferredMetricsTieBreakers>
 </document>

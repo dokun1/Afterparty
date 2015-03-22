@@ -9,6 +9,9 @@
 #import "APUtil.h"
 #import "APConnectionManager.h"
 #import "APConstants.h"
+#import <ISO8601DateFormatter/ISO8601DateFormatter.h>
+#import "APEventNotification.h"
+#import "APEvent.h"
 
 static NSString *kExpiredEventsKey = @"expiredEvents";
 static NSString *kMyEventsKey = @"myEventsArray";
@@ -189,7 +192,7 @@ static NSString *kMyEventsKey = @"myEventsArray";
     NSMutableArray *expiredEvents = [NSMutableArray array];
     [eventsArray enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
         NSDictionary *eventInfo = [eventDict allValues].firstObject;
-        NSDate *deleteDate = [eventInfo objectForKey:@"deleteDate"];
+        NSDate *deleteDate = eventInfo[@"deleteDate"];
         NSComparisonResult result = [deleteDate compare:[NSDate date]];
         if (result == NSOrderedAscending) {
             [myEventsArray removeObject:eventDict];
@@ -260,29 +263,40 @@ static NSString *kMyEventsKey = @"myEventsArray";
 }
 
 + (void)saveEventToMyEvents:(APEvent*)event{
+    NSDictionary *eventInfo = @{@"deleteDate": [event deleteDate] ?: [event deleteDate],
+                                @"endDate" : [event endDate] ?: [event endDate],
+                                @"startDate" : [event startDate] ?: [event startDate],
+                                @"eventName": [event eventName] ?: [event eventName],
+                                @"eventLatitude": @([event location].latitude),
+                                @"eventLongitude": @([event location].longitude),
+                                @"createdByUsername": [event createdByUsername],
+                                @"eventImageData": [event eventImageData],
+                                @"eventPassword": [event password] ?: [event password]};
+    NSDictionary *eventDict = @{[event objectID]: eventInfo};
+    [self private_saveEventDictionaryToMyEvents:eventDict];
+}
+
++ (void)private_saveEventDictionaryToMyEvents:(NSDictionary *)newEvent {
+    APEvent *newEventObject = [[APEvent alloc] init];
+    NSDictionary *eventInfo = newEvent.allValues.firstObject;
+    newEventObject.endDate = eventInfo[@"endDate"];
+    newEventObject.deleteDate = eventInfo[@"deleteDate"];
+    newEventObject.objectID = newEvent.allKeys.firstObject;
+    [self setNotificationsForEvent:newEventObject];
     dispatch_async([self getBackgroundQueue], ^{
         [[self cacheLock] lock];
         NSMutableArray *myEventsArray = [[self loadSavedEvents] mutableCopy];
-        NSDictionary *eventInfo = @{@"deleteDate": [event deleteDate] ?: [event deleteDate],
-                                    @"endDate" : [event endDate] ?: [event endDate],
-                                    @"startDate" : [event startDate] ?: [event startDate],
-                                    @"eventName": [event eventName] ?: [event eventName],
-                                    @"eventLatitude": @([event location].latitude),
-                                    @"eventLongitude": @([event location].longitude),
-                                    @"createdByUsername": [event createdByUsername],
-                                    @"eventImageData": [event eventImageData]};
-        NSDictionary *eventDict = @{[event objectID]: eventInfo};
         __block BOOL containsEvent = NO;
         [myEventsArray enumerateObjectsUsingBlock:^(NSDictionary *iterateEventDict, NSUInteger idx, BOOL *stop) {
-            if ([[[iterateEventDict allKeys] firstObject] isEqualToString:[event objectID]]) {
+            if ([[[iterateEventDict allKeys] firstObject] isEqualToString:newEvent.allKeys.firstObject]) {
                 containsEvent = YES;
-                [myEventsArray replaceObjectAtIndex:idx withObject:eventDict];
+                [myEventsArray replaceObjectAtIndex:idx withObject:newEvent];
                 *stop = YES;
             }
         }];
         if (!containsEvent) {
-            [myEventsArray addObject:eventDict];
-            [[APConnectionManager sharedManager] joinEvent:event.objectID success:^{
+            [myEventsArray addObject:newEvent];
+            [[APConnectionManager sharedManager] joinEvent:newEvent.allKeys.firstObject success:^{
                 
             } failure:^(NSError *error) {
                 [[[UIAlertView alloc] initWithTitle:@"Event Error" message:@"For some reason, we couldn't register your name with the event. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -290,6 +304,26 @@ static NSString *kMyEventsKey = @"myEventsArray";
         }
         [self saveArray:myEventsArray forPath:kMyEventsKey];
         [[self cacheLock] unlock];
+    });
+}
+
++ (void)updateEventFromPushNotification:(NSDictionary *)userInfo {
+    NSDictionary *eventDict = userInfo[@"eventObject"];
+    NSMutableDictionary *eventInfo = [NSMutableDictionary dictionary];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        eventInfo[@"eventImageData"] = [NSData dataWithContentsOfURL:[NSURL URLWithString:eventDict[@"eventImage"][@"url"]]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            eventInfo[@"deleteDate"] = [self formatPushNotificationStringToDate:eventDict[@"deleteDate"][@"iso"]];
+            eventInfo[@"startDate"] = [self formatPushNotificationStringToDate:eventDict[@"startDate"][@"iso"]];
+            eventInfo[@"endDate"] = [self formatPushNotificationStringToDate:eventDict[@"endDate"][@"iso"]];
+            eventInfo[@"eventName"] = eventDict[@"eventName"];
+            eventInfo[@"eventLatitude"] = eventDict[@"latitude"];
+            eventInfo[@"eventLongitude"] = eventDict[@"longitude"];
+            eventInfo[@"createdByUsername"] = eventDict[@"createdByUsername"];
+            eventInfo[@"password"] = eventDict[@"password"] ?: eventDict[@"password"];
+            NSDictionary *updatedEventDict = @{eventDict[@"objectId"]:eventInfo};
+            [self private_saveEventDictionaryToMyEvents:updatedEventDict];
+        });
     });
 }
 
@@ -327,10 +361,10 @@ static NSString *kMyEventsKey = @"myEventsArray";
     NSDictionary *metadata = [items.firstObject objectForKey:@"metadata"];
     NSString *webVersion = [metadata objectForKey:@"bundle-version"];
   
-  if ([[self getVersion] compare:webVersion options:NSNumericSearch] == NSOrderedAscending) { //checks to see if current version is less than web version
-    return YES;
-  }
-  return NO;
+    if ([[self getVersion] compare:webVersion options:NSNumericSearch] == NSOrderedAscending) { //checks to see if current version is less than web version
+        return YES;
+    }
+    return NO;
 }
 
 +(NSString *) genRandIdString {
@@ -343,7 +377,7 @@ static NSString *kMyEventsKey = @"myEventsArray";
     return randomString;
 }
 
-+(NSString*)formatDateForEventDetailScreen:(NSDate*)date {
++ (NSString*)formatDateForEventDetailScreen:(NSDate*)date {
     static NSDateFormatter *df = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -356,27 +390,27 @@ static NSString *kMyEventsKey = @"myEventsArray";
     return dateString;
 }
 
-+ (NSString *)formatDateForEventCreationScreen:(NSDate*)date {
-  static NSDateFormatter *df = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    df = [[NSDateFormatter alloc] init];
-    //FEB 21, 2014 at 8PM
-    //6/29 at 8PM
-    [df setDateFormat:@"M/d h:mma"];
-  });
-  
-  NSString *dateString = [df stringFromDate:date];
-  return dateString;
-}
-
-+ (NSLock*) cacheLock {
-    static NSLock *lock;
++ (NSDate *)formatPushNotificationStringToDate:(NSString *)dateString {
+    static ISO8601DateFormatter *df = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        lock = [[NSLock alloc] init];
+        df = [[ISO8601DateFormatter alloc] init];
     });
-    return lock;
+
+    NSDate *date = [df dateFromString:dateString];
+    return date;
+}
+
++ (NSString *)formatDateForEventCreationScreen:(NSDate*)date {
+    static NSDateFormatter *df = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"M/d h:mma"];
+    });
+
+    NSString *dateString = [df stringFromDate:date];
+    return dateString;
 }
 
 + (dispatch_queue_t)getBackgroundQueue {
@@ -403,6 +437,103 @@ static NSString *kMyEventsKey = @"myEventsArray";
         [reportedPhotos addObject:photoID];
     }
     [self saveArray:reportedPhotos forPath:@"reportedPhotos"];
+}
+
+#pragma mark - event notification methods
++ (NSLock*) cacheLock {
+    // because we have the ability add and remove notifications in an asynchronous environment, we have to lock the thread we are on whenever we are mutating the array saved to disk, so that we can't
+    // delete and add something at the same time and do a poor job of preserving state. the process is:
+    // 1) lock the thread
+    // 2) mutate the array
+    // 3) save it again
+    // 4) unlock the thread
+    // locking the main thread creates a major performance issue, so it is important to dispatch array mutation to a background thread - which I have specified below for safe keeping
+    static NSLock *__lock;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        __lock = [[NSLock alloc] init];
+    });
+    return __lock;
+}
+
++ (dispatch_queue_t)getBackgroundQueueForNotifications {
+    static dispatch_queue_t sharedQueue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedQueue = dispatch_queue_create("com.afterparty.notificationMutationQueue", NULL);
+    });
+    return sharedQueue;
+}
+
++ (NSArray *)getNotificationsForEventID:(NSString *)eventID {
+    NSMutableArray *notificationsToReturn = [NSMutableArray array];
+    NSArray *scheduledNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    [scheduledNotifications enumerateObjectsUsingBlock:^(UILocalNotification *notification, NSUInteger idx, BOOL *stop) {
+        NSDictionary *userInfo = notification.userInfo;
+        if ([userInfo[@"eventID"] isEqualToString:eventID]) {
+            APEventNotification *eventNotification = [[APEventNotification alloc] init];
+            eventNotification.eventID = eventID;
+            
+            NSString *type = userInfo[@"type"];
+            if ([type isEqualToString:@"eventEnded"]) {
+                eventNotification.notificationType = EventNotificationTypeEventEnded;
+            } else if ([type isEqualToString:@"eventAboutToEnd"]) {
+                eventNotification.notificationType = EventNotificationTypeEventOneHourFromDelete;
+            } else if ([type isEqualToString:@"eventDeleted"]) {
+                eventNotification.notificationType = EventNotificationTypeEventDeleted;
+            } else {
+                eventNotification.notificationType = EventNotificationTypeOther;
+            }
+            [notificationsToReturn addObject:eventNotification];
+        }
+    }];
+    
+    return notificationsToReturn;
+}
+
++ (void)setNotificationsForEvent:(APEvent *)event {
+    dispatch_async([self getBackgroundQueueForNotifications], ^{
+        [[self cacheLock] lock];
+        [self removeNotificationsForEventID:event.objectID];
+        
+        UILocalNotification *eventEndedNotification = [[UILocalNotification alloc] init];
+        UILocalNotification *eventAboutToEndNotification = [[UILocalNotification alloc] init];
+        UILocalNotification *eventDeletedNotification = [[UILocalNotification alloc] init];
+        
+        eventEndedNotification.fireDate = event.endDate;
+        eventEndedNotification.alertBody = [NSString stringWithFormat:@"%@ just ended! Go check out all the photos everyone took!", event.eventName];
+        eventEndedNotification.timeZone = [NSTimeZone systemTimeZone];
+        eventEndedNotification.userInfo = @{@"eventID":event.objectID, @"type":@"eventEnded"};
+        [[UIApplication sharedApplication] scheduleLocalNotification:eventEndedNotification];
+        
+        eventAboutToEndNotification.fireDate = [NSDate dateWithTimeInterval:-3600 sinceDate:event.deleteDate];
+        eventAboutToEndNotification.alertBody = [NSString stringWithFormat:@"%@ is going to disappear in an hour...get in there and get a good last look!", event.eventName];
+        eventAboutToEndNotification.timeZone = [NSTimeZone systemTimeZone];
+        eventAboutToEndNotification.userInfo = @{@"eventID":event.objectID, @"type":@"eventAboutToEnd"};
+        [[UIApplication sharedApplication] scheduleLocalNotification:eventAboutToEndNotification];
+        
+        eventDeletedNotification.fireDate = event.deleteDate;
+        eventDeletedNotification.alertBody = [NSString stringWithFormat:@"%@ just disappeared! Why not get another party started?", event.eventName];
+        eventDeletedNotification.timeZone = [NSTimeZone systemTimeZone];
+        eventDeletedNotification.userInfo = @{@"eventID":event.objectID, @"type":@"eventDeleted"};
+        [[UIApplication sharedApplication] scheduleLocalNotification:eventDeletedNotification];
+        [[self cacheLock] unlock];
+    });
+
+}
+
++ (void)removeNotificationsForEventID:(NSString *)eventID {
+    dispatch_async([self getBackgroundQueueForNotifications], ^{
+        NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        NSMutableArray *newLocalNotifications = [NSMutableArray array];
+        [localNotifications enumerateObjectsUsingBlock:^(UILocalNotification *notification, NSUInteger idx, BOOL *stop) {
+            NSDictionary *userInfo = notification.userInfo;
+            if (![userInfo[@"eventID"] isEqualToString:eventID]) {
+                [newLocalNotifications addObject:notification];
+            }
+        }];
+        [[UIApplication sharedApplication] setScheduledLocalNotifications:newLocalNotifications];
+    });
 }
 
 
