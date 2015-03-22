@@ -13,6 +13,7 @@
 		50105674196AFA0C00D7F800 /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50105670196AFA0C00D7F800 /* settingsTab.png */; };
 		501232B119BB70F1007099A4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501232B019BB70F1007099A4 /* AVFoundation.framework */; };
 		501232B419BB73DF007099A4 /* APAVSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 501232B319BB73DF007099A4 /* APAVSessionController.m */; };
+		5021C86C1ABF46F700A3034C /* APEventNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5021C86B1ABF46F700A3034C /* APEventNotification.m */; };
 		503C92811A2C747A00ED06B5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503C92801A2C747A00ED06B5 /* MapKit.framework */; };
 		503C92841A2C788A00ED06B5 /* APEventAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 503C92831A2C788A00ED06B5 /* APEventAnnotation.m */; };
 		5044E5691997FAF1003D5153 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5044E5681997FAF1003D5153 /* Images.xcassets */; };
@@ -60,6 +61,8 @@
 		504CA3D01940C04E003EF9EB /* ap_appicon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3CD1940C04E003EF9EB /* ap_appicon120.png */; };
 		504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */; };
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
+		50529DBD1A9D1D6F00F89975 /* APEventDateAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */; };
+		5061AE4F1AB47A93008AA7AD /* APNewVenueController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061AE4E1AB47A93008AA7AD /* APNewVenueController.m */; };
 		50648A1A1A43364F0044A1BE /* APImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
@@ -83,6 +86,7 @@
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
 		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
+		50C214321A9675F4006E9D4D /* APSearchEventDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C214311A9675F4006E9D4D /* APSearchEventDetailsViewController.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
 		50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */; };
 		50C3AA8F195F0ECB00A0297A /* APInviteFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8C195F0ECB00A0297A /* APInviteFriendTableViewCell.m */; };
@@ -97,7 +101,6 @@
 		50E0A9931A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0A9921A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.m */; };
 		50F64EB81952F40900E0B8DC /* APMyEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA11952F40900E0B8DC /* APMyEventsViewController.m */; };
 		50F64EB91952F40900E0B8DC /* APMyEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA31952F40900E0B8DC /* APMyEventViewController.m */; };
-		50F64EBB1952F40900E0B8DC /* APMyEventUpdateLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA61952F40900E0B8DC /* APMyEventUpdateLocationViewController.m */; };
 		50F64EBC1952F40900E0B8DC /* APCameraOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA81952F40900E0B8DC /* APCameraOverlayViewController.m */; };
 		50F64EBD1952F40900E0B8DC /* APCameraOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F64EA91952F40900E0B8DC /* APCameraOverlayViewController.xib */; };
 		50F64EBE1952F40900E0B8DC /* APImagePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EAB1952F40900E0B8DC /* APImagePreviewViewController.m */; };
@@ -146,6 +149,8 @@
 		501232B019BB70F1007099A4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		501232B219BB73DF007099A4 /* APAVSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAVSessionController.h; sourceTree = "<group>"; };
 		501232B319BB73DF007099A4 /* APAVSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAVSessionController.m; sourceTree = "<group>"; };
+		5021C86A1ABF46F700A3034C /* APEventNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventNotification.h; sourceTree = "<group>"; };
+		5021C86B1ABF46F700A3034C /* APEventNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventNotification.m; sourceTree = "<group>"; };
 		503C92801A2C747A00ED06B5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		503C92821A2C788A00ED06B5 /* APEventAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventAnnotation.h; sourceTree = "<group>"; };
 		503C92831A2C788A00ED06B5 /* APEventAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventAnnotation.m; sourceTree = "<group>"; };
@@ -232,6 +237,10 @@
 		504CA3CD1940C04E003EF9EB /* ap_appicon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ap_appicon120.png; sourceTree = "<group>"; };
 		504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProBold.otf"; sourceTree = "<group>"; };
 		504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProLight.otf"; sourceTree = "<group>"; };
+		50529DBB1A9D1D6F00F89975 /* APEventDateAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventDateAddressView.h; sourceTree = "<group>"; };
+		50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventDateAddressView.m; sourceTree = "<group>"; };
+		5061AE4D1AB47A93008AA7AD /* APNewVenueController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APNewVenueController.h; sourceTree = "<group>"; };
+		5061AE4E1AB47A93008AA7AD /* APNewVenueController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APNewVenueController.m; sourceTree = "<group>"; };
 		50648A171A43364F0044A1BE /* APImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APImageCollectionViewCell.h; sourceTree = "<group>"; };
 		50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APImageCollectionViewCell.m; sourceTree = "<group>"; };
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
@@ -265,6 +274,8 @@
 		50C015E4196AC64600E9E26F /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
 		50C1E08D196704B900105E64 /* APValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APValueTransformer.h; sourceTree = "<group>"; };
 		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
+		50C214301A9675F4006E9D4D /* APSearchEventDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSearchEventDetailsViewController.h; sourceTree = "<group>"; };
+		50C214311A9675F4006E9D4D /* APSearchEventDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSearchEventDetailsViewController.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
 		50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventViewController.m; sourceTree = "<group>"; };
 		50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInviteFriendsViewController.h; sourceTree = "<group>"; };
@@ -291,8 +302,6 @@
 		50F64EA11952F40900E0B8DC /* APMyEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyEventsViewController.m; sourceTree = "<group>"; };
 		50F64EA21952F40900E0B8DC /* APMyEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyEventViewController.h; sourceTree = "<group>"; };
 		50F64EA31952F40900E0B8DC /* APMyEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyEventViewController.m; sourceTree = "<group>"; };
-		50F64EA51952F40900E0B8DC /* APMyEventUpdateLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyEventUpdateLocationViewController.h; sourceTree = "<group>"; };
-		50F64EA61952F40900E0B8DC /* APMyEventUpdateLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMyEventUpdateLocationViewController.m; sourceTree = "<group>"; };
 		50F64EA71952F40900E0B8DC /* APCameraOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCameraOverlayViewController.h; sourceTree = "<group>"; };
 		50F64EA81952F40900E0B8DC /* APCameraOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCameraOverlayViewController.m; sourceTree = "<group>"; };
 		50F64EA91952F40900E0B8DC /* APCameraOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APCameraOverlayViewController.xib; sourceTree = "<group>"; };
@@ -482,6 +491,8 @@
 				504CA34D194096C5003EF9EB /* APPhotoInfo.m */,
 				504CA34F194096CE003EF9EB /* APComment.h */,
 				504CA350194096CE003EF9EB /* APComment.m */,
+				5021C86A1ABF46F700A3034C /* APEventNotification.h */,
+				5021C86B1ABF46F700A3034C /* APEventNotification.m */,
 				504CA35219409898003EF9EB /* FSConverter.h */,
 				504CA35319409899003EF9EB /* FSConverter.m */,
 				504CA35419409899003EF9EB /* FSVenue.h */,
@@ -526,6 +537,8 @@
 				50F64EC71952F64800E0B8DC /* APSearchEventsViewController.m */,
 				50F64ECB1952F64800E0B8DC /* APSearchEventDetailViewController.h */,
 				50F64ECC1952F64800E0B8DC /* APSearchEventDetailViewController.m */,
+				50C214301A9675F4006E9D4D /* APSearchEventDetailsViewController.h */,
+				50C214311A9675F4006E9D4D /* APSearchEventDetailsViewController.m */,
 			);
 			name = NearbyEvents;
 			sourceTree = "<group>";
@@ -539,8 +552,6 @@
 				50F64EA31952F40900E0B8DC /* APMyEventViewController.m */,
 				50F64ED819531DF400E0B8DC /* APPhotoUploadQueue.h */,
 				50F64ED919531DF400E0B8DC /* APPhotoUploadQueue.m */,
-				50F64EA51952F40900E0B8DC /* APMyEventUpdateLocationViewController.h */,
-				50F64EA61952F40900E0B8DC /* APMyEventUpdateLocationViewController.m */,
 				50F64EA71952F40900E0B8DC /* APCameraOverlayViewController.h */,
 				50F64EA81952F40900E0B8DC /* APCameraOverlayViewController.m */,
 				501232B219BB73DF007099A4 /* APAVSessionController.h */,
@@ -579,6 +590,8 @@
 				509FE67A1A33A8A6003FFD3F /* APCreateEventTimeViewController.m */,
 				50F990B21A33B10500F3FF00 /* APCreateEventPasswordViewController.h */,
 				50F990B31A33B10500F3FF00 /* APCreateEventPasswordViewController.m */,
+				5061AE4D1AB47A93008AA7AD /* APNewVenueController.h */,
+				5061AE4E1AB47A93008AA7AD /* APNewVenueController.m */,
 			);
 			name = CreateEvent;
 			sourceTree = "<group>";
@@ -633,6 +646,8 @@
 				50DE658E1940D01100C27B84 /* APButton.m */,
 				50DE65901940D02500C27B84 /* APTextView.h */,
 				50DE65911940D02500C27B84 /* APTextView.m */,
+				50529DBB1A9D1D6F00F89975 /* APEventDateAddressView.h */,
+				50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */,
 				50A2005E19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.h */,
 				50A2005F19ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m */,
 				503C92821A2C788A00ED06B5 /* APEventAnnotation.h */,
@@ -957,18 +972,21 @@
 				504CA35D19409B87003EF9EB /* APUtil.m in Sources */,
 				C9AEB3BB19C4918B009915BF /* APSearchEventDescriptionTableViewCell.m in Sources */,
 				50F64EC21952F40900E0B8DC /* APStackedGridLayoutSection.m in Sources */,
+				5061AE4F1AB47A93008AA7AD /* APNewVenueController.m in Sources */,
 				509FE67B1A33A8A6003FFD3F /* APCreateEventTimeViewController.m in Sources */,
 				504CA351194096CE003EF9EB /* APComment.m in Sources */,
+				5021C86C1ABF46F700A3034C /* APEventNotification.m in Sources */,
 				504CA3751940B8F8003EF9EB /* APMainTabBarController.m in Sources */,
 				50F64EB91952F40900E0B8DC /* APMyEventViewController.m in Sources */,
-				50F64EBB1952F40900E0B8DC /* APMyEventUpdateLocationViewController.m in Sources */,
 				5048D4AA194A1D0F0092178E /* APConnectionManager.m in Sources */,
+				50C214321A9675F4006E9D4D /* APSearchEventDetailsViewController.m in Sources */,
 				50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */,
 				50C3AA93195F171D00A0297A /* APFindVenueTableViewController.m in Sources */,
 				C9F2B40B19CCD6B30027BC95 /* APSearchEventTableViewCellFactory.m in Sources */,
 				50F64EC01952F40900E0B8DC /* APPhotoViewController.m in Sources */,
 				504CA31A19408C82003EF9EB /* main.m in Sources */,
 				50DE65891940C76D00C27B84 /* APLabel.m in Sources */,
+				50529DBD1A9D1D6F00F89975 /* APEventDateAddressView.m in Sources */,
 				50F64ECF1952F64800E0B8DC /* APSearchEventTableViewCell.m in Sources */,
 				50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */,
 				50A2006019ABA6AA00CD8FA5 /* APMetadataPhotoOverlayView.m in Sources */,
@@ -1072,7 +1090,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: David Okun (ATL9M5R398)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1090,6 +1109,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "67923750-ae14-4aeb-be61-638d79f02f35";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1110,7 +1130,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: David Okun (ATL9M5R398)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1121,6 +1142,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PROVISIONING_PROFILE = "67923750-ae14-4aeb-be61-638d79f02f35";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1132,8 +1154,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: David Okun (ATL9M5R398)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1143,7 +1165,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9dcd93f8-c7eb-43ab-9c0f-b5ca2bc6c6de";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -1156,8 +1178,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: David Okun (ATL9M5R398)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1167,7 +1189,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9dcd93f8-c7eb-43ab-9c0f-b5ca2bc6c6de";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;

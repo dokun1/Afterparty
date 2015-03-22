@@ -20,4 +20,6 @@
 
 @property (weak, nonatomic) id<APEventTimeDelegate> delegate;
 
+- (void)setStartDate:(NSDate *)startDate endDate:(NSDate *)endDate;
+
 @end

@@ -10,18 +10,25 @@
 #import "APConstants.h"
 #import <pop/POP.h>
 #import "APCollectionViewGalleryFlowLayout.h"
+#import "APCreateEventViewController.h"
 
 @import AssetsLibrary;
 @import AVFoundation;
+@import MessageUI;
 
-@interface APMyEventViewController () <UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, CLLocationManagerDelegate, StackedGridLayoutDelegate, CaptureDelegate, UIAlertViewDelegate, UpdateLocationDelegate>
+@interface APMyEventViewController () <UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, CLLocationManagerDelegate, StackedGridLayoutDelegate, CaptureDelegate, UIAlertViewDelegate, VenueChoiceDelegate, MFMessageComposeViewControllerDelegate, CreateEventDelegate>
 
 @property (strong, nonatomic) AVCaptureSession  *session;
 
 @property (strong, nonatomic) NSString          *eventID;
 @property (strong, nonatomic) NSString          *eventName;
 @property (strong, nonatomic) NSDate            *deleteDate;
+@property (strong, nonatomic) NSString          *password;
 @property (strong, nonatomic) UIRefreshControl  *refreshControl;
+@property (copy, nonatomic) NSString            *eventCreatedUsername;
+@property (copy, nonatomic) NSData              *eventCoverImageData;
+
+@property (strong, nonatomic) APEvent           *currentEvent;
 
 @property (strong, nonatomic) NSArray           *photoMetadata;
 
@@ -79,10 +86,25 @@
           [SVProgressHUD showErrorWithStatus:@"could not get photos"];
       });
   }];
+    if (self.eventID) {
+        [self setCurrentEvent];
+    }
 }
 
-- (void)viewDidLoad
-{
+- (void)setCurrentEvent {
+    __weak APMyEventViewController *weakself = self;
+    [[APConnectionManager sharedManager] getEventForId:self.eventID success:^(APEvent *event) {
+        self.currentEvent = event;
+        self.currentEvent.eventImageData = self.eventCoverImageData;
+        [self setBarButtons];
+    } failure:^(NSError *error) {
+        if (error) { //error will be nil if there is no object to retrieve, so dont try again if there's just no object, but that would be weird anyway
+            [weakself setCurrentEvent];
+        }
+    }];
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpUI];
     [self setUpCountdown];
@@ -116,75 +138,137 @@
 
 -(void)setUpUI {
   
-  NSDictionary *eventInfo = [[self.eventDict allValues] firstObject];
-  self.eventID            = [[self.eventDict allKeys] firstObject];
-  self.eventName          = eventInfo[@"eventName"];
-  self.deleteDate         = eventInfo[@"deleteDate"];
-  self.eventLocation = [[CLLocation alloc] initWithLatitude:[eventInfo[@"eventLatitude"] doubleValue] longitude:[eventInfo[@"eventLongitude"] doubleValue]];
-  
-  self.manager = [[CLLocationManager alloc] init];
-  self.manager.delegate = self;
-  self.manager.distanceFilter = kCLDistanceFilterNone;
-  self.manager.desiredAccuracy = kCLLocationAccuracyBest;
-  
-  if ([[[PFUser currentUser] username] isEqualToString:eventInfo[@"createdByUsername"]]) {
-    self.shouldAskAboutMove = YES;
-  }
-  
-  self.selectedPhotos = nil;
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kQueueIsDoneUploading object:nil];
-  
-  self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
-  self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
-  self.view.backgroundColor = [UIColor afterpartyTealBlueColor];
-  [self.collectionView registerNib:[UINib nibWithNibName:@"APPhotoCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"APPhotoCell"];
+    NSDictionary *eventInfo = [[self.eventDict allValues] firstObject];
+    self.eventID            = [[self.eventDict allKeys] firstObject];
+    self.eventName          = eventInfo[@"eventName"];
+    self.deleteDate         = eventInfo[@"deleteDate"];
+    self.password           = eventInfo[@"eventPassword"];
+    self.eventCreatedUsername = eventInfo[@"createdByUsername"];
+    self.eventCoverImageData = eventInfo[@"eventImageData"];
+    self.eventLocation = [[CLLocation alloc] initWithLatitude:[eventInfo[@"eventLatitude"] doubleValue] longitude:[eventInfo[@"eventLongitude"] doubleValue]];
 
-  self.layout = [[APStackedGridLayout alloc] init];
-  [self.collectionView setCollectionViewLayout:self.layout];
+    self.manager = [[CLLocationManager alloc] init];
+    self.manager.delegate = self;
+    self.manager.distanceFilter = kCLDistanceFilterNone;
+    self.manager.desiredAccuracy = kCLLocationAccuracyBest;
   
-  self.isSavingBulk = NO;
-  
-  self.refreshControl = [[UIRefreshControl alloc] init];
-  self.refreshControl.tintColor = [UIColor afterpartyTealBlueColor];
-  [self.refreshControl addTarget:self action:@selector(refreshPhotos) forControlEvents:UIControlEventValueChanged];
-  [self.collectionView addSubview:self.refreshControl];
-  self.collectionView.alwaysBounceVertical = YES;
-  self.collectionView.backgroundColor = [UIColor afterpartyOffWhiteColor];
-  
-  CGRect frame = self.collectionView.frame;
-  frame.origin.y = frame.origin.y - 40;
-  self.collectionView.frame = frame;
-  
-  [self.photoButton addTarget:self action:@selector(photoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-  
-  self.title = self.eventName;
-  self.photoButton.enabled = YES;
-  
-  NSDateFormatter *df = [[NSDateFormatter alloc] init];
-  [df setDateFormat:@"MM/dd/yy hh:mm:ss a"];
-  NSString *formattedDate = [df stringFromDate:self.deleteDate];
+    if ([[[PFUser currentUser] username] isEqualToString:self.eventCreatedUsername]) {
+        self.shouldAskAboutMove = YES;
+    }
 
-  self.countdownLabel.text = formattedDate;
-  [self.countdownLabel styleForType:LabelTypeStandard];
+    self.selectedPhotos = nil;
 
-  self.eventEndsLabel.text = @"event ends in...";
-  [self.eventEndsLabel styleForType:LabelTypeStandard];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kQueueIsDoneUploading object:nil];
 
-  self.countdownLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
-  self.eventEndsLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
+    self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
+    self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
+    self.view.backgroundColor = [UIColor afterpartyTealBlueColor];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"APPhotoCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"APPhotoCell"];
+
+    self.layout = [[APStackedGridLayout alloc] init];
+    [self.collectionView setCollectionViewLayout:self.layout];
+
+    self.isSavingBulk = NO;
+
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor afterpartyTealBlueColor];
+    [self.refreshControl addTarget:self action:@selector(refreshPhotos) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
+    self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.backgroundColor = [UIColor afterpartyOffWhiteColor];
+
+    CGRect frame = self.collectionView.frame;
+    frame.origin.y = frame.origin.y - 40;
+    self.collectionView.frame = frame;
+
+    [self.photoButton addTarget:self action:@selector(photoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+
+    self.title = self.eventName;
+    self.photoButton.enabled = YES;
+
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"MM/dd/yy hh:mm:ss a"];
+    NSString *formattedDate = [df stringFromDate:self.deleteDate];
+
+    self.countdownLabel.text = formattedDate;
+    [self.countdownLabel styleForType:LabelTypeStandard];
+
+    self.eventEndsLabel.text = @"event ends in...";
+    [self.eventEndsLabel styleForType:LabelTypeStandard];
+
+    self.countdownLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
+    self.eventEndsLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
     self.countdownLabel.textColor = [UIColor whiteColor];
     self.eventEndsLabel.textColor = [UIColor whiteColor];
   
-  [self.manager startUpdatingLocation];
+    [self.manager startUpdatingLocation];
   
+    [self setBarButtons];
+  
+    self.photoMetadata = [[NSArray alloc] init];
+  
+    [self refreshPhotos];
+}
+
+- (void)setBarButtons {
     UIBarButtonItem *btnSelect = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonTapped)];
-  UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
-  [self.navigationItem setRightBarButtonItems:@[btnSelect, btnRefresh]];
-  
-  self.photoMetadata = [[NSArray alloc] init];
-  
-  [self refreshPhotos];
+    UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
+    if ([[[PFUser currentUser] username] isEqualToString:self.eventCreatedUsername] && self.currentEvent) {
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(editButtonTapped)];
+        [self.navigationItem setRightBarButtonItems:@[btnSelect, btnRefresh, editButton]];
+    } else {
+        [self.navigationItem setRightBarButtonItems:@[btnSelect, btnRefresh]];
+    }
+}
+
+#pragma mark - EditEventActions
+
+- (void)editButtonTapped {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Edit Event", @"Share Event", nil];
+    actionSheet.tag = 6969;
+    [actionSheet showInView:self.view.window];
+}
+
+- (void)shareEventSelected {
+    NSString *message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", self.eventID];
+    if (![[self.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.password];
+        message = [NSString stringWithFormat:@"%@%@", message, addOn];
+    }
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = self;
+    [messageController setBody:message];
+    
+    [self presentViewController:messageController animated:YES completion:nil];
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    switch (result) {
+        case MessageComposeResultCancelled:
+            [SVProgressHUD dismiss];
+            break;
+        case MessageComposeResultFailed:
+            [SVProgressHUD showErrorWithStatus:@"invitations failed"];
+            break;
+        case MessageComposeResultSent:
+            [SVProgressHUD showSuccessWithStatus:@"invitations sent"];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)editEventSelected {
+    NSLog(@"event edit selected");
+    [self performSegueWithIdentifier:kEditMyEventSegue sender:self.currentEvent];
+}
+
+#pragma mark - CreateEventDelegate methods
+
+- (void)controllerDidFinishEditing:(APCreateEventViewController *)controller withEventID:(NSString *)eventID {
+    //do i need this here? let's experiment.
 }
 
 
@@ -311,7 +395,7 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([[alertView title] isEqualToString:@"Keep the party going?"]) {
         if (buttonIndex == 1) {
-            APMyEventUpdateLocationViewController *vc = [[APMyEventUpdateLocationViewController alloc] initWithCurrentLocation:self.currentLocation forEventID:self.eventID];
+            APFindVenueTableViewController *vc = [[APFindVenueTableViewController alloc] init];
             vc.delegate = self;
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -320,10 +404,10 @@
 
 #pragma mark - UpdateLocationDelegate methods
 
--(void)venueSuccessfullyUpdated:(APVenue *)newVenue {
-    self.eventLocation = [[CLLocation alloc] initWithLatitude:newVenue.location.coordinate.latitude
-                                                        longitude:newVenue.location.coordinate.longitude];
-    [APUtil updateEventVenue:newVenue forEventID:self.eventID];
+- (void)controller:(APFindVenueTableViewController *)controller didChooseVenue:(APVenue *)venue {
+    self.eventLocation = [[CLLocation alloc] initWithLatitude:venue.location.coordinate.latitude
+                                                    longitude:venue.location.coordinate.longitude];
+    [APUtil updateEventVenue:venue forEventID:self.eventID];
     [self.navigationController popToViewController:self animated:YES];
 }
 
@@ -354,6 +438,19 @@
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet.tag == 6969) {
+        switch (buttonIndex) {
+            case 0:
+                [self editEventSelected];
+                break;
+            case 1:
+                [self shareEventSelected];
+                break;
+            case 2:
+            default:
+                break;
+        }
+    }
     if (actionSheet.tag == 9000) {
         if (buttonIndex == 0) {
             NSArray *reportedPhotos = [APUtil getReportedPhotoIDs];
@@ -579,7 +676,11 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
+    if ([segue.identifier isEqualToString:kEditMyEventSegue]) {
+        APCreateEventViewController *editVC = (APCreateEventViewController *)segue.destinationViewController;
+        editVC.delegate = self;
+        [editVC setEventForEditing:(APEvent *)sender];
+    }
 }
 
 #pragma mark - StackedGridLayoutDelegate Methods 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GYt-on-aUY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="GYt-on-aUY">
     <dependencies>
         <deployment version="2048" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -292,9 +292,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ozj-En-iDt" id="gQH-Nb-mol">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="51j-6s-3oY" kind="push" identifier="EventDetailSegue" id="vBY-ii-oKE"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -320,101 +317,37 @@
                     <connections>
                         <outlet property="mapView" destination="n8q-GM-G5s" id="7CI-ol-Lfn"/>
                         <outlet property="tableView" destination="fzd-G0-izC" id="8JY-fB-PV4"/>
+                        <segue destination="IGl-kd-ezc" kind="push" identifier="EventDetailSegue" id="oGq-0P-GaX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tp-ib-cPo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="559" y="-296"/>
+            <point key="canvasLocation" x="570" y="-296"/>
         </scene>
-        <!--Search Event Detail View Controller-->
-        <scene sceneID="Kex-vm-0OP">
+        <!--Search Event Details View Controller-->
+        <scene sceneID="Kcc-ao-YmZ">
             <objects>
-                <viewController id="51j-6s-3oY" customClass="APSearchEventDetailViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="IGl-kd-ezc" customClass="APSearchEventDetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="l6V-Lc-V8h"/>
-                        <viewControllerLayoutGuide type="bottom" id="830-Xk-RSe"/>
+                        <viewControllerLayoutGuide type="top" id="eL2-BH-Nnt"/>
+                        <viewControllerLayoutGuide type="bottom" id="xbZ-Sl-OAt"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KRE-Bb-ATr">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="esV-WG-m5P">
-                                <rect key="frame" x="0.0" y="64" width="320" height="170"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="170" id="J6M-fQ-iW0"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBq-um-TeV" customClass="APButton">
-                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Q6J-pB-eV2"/>
-                                </constraints>
-                                <state key="normal" title="JOIN US!!!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="eventJoinTapped:" destination="51j-6s-3oY" eventType="touchUpInside" id="W2k-on-GqC"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SNOWPOCALYPSE '14" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IE-jf-Jyj" customClass="APLabel">
-                                <rect key="frame" x="20" y="96" width="297" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="f9r-vM-WUo"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-Ej-r3Z">
-                                <rect key="frame" x="0.0" y="234" width="320" height="284"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
-                            </tableView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAUREN PERLOW'S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TH-5B-vsq" customClass="APLabel">
-                                <rect key="frame" x="20" y="71" width="297" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="EQ2-oP-L59"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="1TH-5B-vsq" secondAttribute="trailing" constant="-13" id="3ap-gG-vA7"/>
-                            <constraint firstItem="esV-WG-m5P" firstAttribute="trailing" secondItem="sD4-Ej-r3Z" secondAttribute="trailing" id="5Jr-qj-ajZ"/>
-                            <constraint firstItem="oBq-um-TeV" firstAttribute="top" secondItem="sD4-Ej-r3Z" secondAttribute="bottom" id="FE1-Wi-9qb"/>
-                            <constraint firstAttribute="trailing" secondItem="sD4-Ej-r3Z" secondAttribute="trailing" id="LcZ-1P-zc8"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="oBq-um-TeV" secondAttribute="leading" id="NIB-R0-K9a"/>
-                            <constraint firstAttribute="bottom" secondItem="oBq-um-TeV" secondAttribute="bottom" id="WoD-wY-zDQ"/>
-                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="top" secondItem="1TH-5B-vsq" secondAttribute="bottom" constant="5" id="XQr-PA-k8B"/>
-                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="trailing" secondItem="1TH-5B-vsq" secondAttribute="trailing" id="aY4-8M-2NX"/>
-                            <constraint firstItem="1TH-5B-vsq" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" constant="7" id="dSI-lz-zoI"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leading" id="hua-jF-UmM"/>
-                            <constraint firstItem="1TH-5B-vsq" firstAttribute="leading" secondItem="KRE-Bb-ATr" secondAttribute="leadingMargin" constant="4" id="kSL-Xl-JQF"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="trailing" secondItem="oBq-um-TeV" secondAttribute="trailing" id="nPA-EL-kb3"/>
-                            <constraint firstItem="9IE-jf-Jyj" firstAttribute="leading" secondItem="1TH-5B-vsq" secondAttribute="leading" id="npr-Zz-Bgl"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="leading" secondItem="esV-WG-m5P" secondAttribute="leading" id="uXL-5q-fCr"/>
-                            <constraint firstItem="sD4-Ej-r3Z" firstAttribute="top" secondItem="esV-WG-m5P" secondAttribute="bottom" id="uiB-oL-9eD"/>
-                            <constraint firstItem="esV-WG-m5P" firstAttribute="top" secondItem="l6V-Lc-V8h" secondAttribute="bottom" id="vqJ-Cf-X8G"/>
-                        </constraints>
+                    <view key="view" contentMode="scaleToFill" id="vhw-YK-H5F">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="qAq-4U-Ahn">
-                        <barButtonItem key="backBarButtonItem" title="BACK" id="0BE-cw-VAb"/>
-                    </navigationItem>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="Lzj-j2-Fz0"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="eventAuthorNameOnTopImage" destination="1TH-5B-vsq" id="Usa-Aq-i4c"/>
-                        <outlet property="eventDetailsTableView" destination="sD4-Ej-r3Z" id="W0v-FT-0uR"/>
-                        <outlet property="eventImageView" destination="esV-WG-m5P" id="OtB-Vn-AEP"/>
-                        <outlet property="eventJoinButton" destination="oBq-um-TeV" id="7DP-hh-HHf"/>
-                        <outlet property="eventTitleOnTopImage" destination="9IE-jf-Jyj" id="I8U-Lx-EQd"/>
-                        <segue destination="xba-d3-b1b" kind="push" identifier="EventDetailsGoToEventSegue" id="4mA-R2-d1K"/>
+                        <segue destination="bSh-UU-cpN" kind="push" identifier="editEventSegue" id="ykt-Ao-nhe"/>
+                        <segue destination="xba-d3-b1b" kind="push" identifier="EventDetailsGoToEventSegue" id="KHV-ht-fcI"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gcm-D7-Ud8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fNb-BJ-k2B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1057" y="-296"/>
+            <point key="canvasLocation" x="1082" y="-296"/>
         </scene>
         <!--CREATE EVENT-->
         <scene sceneID="kQ8-vB-zlS">
@@ -425,7 +358,7 @@
                         <viewControllerLayoutGuide type="bottom" id="5zY-dy-sta"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ugs-D1-Y5r">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -576,11 +509,30 @@
                         <outlet property="countdownLabel" destination="JwD-NB-8fK" id="8jx-AW-Rff"/>
                         <outlet property="eventEndsLabel" destination="8QQ-lv-iZN" id="Wfh-le-O6z"/>
                         <outlet property="photoButton" destination="oWq-WG-BpE" id="XzL-NB-CQt"/>
+                        <segue destination="bSh-UU-cpN" kind="push" identifier="editMyEventSegue" id="Gzm-d8-Nzg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nyr-rQ-g3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1583" y="-296"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="HV9-Xa-MFt">
+            <objects>
+                <viewController id="kWd-Qw-f8h" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jHZ-rt-Bl7"/>
+                        <viewControllerLayoutGuide type="bottom" id="0LN-W8-TzO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3XL-a3-KOQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fcP-X0-Y5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2120" y="-296"/>
         </scene>
         <!--SET TIME-->
         <scene sceneID="56v-nZ-Dxf">
@@ -662,7 +614,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="SET TIME" id="gtm-VW-DTS"/>
                     <connections>
-                        <outlet property="endTimePicker" destination="3sx-iW-Y9Z" id="sD7-9P-xA7"/>
+                        <outlet property="endDatePicker" destination="3sx-iW-Y9Z" id="b1n-LS-67H"/>
                         <outlet property="startDatePicker" destination="U2Z-p8-x3U" id="jUj-4g-Lvl"/>
                     </connections>
                 </tableViewController>
@@ -1117,6 +1069,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="f8i-cj-h7P"/>
+        <segue reference="KHV-ht-fcI"/>
+        <segue reference="Gzm-d8-Nzg"/>
     </inferredMetricsTieBreakers>
 </document>

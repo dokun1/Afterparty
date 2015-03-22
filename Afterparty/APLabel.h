@@ -10,19 +10,23 @@
 #import <TTTAttributedLabel/TTTAttributedLabel.h>
 
 typedef NS_ENUM(int, LabelType) {
-  LabelTypeTitle,
-  LabelTypeTableViewCellTitle,
-  LabelTypeTableViewCellAttribute,
-  LabelTypeButtonDefault,
-  LabelTypeStandard,
-  LabelTypeHeading,
-  LabelTypeLoginHeading,
-  LabelTypeSearchDetailTitle,
-  LabelTypeSearchDetailAttribute,
-  LabelTypeSearchDetailDescription,
-  LabelTypeCreateLabel,
-  LabelTypeFriendInvite,
-  LabelTypeFriendHeader
+    LabelTypeTitle,
+    LabelTypeTableViewCellTitle,
+    LabelTypeTableViewCellAttribute,
+    LabelTypeButtonDefault,
+    LabelTypeStandard,
+    LabelTypeHeading,
+    LabelTypeLoginHeading,
+    LabelTypeSearchDetailTitle,
+    LabelTypeSearchDetailAttribute,
+    LabelTypeSearchDetailDescription,
+    LabelTypeCreateLabel,
+    LabelTypeFriendInvite,
+    LabelTypeFriendHeader,
+    LabelTypeNearbyUsername,
+    LabelTypeNearbyBlurb,
+    LabelTypeNearbyDateView,
+    LabelTypeNearbyAddress
 };
 
 @interface APLabel : UILabel

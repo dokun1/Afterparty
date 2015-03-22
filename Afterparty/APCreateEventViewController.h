@@ -14,14 +14,15 @@
 @protocol CreateEventDelegate <NSObject>
 
 @optional
-- (void)controllerDidFinish:(APCreateEventViewController*)controller withEventID:(NSString*)eventID;
-
+- (void)controllerDidFinish:(APCreateEventViewController *)controller withEventID:(NSString*)eventID;
+- (void)controllerDidFinishEditing:(APCreateEventViewController *)controller withEventID:(NSString *)eventID;
 @end
 
 @interface APCreateEventViewController : UIViewController
 
--(id)initForNewEvent;
--(id)initForEditingWithEvent:(APEvent*)event;
+- (id)initForNewEvent;
+- (id)initForEditingWithEvent:(APEvent*)event;
+- (void)setEventForEditing:(APEvent *)event;
 
 @property (weak, nonatomic) id<CreateEventDelegate> delegate;
 
