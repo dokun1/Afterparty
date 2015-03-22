@@ -38,6 +38,7 @@
         _eventName         = parseObject[@"eventName"];
         APVenue *venue     = [APVenue new];
         venue.name         = parseObject[@"eventVenueName"];
+        venue.venueId      = parseObject[@"eventVenueID"];
         _eventVenue        = venue;
         _password          = parseObject[@"password"];
         _startDate         = parseObject[@"startDate"];

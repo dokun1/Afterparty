@@ -11,25 +11,40 @@
 @interface APCreateEventTimeViewController ()
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *startDatePicker;
-@property (weak, nonatomic) IBOutlet UIDatePicker *endTimePicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *endDatePicker;
+
+@property (copy, nonatomic) NSDate *startDate;
+@property (copy, nonatomic) NSDate *endDate;
 
 @end
 
 @implementation APCreateEventTimeViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.startDatePicker.minimumDate = [NSDate date];
-    self.endTimePicker.date = [[NSDate date] dateByAddingTimeInterval:60 * 60 * 4];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.endDatePicker.date = [[NSDate date] dateByAddingTimeInterval:60 * 60 * 4];
     
     UIBarButtonItem *btnSave = [[UIBarButtonItem alloc] initWithTitle:@"SAVE" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonTapped)];
     [self.navigationItem setRightBarButtonItems:@[btnSave]];
+    
+    if (self.startDate && self.endDate) {
+        self.startDatePicker.date = self.startDate;
+        self.endDatePicker.date = self.endDate;
+    } else {
+        self.startDatePicker.minimumDate = [NSDate date];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self datePickerUpdated:nil];
+}
+
+- (void)setStartDate:(NSDate *)startDate endDate:(NSDate *)endDate {
+    self.startDate = [NSDate date];
+    self.endDate = [NSDate date];
+    self.startDate = startDate;
+    self.endDate = endDate;
 }
 
 #pragma mark - Table view data source
@@ -44,7 +59,7 @@
 
 - (IBAction)datePickerUpdated:(id)sender {
     if ([self.delegate respondsToSelector:@selector(updateForStartTime:andEndTime:)]) {
-        [self.delegate updateForStartTime:self.startDatePicker.date andEndTime:self.endTimePicker.date];
+        [self.delegate updateForStartTime:self.startDatePicker.date andEndTime:self.endDatePicker.date];
     }
 }
 

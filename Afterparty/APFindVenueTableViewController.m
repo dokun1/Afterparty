@@ -13,9 +13,10 @@
 #import "UIColor+APColor.h"
 #import "APConstants.h"
 #import <UIKit+AFNetworking.h>
+#import "APNewVenueController.h"
 
 
-@interface APFindVenueTableViewController () <UISearchBarDelegate, CLLocationManagerDelegate>
+@interface APFindVenueTableViewController () <UISearchBarDelegate, CLLocationManagerDelegate, NewVenueDelegate>
 
 @property (strong, nonatomic) NSArray *venues;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -72,6 +73,10 @@
             [self.locationManager requestWhenInUseAuthorization];
         }
     }
+
+    //TODO: When you get your API ability to add venues, simply uncomment this, and the rest should work.
+//    UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewVenueTapped)];
+//    [self.navigationItem setRightBarButtonItem:btnAdd];
     
     [self.tableView setBackgroundColor:[UIColor afterpartyOffWhiteColor]];
     
@@ -93,10 +98,20 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)addNewVenueTapped {
+    APNewVenueController *vc = [[APNewVenueController alloc] init];
+    vc.delegate = self;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - NewVenueDelegate Methods
+
+- (void)controller:(APNewVenueController *)controller didCreateNewVenue:(APVenue *)newVenue {
+    
+}
+
+- (void)controllerDidCancel:(APNewVenueController *)controller {
+    
 }
 
 #pragma mark - LocationManagerDelegate Methods

@@ -85,12 +85,6 @@
     if ([self.currentEvent.createdByUsername isEqualToString:[PFUser currentUser].username]) {
         UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(editButtonTapped)];
         [self.navigationItem setRightBarButtonItem:editButton];
-//        self.editEventButton = [[APButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
-//        [self.editEventButton setTitle:@"EDIT EVENT" forState:UIControlStateNormal];
-//        [self.editEventButton addTarget:self action:@selector(editEventTapped) forControlEvents:UIControlEventTouchUpInside];
-//        [self.editEventButton style];
-//        [self.view addSubview:self.editEventButton];
-//        self.eventJoinButton.hidden = YES;
     }
 }
 

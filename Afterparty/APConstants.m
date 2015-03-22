@@ -17,6 +17,7 @@ NSString *const kNearbyEventDetailSegue = @"EventDetailSegue";
 NSString *const kNearbyEventGoToSegue = @"EventDetailsGoToEventSegue";
 NSString *const kCreateEventSegue = @"createEventSegue";
 NSString *const kEditEventSegue = @"editEventSegue";
+NSString *const kEditMyEventSegue = @"editMyEventSegue";
 NSString *const kSettingsProfileSegue = @"settingsProfileSegue";
 NSString *const kSettingsEventSegue = @"settingsEventSegue";
 NSString *const kSettingsSocialNetworkingSegue = @"settingsSocialNetworkingSegue";

@@ -13,6 +13,7 @@
 		50105674196AFA0C00D7F800 /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 50105670196AFA0C00D7F800 /* settingsTab.png */; };
 		501232B119BB70F1007099A4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501232B019BB70F1007099A4 /* AVFoundation.framework */; };
 		501232B419BB73DF007099A4 /* APAVSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 501232B319BB73DF007099A4 /* APAVSessionController.m */; };
+		5021C86C1ABF46F700A3034C /* APEventNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5021C86B1ABF46F700A3034C /* APEventNotification.m */; };
 		503C92811A2C747A00ED06B5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503C92801A2C747A00ED06B5 /* MapKit.framework */; };
 		503C92841A2C788A00ED06B5 /* APEventAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 503C92831A2C788A00ED06B5 /* APEventAnnotation.m */; };
 		5044E5691997FAF1003D5153 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5044E5681997FAF1003D5153 /* Images.xcassets */; };
@@ -61,6 +62,7 @@
 		504CA3D31940C05C003EF9EB /* Mostardesign-SofiaProBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D11940C05C003EF9EB /* Mostardesign-SofiaProBold.otf */; };
 		504CA3D41940C05C003EF9EB /* Mostardesign-SofiaProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */; };
 		50529DBD1A9D1D6F00F89975 /* APEventDateAddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */; };
+		5061AE4F1AB47A93008AA7AD /* APNewVenueController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5061AE4E1AB47A93008AA7AD /* APNewVenueController.m */; };
 		50648A1A1A43364F0044A1BE /* APImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */; };
 		508849E81955DE5E00B1CA5E /* sunRising.png in Resources */ = {isa = PBXBuildFile; fileRef = 508849E71955DE5E00B1CA5E /* sunRising.png */; };
 		508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 508849ED1958C49B00B1CA5E /* UIView+APViewAnimations.m */; };
@@ -147,6 +149,8 @@
 		501232B019BB70F1007099A4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		501232B219BB73DF007099A4 /* APAVSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAVSessionController.h; sourceTree = "<group>"; };
 		501232B319BB73DF007099A4 /* APAVSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAVSessionController.m; sourceTree = "<group>"; };
+		5021C86A1ABF46F700A3034C /* APEventNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventNotification.h; sourceTree = "<group>"; };
+		5021C86B1ABF46F700A3034C /* APEventNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventNotification.m; sourceTree = "<group>"; };
 		503C92801A2C747A00ED06B5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		503C92821A2C788A00ED06B5 /* APEventAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventAnnotation.h; sourceTree = "<group>"; };
 		503C92831A2C788A00ED06B5 /* APEventAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventAnnotation.m; sourceTree = "<group>"; };
@@ -235,6 +239,8 @@
 		504CA3D21940C05C003EF9EB /* Mostardesign-SofiaProLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mostardesign-SofiaProLight.otf"; sourceTree = "<group>"; };
 		50529DBB1A9D1D6F00F89975 /* APEventDateAddressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventDateAddressView.h; sourceTree = "<group>"; };
 		50529DBC1A9D1D6F00F89975 /* APEventDateAddressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventDateAddressView.m; sourceTree = "<group>"; };
+		5061AE4D1AB47A93008AA7AD /* APNewVenueController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APNewVenueController.h; sourceTree = "<group>"; };
+		5061AE4E1AB47A93008AA7AD /* APNewVenueController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APNewVenueController.m; sourceTree = "<group>"; };
 		50648A171A43364F0044A1BE /* APImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APImageCollectionViewCell.h; sourceTree = "<group>"; };
 		50648A181A43364F0044A1BE /* APImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APImageCollectionViewCell.m; sourceTree = "<group>"; };
 		508849E71955DE5E00B1CA5E /* sunRising.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunRising.png; sourceTree = "<group>"; };
@@ -485,6 +491,8 @@
 				504CA34D194096C5003EF9EB /* APPhotoInfo.m */,
 				504CA34F194096CE003EF9EB /* APComment.h */,
 				504CA350194096CE003EF9EB /* APComment.m */,
+				5021C86A1ABF46F700A3034C /* APEventNotification.h */,
+				5021C86B1ABF46F700A3034C /* APEventNotification.m */,
 				504CA35219409898003EF9EB /* FSConverter.h */,
 				504CA35319409899003EF9EB /* FSConverter.m */,
 				504CA35419409899003EF9EB /* FSVenue.h */,
@@ -582,6 +590,8 @@
 				509FE67A1A33A8A6003FFD3F /* APCreateEventTimeViewController.m */,
 				50F990B21A33B10500F3FF00 /* APCreateEventPasswordViewController.h */,
 				50F990B31A33B10500F3FF00 /* APCreateEventPasswordViewController.m */,
+				5061AE4D1AB47A93008AA7AD /* APNewVenueController.h */,
+				5061AE4E1AB47A93008AA7AD /* APNewVenueController.m */,
 			);
 			name = CreateEvent;
 			sourceTree = "<group>";
@@ -962,8 +972,10 @@
 				504CA35D19409B87003EF9EB /* APUtil.m in Sources */,
 				C9AEB3BB19C4918B009915BF /* APSearchEventDescriptionTableViewCell.m in Sources */,
 				50F64EC21952F40900E0B8DC /* APStackedGridLayoutSection.m in Sources */,
+				5061AE4F1AB47A93008AA7AD /* APNewVenueController.m in Sources */,
 				509FE67B1A33A8A6003FFD3F /* APCreateEventTimeViewController.m in Sources */,
 				504CA351194096CE003EF9EB /* APComment.m in Sources */,
+				5021C86C1ABF46F700A3034C /* APEventNotification.m in Sources */,
 				504CA3751940B8F8003EF9EB /* APMainTabBarController.m in Sources */,
 				50F64EB91952F40900E0B8DC /* APMyEventViewController.m in Sources */,
 				5048D4AA194A1D0F0092178E /* APConnectionManager.m in Sources */,
