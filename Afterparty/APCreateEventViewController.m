@@ -23,7 +23,7 @@
 #import "APCreateEventTimeViewController.h"
 #import "APCreateEventPasswordViewController.h"
 #import "APVenue.h"
-#import <DeeplinkSDK/DeeplinkSDK.h>
+#import <AppWordsSDK/AppWordsSDK.h>
 
 @import MessageUI;
 @import AddressBook;

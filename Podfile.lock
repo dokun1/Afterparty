@@ -20,11 +20,12 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AppWords (0.3.1)
   - Bolts (1.1.3)
   - Facebook-iOS-SDK (3.21.1):
     - Bolts (~> 1.0)
   - Foursquare-API-v2 (1.4.8)
-  - JazzHands (0.2.0)
+  - JazzHands (0.2.1)
   - Parse (1.6.0):
     - Bolts (~> 1.1.3)
   - ParseFacebookUtils (1.6.0):
@@ -36,6 +37,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - appwords
   - Foursquare-API-v2 (~> 1.4)
   - Jazzhands
   - Parse
@@ -46,10 +48,11 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
+  AppWords: 3e52f38b77142326c3ec40943462361f3c9beb64
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   Facebook-iOS-SDK: 18c26e86ab25c17854a2ee2a8f60562099c6600f
   Foursquare-API-v2: 6be0e2d5b4f0adde6d39a3ebcb38311f54bf9694
-  JazzHands: 700f8eed9e2b2dec07963fde59153dea3c194f85
+  JazzHands: ee1b38902bf63410a90b0bac789232b868c01052
   Parse: f15dfacd941ee8084a5decbef486da8b223c2810
   ParseFacebookUtils: 8d33da72678c4c03a3b94332179dc04548bbd268
   pop: 2f14a1ea61339767af9e66741b418c831b3844df

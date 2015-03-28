@@ -12,7 +12,7 @@
 #import "APConstants.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
-#import <DeeplinkSDK/DeeplinkSDK.h>
+#import <AppWordsSDK/AppWordsSDK.h>
 
 @implementation APAppDelegate
 
@@ -32,12 +32,14 @@
     [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
-    [[DeeplinkSDK sharedInstance] initializeWithApiKey:kDeeplinkApiKey andAppID:kDeeplinkAppID completion:^(NSError *error) {
-        [[DeeplinkSDK sharedInstance] getLinkWithKeywords:@"abcdefgh" completion:^(NSError *error, DLResultObject *result) {
-            NSLog(@"got a results");
-            NSLog(@"oh hey");
-        }];
+    
+    [[AppWordsSDK sharedInstance] initializeWithApiKey:kDeeplinkApiKey andAppID:kDeeplinkAppID completion:^(NSError *error) {
+        NSLog(@"testing");
     }];
+    
+//    [[AppWordsSDK sharedInstance] getLinkWithKeywords:@"afterparty" completion:^(NSError *error, DLMELink *deeplink) {
+//        NSLog(@"what is dis?");
+//    }];
 
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
   
