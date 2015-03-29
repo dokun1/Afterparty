@@ -53,7 +53,7 @@
         [application registerUserNotificationSettings:settings];
         [application registerForRemoteNotifications];
     } else {
-        NSLog(@"less than ios 8");
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert | UIUserNotificationTypeBadge)];
     }
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
@@ -66,11 +66,10 @@
     [currentInstallation setDeviceTokenFromData:deviceToken];
     currentInstallation.channels = @[@"global"];
     [currentInstallation saveInBackground];
-    
-    /* HOW AFTERPARTY HANDLES PUSH NOTIFICATIONS
-     
-     Whenever a user goes to an event, add the objectID of the event to the array of channels for this currentInstallation object. All push notifications will be sent via cloud code to a specific channel, being able to avoid having to query the service for all users with a certain installation or userID.
-     */
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"failing to register for push notifications!");
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {

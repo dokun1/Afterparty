@@ -479,7 +479,7 @@
                         NSData *imgData = [NSData dataWithContentsOfURL:photoInfo.photoURL];
                         UIImage *img = [UIImage imageWithData:imgData];
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self saveImageToCameraRoll:img];
+                            [APUtil saveImageToCameraRoll:img];
                             [SVProgressHUD showSuccessWithStatus:@"photo saved!"];
                         });
                         *stop = YES;
@@ -541,7 +541,7 @@
       NSData *imgData = [NSData dataWithContentsOfURL:photoInfo.photoURL];
       UIImage *img = [UIImage imageWithData:imgData];
       dispatch_async(dispatch_get_main_queue(), ^{
-        [self saveImageToCameraRoll:img];
+          [APUtil saveImageToCameraRoll:img];
       });
     }
     [self.selectedPhotos removeAllObjects];
@@ -558,53 +558,6 @@
         [cell setSelected:NO];
     }
 }
-
--(void)saveImageToCameraRoll:(UIImage*)image {
-  
-  ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-  NSString *albumName = @"Afterparty";
-  __block ALAssetsGroup* folder;
-  
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-    NSNumber *hasFolder = [[NSUserDefaults standardUserDefaults] objectForKey:@"hasFolder"];
-    if (![hasFolder boolValue]) {
-      [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-        folder = group;
-      } failureBlock:^(NSError *error) {
-      }];
-      hasFolder = [NSNumber numberWithBool:YES];
-      [[NSUserDefaults standardUserDefaults] setValue:hasFolder forKey:@"hasFolder"];
-      [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-      if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:albumName]) {
-        folder = group;
-        *stop = YES;
-      }
-    } failureBlock:^(NSError *error) {
-      [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-        folder = group;
-      } failureBlock:^(NSError *error) {
-      }];
-    }];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-      NSData *imageData = UIImagePNGRepresentation(image);
-      [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-        if (error.code == 0) {
-          [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-            [folder addAsset:asset];
-          } failureBlock:^(NSError *error) {
-          }];
-        }
-      }];
-    });
-  });
-}
-
-
-
 
 #pragma mark - CaptureDelegate Methods
 

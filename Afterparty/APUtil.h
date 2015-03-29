@@ -55,4 +55,6 @@
 
 + (void)removeNotificationsForEventID:(NSString *)eventID;
 
++ (void)saveImageToCameraRoll:(UIImage *)image;
+
 @end

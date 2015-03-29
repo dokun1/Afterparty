@@ -115,63 +115,16 @@
                 }
                 break;
             }
-            case 1:
-                [self saveImageToCameraRoll];
+            case 1:{
+                APImageCollectionViewCell *cell = (APImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndexPath.item inSection:0]];
+                UIImage *selectedImage = cell.imageView.image;
+                [APUtil saveImageToCameraRoll:selectedImage];
                 break;
+            }
             default:
                 break;
         }
     }
-}
-
-
--(void)saveImageToCameraRoll {
-    [PFAnalytics trackEvent:@"photoSaved"];
-    self.longPressed = NO;
-    
-    APImageCollectionViewCell *cell = (APImageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndexPath.item inSection:0]];
-    UIImage *selectedImage = cell.imageView.image;
-
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    NSString *albumName = @"Afterparty";
-    __block ALAssetsGroup* folder;
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSNumber *hasFolder = [[NSUserDefaults standardUserDefaults] objectForKey:@"hasFolder"];
-        if (![hasFolder boolValue]) {
-            [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-                folder = group;
-            } failureBlock:^(NSError *error) {
-            }];
-            hasFolder = [NSNumber numberWithBool:YES];
-            [[NSUserDefaults standardUserDefaults] setValue:hasFolder forKey:@"hasFolder"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-        [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-            if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:albumName]) {
-                folder = group;
-                *stop = YES;
-            }
-        } failureBlock:^(NSError *error) {
-            [library addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-                folder = group;
-            } failureBlock:^(NSError *error) {
-            }];
-        }];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSData *imageData = UIImagePNGRepresentation(selectedImage);
-            [library writeImageDataToSavedPhotosAlbum:imageData metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
-                if (error.code == 0) {
-                    [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-                        [folder addAsset:asset];
-                    } failureBlock:^(NSError *error) {
-                    }];
-                }
-            }];
-        });
-    });
 }
 
 #pragma mark - Cleanup
