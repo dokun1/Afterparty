@@ -320,6 +320,7 @@ static NSString *kMyEventsKey = @"myEventsArray";
             eventInfo[@"password"] = eventDict[@"password"] ?: eventDict[@"password"];
             NSDictionary *updatedEventDict = @{eventDict[@"objectId"]:eventInfo};
             APEvent *newEvent = [[APEvent alloc] initWithName:eventDict[@"eventName"] venue:nil password:eventInfo[@"password"] startDate:eventInfo[@"startDate"] endDate:eventInfo[@"endDate"] deleteDate:eventInfo[@"deleteDate"] createdByUsername:eventInfo[@"createdByUsername"] atLocation:CLLocationCoordinate2DMake([eventInfo[@"eventLatitude"] floatValue], [eventInfo[@"eventLongitude"] floatValue]) coverPhotoID:nil eventDescription:nil eventAddress:nil eventImage:nil eventUserPhotoURL:nil eventUserBlurb:nil];
+            newEvent.objectID = eventDict[@"objectId"];
             [self private_saveEventDictionaryToMyEvents:updatedEventDict eventObject:newEvent];
         });
     });

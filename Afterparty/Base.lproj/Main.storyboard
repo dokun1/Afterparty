@@ -253,7 +253,7 @@
         <!--NEARBY EVENTS-->
         <scene sceneID="P4a-cf-pIB">
             <objects>
-                <viewController id="a55-tB-CUx" customClass="APSearchEventsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NearbyEventsController" id="a55-tB-CUx" customClass="APSearchEventsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qPg-cn-uQg"/>
                         <viewControllerLayoutGuide type="bottom" id="C8r-oY-i2X"/>
@@ -515,24 +515,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nyr-rQ-g3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1583" y="-296"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="HV9-Xa-MFt">
-            <objects>
-                <viewController id="kWd-Qw-f8h" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jHZ-rt-Bl7"/>
-                        <viewControllerLayoutGuide type="bottom" id="0LN-W8-TzO"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3XL-a3-KOQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fcP-X0-Y5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2120" y="-296"/>
         </scene>
         <!--SET TIME-->
         <scene sceneID="56v-nZ-Dxf">
@@ -1069,7 +1051,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="IRp-cX-4ff"/>
-        <segue reference="f8i-cj-h7P"/>
+        <segue reference="ykt-Ao-nhe"/>
+        <segue reference="KHV-ht-fcI"/>
     </inferredMetricsTieBreakers>
 </document>
