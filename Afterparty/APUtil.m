@@ -275,16 +275,11 @@ static NSString *kMyEventsKey = @"myEventsArray";
                                 @"eventImageData": [event eventImageData],
                                 @"eventPassword": [event password] ?: [event password]};
     NSDictionary *eventDict = @{[event objectID]: eventInfo};
-    [self private_saveEventDictionaryToMyEvents:eventDict];
+    [self private_saveEventDictionaryToMyEvents:eventDict eventObject:event];
 }
 
-+ (void)private_saveEventDictionaryToMyEvents:(NSDictionary *)newEvent {
-    APEvent *newEventObject = [[APEvent alloc] init];
-    NSDictionary *eventInfo = newEvent.allValues.firstObject;
-    newEventObject.endDate = eventInfo[@"endDate"];
-    newEventObject.deleteDate = eventInfo[@"deleteDate"];
-    newEventObject.objectID = newEvent.allKeys.firstObject;
-    [self setNotificationsForEvent:newEventObject];
++ (void)private_saveEventDictionaryToMyEvents:(NSDictionary *)newEvent eventObject:(APEvent *)eventObject {
+    [self setNotificationsForEvent:eventObject];
     dispatch_async([self getBackgroundQueue], ^{
         [[self cacheLock] lock];
         NSMutableArray *myEventsArray = [[self loadSavedEvents] mutableCopy];
@@ -324,7 +319,8 @@ static NSString *kMyEventsKey = @"myEventsArray";
             eventInfo[@"createdByUsername"] = eventDict[@"createdByUsername"];
             eventInfo[@"password"] = eventDict[@"password"] ?: eventDict[@"password"];
             NSDictionary *updatedEventDict = @{eventDict[@"objectId"]:eventInfo};
-            [self private_saveEventDictionaryToMyEvents:updatedEventDict];
+            APEvent *newEvent = [[APEvent alloc] initWithName:eventDict[@"eventName"] venue:nil password:eventInfo[@"password"] startDate:eventInfo[@"startDate"] endDate:eventInfo[@"endDate"] deleteDate:eventInfo[@"deleteDate"] createdByUsername:eventInfo[@"createdByUsername"] atLocation:CLLocationCoordinate2DMake([eventInfo[@"eventLatitude"] floatValue], [eventInfo[@"eventLongitude"] floatValue]) coverPhotoID:nil eventDescription:nil eventAddress:nil eventImage:nil eventUserPhotoURL:nil eventUserBlurb:nil];
+            [self private_saveEventDictionaryToMyEvents:updatedEventDict eventObject:newEvent];
         });
     });
 }

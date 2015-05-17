@@ -47,6 +47,8 @@
     textField.font = [UIFont fontWithName:kRegularFont size:15.f];
     textField.textColor = [UIColor afterpartyBlackColor];
     textField.delegate = self;
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     textField.returnKeyType = [textField isEqual:self.passwordTextField] ? UIReturnKeyNext : UIReturnKeyDone;
     [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }

@@ -14,6 +14,7 @@
 - (UIImage*)imageRotatedByRadians:(CGFloat)radians;
 - (UIImage*)imageRotatedByDegrees:(CGFloat)degrees;
 - (UIImage*)imageSquareCrop:(UIImage*)original;
+- (UIImage *)rotate:(UIImageOrientation)orientation;
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @end

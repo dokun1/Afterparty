@@ -55,9 +55,9 @@
     
     self.navigationController.navigationBar.barTintColor = [UIColor afterpartyOffWhiteColor];
 
-  self.navigationController.delegate = self;
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveSearchNotification:) name:kSearchSpecificEventNotification object:nil];
+    self.navigationController.delegate = self;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveSearchNotification:) name:kSearchSpecificEventNotification object:nil];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl setTintColor:[UIColor afterpartyTealBlueColor]];
@@ -91,19 +91,15 @@
     self.venueAnnotations = [NSMutableArray array];
 }
 
-
-
 - (void)didReceiveSearchNotification:(NSNotification*)notification {
-  self.initialSearch = (NSString*)notification.object;
-  self.tabBarController.selectedIndex = 0;
-  [self searchForEventByID];
+    self.initialSearch = (NSString*)notification.object;
+    self.tabBarController.selectedIndex = 0;
+    [self searchForEventByID];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  if (!self.isLoading) {
+    [super viewDidAppear:animated];
     [self refreshEvents];
-  }
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         if ([PFUser currentUser] && ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse)) {
             [self.locationManager requestWhenInUseAuthorization];

@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet APButton           *cameraButton;
 @property (weak, nonatomic) IBOutlet UIView             *imagePreview;
 @property (weak, nonatomic) IBOutlet APCamPreviewView   *viewFinderView;
+@property (assign, nonatomic) BOOL                      isFrontCamera;
 
 @property (nonatomic, strong, readwrite) APAVSessionController *sessionController;
 
@@ -37,17 +38,7 @@
 
 @implementation APCameraOverlayViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -57,6 +48,8 @@
     [self.navigationController setNavigationBarHidden:YES];
 
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    self.isFrontCamera = NO;
     
     self.cameraFlipButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.cameraFlipButton setBackgroundColor:[UIColor clearColor]];
@@ -72,16 +65,16 @@
     [self.flashButton addTarget:self action:@selector(cameraFlashButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view insertSubview:self.flashButton belowSubview:self.cameraButton];
   
-  self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [self.cancelButton setBackgroundColor:[UIColor clearColor]];
-  [self.cancelButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
-  [self.cancelButton setFrame:CGRectMake(CGRectGetMidX(screenRect) - 20, self.buttonHeight, 40, 40)];
-  [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-  [self.view insertSubview:self.cancelButton belowSubview:self.cameraButton];
-  
-  [self.cameraFlipButton afterparty_translateToPoint:CGPointMake(60, self.buttonHeight + 20) expanding:YES delay:0.1 withCompletion:nil];
-  [self.flashButton afterparty_translateToPoint:CGPointMake(CGRectGetMaxX(screenRect) - 60, self.buttonHeight + 20) expanding:YES delay:0.2 withCompletion:nil];
-  [self.cancelButton afterparty_translateToPoint:CGPointMake(30, 30) expanding:YES delay:0.3 withCompletion:nil];
+    self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.cancelButton setBackgroundColor:[UIColor clearColor]];
+    [self.cancelButton setImage:[UIImage imageNamed:@"button_redCancel"] forState:UIControlStateNormal];
+    [self.cancelButton setFrame:CGRectMake(CGRectGetMidX(screenRect) - 20, self.buttonHeight, 40, 40)];
+    [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view insertSubview:self.cancelButton belowSubview:self.cameraButton];
+
+    [self.cameraFlipButton afterparty_translateToPoint:CGPointMake(60, self.buttonHeight + 20) expanding:YES delay:0.1 withCompletion:nil];
+    [self.flashButton afterparty_translateToPoint:CGPointMake(CGRectGetMaxX(screenRect) - 60, self.buttonHeight + 20) expanding:YES delay:0.2 withCompletion:nil];
+    [self.cancelButton afterparty_translateToPoint:CGPointMake(30, 30) expanding:YES delay:0.3 withCompletion:nil];
     
     self.sessionController = [[APAVSessionController alloc] initWithPreviewView:self.viewFinderView];
     self.sessionController.delegate = self;
@@ -89,16 +82,20 @@
 }
 
 # pragma mark - Actions
+
 -(void)cameraFlashButtonTapped {
-    [self.sessionController switchFlash];
+    if (!self.isFrontCamera) {
+        [self.sessionController switchFlash];
+    }
 }
 
 -(void)cameraFlipButtonTapped {
+    self.isFrontCamera = !self.isFrontCamera;
     [self.sessionController switchCamera];
 }
 
 - (void)cancelButtonTapped {
-  [self.delegate cameraControllerDidCancel:self];
+    [self.delegate cameraControllerDidCancel:self];
 }
 
 -(IBAction)cameraButtonTapped:(id)sender {
@@ -131,10 +128,14 @@
     default:
       break;
   }
-  
-  APImagePreviewViewController *vc = [[APImagePreviewViewController alloc] initWithImage:rotatedImage];
-  vc.delegate = self;
-  [self presentViewController:vc animated:NO completion:nil];
+    NSLog(@"image orientation %ld", (long)image.imageOrientation);
+    if (isFrontCamera) {
+        rotatedImage = [rotatedImage rotate:UIImageOrientationDownMirrored];
+        rotatedImage = [rotatedImage imageRotatedByDegrees:90];
+    }
+    APImagePreviewViewController *vc = [[APImagePreviewViewController alloc] initWithImage:rotatedImage];
+    vc.delegate = self;
+    [self presentViewController:vc animated:NO completion:nil];
 
 }
 

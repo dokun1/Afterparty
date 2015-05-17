@@ -11,6 +11,7 @@
 #import <ImageIO/ImageIO.h>
 #import <AssertMacros.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "UIImage+APImage.h"
 
 @class CIDetector;
 
@@ -172,7 +173,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 
 - (void)checkDeviceAuthorizationStatus {
 	NSString *mediaType = AVMediaTypeVideo;
-	
 	[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
 		if (granted) {
 			//Granted access to mediaType
@@ -257,7 +257,6 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 			if (imageDataSampleBuffer){
 				weakSelf.capturedImageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
 				UIImage *image = [[UIImage alloc] initWithData:weakSelf.capturedImageData];
-				[[[ALAssetsLibrary alloc] init] writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:nil];
                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(sessionDidReceivedImageData:forOrientation:)]) {
                     [weakSelf.delegate sessionDidReceivedImageData:weakSelf.capturedImageData
                                                     forOrientation:(AVCaptureVideoOrientation)[image imageOrientation]];

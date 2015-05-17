@@ -408,6 +408,9 @@
     self.eventLocation = [[CLLocation alloc] initWithLatitude:venue.location.coordinate.latitude
                                                     longitude:venue.location.coordinate.longitude];
     [APUtil updateEventVenue:venue forEventID:self.eventID];
+    [[APConnectionManager sharedManager] updateEventAfterEdit:self.currentEvent success:^() {} failure:^(NSError *error) {
+        NSLog(@"Some kind of error sending an update");
+    }];
     [self.navigationController popToViewController:self animated:YES];
 }
 
@@ -425,6 +428,7 @@
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    
 }
 
 #pragma mark - Long Press Methods

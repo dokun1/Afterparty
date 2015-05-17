@@ -72,12 +72,28 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     [self.twitterIconView setClipsToBounds:YES];
     self.facebookIconView.layer.cornerRadius = 5.0f;
     self.twitterIconView.layer.cornerRadius = 5.0f;
+    if ([self shouldPromptForEmail]) {
+        [[[UIAlertView alloc] initWithTitle:@"We want your email!" message:@"This is so we can help you if you ever need to recover your password, or we need to notify you of something." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self.emailTextField becomeFirstResponder];
+    } else {
+        if ([self shouldPromptForBlurb]) {
+            [[[UIAlertView alloc] initWithTitle:@"Give us a blurb!" message:@"No one likes a host without the most - give yourself a short description." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [self.blurbTextField becomeFirstResponder];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  [SVProgressHUD dismiss];
+    [super viewDidAppear:animated];
+    [SVProgressHUD dismiss];
+}
 
+- (BOOL)shouldPromptForEmail {
+    return [[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
+}
+
+- (BOOL)shouldPromptForBlurb {
+    return [[self.blurbTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
 }
 
 - (void)loadUserData {

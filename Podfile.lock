@@ -25,21 +25,21 @@ PODS:
     - Bolts (~> 1.0)
   - Foursquare-API-v2 (1.4.8)
   - ISO8601DateFormatter (0.7)
-  - JazzHands (0.2.0)
+  - JazzHands (0.2.1)
   - Parse (1.6.2):
     - Bolts (~> 1.1)
   - ParseFacebookUtils (1.6.2):
     - Facebook-iOS-SDK (~> 3.20)
     - Parse (~> 1.6.2)
   - pop (1.0.7)
-  - SVProgressHUD (HEAD based on 1.1.2)
+  - SVProgressHUD (HEAD based on 1.1.3)
   - TTTAttributedLabel (1.13.1)
 
 DEPENDENCIES:
   - AFNetworking
   - Foursquare-API-v2 (~> 1.4)
   - ISO8601DateFormatter
-  - Jazzhands
+  - JazzHands (~> 0.2)
   - Parse
   - ParseFacebookUtils
   - pop (~> 1.0)
@@ -47,16 +47,16 @@ DEPENDENCIES:
   - TTTAttributedLabel (~> 1.10)
 
 SPEC CHECKSUMS:
-  AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
-  Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
-  Facebook-iOS-SDK: 3d65f685348b789e46a9aacf92bfa85b60b63755
-  Foursquare-API-v2: 6be0e2d5b4f0adde6d39a3ebcb38311f54bf9694
-  ISO8601DateFormatter: 59731cd880cf87e71b4fa95f0d6b713dcbc4cbce
-  JazzHands: 700f8eed9e2b2dec07963fde59153dea3c194f85
-  Parse: 60d65108fe39da77ec16c9e51d74b4d296b21424
-  ParseFacebookUtils: 0b86cd67283c60d10e3ddc8427f989f5e60ebbd7
-  pop: 2f14a1ea61339767af9e66741b418c831b3844df
-  SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
-  TTTAttributedLabel: 71843ac4178e1ebd6b0950b54325146726a124ae
+  AFNetworking: 10e85a00bb0f475124e4ff2677bf15693b2c1523
+  Bolts: e431c88fd02115d4a34016c2100bbfa4d2d5b146
+  Facebook-iOS-SDK: fcb0fd5bcdb50f1fe9ce27bf6b8cdf1aa5b2b0ed
+  Foursquare-API-v2: dedba546a2048dc66dc444e9784fc5f9c27f81d9
+  ISO8601DateFormatter: ab926648eebe497f4d167c0fd083992f959f1274
+  JazzHands: d2343c3f2f9d70598d0cad8f521ce3893842a44a
+  Parse: 5d2c7c40c4c3791efd182355c0578fc92bbc3400
+  ParseFacebookUtils: 1743db2d2e5e0359dcd40ae8b53535abb79b272b
+  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  TTTAttributedLabel: 0a9e524c8d78301506c26affffc827429b833b25
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.3

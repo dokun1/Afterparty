@@ -58,4 +58,8 @@
     return self;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"\n%@%@%@%@%@%@%@%@%@%@%@", self.eventName, self.eventVenue.name, self.eventVenue.venueId, self.password, self.startDate, self.endDate, self.deleteDate, self.createdByUsername, self.eventDescription, self.eventAddress, self.attendees];
+}
+
 @end

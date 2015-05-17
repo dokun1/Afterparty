@@ -78,27 +78,27 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (void)styleUI {
-  [self.usernameLoginField styleForLogin];
-  [self.emailAddressLoginField styleForLogin];
-  [self.passwordLoginField styleForLogin];
-  [self.titleLabel styleForType:LabelTypeLoginHeading];
-  [self.facebookLoginButton style];
-  [self.twitterLoginButton style];
-  [self.signUpButton style];
-  [self.signUpCredentialsButton style];
-  [self.afterpartyLoginButton style];
-  [self.afterpartyCredentialsLoginButton style];
-  [self.goBackButton style];
+    [self.usernameLoginField styleForLogin];
+    [self.emailAddressLoginField styleForLogin];
+    [self.passwordLoginField styleForLogin];
+    [self.titleLabel styleForType:LabelTypeLoginHeading];
+    [self.facebookLoginButton style];
+    [self.twitterLoginButton style];
+    [self.signUpButton style];
+    [self.signUpCredentialsButton style];
+    [self.afterpartyLoginButton style];
+    [self.afterpartyCredentialsLoginButton style];
+    [self.goBackButton style];
     [self.forgotPasswordButton style];
-  self.signUpButton.backgroundColor = [UIColor clearColor];
-  self.signUpCredentialsButton.backgroundColor = [UIColor clearColor];
-  self.facebookLoginButton.backgroundColor = [UIColor clearColor];
-  self.twitterLoginButton.backgroundColor = [UIColor clearColor];
-  self.afterpartyLoginButton.backgroundColor = [UIColor clearColor];
+    self.signUpButton.backgroundColor = [UIColor clearColor];
+    self.signUpCredentialsButton.backgroundColor = [UIColor clearColor];
+    self.facebookLoginButton.backgroundColor = [UIColor clearColor];
+    self.twitterLoginButton.backgroundColor = [UIColor clearColor];
+    self.afterpartyLoginButton.backgroundColor = [UIColor clearColor];
     self.forgotPasswordButton.backgroundColor = [UIColor clearColor];
-  self.afterpartyCredentialsLoginButton.backgroundColor = [UIColor clearColor];
-  self.goBackButton.backgroundColor = [UIColor clearColor];
-  self.view.backgroundColor = [UIColor afterpartyLoginBackgroundColor];
+    self.afterpartyCredentialsLoginButton.backgroundColor = [UIColor clearColor];
+    self.goBackButton.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor afterpartyLoginBackgroundColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -283,17 +283,17 @@ typedef NS_ENUM(NSInteger, LoginState) {
 #pragma mark - IBAction Methods
 
 - (IBAction)loginCredentialsButtonTapped:(id)sender {
-  [SVProgressHUD show];
-  [self.usernameLoginField resignFirstResponder];
-  [self loginUser];
+    [SVProgressHUD show];
+    [self.usernameLoginField resignFirstResponder];
+    [self loginUser];
 }
 
 - (IBAction)signupButtonTapped:(id)sender {
-  [self fadeOutInitialSceneForLogin:NO];
+    [self fadeOutInitialSceneForLogin:NO];
 }
 
 - (IBAction)loginButtonTapped:(id)sender {
-  [self fadeOutInitialSceneForLogin:YES];
+    [self fadeOutInitialSceneForLogin:YES];
 }
 
 - (IBAction)signUpCredentialsButton:(id)sender {
@@ -432,7 +432,9 @@ typedef NS_ENUM(NSInteger, LoginState) {
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    [self loginCredentialsButtonTapped:nil];
+    if (textField == self.emailAddressLoginField && self.currentState == kAfterpartySignup) {
+        [self loginCredentialsButtonTapped:nil];
+    }
     return YES;
 }  
 @end
