@@ -98,6 +98,9 @@
 		50DE658C1940CE9F00C27B84 /* UIColor+APColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DE658B1940CE9F00C27B84 /* UIColor+APColor.m */; };
 		50DE658F1940D01100C27B84 /* APButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DE658E1940D01100C27B84 /* APButton.m */; };
 		50DE65921940D02500C27B84 /* APTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DE65911940D02500C27B84 /* APTextView.m */; };
+		50DF86191B19E48F001AC673 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50DF86181B19E48F001AC673 /* ImageIO.framework */; };
+		50DF861B1B19E495001AC673 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50DF861A1B19E495001AC673 /* AssetsLibrary.framework */; };
+		50DF861D1B19E802001AC673 /* button_blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 50DF861C1B19E802001AC673 /* button_blank.png */; };
 		50E0A9931A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E0A9921A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.m */; };
 		50F64EB81952F40900E0B8DC /* APMyEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA11952F40900E0B8DC /* APMyEventsViewController.m */; };
 		50F64EB91952F40900E0B8DC /* APMyEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F64EA31952F40900E0B8DC /* APMyEventViewController.m */; };
@@ -148,6 +151,7 @@
 		501232B019BB70F1007099A4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		501232B219BB73DF007099A4 /* APAVSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAVSessionController.h; sourceTree = "<group>"; };
 		501232B319BB73DF007099A4 /* APAVSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAVSessionController.m; sourceTree = "<group>"; };
+		501572781B0F67E200A51E00 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		5021C86A1ABF46F700A3034C /* APEventNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APEventNotification.h; sourceTree = "<group>"; };
 		5021C86B1ABF46F700A3034C /* APEventNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APEventNotification.m; sourceTree = "<group>"; };
 		503C92801A2C747A00ED06B5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -295,6 +299,9 @@
 		50DE658E1940D01100C27B84 /* APButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APButton.m; sourceTree = "<group>"; };
 		50DE65901940D02500C27B84 /* APTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTextView.h; sourceTree = "<group>"; };
 		50DE65911940D02500C27B84 /* APTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTextView.m; sourceTree = "<group>"; };
+		50DF86181B19E48F001AC673 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		50DF861A1B19E495001AC673 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		50DF861C1B19E802001AC673 /* button_blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_blank.png; sourceTree = "<group>"; };
 		50E0A9911A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCollectionViewGalleryFlowLayout.h; sourceTree = "<group>"; };
 		50E0A9921A4ADEF70091B64F /* APCollectionViewGalleryFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCollectionViewGalleryFlowLayout.m; sourceTree = "<group>"; };
 		50F64EA01952F40900E0B8DC /* APMyEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMyEventsViewController.h; sourceTree = "<group>"; };
@@ -353,6 +360,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50DF861B1B19E495001AC673 /* AssetsLibrary.framework in Frameworks */,
+				50DF86191B19E48F001AC673 /* ImageIO.framework in Frameworks */,
 				503C92811A2C747A00ED06B5 /* MapKit.framework in Frameworks */,
 				509F18CE1A2BB60B00C37742 /* Accounts.framework in Frameworks */,
 				509F18CC1A2BB60400C37742 /* Social.framework in Frameworks */,
@@ -411,6 +420,8 @@
 		504CA30C19408C82003EF9EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50DF861A1B19E495001AC673 /* AssetsLibrary.framework */,
+				50DF86181B19E48F001AC673 /* ImageIO.framework */,
 				503C92801A2C747A00ED06B5 /* MapKit.framework */,
 				509F18CD1A2BB60B00C37742 /* Accounts.framework */,
 				509F18CB1A2BB60400C37742 /* Social.framework */,
@@ -679,6 +690,7 @@
 				504CA3911940C029003EF9EB /* 19.jpg */,
 				504CA3921940C029003EF9EB /* 20.png */,
 				504CA3A71940C035003EF9EB /* button_camera.png */,
+				50DF861C1B19E802001AC673 /* button_blank.png */,
 				504CA3A81940C035003EF9EB /* button_flashauto.png */,
 				504CA3A91940C035003EF9EB /* button_flashoff.png */,
 				504CA3AA1940C035003EF9EB /* button_flashon.png */,
@@ -837,6 +849,7 @@
 				5044E5691997FAF1003D5153 /* Images.xcassets in Resources */,
 				50F64EC51952F40900E0B8DC /* APPhotoCell.xib in Resources */,
 				504CA3B81940C035003EF9EB /* button_frontfacingcamera.png in Resources */,
+				50DF861D1B19E802001AC673 /* button_blank.png in Resources */,
 				504CA3BF1940C035003EF9EB /* icon_lock.png in Resources */,
 				50105674196AFA0C00D7F800 /* settingsTab.png in Resources */,
 				504CA3D01940C04E003EF9EB /* ap_appicon120.png in Resources */,
@@ -1038,6 +1051,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				504CA32019408C82003EF9EB /* Base */,
+				501572781B0F67E200A51E00 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1133,8 +1147,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Afterparty, LLC (5NLKGYN885)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Afterparty, LLC (5NLKGYN885)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (VDU94QGZ8Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: David Okun (VDU94QGZ8Q)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1144,7 +1158,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6d0669c1-1f0c-498c-a026-015e97d7c0d9";
+				PROVISIONING_PROFILE = "3ef06374-b720-4dfc-972c-92884b48b051";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -1157,8 +1171,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Afterparty, LLC (5NLKGYN885)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Afterparty, LLC (5NLKGYN885)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: David Okun (VDU94QGZ8Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: David Okun (VDU94QGZ8Q)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1168,7 +1182,7 @@
 				INFOPLIST_FILE = "Afterparty/Afterparty-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6d0669c1-1f0c-498c-a026-015e97d7c0d9";
+				PROVISIONING_PROFILE = "3ef06374-b720-4dfc-972c-92884b48b051";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;

@@ -74,7 +74,6 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"push notification user info: %@", userInfo);
     if (userInfo[@"eventObject"]) {
         [APUtil updateEventFromPushNotification:userInfo];
     }

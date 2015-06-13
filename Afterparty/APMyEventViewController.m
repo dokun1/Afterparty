@@ -261,7 +261,6 @@
 }
 
 - (void)editEventSelected {
-    NSLog(@"event edit selected");
     [self performSegueWithIdentifier:kEditMyEventSegue sender:self.currentEvent];
 }
 
@@ -513,18 +512,19 @@
 
 - (void)photoButtonTapped {
     if (self.isSavingBulk) {
-      if (self.selectedPhotos && self.selectedPhotos.count > 0) {
-        [self saveBulkPhotos];
-        [SVProgressHUD showWithStatus:@"saving photos..."];
-      }
-        [self cancelButtonTapped];
-
-    }else{
-        if (self.canTakePhoto) {
+        if (self.selectedPhotos && self.selectedPhotos.count > 0) {
+          [self saveBulkPhotos];
+          [SVProgressHUD showWithStatus:@"saving photos..."];
+        }
+    [self cancelButtonTapped];
+    } else {
+#warning remove for checking location
+//        if (self.canTakePhoto) {
             if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES){
-                APCameraOverlayViewController *vc = [[APCameraOverlayViewController alloc] init];
-                vc.delegate = self;
-                [self.navigationController pushViewController:vc animated:NO];
+                APCameraOverlayViewController *controller=  [[APCameraOverlayViewController alloc] init];
+                controller.delegate = self;
+                controller.eventDict = self.eventDict;
+                [self.navigationController pushViewController:controller animated:NO];
             }else{
                 // Device has no camera
                 NSUInteger randNum = arc4random_uniform(7) + 1;
@@ -533,8 +533,9 @@
 
                 [self uploadImage:image];
             }
-        }else
-            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a half mile of the party center to contribute. Try moving closer!"];
+//        } else {
+//            [UIAlertView showSimpleAlertWithTitle:@"Too Far Away" andMessage:@"You must be within a half mile of the party center to contribute. Try moving closer!"];
+//        }
     }
 }
 

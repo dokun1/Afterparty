@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APEvent.h"
 
 @class APCameraOverlayViewController;
 
@@ -20,5 +21,6 @@
 @interface APCameraOverlayViewController : UIViewController
 
 @property (weak, nonatomic) id <CaptureDelegate> delegate;
+@property (strong, nonatomic) NSDictionary *eventDict;
 
 @end

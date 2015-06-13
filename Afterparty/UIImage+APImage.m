@@ -7,6 +7,7 @@
 //
 
 #import "UIImage+APImage.h"
+#import "APUtil.h"
 
 CGFloat degreesToRadians(CGFloat degrees) {
     return degrees * M_PI / 180;
@@ -201,6 +202,25 @@ static CGRect swapWidthAndHeight(CGRect rect)
     UIGraphicsEndImageContext();
     
     return copy;
+}
+
+- (BOOL)checkImageOKForSubmissionToEvent:(NSDictionary *)eventDict metadataDictionary:(NSDictionary *)metadataDictionary {
+    NSDictionary *gpsDictionary = metadataDictionary[@"{GPS}"];
+    if (!gpsDictionary) {
+        return NO;
+    }
+    NSDictionary *tiffDictionary = metadataDictionary[@"{TIFF}"];
+    if (!tiffDictionary) {
+        return NO;
+    }
+    NSDate *photoDate = [APUtil getDateFromEXIFDateString:tiffDictionary[@"DateTime"]];
+    NSDictionary *innerDict = eventDict.allValues.firstObject;
+    NSComparisonResult startComparisonResult = [photoDate compare:innerDict[@"startDate"]];
+    NSComparisonResult endComparisonResult = [photoDate compare:innerDict[@"endDate"]];
+    CLLocation *photoLocation = [[CLLocation alloc] initWithLatitude:[gpsDictionary[@"Latitude"] floatValue] longitude:[gpsDictionary[@"Longitude"] floatValue]];
+    CLLocationDistance meters = [photoLocation distanceFromLocation:[[CLLocation alloc] initWithLatitude:[innerDict[@"eventLatitude"] floatValue] longitude:[innerDict[@"eventLongitude"] floatValue]]];
+    NSLog(@"save photo stats:\ndistance from party: %f\nstart time: %@\ntime of photo: %@\nend time: %@", meters, innerDict[@"startDate"], photoDate, innerDict[@"endDate"]);
+    return (meters <= 850 && startComparisonResult == NSOrderedDescending && endComparisonResult == NSOrderedAscending);
 }
 
 @end

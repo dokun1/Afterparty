@@ -343,12 +343,12 @@ static NSString *kMyEventsKey = @"myEventsArray";
     }];
 }
 
-+ (NSString*)getVersion {
++ (NSString *)getVersion {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 
 }
 
-+(BOOL)shouldDownloadNewVersion { // should only call on background thread
++ (BOOL)shouldDownloadNewVersion { // should only call on background thread
     if ([NSThread isMainThread])
         return NO;
     
@@ -366,7 +366,7 @@ static NSString *kMyEventsKey = @"myEventsArray";
     return NO;
 }
 
-+(NSString *) genRandIdString {
++ (NSString *) genRandIdString {
     NSMutableString *randomString = [NSMutableString stringWithCapacity:8];
     
     for (int i=0; i<8; i++) {
@@ -400,6 +400,18 @@ static NSString *kMyEventsKey = @"myEventsArray";
     return date;
 }
 
++ (NSDate *)formatEXIFDate:(NSString *)dateString {
+    static NSDateFormatter *df = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss zz"];
+    });
+    
+    NSDate *date = [df dateFromString:dateString];
+    return date;
+}
+
 + (NSString *)formatDateForEventCreationScreen:(NSDate*)date {
     static NSDateFormatter *df = nil;
     static dispatch_once_t onceToken;
@@ -410,6 +422,16 @@ static NSString *kMyEventsKey = @"myEventsArray";
 
     NSString *dateString = [df stringFromDate:date];
     return dateString;
+}
+
++ (NSDate *)getDateFromEXIFDateString:(NSString *)EXIFDate {
+    static NSDateFormatter *df = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    });
+    return [df dateFromString:EXIFDate];
 }
 
 + (dispatch_queue_t)getBackgroundQueue {

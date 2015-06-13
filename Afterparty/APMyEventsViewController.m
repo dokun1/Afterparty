@@ -136,20 +136,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *eventDict = self.events[indexPath.row];
-    NSDictionary *eventInfo = [eventDict allValues].firstObject;
-    NSDate *deleteDate = [eventInfo objectForKey:@"deleteDate"];
-    NSComparisonResult result = [deleteDate compare:[NSDate date]];
-    switch (result){
-        case NSOrderedAscending:
-          [UIAlertView showSimpleAlertWithTitle:@"Error" andMessage:[NSString stringWithFormat:@"Sorry, %@ has ended.", [eventInfo objectForKey:@"eventName"]]];
-          break;
-        case NSOrderedSame:
-          [UIAlertView showSimpleAlertWithTitle:@"Error" andMessage:[NSString stringWithFormat:@"Sorry, %@ has ended.", [eventInfo objectForKey:@"eventName"]]];
-          break;
-        case NSOrderedDescending:{
-          [self performSegueWithIdentifier:kMyEventSelectedSegue sender:eventDict];
-          break;
-        }
+    NSDictionary *eventInfo = eventDict.allValues.firstObject;
+    NSDate *deleteDate = eventInfo[@"deleteDate"];
+    if ([deleteDate compare:[NSDate date]] == NSOrderedDescending) {
+        [self performSegueWithIdentifier:kMyEventSelectedSegue sender:eventDict];
+    } else {
+        [UIAlertView showSimpleAlertWithTitle:@"Error" andMessage:[NSString stringWithFormat:@"Sorry, %@ has ended.", eventInfo[@"eventName"]]];
     }
     [self.tableView reloadData];
 }
@@ -157,14 +149,14 @@
 #pragma mark - Navigation
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  if ([[segue identifier] isEqualToString:kMyEventSelectedSegue]) {
-    APMyEventViewController *vc = (APMyEventViewController*)segue.destinationViewController;
-    vc.eventDict = sender;
-    vc.hidesBottomBarWhenPushed = YES;
-  } else if ([segue.identifier isEqualToString:kCreateEventSegue]) {
-    APCreateEventViewController *controller = (APCreateEventViewController*)segue.destinationViewController;
-    controller.delegate = self;
-  }
+    if ([segue.identifier isEqualToString:kMyEventSelectedSegue]) {
+        APMyEventViewController *controller = (APMyEventViewController *)segue.destinationViewController;
+        controller.eventDict = sender;
+        controller.hidesBottomBarWhenPushed = YES;
+    } else if ([segue.identifier isEqualToString:kCreateEventSegue]) {
+        APCreateEventViewController *controller = (APCreateEventViewController *)segue.destinationViewController;
+        controller.delegate = self;
+    }
 }
 
 #pragma mark - CreateEventDelegate Methods

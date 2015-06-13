@@ -30,13 +30,10 @@
 
     currentOrigin.y = self.height;
     
-    NSInteger numberOfColumns = [self.myDelegate collectionView:self.collectionView
-                                                     layout:self
-                                   numberOfColumnsInSection:0];
+    NSInteger numberOfColumns = [self.myDelegate collectionView:self.collectionView layout:self numberOfColumnsInSection:0];
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
     
-    UIEdgeInsets itemInsets = [self.myDelegate collectionView:self.collectionView
-                                                   layout:self itemInsetsForSectionAtIndex:0];
+    UIEdgeInsets itemInsets = [self.myDelegate collectionView:self.collectionView layout:self itemInsetsForSectionAtIndex:0];
     
     APStackedGridLayoutSection *section = [[APStackedGridLayoutSection alloc] initWithOrigin:currentOrigin width:self.collectionView.bounds.size.width columns:numberOfColumns itemInsets:itemInsets];
     

@@ -1,0 +1,138 @@
+
+/* Class = "UILabel"; text = "Oops, they don't match! Please re-enter."; ObjectID = "2fM-S6-rRK"; */
+"2fM-S6-rRK.text" = "Oops, they don't match! Please re-enter.";
+
+/* Class = "UITextField"; placeholder = "emailaddressgoeshere"; ObjectID = "4Cc-Kf-kND"; */
+"4Cc-Kf-kND.placeholder" = "emailaddressgoeshere";
+
+/* Class = "UIButton"; normalTitle = "sign up"; ObjectID = "50v-qg-cIH"; */
+"50v-qg-cIH.normalTitle" = "sign up";
+
+/* Class = "UIButton"; normalTitle = "log in with facebook"; ObjectID = "5gV-1Q-Oq9"; */
+"5gV-1Q-Oq9.normalTitle" = "log in with facebook";
+
+/* Class = "UITextField"; placeholder = "email address"; ObjectID = "6Sp-RQ-4mj"; */
+"6Sp-RQ-4mj.placeholder" = "email address";
+
+/* Class = "UITabBarItem"; title = "Profile"; ObjectID = "7D0-bd-nVL"; */
+"7D0-bd-nVL.title" = "Profile";
+
+/* Class = "UINavigationItem"; title = "MY EVENTS"; ObjectID = "7sT-gV-F6b"; */
+"7sT-gV-F6b.title" = "MY EVENTS";
+
+/* Class = "UILabel"; text = "eventEndsInText"; ObjectID = "8QQ-lv-iZN"; */
+"8QQ-lv-iZN.text" = "eventEndsInText";
+
+/* Class = "UITabBarItem"; title = "Nearby"; ObjectID = "8n6-fJ-Ki3"; */
+"8n6-fJ-Ki3.title" = "Nearby";
+
+/* Class = "UILabel"; text = "A private event needs a password, yes?"; ObjectID = "9Ik-ZW-PbE"; */
+"9Ik-ZW-PbE.text" = "A private event needs a password, yes?";
+
+/* Class = "UITableViewSection"; headerTitle = "END TIME"; ObjectID = "9ef-J2-gBJ"; */
+"9ef-J2-gBJ.headerTitle" = "END TIME";
+
+/* Class = "UILabel"; text = "email"; ObjectID = "BYH-Hn-W8j"; */
+"BYH-Hn-W8j.text" = "email";
+
+/* Class = "UIButton"; normalTitle = "sign up"; ObjectID = "DIE-86-aEd"; */
+"DIE-86-aEd.normalTitle" = "sign up";
+
+/* Class = "UITextField"; placeholder = "username"; ObjectID = "FvC-RK-i5J"; */
+"FvC-RK-i5J.placeholder" = "username";
+
+/* Class = "UILabel"; text = "countdownTimerGoesHere"; ObjectID = "JwD-NB-8fK"; */
+"JwD-NB-8fK.text" = "countdownTimerGoesHere";
+
+/* Class = "UINavigationItem"; title = "CREATE EVENT"; ObjectID = "M8O-6a-saT"; */
+"M8O-6a-saT.title" = "CREATE EVENT";
+
+/* Class = "UILabel"; text = "blurb"; ObjectID = "MQ4-Et-loc"; */
+"MQ4-Et-loc.text" = "blurb";
+
+/* Class = "UILabel"; text = "website"; ObjectID = "MnF-se-7wg"; */
+"MnF-se-7wg.text" = "website";
+
+/* Class = "UILabel"; text = "welcome to afterparty"; ObjectID = "Mqu-ij-De7"; */
+"Mqu-ij-De7.text" = "welcome to afterparty";
+
+/* Class = "UINavigationItem"; title = "WHAT'S NEW"; ObjectID = "N7h-Ir-cRA"; */
+"N7h-Ir-cRA.title" = "WHAT'S NEW";
+
+/* Class = "UIButton"; normalTitle = "forgot password?"; ObjectID = "Ou5-03-jRb"; */
+"Ou5-03-jRb.normalTitle" = "forgot password?";
+
+/* Class = "UILabel"; text = "v. xx.xx.xx.xx.xx.xx.xx.xx.xx"; ObjectID = "QK5-F1-lSN"; */
+"QK5-F1-lSN.text" = "v. xx.xx.xx.xx.xx.xx.xx.xx.xx";
+
+/* Class = "UINavigationItem"; title = "NEARBY EVENTS"; ObjectID = "R0m-lk-SjP"; */
+"R0m-lk-SjP.title" = "NEARBY EVENTS";
+
+/* Class = "UINavigationItem"; title = "CREATE PASSWORD"; ObjectID = "Sz7-Hx-sHi"; */
+"Sz7-Hx-sHi.title" = "CREATE PASSWORD";
+
+/* Class = "UIButton"; normalTitle = "go back"; ObjectID = "TYY-dO-I1B"; */
+"TYY-dO-I1B.normalTitle" = "go back";
+
+/* Class = "UINavigationItem"; title = "PROFILE"; ObjectID = "VNE-TV-G1U"; */
+"VNE-TV-G1U.title" = "PROFILE";
+
+/* Class = "UILabel"; text = "link to facebook"; ObjectID = "XBx-R5-2QP"; */
+"XBx-R5-2QP.text" = "link to facebook";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "XbL-oA-Ukd"; */
+"XbL-oA-Ukd.placeholder" = "password";
+
+/* Class = "UILabel"; text = "usernamegoeshereandhere"; ObjectID = "XgU-lw-Gev"; */
+"XgU-lw-Gev.text" = "usernamegoeshereandhere";
+
+/* Class = "UILabel"; text = "terms & conditions"; ObjectID = "Yu1-qP-7ox"; */
+"Yu1-qP-7ox.text" = "terms & conditions";
+
+/* Class = "UITableViewSection"; headerTitle = "START TIME"; ObjectID = "ZoV-RS-i06"; */
+"ZoV-RS-i06.headerTitle" = "START TIME";
+
+/* Class = "UIButton"; normalTitle = "log in"; ObjectID = "Zta-tz-FGH"; */
+"Zta-tz-FGH.normalTitle" = "log in";
+
+/* Class = "UITextField"; placeholder = "confirm it here"; ObjectID = "bVp-D7-UfN"; */
+"bVp-D7-UfN.placeholder" = "confirm it here";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "d4E-hq-ha7"; */
+"d4E-hq-ha7.placeholder" = "password";
+
+/* Class = "UINavigationItem"; title = "SET TIME"; ObjectID = "gtm-VW-DTS"; */
+"gtm-VW-DTS.title" = "SET TIME";
+
+/* Class = "UILabel"; text = "current version:"; ObjectID = "hKK-ZU-jDS"; */
+"hKK-ZU-jDS.text" = "current version:";
+
+/* Class = "UILabel"; text = "show intro screen"; ObjectID = "hL2-A2-uVQ"; */
+"hL2-A2-uVQ.text" = "show intro screen";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "lpv-Ag-8eS"; */
+"lpv-Ag-8eS.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "UILabel"; text = "When your friends join the event, they will have to type in this password to gain full access. Don't forget to let them know!"; ObjectID = "mSb-0E-2Sy"; */
+"mSb-0E-2Sy.text" = "When your friends join the event, they will have to type in this password to gain full access. Don't forget to let them know!";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "oWq-WG-BpE"; */
+"oWq-WG-BpE.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "link to twitter"; ObjectID = "qT0-V8-F2t"; */
+"qT0-V8-F2t.text" = "link to twitter";
+
+/* Class = "UILabel"; text = "sign out"; ObjectID = "rAZ-qN-Xea"; */
+"rAZ-qN-Xea.text" = "sign out";
+
+/* Class = "UIButton"; normalTitle = "log in with twitter"; ObjectID = "slL-Ly-2bT"; */
+"slL-Ly-2bT.normalTitle" = "log in with twitter";
+
+/* Class = "UITextField"; placeholder = "blurbgoeshere"; ObjectID = "tFq-CK-1FJ"; */
+"tFq-CK-1FJ.placeholder" = "blurbgoeshere";
+
+/* Class = "UIButton"; normalTitle = "log in"; ObjectID = "vNo-Gm-cKi"; */
+"vNo-Gm-cKi.normalTitle" = "log in";
+
+/* Class = "UITabBarItem"; title = "My Events"; ObjectID = "z56-aD-kxT"; */
+"z56-aD-kxT.title" = "My Events";

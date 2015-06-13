@@ -41,6 +41,12 @@
 
 + (NSString *)formatDateForEventCreationScreen:(NSDate*)date;
 
++ (NSDate *)formatPushNotificationStringToDate:(NSString *)dateString;
+
++ (NSDate *)getDateFromEXIFDateString:(NSString *)EXIFDate;
+
++ (NSDate *)formatEXIFDate:(NSString *)dateString;
+
 + (NSLock *)cacheLock;
 
 + (NSArray *)getReportedPhotoIDs;

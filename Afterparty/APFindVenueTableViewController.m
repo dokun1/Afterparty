@@ -176,13 +176,11 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.venues count];
 }
 
@@ -192,8 +190,7 @@
 
 #pragma mark - TableViewDelegate Methods
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"APVenueCell";
     APVenueTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
@@ -213,9 +210,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  APVenue *venue = self.venues[indexPath.row];
-  [self.delegate controller:self didChooseVenue:venue];
-  
+    APVenue *venue = self.venues[indexPath.row];
+    [self.delegate controller:self didChooseVenue:venue];
 }
 
 @end

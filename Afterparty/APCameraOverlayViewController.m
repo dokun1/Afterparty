@@ -13,8 +13,11 @@
 #import "APCamPreviewView.h"
 #import "UIView+APViewAnimations.h"
 #import "APAVSessionController.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
-@interface APCameraOverlayViewController () <PreviewDelegate,AVSessionControllerDelegate>
+@import AssetsLibrary;
+
+@interface APCameraOverlayViewController () <PreviewDelegate,AVSessionControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (assign, nonatomic) CGFloat                   screenHeight;
 @property (assign, nonatomic) CGFloat                   buttonHeight;
@@ -22,6 +25,7 @@
 @property (strong, nonatomic) UIButton                  *cameraFlipButton;
 @property (strong, nonatomic) UIButton                  *flashButton;
 @property (strong, nonatomic) UIButton                  *cancelButton;
+@property (strong, nonatomic) UIButton                  *choosePhotoButton;
 @property (weak, nonatomic) IBOutlet APButton           *cameraButton;
 @property (weak, nonatomic) IBOutlet UIView             *imagePreview;
 @property (weak, nonatomic) IBOutlet APCamPreviewView   *viewFinderView;
@@ -71,10 +75,18 @@
     [self.cancelButton setFrame:CGRectMake(CGRectGetMidX(screenRect) - 20, self.buttonHeight, 40, 40)];
     [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view insertSubview:self.cancelButton belowSubview:self.cameraButton];
+    
+    self.choosePhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.choosePhotoButton setBackgroundColor:[UIColor clearColor]];
+    [self.choosePhotoButton setImage:[UIImage imageNamed:@"button_blank"] forState:UIControlStateNormal];
+    [self.choosePhotoButton setFrame:CGRectMake(CGRectGetMidX(screenRect) - 20, self.buttonHeight, 40, 40)];
+    [self.choosePhotoButton addTarget:self action:@selector(choosePhotoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view insertSubview:self.choosePhotoButton belowSubview:self.cameraButton];
 
     [self.cameraFlipButton afterparty_translateToPoint:CGPointMake(60, self.buttonHeight + 20) expanding:YES delay:0.1 withCompletion:nil];
     [self.flashButton afterparty_translateToPoint:CGPointMake(CGRectGetMaxX(screenRect) - 60, self.buttonHeight + 20) expanding:YES delay:0.2 withCompletion:nil];
     [self.cancelButton afterparty_translateToPoint:CGPointMake(30, 30) expanding:YES delay:0.3 withCompletion:nil];
+    [self.choosePhotoButton afterparty_translateToPoint:CGPointMake(CGRectGetMaxX(screenRect) - 30, 30) expanding:YES delay:0.1 withCompletion:nil];
     
     self.sessionController = [[APAVSessionController alloc] initWithPreviewView:self.viewFinderView];
     self.sessionController.delegate = self;
@@ -96,6 +108,34 @@
 
 - (void)cancelButtonTapped {
     [self.delegate cameraControllerDidCancel:self];
+}
+
+- (void)choosePhotoButtonTapped {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+    NSLog(@"choose photo button tapped");
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *selectedImage = info[UIImagePickerControllerOriginalImage];
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:(NSURL *)info[UIImagePickerControllerReferenceURL] resultBlock:^(ALAsset *asset) {
+        ALAssetRepresentation *imageRepresentation = [asset defaultRepresentation];
+        if ([selectedImage checkImageOKForSubmissionToEvent:self.eventDict metadataDictionary:imageRepresentation.metadata]) {
+            [self prepareImageForPreview:UIImagePNGRepresentation(selectedImage) forOrientation:AVCaptureVideoOrientationPortrait];
+            [picker dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Invalid Photo" message:@"This photo wasn't taken at the party - choose one that you took there!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
+    } failureBlock:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"Unknown error"];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction)cameraButtonTapped:(id)sender {

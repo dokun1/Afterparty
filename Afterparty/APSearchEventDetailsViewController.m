@@ -166,7 +166,7 @@
 - (void)shareEventSelected {
     NSString *message = [NSString stringWithFormat:@"Psst...there's a party going on here: http://www.deeplink.me/afterparty.io/event.html?eventID=%@", self.currentEvent.objectID];
     if (![[self.currentEvent.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
-        NSString *addOn = [NSString stringWithFormat:@" and the password is %@", self.currentEvent.password];
+        NSString *addOn = [NSString stringWithFormat:@" P %@", self.currentEvent.password];
         message = [NSString stringWithFormat:@"%@%@", message, addOn];
     }
     

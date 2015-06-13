@@ -459,13 +459,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.eventNameField) {
         NSRange lowercaseCharRange = [string rangeOfCharacterFromSet:[NSCharacterSet lowercaseLetterCharacterSet]];
-        
         if (lowercaseCharRange.location != NSNotFound) {
-            textField.text = [textField.text stringByReplacingCharactersInRange:range
-                                                                     withString:[string uppercaseString]];
+            textField.text = [textField.text stringByReplacingCharactersInRange:range withString:[string uppercaseString]];
             return NO;
         }
-        
         return YES;
     } else {
         return YES;
@@ -473,13 +470,10 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-
     NSUInteger oldLength = [textView.text length];
     NSUInteger replacementLength = [text length];
     NSUInteger rangeLength = range.length;
-    
     NSUInteger newLength = oldLength - rangeLength + replacementLength;
-    
     return newLength <= 100;
 }
 
@@ -794,9 +788,7 @@ static NSString *kSetPasswordSegue = @"setPasswordSegue";
 }
 
 - (UIImage *)getScrollViewVisibleImage {
-    UIGraphicsBeginImageContextWithOptions(self.coverPhotoScrollView.bounds.size,
-                                           YES,
-                                           [UIScreen mainScreen].scale);
+    UIGraphicsBeginImageContextWithOptions(self.coverPhotoScrollView.bounds.size, YES, [UIScreen mainScreen].scale);
     
     CGPoint offset = self.coverPhotoScrollView.contentOffset;
     CGContextTranslateCTM(UIGraphicsGetCurrentContext(), -offset.x, -offset.y);
