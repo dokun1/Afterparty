@@ -40,6 +40,8 @@ NSString *const kEventSearchParseClass = @"EventSearch";
 NSString *const kPhotosParseClass = @"Photos";
 NSString *const kUserParseClass = @"_User";
 NSString *const kUserAvatarParseClass = @"UserAvatars";
+NSString *const kParseApplicationIDLocal = @"nXzCDFuTYLWqdbe1zLMJKu4r1wDOWAM1mm678zgZ";
+NSString *const kParseMasterKey = @"T8EhXqKtN0FCT9NfXOIabyU7GiRdgHIf0zh6i5qU";
 
 // NSNotification Names
 

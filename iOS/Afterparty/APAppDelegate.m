@@ -12,6 +12,7 @@
 #import "APConstants.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+#import <ParseTwitterUtils/PFTwitterUtils.h>
 
 @implementation APAppDelegate
 
@@ -19,7 +20,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 #ifdef DEBUG
     NSLog(@"--------DEV SERVER--------");
-    [Parse setApplicationId:kParseApplicationIDDev clientKey:kParseClientKeyDev];
+    [Parse setApplicationId:kParseApplicationIDLocal clientKey:kParseClientKeyDev];
 #else
     NSLog(@"--------PROD SERVER--------");
     [Parse setApplicationId:kParseApplicationIDProduction clientKey:kParseClientKeyProduction];

@@ -39,6 +39,8 @@ extern NSString *const kEventSearchParseClass;
 extern NSString *const kPhotosParseClass;
 extern NSString *const kUserParseClass;
 extern NSString *const kUserAvatarParseClass;
+extern NSString *const kParseApplicationIDLocal;
+extern NSString *const kParseMasterKey;
 
 
 // NSNotification Names

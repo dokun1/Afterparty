@@ -15,6 +15,7 @@
 #import "APConstants.h"
 #import "APVenue.h"
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+#import <ParseTwitterUtils/PFTwitterUtils.h>
 
 @implementation APConnectionManager
 
@@ -496,7 +497,8 @@
     NSString *requestString = [NSString stringWithFormat:@"https://api.twitter.com/1.1/users/show.json?screen_name=%@", twitterUsername];
     NSURL *verify = [NSURL URLWithString:requestString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:verify];
-    [[PFTwitterUtils twitter] signRequest:request];
+//    [[PFTwitterUtils twitter] signRequest:request];
+//    [[PFTwitterUtils twitter] ]
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError) failureBlock(connectionError);

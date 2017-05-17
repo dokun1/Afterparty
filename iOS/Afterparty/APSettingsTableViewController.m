@@ -22,6 +22,7 @@
 #import <Bolts/Bolts.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import "APIntroViewController.h"
+#import <ParseTwitterUtils/PFTwitterUtils.h>
 
 static NSString *kVersionWhatsNewFilePath = @"APWhatsNew";
 static NSString *kTermsAndConditionsFilePath = @"APTermsAndConditions";
