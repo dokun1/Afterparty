@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "AfterpartyDev": {
+            "applicationId": "g7uceRQOuK3aRgsGZhjqdG9fIV0EoaTjbvPwbKTN", 
+            "masterKey": "SAjj1JHhAxcFFGDuSBaqc8l4tp7AySzSLfYw4b6M"
+        }, 
+        "_default": {
+            "link": "AfterpartyDev"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.19"
+    }
+}
