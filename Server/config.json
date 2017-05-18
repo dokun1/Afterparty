@@ -3,5 +3,14 @@
   "masterKey": "T8EhXqKtN0FCT9NfXOIabyU7GiRdgHIf0zh6i5qU",
   "appName": "Afterparty",
   "cloud": "./cloud/main",
-  "databaseURI": "mongodb://127.0.0.1:27017/parse"
+  "databaseURI": "mongodb://127.0.0.1:27017/parse",
+  "auth": {
+      "twitter": {
+          "consumer_key": "C6tnCRjcePUjdKFwqYPuYH",
+          "consumer_secret": "qqVeqAp2MWhKzdVmJ3LR2S1LIfnlbRIwzdSFcEjXfWC6rWp99T"
+      },
+      "facebook": {
+           "appIds": "1377327292516803"
+       }
+  }
 }

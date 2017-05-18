@@ -27,6 +27,7 @@
 			<array>
 				<string>afterparty</string>
 				<string>fb1377327292516803</string>
+				<string>fbauth2</string>
 			</array>
 		</dict>
 	</array>
@@ -44,9 +45,9 @@
 		<true/>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>Your contacts like to party too - don't leave them hanging!</string>
+	<string>Your contacts like to party too - don&apos;t leave them hanging!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>It's kind of, you know, the main purpose of the app.</string>
+	<string>It&apos;s kind of, you know, the main purpose of the app.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In the interest of being fair, this *is* an app about photos.</string>
 	<key>UIAppFonts</key>

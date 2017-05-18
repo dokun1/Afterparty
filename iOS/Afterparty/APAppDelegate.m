@@ -8,7 +8,7 @@
 
 #import "APAppDelegate.h"
 #import "APMainTabBarController.h"
-#import <Crashlytics/Crashlytics.h>
+//#import <Crashlytics/Crashlytics.h>
 #import "APConstants.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
@@ -38,7 +38,7 @@
     [PFFacebookUtils initializeFacebook];
     [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    [Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
+    //[Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
     
 
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];

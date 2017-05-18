@@ -326,10 +326,10 @@ static NSString *kMyEventsKey = @"myEventsArray";
     NSDictionary *metadata = [items.firstObject objectForKey:@"metadata"];
     NSString *webVersion = [metadata objectForKey:@"bundle-version"];
   
-  if ([[self getVersion] compare:webVersion options:NSNumericSearch] == NSOrderedAscending) { //checks to see if current version is less than web version
-    return YES;
-  }
-  return NO;
+    if ([[self getVersion] compare:webVersion options:NSNumericSearch] == NSOrderedAscending) { //checks to see if current version is less than web version
+        return YES;
+    }
+    return NO;
 }
 
 +(NSString *) genRandIdString {

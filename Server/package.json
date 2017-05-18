@@ -1,5 +1,6 @@
 {
   "name": "afterparty",
+  "version": "1.0.0",
   "description": "parse-server for Afterparty",
   "scripts": {
     "start": "parse-server config.json"
