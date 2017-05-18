@@ -387,14 +387,14 @@
                  password:(NSString *)password
                   success:(APSuccessPFUserBlock)successBlock
                   failure:(APFailureErrorBlock)failureBlock {
-    NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
-    NSString *hashedPassword = nil;
-    unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
-    NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
-    if (CC_SHA1([data bytes], (uint)[data length], hashedPasswordData)) {
-        hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
-    }
-    [PFUser logInWithUsernameInBackground:username password:hashedPassword block:^(PFUser *user, NSError *error) {
+//    NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
+//    NSString *hashedPassword = nil;
+//    unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
+//    NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
+//    if (CC_SHA1([data bytes], (uint)[data length], hashedPasswordData)) {
+//        hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
+//    }
+    [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
         (error == nil) ? successBlock(user) : failureBlock(error);
     }];
 }
@@ -544,14 +544,14 @@
            failure:(APFailureErrorBlock)failureBlock {
     PFUser *user = [PFUser user];
     user.username = username;
-    NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
-    NSString *hashedPassword = nil;
-    unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
-    NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
-    if (CC_SHA1([data bytes], (uint)[data length], hashedPasswordData)) {
-        hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
-    }
-    user.password = hashedPassword;
+//    NSString *saltedPassword = [NSString stringWithFormat:@"%@%@", password, kPasswordSalt];
+//    NSString *hashedPassword = nil;
+//    unsigned char hashedPasswordData[CC_SHA1_DIGEST_LENGTH];
+//    NSData *data = [saltedPassword dataUsingEncoding:NSUTF8StringEncoding];
+//    if (CC_SHA1([data bytes], (uint)[data length], hashedPasswordData)) {
+//        hashedPassword = [[NSString alloc] initWithBytes:hashedPasswordData length:sizeof(hashedPasswordData) encoding:NSASCIIStringEncoding];
+//    }
+    user.password = password;
     user.email = email;
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         (error == nil) ? successBlock(succeeded) : failureBlock(error);

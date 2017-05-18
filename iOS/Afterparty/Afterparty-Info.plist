@@ -20,6 +20,15 @@
 	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>In the interest of being fair, this *is* an app about photos.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Your contacts like to party too - don&apos;t leave them hanging!</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -39,7 +48,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>It's kind of, you know, the main purpose of the app.</string>
+	<string>It&apos;s kind of, you know, the main purpose of the app.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mostardesign-SofiaProBold.otf</string>

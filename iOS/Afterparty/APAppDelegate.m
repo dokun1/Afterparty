@@ -20,13 +20,20 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 #ifdef DEBUG
     NSLog(@"--------DEV SERVER--------");
-    [Parse setApplicationId:kParseApplicationIDLocal clientKey:kParseClientKeyDev];
+//    [Parse setApplicationId:kParseApplicationIDLocal clientKey:kParseClientKeyDev];
 #else
     NSLog(@"--------PROD SERVER--------");
-    [Parse setApplicationId:kParseApplicationIDProduction clientKey:kParseClientKeyProduction];
+//    [Parse setApplicationId:kParseApplicationIDProduction clientKey:kParseClientKeyProduction];
 #endif
-    
+
     //API Setup
+    [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration>  _Nonnull configuration) {
+        configuration.server = @"http://localhost:1337/parse";
+        configuration.applicationId = kParseApplicationIDLocal;
+        configuration.clientKey = nil;
+    }]];
+    
+    [Parse setLogLevel:PFLogLevelDebug];
     [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
     [PFFacebookUtils initializeFacebook];
     [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
