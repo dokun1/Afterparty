@@ -5,5 +5,12 @@
     },
     "1.0.1": {
         "1":"Oops! iOS 7 phones no longer have problems running the app. Sorry about that one!"
+    },
+    "1.1.0": {
+        "1":"Now introducing...push notifications!",
+        "2":"Parties move - we get it. Now, your afterparties can move too! You can now edit any party if you made it, or if you move from the original location, we'll automatically help you shift."
+    },
+    "1.2.0": {
+        "1":"Shifted gears on the backend - you'll have to sign up for a new account. It's a cinch though!"
     }
 }

@@ -5,6 +5,7 @@
     "start": "parse-server config.json"
   },
   "dependencies": {
-    "parse-server": "^2.0.0"
+    "parse-server": "^2.0.0",
+    "parse-image": "0.2.0"
   }
 }

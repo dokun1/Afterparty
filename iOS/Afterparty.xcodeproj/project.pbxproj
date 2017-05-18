@@ -82,7 +82,6 @@
 		50BF4C8D196C410600B6EA1F /* APSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF4C8C196C410600B6EA1F /* APSettingsTableViewController.m */; };
 		50C015BA19697BF500E9E26F /* default_avatar_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C015B919697BF500E9E26F /* default_avatar_large.png */; };
 		50C015E5196AC64600E9E26F /* APConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C015E4196AC64600E9E26F /* APConstants.m */; };
-		50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C1E08E196704B900105E64 /* APValueTransformer.m */; };
 		50C3AA85195F07EE00A0297A /* APCreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */; };
 		50C3AA8E195F0ECB00A0297A /* APInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8A195F0ECB00A0297A /* APInviteFriendsViewController.m */; };
 		50C3AA8F195F0ECB00A0297A /* APInviteFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C3AA8C195F0ECB00A0297A /* APInviteFriendTableViewCell.m */; };
@@ -262,8 +261,6 @@
 		50C015B919697BF500E9E26F /* default_avatar_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_avatar_large.png; sourceTree = "<group>"; };
 		50C015E3196AC64600E9E26F /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APConstants.h; sourceTree = "<group>"; };
 		50C015E4196AC64600E9E26F /* APConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APConstants.m; sourceTree = "<group>"; };
-		50C1E08D196704B900105E64 /* APValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APValueTransformer.h; sourceTree = "<group>"; };
-		50C1E08E196704B900105E64 /* APValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APValueTransformer.m; sourceTree = "<group>"; };
 		50C3AA83195F07EE00A0297A /* APCreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APCreateEventViewController.h; sourceTree = "<group>"; };
 		50C3AA84195F07EE00A0297A /* APCreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APCreateEventViewController.m; sourceTree = "<group>"; };
 		50C3AA89195F0ECB00A0297A /* APInviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInviteFriendsViewController.h; sourceTree = "<group>"; };
@@ -419,8 +416,6 @@
 				50D10E3D1A2093D600D185CC /* Launch Screen.xib */,
 				5048D4A8194A1D0F0092178E /* APConnectionManager.h */,
 				5048D4A9194A1D0F0092178E /* APConnectionManager.m */,
-				50C1E08D196704B900105E64 /* APValueTransformer.h */,
-				50C1E08E196704B900105E64 /* APValueTransformer.m */,
 				50C015E3196AC64600E9E26F /* APConstants.h */,
 				50C015E4196AC64600E9E26F /* APConstants.m */,
 				504CA348194096AB003EF9EB /* Model */,
@@ -995,7 +990,6 @@
 				504CA36719409B9C003EF9EB /* UIImage+APImage.m in Sources */,
 				503C92841A2C788A00ED06B5 /* APEventAnnotation.m in Sources */,
 				504CA36519409B9C003EF9EB /* NSString+APString.m in Sources */,
-				50C1E08F196704B900105E64 /* APValueTransformer.m in Sources */,
 				50F64EC41952F40900E0B8DC /* APPhotoCell.m in Sources */,
 				508849EE1958C49B00B1CA5E /* UIView+APViewAnimations.m in Sources */,
 				50648A1A1A43364F0044A1BE /* APImageCollectionViewCell.m in Sources */,

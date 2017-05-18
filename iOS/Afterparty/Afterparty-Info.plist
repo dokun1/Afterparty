@@ -17,18 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>In the interest of being fair, this *is* an app about photos.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Your contacts like to party too - don&apos;t leave them hanging!</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -40,15 +31,24 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>214</string>
+	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>1377327292516803</string>
 	<key>FacebookDisplayName</key>
 	<string>Afterparty</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSContactsUsageDescription</key>
+	<string>Your contacts like to party too - don't leave them hanging!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>It&apos;s kind of, you know, the main purpose of the app.</string>
+	<string>It's kind of, you know, the main purpose of the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>In the interest of being fair, this *is* an app about photos.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mostardesign-SofiaProBold.otf</string>
