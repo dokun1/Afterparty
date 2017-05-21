@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script>
+    window.onload = function() {
+        var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false ); //detect if the device is a mobile device
+        if (iOS) { //if its mobile, we want to parse out the eventID and construct new URL
+            //The url MUST be of format http://afterparty.io/event.html?eventID=xxxxxxxx with xxxxxxxx being the eventID string
+            var iOS8 = ( navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 8_\d/i) ? true : false);
+            var eventID = getURLParameter('eventID');
+            if (eventID == null || eventID == '') {
+                window.location = "http://afterparty.io";
+                return;
+            }
+            window.location("afterparty://eventID:" + eventID);
+            setTimeout("window.location = 'http://afterparty.io'", 1000); //the app store link will go here in the future when it's up
+        } else {
+            window.location = "http://afterparty.io";
+        }
+    }
+    
+    function getURLParameter(name) {
+      return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
+        
+    </script>
+</head>
+</html>
