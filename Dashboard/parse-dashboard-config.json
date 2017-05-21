@@ -1,0 +1,14 @@
+{
+  "apps": [{
+    "serverURL": "https://afterparty-dev.mybluemix.net/parse",
+    "appId": "nXzCDFuTYLWqdbe1zLMJKu4r1wDOWAM1mm678zgZ",
+    "masterKey": "T8EhXqKtN0FCT9NfXOIabyU7GiRdgHIf0zh6i5qU",
+    "appName": "AfterpartyDev",
+    "iconName": "afterparty.png"
+  }],
+  "iconsFolder": "icons",
+  "users": [{
+    "user": "david",
+    "pass": "thrasher1"   
+  }]
+}

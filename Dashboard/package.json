@@ -1,0 +1,14 @@
+{
+  "name": "afterparty-dashboard",
+  "version": "1.0.0",
+  "description": "parse-server dashboard for Afterparty",
+  "scripts": {
+    "start": "parse-dashboard --config ./parse-dashboard-config.json --allowInsecureHTTP"
+  },
+  "engines": {
+    "node" : "7.9.0"
+  },
+  "dependencies": {
+    "parse-dashboard": "latest"
+  }
+}

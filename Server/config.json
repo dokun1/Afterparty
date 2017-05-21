@@ -1,0 +1,17 @@
+{
+  "appId": "nXzCDFuTYLWqdbe1zLMJKu4r1wDOWAM1mm678zgZ",
+  "masterKey": "T8EhXqKtN0FCT9NfXOIabyU7GiRdgHIf0zh6i5qU",
+  "appName": "AfterpartyDev",
+  "cloud": "./cloud/main",
+  "databaseURI": "mongodb://afterpartydev:yTz23tU4eHjQstz99@ds053186.mlab.com:53186/afterparty-dev",
+  "auth": {
+      "twitter": {
+          "consumer_key": "C6tnCRjcePUjdKFwqYPuYH",
+          "consumer_secret": "qqVeqAp2MWhKzdVmJ3LR2S1LIfnlbRIwzdSFcEjXfWC6rWp99T"
+      },
+      "facebook": {
+           "appIds": "1377327292516803"
+      }
+    }
+  
+}
