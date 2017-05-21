@@ -50,6 +50,10 @@
 	<string>It&apos;s kind of, you know, the main purpose of the app.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In the interest of being fair, this *is* an app about photos.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>A photo sharing app without a camera? C&apos;mon.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>When this app can handle videos, you&apos;ll be glad you let us use this.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mostardesign-SofiaProBold.otf</string>

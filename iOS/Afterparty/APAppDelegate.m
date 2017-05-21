@@ -33,6 +33,13 @@
         configuration.clientKey = nil;
     }]];
     
+    for (NSString *familyName in [UIFont familyNames]){
+        NSLog(@"Family name: %@", familyName);
+        for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
+            NSLog(@"--Font name: %@", fontName);
+        }
+    }
+    
     [Parse setLogLevel:PFLogLevelDebug];
     [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
     [PFFacebookUtils initializeFacebook];

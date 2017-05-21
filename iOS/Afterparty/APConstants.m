@@ -53,6 +53,8 @@ NSString *const kQueueIsDoneUploading = @"photoQueueDoneUploading";
 
 NSString *const kRegularFont = @"AvenirNext-Regular";
 NSString *const kBoldFont = @"AvenirNext-Bold";
+//NSString *const kRegularFont = @"Mostardesign-SofiaProLight";
+//NSString *const kBoldFont = @"Mostardesign-SofiaProBold";
 
 CGFloat const kIPhone5Width = 320.f;
 CGFloat const kIPhone6Width = 375.f;

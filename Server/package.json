@@ -2,11 +2,12 @@
   "name": "afterparty",
   "version": "1.0.0",
   "description": "parse-server for Afterparty",
-  "scripts": {
-    "start": "parse-server config.json"
+  "engines": {
+    "node": "7.9.0"
   },
   "dependencies": {
-    "parse-server": "^2.0.0",
-    "parse-image": "0.2.0"
+    "parse-server": "latest",
+    "parse-image": "latest",
+    "parse-server-s3-adapter": "latest"
   }
 }
