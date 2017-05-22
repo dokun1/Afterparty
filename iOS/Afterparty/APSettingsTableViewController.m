@@ -43,6 +43,7 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
 @property (weak, nonatomic) IBOutlet APLabel *blurbFieldLabel;
 @property (weak, nonatomic) IBOutlet APLabel *versionLabel;
 @property (weak, nonatomic) IBOutlet APLabel *versionFieldLabel;
+@property (weak, nonatomic) IBOutlet APLabel *acknowledgementsLabel;
 @property (weak, nonatomic) IBOutlet APLabel *termsAndConditionsLabel;
 @property (weak, nonatomic) IBOutlet APLabel *websiteLabel;
 @property (weak, nonatomic) IBOutlet APLabel *introScreenLabel;
@@ -127,11 +128,13 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
     [self.versionLabel styleForType:LabelTypeTableViewCellAttribute withText:[NSString stringWithFormat:@"v%@", [APUtil getVersion]]];
 #endif
     [self.versionFieldLabel styleForType:LabelTypeTableViewCellAttribute];
+    [self.acknowledgementsLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.termsAndConditionsLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.websiteLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.introScreenLabel styleForType:LabelTypeTableViewCellAttribute];
     [self.signOutLabel styleForType:LabelTypeTableViewCellAttribute];
     self.versionFieldLabel.textColor = [UIColor afterpartyBlackColor];
+    self.acknowledgementsLabel.textColor = [UIColor afterpartyBlackColor];
     self.signOutLabel.textColor = [UIColor afterpartyBlackColor];
     self.websiteLabel.textColor = [UIColor afterpartyBlackColor];
     self.introScreenLabel.textColor = [UIColor afterpartyBlackColor];
@@ -174,15 +177,18 @@ static NSString *kTermsAndConditionsSegue = @"TermsAndConditionsSegue";
             // version cell tapped, uses prepareForSegue
         }
         if (indexPath.row == 1) {
-            [self termsAndConditionsRowTapped];
+            //show acknowledgements and stuff here
         }
         if (indexPath.row == 2) {
-            [self websiteButtonTapped];
+            [self termsAndConditionsRowTapped];
         }
         if (indexPath.row == 3) {
-            [self introScreenButtonTapped];
+            [self websiteButtonTapped];
         }
         if (indexPath.row == 4) {
+            [self introScreenButtonTapped];
+        }
+        if (indexPath.row == 5) {
             [self signOutButtonTapped];
         }
     }
