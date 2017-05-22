@@ -5,6 +5,12 @@
     "masterKey": "T8EhXqKtN0FCT9NfXOIabyU7GiRdgHIf0zh6i5qU",
     "appName": "AfterpartyDev",
     "iconName": "afterparty.png"
+  },{
+    "serverURL": "https://afterparty.mybluemix.net/parse",
+    "appId": "5oylONmG3AEYJnzoBv0m4YgOQFGytlAdQO9fEUB2",
+    "masterKey": "rEIlG84j9d9eKct1R9Q8jSasuiAKFeRWdbOUvnPc",
+    "appName": "Afterparty",
+    "iconName": "afterparty.png"
   }],
   "iconsFolder": "icons",
   "users": [{

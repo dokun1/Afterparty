@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
   [self.passwordLoginField styleForLogin];
   [self.titleLabel styleForType:LabelTypeLoginHeading];
   [self.facebookLoginButton style];
-  [self.twitterLoginButton style];
+//  [self.twitterLoginButton style];
   [self.signUpButton style];
   [self.signUpCredentialsButton style];
   [self.afterpartyLoginButton style];
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
   self.signUpButton.backgroundColor = [UIColor clearColor];
   self.signUpCredentialsButton.backgroundColor = [UIColor clearColor];
   self.facebookLoginButton.backgroundColor = [UIColor clearColor];
-  self.twitterLoginButton.backgroundColor = [UIColor clearColor];
+//  self.twitterLoginButton.backgroundColor = [UIColor clearColor];
   self.afterpartyLoginButton.backgroundColor = [UIColor clearColor];
     self.forgotPasswordButton.backgroundColor = [UIColor clearColor];
   self.afterpartyCredentialsLoginButton.backgroundColor = [UIColor clearColor];
@@ -183,7 +183,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
     [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
     [self.signUpButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
     [self.facebookLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
-    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
+//    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.7 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         completionBlock();
@@ -220,7 +220,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
     [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0];
     [self.signUpButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.1];
     [self.facebookLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.2];
-    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
+//    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewDisappearWithCompletion:) withObject:nil afterDelay:0.3];
     if (isForLogin) {
         [self performSelector:@selector(fadeInLoginScene) withObject:nil afterDelay:0.7];
     } else {
@@ -232,7 +232,7 @@ typedef NS_ENUM(NSInteger, LoginState) {
     [self.afterpartyLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay];
     [self.signUpButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.1];
     [self.facebookLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.2];
-    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.3];
+//    [self.twitterLoginButton performSelector:@selector(afterparty_makeViewAppearWithCompletion:) withObject:nil afterDelay:delay+0.3];
     self.currentState = kNothing;
 }
 
@@ -319,6 +319,8 @@ typedef NS_ENUM(NSInteger, LoginState) {
 }
 
 - (IBAction)twitterSigninButtonTapped:(id)sender {
+#warning fix this after you get twitter auth working right
+    return;
   self.currentState = kTwitter;
   
   self.accountStore = [[ACAccountStore alloc] init];

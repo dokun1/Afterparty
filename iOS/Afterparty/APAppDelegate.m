@@ -34,7 +34,7 @@
     [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration>  _Nonnull configuration) {
         configuration.server = server;
 #warning comment this line out if you are testing against a deployed instance
-        configuration.server = kParseApplicationLocalURL;
+//        configuration.server = kParseApplicationLocalURL;
 #warning that was the line, right above this one
         configuration.applicationId = applicationID;
         configuration.clientKey = nil;
