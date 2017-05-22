@@ -1,0 +1,7 @@
+{
+  "appId": "5oylONmG3AEYJnzoBv0m4YgOQFGytlAdQO9fEUB2",
+  "masterKey": "rEIlG84j9d9eKct1R9Q8jSasuiAKFeRWdbOUvnPc",
+  "appName": "afterparty",
+  "cloud": "./cloud/main",
+  "databaseURI": "mongodb://127.0.0.1:27017/parse"
+}

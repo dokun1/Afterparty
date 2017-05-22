@@ -42,6 +42,12 @@ NSString *const kUserParseClass = @"_User";
 NSString *const kUserAvatarParseClass = @"UserAvatars";
 NSString *const kParseApplicationIDLocal = @"nXzCDFuTYLWqdbe1zLMJKu4r1wDOWAM1mm678zgZ";
 NSString *const kParseMasterKey = @"T8EhXqKtN0FCT9NfXOIabyU7GiRdgHIf0zh6i5qU";
+NSString *const kParseApplicationIDSelfDev = @"nXzCDFuTYLWqdbe1zLMJKu4r1wDOWAM1mm678zgZ";
+NSString *const kParseApplicationIDDeployedDev = @"nXzCDFuTYLWqdbe1zLMJKu4r1wDOWAM1mm678zgZ";
+NSString *const kParseApplicationIDDeployedProd = @"5oylONmG3AEYJnzoBv0m4YgOQFGytlAdQO9fEUB2";
+NSString *const kParseApplicationLocalURL = @"http://localhost:1337/parse";
+NSString *const kParseApplicationDevURL = @"https://afterparty-dev.mybluemix.net/parse";
+NSString *const kParseApplicationProdURL = @"https://afterparty.mybluemix.net/parse";
 
 // NSNotification Names
 

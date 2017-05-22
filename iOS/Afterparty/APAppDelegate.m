@@ -8,7 +8,6 @@
 
 #import "APAppDelegate.h"
 #import "APMainTabBarController.h"
-//#import <Crashlytics/Crashlytics.h>
 #import "APConstants.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
@@ -18,35 +17,34 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    NSString *server, *applicationID;
 #ifdef DEBUG
     NSLog(@"--------DEV SERVER--------");
+    server = kParseApplicationDevURL;
+    applicationID = kParseApplicationIDDeployedDev;
 //    [Parse setApplicationId:kParseApplicationIDLocal clientKey:kParseClientKeyDev];
 #else
     NSLog(@"--------PROD SERVER--------");
+    server = kParseApplicationProdURL;
+    applicationID = kParseApplicationIDDeployedProd;
 //    [Parse setApplicationId:kParseApplicationIDProduction clientKey:kParseClientKeyProduction];
 #endif
 
     //API Setup
     [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration>  _Nonnull configuration) {
-        configuration.server = @"http://localhost:1337/parse";
-        configuration.applicationId = kParseApplicationIDLocal;
+        configuration.server = server;
+#warning comment this line out if you are testing against a deployed instance
+        configuration.server = kParseApplicationLocalURL;
+#warning that was the line, right above this one
+        configuration.applicationId = applicationID;
         configuration.clientKey = nil;
     }]];
-    
-    for (NSString *familyName in [UIFont familyNames]){
-        NSLog(@"Family name: %@", familyName);
-        for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
-            NSLog(@"--Font name: %@", fontName);
-        }
-    }
     
     [Parse setLogLevel:PFLogLevelDebug];
     [PFTwitterUtils initializeWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterConsumerSecret];
     [PFFacebookUtils initializeFacebook];
     [Foursquare2 setupFoursquareWithClientId:kFoursquareClientID secret:kFoursquareSecret callbackURL:@"afterparty://foursquare"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    //[Crashlytics startWithAPIKey:kCrashlyticsAPIKey];
-    
 
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor afterpartyBlackColor], NSForegroundColorAttributeName, [UIFont fontWithName:kBoldFont size:18.5f], NSFontAttributeName, nil]];
   

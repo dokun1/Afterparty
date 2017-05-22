@@ -13,14 +13,14 @@ if (!databaseUri) {
 }
 
 var api = new ParseServer({
-  databaseURI: 'mongodb://afterpartydev:yTz23tU4eHjQstz99@ds053186.mlab.com:53186/afterparty-dev',
+  databaseURI: 'mongodb://iosApp:73NM8ith3HFdBAva6@ds149761-a0.mlab.com:49761,ds149761-a1.mlab.com:49761/afterparty-prod?replicaSet=rs-ds149761',
   cloud: './cloud/main.js',
-  appId: 'nXzCDFuTYLWqdbe1zLMJKu4r1wDOWAM1mm678zgZ',
-  masterKey: 'T8EhXqKtN0FCT9NfXOIabyU7GiRdgHIf0zh6i5qU',
+  appId: '5oylONmG3AEYJnzoBv0m4YgOQFGytlAdQO9fEUB2',
+  masterKey: 'rEIlG84j9d9eKct1R9Q8jSasuiAKFeRWdbOUvnPc',
   filesAdapter: new S3Adapter(
-    "AKIAJFS5J6CGAQE252CQ",
-    "wui4X+KDI/yAz2FX+jl3TQZTAchxV/lXvR/gw8gq",
-    "afterparty-file-storage-dev", {
+    "AKIAI6WJS5BZM6KFDIRA",
+    "dge8/ntzKfopJtehgmPY3lQON0zxv1rG0MH/H8Zg",
+    "afterparty-file-storage", {
        directAccess: true
     }
   ),

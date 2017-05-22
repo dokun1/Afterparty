@@ -42,7 +42,11 @@ extern NSString *const kUserAvatarParseClass;
 extern NSString *const kParseApplicationIDLocal;
 extern NSString *const kParseMasterKey;
 extern NSString *const kParseApplicationIDSelfDev;
-
+extern NSString *const kParseApplicationIDDeployedDev;
+extern NSString *const kParseApplicationIDDeployedProd;
+extern NSString *const kParseApplicationLocalURL;
+extern NSString *const kParseApplicationDevURL;
+extern NSString *const kParseApplicationProdURL;
 
 
 // NSNotification Names

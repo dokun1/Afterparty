@@ -115,76 +115,76 @@
 }
 
 -(void)setUpUI {
-  
-  NSDictionary *eventInfo = [[self.eventDict allValues] firstObject];
-  self.eventID            = [[self.eventDict allKeys] firstObject];
-  self.eventName          = eventInfo[@"eventName"];
-  self.deleteDate         = eventInfo[@"deleteDate"];
-  self.eventLocation = [[CLLocation alloc] initWithLatitude:[eventInfo[@"eventLatitude"] doubleValue] longitude:[eventInfo[@"eventLongitude"] doubleValue]];
-  
-  self.manager = [[CLLocationManager alloc] init];
-  self.manager.delegate = self;
-  self.manager.distanceFilter = kCLDistanceFilterNone;
-  self.manager.desiredAccuracy = kCLLocationAccuracyBest;
-  
-  if ([[[PFUser currentUser] username] isEqualToString:eventInfo[@"createdByUsername"]]) {
-    self.shouldAskAboutMove = YES;
-  }
-  
-  self.selectedPhotos = nil;
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kQueueIsDoneUploading object:nil];
-  
-  self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
-  self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
-  self.view.backgroundColor = [UIColor afterpartyTealBlueColor];
-  [self.collectionView registerNib:[UINib nibWithNibName:@"APPhotoCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"APPhotoCell"];
 
-  self.layout = [[APStackedGridLayout alloc] init];
-  [self.collectionView setCollectionViewLayout:self.layout];
-  
-  self.isSavingBulk = NO;
-  
-  self.refreshControl = [[UIRefreshControl alloc] init];
-  self.refreshControl.tintColor = [UIColor afterpartyTealBlueColor];
-  [self.refreshControl addTarget:self action:@selector(refreshPhotos) forControlEvents:UIControlEventValueChanged];
-  [self.collectionView addSubview:self.refreshControl];
-  self.collectionView.alwaysBounceVertical = YES;
-  self.collectionView.backgroundColor = [UIColor afterpartyOffWhiteColor];
-  
-  CGRect frame = self.collectionView.frame;
-  frame.origin.y = frame.origin.y - 40;
-  self.collectionView.frame = frame;
-  
-  [self.photoButton addTarget:self action:@selector(photoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-  
-  self.title = self.eventName;
-  self.photoButton.enabled = YES;
-  
-  NSDateFormatter *df = [[NSDateFormatter alloc] init];
-  [df setDateFormat:@"MM/dd/yy hh:mm:ss a"];
-  NSString *formattedDate = [df stringFromDate:self.deleteDate];
+    NSDictionary *eventInfo = [[self.eventDict allValues] firstObject];
+    self.eventID            = [[self.eventDict allKeys] firstObject];
+    self.eventName          = eventInfo[@"eventName"];
+    self.deleteDate         = eventInfo[@"deleteDate"];
+    self.eventLocation = [[CLLocation alloc] initWithLatitude:[eventInfo[@"eventLatitude"] doubleValue] longitude:[eventInfo[@"eventLongitude"] doubleValue]];
 
-  self.countdownLabel.text = formattedDate;
-  [self.countdownLabel styleForType:LabelTypeStandard];
+    self.manager = [[CLLocationManager alloc] init];
+    self.manager.delegate = self;
+    self.manager.distanceFilter = kCLDistanceFilterNone;
+    self.manager.desiredAccuracy = kCLLocationAccuracyBest;
 
-  self.eventEndsLabel.text = @"event ends in...";
-  [self.eventEndsLabel styleForType:LabelTypeStandard];
+    if ([[[PFUser currentUser] username] isEqualToString:eventInfo[@"createdByUsername"]]) {
+        self.shouldAskAboutMove = YES;
+    }
 
-  self.countdownLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
-  self.eventEndsLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
+    self.selectedPhotos = nil;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedRefreshNotification) name:kQueueIsDoneUploading object:nil];
+
+    self.photoDownloadQueue = dispatch_queue_create("com.afterparty.downloadQueue", NULL);
+    self.view.backgroundColor = [UIColor afterpartyOffWhiteColor];
+    self.view.backgroundColor = [UIColor afterpartyTealBlueColor];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"APPhotoCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"APPhotoCell"];
+
+    self.layout = [[APStackedGridLayout alloc] init];
+    [self.collectionView setCollectionViewLayout:self.layout];
+
+    self.isSavingBulk = NO;
+
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor afterpartyTealBlueColor];
+    [self.refreshControl addTarget:self action:@selector(refreshPhotos) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
+    self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.backgroundColor = [UIColor afterpartyOffWhiteColor];
+
+    CGRect frame = self.collectionView.frame;
+    frame.origin.y = frame.origin.y - 40;
+    self.collectionView.frame = frame;
+
+    [self.photoButton addTarget:self action:@selector(photoButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+
+    self.title = self.eventName;
+    self.photoButton.enabled = YES;
+
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"MM/dd/yy hh:mm:ss a"];
+    NSString *formattedDate = [df stringFromDate:self.deleteDate];
+
+    self.countdownLabel.text = formattedDate;
+    [self.countdownLabel styleForType:LabelTypeStandard];
+
+    self.eventEndsLabel.text = @"event ends in...";
+    [self.eventEndsLabel styleForType:LabelTypeStandard];
+
+    self.countdownLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
+    self.eventEndsLabel.backgroundColor = [UIColor afterpartyTealBlueColor];
     self.countdownLabel.textColor = [UIColor whiteColor];
     self.eventEndsLabel.textColor = [UIColor whiteColor];
-  
-  [self.manager startUpdatingLocation];
-  
+
+    [self.manager startUpdatingLocation];
+
     UIBarButtonItem *btnSelect = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonTapped)];
-  UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
-  [self.navigationItem setRightBarButtonItems:@[btnSelect, btnRefresh]];
-  
-  self.photoMetadata = [[NSArray alloc] init];
-  
-  [self refreshPhotos];
+    UIBarButtonItem *btnRefresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPhotos)];
+    [self.navigationItem setRightBarButtonItems:@[btnSelect, btnRefresh]];
+
+    self.photoMetadata = [[NSArray alloc] init];
+
+    [self refreshPhotos];
 }
 
 
@@ -228,7 +228,7 @@
 }
 
 
--(void)checkForDeleteTime {
+- (void)checkForDeleteTime {
     if ([self.deleteDate timeIntervalSinceDate:[NSDate date]] >= (24 * 60 * 60)) {
         return;
     }
@@ -244,7 +244,7 @@
     self.switchTimer = [NSTimer scheduledTimerWithTimeInterval:2.7 target:self selector:@selector(switchLabels) userInfo:nil repeats:YES];
 }
 
--(void)switchLabels {
+- (void)switchLabels {
     if (self.eventEndsLabel.alpha == 1.0f) {
         [UIView animateWithDuration:0.7
                          animations:^{

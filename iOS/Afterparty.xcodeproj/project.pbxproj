@@ -784,7 +784,7 @@
 				ORGANIZATIONNAME = Afterparty;
 				TargetAttributes = {
 					504CA30919408C82003EF9EB = {
-						DevelopmentTeam = RQ632LL2X3;
+						DevelopmentTeam = NAED4KPNJ7;
 						ProvisioningStyle = Automatic;
 					};
 					504CA32A19408C82003EF9EB = {
@@ -1141,7 +1141,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NAED4KPNJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1168,7 +1168,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iOS Development: David Okun (ATL9M5R398)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = NAED4KPNJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
