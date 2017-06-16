@@ -21,7 +21,8 @@ var api = new ParseServer({
     "AKIAI6WJS5BZM6KFDIRA",
     "dge8/ntzKfopJtehgmPY3lQON0zxv1rG0MH/H8Zg",
     "afterparty-file-storage", {
-       directAccess: true
+       directAccess: false,
+       region: 'us-east-1'
     }
   ),
   serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',

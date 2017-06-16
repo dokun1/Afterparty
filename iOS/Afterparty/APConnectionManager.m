@@ -218,7 +218,7 @@
 
 - (void)uploadImage:(UIImage*)image forEventID:(NSString*)eventID success:(APSuccessVoidBlock)successBlock failure:(APFailureErrorBlock)failureBlock {
     NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
-    PFFile *imageFile = [PFFile fileWithName:@"image.jpg" data:imageData];
+    PFFile *imageFile = [PFFile fileWithName:@"image.jpeg" data:imageData];
     NSString *refID     = [NSString stringWithFormat:@"%@%@", eventID, [APUtil genRandIdString]];
     PFObject *photoData = [PFObject objectWithClassName:kPhotosParseClass];
     

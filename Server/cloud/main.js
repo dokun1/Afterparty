@@ -135,29 +135,32 @@ Parse.Cloud.beforeSave("Photos", function(request, response) {
     	url: photoObject.get("imageFile").url()
   	}).then(function(response) {
     	var image = new Image();
+        console.log("setting buffer for thumb image");
     	return image.setData(response.buffer);
   	}).then(function(image) {
-    	// Resize the image to 20% of original size.
+        console.log("scaling image");
     	return image.scale({
         	ratio:0.20
     	});
   	}).then(function(image) {
-    	// Make sure it's a JPEG to save disk space and bandwidth.
+        console.log("setting format to jpeg");
     	return image.setFormat("JPEG");
   	}).then(function(image) {
-    	// Get the image data in a Buffer.
+        console.log("returning binary image data");
+        console.log("image.width = "+image.width);
     	return image.data();
   	}).then(function(buffer) {
-    	// Save the image into a new file.
-    	var base64 = buffer.toString("base64");
-    	var cropped = new Parse.File("thumb.jpg", { base64: base64 });
-    	return cropped.save();
+        var base64 = buffer.toString("base64");
+        var cropped = new Parse.File("thumb.jpg", { base64: base64 });
+        return cropped.save();
  	}).then(function(altered) {
-    	// Attach the image file to the original object.
+        console.log("setting saved image as thumbFile");
     	photoObject.set("thumbFile", altered);
   	}).then(function(result) {
+        console.log("success!");
     	response.success();
   	}, function(error) {
+        console.log("There was an error saving your thumbnail image. " + error.message);
     	response.error(error);
   	});
 });

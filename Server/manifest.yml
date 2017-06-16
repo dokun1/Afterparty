@@ -1,4 +1,4 @@
 applications:
-- name: afterparty-dev
+- name: afterparty
   random-route: true
   memory: 128M

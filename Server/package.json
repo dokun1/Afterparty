@@ -1,5 +1,5 @@
 {
-  "name": "afterparty",
+  "name": "afterparty-dev",
   "version": "1.0.0",
   "description": "parse-server for Afterparty",
   "engines": {
@@ -11,6 +11,7 @@
   "dependencies": {
     "parse-server": "latest",
     "parse-image": "latest",
-    "parse-server-s3-adapter": "latest"
+    "parse-server-s3-adapter": "latest",
+    "cfenv": "latest"
   }
 }
