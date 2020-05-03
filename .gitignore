@@ -16,3 +16,6 @@ xcuserdata
 DerivedData
 *.xcuserstate
 *Pods/
+
+GoogleService-Info.plist
+Afterparty/Dependencies/Firebase/*
